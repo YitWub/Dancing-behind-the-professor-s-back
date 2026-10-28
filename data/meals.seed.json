@@ -1,0 +1,1463 @@
+{
+  "note": "시드(가상) 식단 데이터. 크롤링 실패 시 폴백으로만 사용한다.",
+  "generatedBy": "scripts/make-seeds.ts",
+  "anchorDate": "2026-09-23",
+  "items": [
+    {
+      "id": "2026-09-14-haksik-breakfast",
+      "date": "2026-09-14",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "소고기미역국",
+        "계란말이",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 1000,
+      "kcal": 537
+    },
+    {
+      "id": "2026-09-14-haksik-lunch",
+      "date": "2026-09-14",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "돈까스",
+        "크림스프",
+        "양배추샐러드",
+        "단무지",
+        "배추김치"
+      ],
+      "price": 4500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-14-haksik-dinner",
+      "date": "2026-09-14",
+      "cafeteria": "haksik",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "순두부찌개",
+        "진미채볶음",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 4500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-14-changbo-lunch",
+      "date": "2026-09-14",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "menu": [
+        "치즈돈까스",
+        "브라운소스",
+        "양송이스프",
+        "모닝빵",
+        "샐러드",
+        "피클"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-14-changbo-dinner",
+      "date": "2026-09-14",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "menu": [
+        "불닭볶음면 정식",
+        "치즈토핑",
+        "계란후라이",
+        "단무지"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-14-dorm-breakfast",
+      "date": "2026-09-14",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "동태국",
+        "계란찜",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 3500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-14-dorm-lunch",
+      "date": "2026-09-14",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "닭볶음탕",
+        "어묵볶음",
+        "배추김치",
+        "요구르트"
+      ],
+      "price": 5000,
+      "kcal": 678
+    },
+    {
+      "id": "2026-09-14-dorm-dinner",
+      "date": "2026-09-14",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "김치찌개",
+        "계란말이",
+        "콩나물무침",
+        "배추김치"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-14-faculty-lunch",
+      "date": "2026-09-14",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "갈치조림",
+        "된장찌개",
+        "도라지무침",
+        "배추김치",
+        "과일"
+      ],
+      "price": 7000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-15-haksik-breakfast",
+      "date": "2026-09-15",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "북어채국",
+        "어묵볶음",
+        "깍두기",
+        "요구르트"
+      ],
+      "price": 1000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-15-haksik-lunch",
+      "date": "2026-09-15",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "menu": [
+        "흰쌀밥",
+        "제육볶음",
+        "된장찌개",
+        "콩나물무침",
+        "배추김치"
+      ],
+      "price": 4500,
+      "kcal": 621
+    },
+    {
+      "id": "2026-09-15-haksik-dinner",
+      "date": "2026-09-15",
+      "cafeteria": "haksik",
+      "mealTime": "dinner",
+      "menu": [
+        "잡곡밥",
+        "치킨마요덮밥",
+        "단무지",
+        "미소된장국",
+        "깍두기"
+      ],
+      "price": 4500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-15-changbo-lunch",
+      "date": "2026-09-15",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "menu": [
+        "매콤제육덮밥",
+        "계란국",
+        "단무지",
+        "콘샐러드"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-15-changbo-dinner",
+      "date": "2026-09-15",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "menu": [
+        "수제버거",
+        "감자튀김",
+        "콜슬로",
+        "피클"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-15-dorm-breakfast",
+      "date": "2026-09-15",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "시금치된장국",
+        "소시지야채볶음",
+        "깍두기",
+        "우유"
+      ],
+      "price": 3500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-15-dorm-lunch",
+      "date": "2026-09-15",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "menu": [
+        "흰쌀밥",
+        "동그랑땡",
+        "된장국",
+        "삼색나물",
+        "깍두기"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-15-dorm-dinner",
+      "date": "2026-09-15",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "잡곡밥",
+        "탕수육",
+        "짬뽕국",
+        "단무지",
+        "깍두기"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-15-faculty-lunch",
+      "date": "2026-09-15",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "소불고기",
+        "맑은국",
+        "삼색나물",
+        "깍두기",
+        "요구르트"
+      ],
+      "price": 7000,
+      "kcal": 821
+    },
+    {
+      "id": "2026-09-16-haksik-breakfast",
+      "date": "2026-09-16",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "menu": [
+        "토스트 2쪽",
+        "딸기잼/버터",
+        "삶은계란",
+        "시리얼",
+        "우유"
+      ],
+      "price": 1000,
+      "kcal": 690
+    },
+    {
+      "id": "2026-09-16-haksik-lunch",
+      "date": "2026-09-16",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "menu": [
+        "김치볶음밥",
+        "계란후라이",
+        "미니우동",
+        "단무지",
+        "요구르트"
+      ],
+      "price": 4500,
+      "kcal": 729
+    },
+    {
+      "id": "2026-09-16-haksik-dinner",
+      "date": "2026-09-16",
+      "cafeteria": "haksik",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "돼지불고기",
+        "유부장국",
+        "브로콜리무침",
+        "배추김치"
+      ],
+      "price": 4500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-16-changbo-lunch",
+      "date": "2026-09-16",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "menu": [
+        "로제파스타",
+        "갈릭브레드",
+        "포테이토웨지",
+        "피클"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-16-changbo-dinner",
+      "date": "2026-09-16",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "menu": [
+        "짜장밥",
+        "군만두 3개",
+        "짬뽕국물",
+        "단무지"
+      ],
+      "price": 6000,
+      "kcal": 755
+    },
+    {
+      "id": "2026-09-16-dorm-breakfast",
+      "date": "2026-09-16",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "모닝롤 2개",
+        "스크램블에그",
+        "베이컨",
+        "오렌지주스"
+      ],
+      "price": 3500,
+      "kcal": 775
+    },
+    {
+      "id": "2026-09-16-dorm-lunch",
+      "date": "2026-09-16",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "menu": [
+        "볶음우동",
+        "군만두 2개",
+        "단무지",
+        "미역국"
+      ],
+      "price": 5000,
+      "kcal": 838
+    },
+    {
+      "id": "2026-09-16-dorm-dinner",
+      "date": "2026-09-16",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "라면",
+        "공깃밥",
+        "김치",
+        "삶은계란"
+      ],
+      "price": 5000,
+      "kcal": 584
+    },
+    {
+      "id": "2026-09-16-faculty-lunch",
+      "date": "2026-09-16",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "menu": [
+        "영양돌솥밥",
+        "양념장",
+        "한우미역국",
+        "잡채",
+        "배추김치",
+        "과일"
+      ],
+      "price": 7000,
+      "kcal": 815
+    },
+    {
+      "id": "2026-09-17-haksik-breakfast",
+      "date": "2026-09-17",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "콩나물국",
+        "두부조림",
+        "배추김치",
+        "멸치볶음"
+      ],
+      "price": 1000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-17-haksik-lunch",
+      "date": "2026-09-17",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "고등어구이",
+        "시금치된장국",
+        "도라지무침",
+        "배추김치"
+      ],
+      "price": 4500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-17-haksik-dinner",
+      "date": "2026-09-17",
+      "cafeteria": "haksik",
+      "mealTime": "dinner",
+      "menu": [
+        "잔치국수",
+        "김밥 2줄",
+        "단무지",
+        "배추김치"
+      ],
+      "price": 4500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-17-changbo-lunch",
+      "date": "2026-09-17",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "menu": [
+        "부대찌개",
+        "공깃밥",
+        "라면사리",
+        "떡사리",
+        "배추김치"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-17-changbo-dinner",
+      "date": "2026-09-17",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "menu": [
+        "떡볶이",
+        "튀김 3종",
+        "주먹밥",
+        "어묵국물"
+      ],
+      "price": 6000,
+      "kcal": 846
+    },
+    {
+      "id": "2026-09-17-dorm-breakfast",
+      "date": "2026-09-17",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "황태해장국",
+        "무생채",
+        "배추김치",
+        "요구르트"
+      ],
+      "price": 3500,
+      "kcal": 703
+    },
+    {
+      "id": "2026-09-17-dorm-lunch",
+      "date": "2026-09-17",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "menu": [
+        "흰쌀밥",
+        "삼치구이",
+        "시래기국",
+        "멸치볶음",
+        "배추김치"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-17-dorm-dinner",
+      "date": "2026-09-17",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "갈비탕",
+        "부추무침",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-17-faculty-lunch",
+      "date": "2026-09-17",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "고등어구이",
+        "아욱국",
+        "연근조림",
+        "배추김치",
+        "과일"
+      ],
+      "price": 7000,
+      "kcal": 780
+    },
+    {
+      "id": "2026-09-18-haksik-breakfast",
+      "date": "2026-09-18",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "menu": [
+        "누룽지죽",
+        "장조림",
+        "김무침",
+        "단무지",
+        "우유"
+      ],
+      "price": 1000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-18-haksik-lunch",
+      "date": "2026-09-18",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "menu": [
+        "흰쌀밥",
+        "닭갈비",
+        "어묵국",
+        "감자샐러드",
+        "깍두기"
+      ],
+      "price": 4500,
+      "kcal": 819
+    },
+    {
+      "id": "2026-09-18-haksik-dinner",
+      "date": "2026-09-18",
+      "cafeteria": "haksik",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "스팸구이",
+        "김치찌개",
+        "콩자반",
+        "깍두기"
+      ],
+      "price": 4500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-18-changbo-lunch",
+      "date": "2026-09-18",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "menu": [
+        "규동",
+        "미소된장국",
+        "단무지",
+        "양배추샐러드"
+      ],
+      "price": 6000,
+      "kcal": 876
+    },
+    {
+      "id": "2026-09-18-changbo-dinner",
+      "date": "2026-09-18",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "menu": [
+        "새우볶음밥",
+        "짬뽕국",
+        "탕수육 5조각",
+        "단무지"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-18-dorm-breakfast",
+      "date": "2026-09-18",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "동태국",
+        "계란찜",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 3500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-18-dorm-lunch",
+      "date": "2026-09-18",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "menu": [
+        "오므라이스",
+        "데미글라스소스",
+        "미니돈까스",
+        "양송이스프",
+        "피클"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-18-dorm-dinner",
+      "date": "2026-09-18",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "비빔국수",
+        "수육 4점",
+        "삶은계란",
+        "동치미"
+      ],
+      "price": 5000,
+      "kcal": 882
+    },
+    {
+      "id": "2026-09-18-faculty-lunch",
+      "date": "2026-09-18",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "menu": [
+        "한방수육",
+        "쌈채소",
+        "된장국",
+        "공깃밥",
+        "배추김치",
+        "과일"
+      ],
+      "price": 7000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-19-dorm-breakfast",
+      "date": "2026-09-19",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "시금치된장국",
+        "소시지야채볶음",
+        "깍두기",
+        "우유"
+      ],
+      "price": 3500,
+      "kcal": 862
+    },
+    {
+      "id": "2026-09-19-dorm-dinner",
+      "date": "2026-09-19",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "김치찌개",
+        "계란말이",
+        "콩나물무침",
+        "배추김치"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-20-dorm-breakfast",
+      "date": "2026-09-20",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "모닝롤 2개",
+        "스크램블에그",
+        "베이컨",
+        "오렌지주스"
+      ],
+      "price": 3500,
+      "kcal": 574
+    },
+    {
+      "id": "2026-09-20-dorm-dinner",
+      "date": "2026-09-20",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "잡곡밥",
+        "탕수육",
+        "짬뽕국",
+        "단무지",
+        "깍두기"
+      ],
+      "price": 5000,
+      "kcal": 554
+    },
+    {
+      "id": "2026-09-21-haksik-breakfast",
+      "date": "2026-09-21",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "menu": [
+        "토스트 2쪽",
+        "딸기잼/버터",
+        "삶은계란",
+        "시리얼",
+        "우유"
+      ],
+      "price": 1000,
+      "kcal": 526
+    },
+    {
+      "id": "2026-09-21-haksik-lunch",
+      "date": "2026-09-21",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "돈까스",
+        "크림스프",
+        "양배추샐러드",
+        "단무지",
+        "배추김치"
+      ],
+      "price": 4500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-21-haksik-dinner",
+      "date": "2026-09-21",
+      "cafeteria": "haksik",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "돼지불고기",
+        "유부장국",
+        "브로콜리무침",
+        "배추김치"
+      ],
+      "price": 4500,
+      "kcal": 834
+    },
+    {
+      "id": "2026-09-21-changbo-lunch",
+      "date": "2026-09-21",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "menu": [
+        "치즈돈까스",
+        "브라운소스",
+        "양송이스프",
+        "모닝빵",
+        "샐러드",
+        "피클"
+      ],
+      "price": 6000,
+      "kcal": 650
+    },
+    {
+      "id": "2026-09-21-changbo-dinner",
+      "date": "2026-09-21",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "menu": [
+        "짜장밥",
+        "군만두 3개",
+        "짬뽕국물",
+        "단무지"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-21-dorm-breakfast",
+      "date": "2026-09-21",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "황태해장국",
+        "무생채",
+        "배추김치",
+        "요구르트"
+      ],
+      "price": 3500,
+      "kcal": 692
+    },
+    {
+      "id": "2026-09-21-dorm-lunch",
+      "date": "2026-09-21",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "menu": [
+        "볶음우동",
+        "군만두 2개",
+        "단무지",
+        "미역국"
+      ],
+      "price": 5000,
+      "kcal": 556
+    },
+    {
+      "id": "2026-09-21-dorm-dinner",
+      "date": "2026-09-21",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "라면",
+        "공깃밥",
+        "김치",
+        "삶은계란"
+      ],
+      "price": 5000,
+      "kcal": 794
+    },
+    {
+      "id": "2026-09-21-faculty-lunch",
+      "date": "2026-09-21",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "menu": [
+        "영양돌솥밥",
+        "양념장",
+        "한우미역국",
+        "잡채",
+        "배추김치",
+        "과일"
+      ],
+      "price": 7000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-22-haksik-breakfast",
+      "date": "2026-09-22",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "콩나물국",
+        "두부조림",
+        "배추김치",
+        "멸치볶음"
+      ],
+      "price": 1000,
+      "kcal": 770
+    },
+    {
+      "id": "2026-09-22-haksik-lunch",
+      "date": "2026-09-22",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "menu": [
+        "흰쌀밥",
+        "제육볶음",
+        "된장찌개",
+        "콩나물무침",
+        "배추김치"
+      ],
+      "price": 4500,
+      "kcal": 763
+    },
+    {
+      "id": "2026-09-22-haksik-dinner",
+      "date": "2026-09-22",
+      "cafeteria": "haksik",
+      "mealTime": "dinner",
+      "menu": [
+        "잔치국수",
+        "김밥 2줄",
+        "단무지",
+        "배추김치"
+      ],
+      "price": 4500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-22-changbo-lunch",
+      "date": "2026-09-22",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "menu": [
+        "매콤제육덮밥",
+        "계란국",
+        "단무지",
+        "콘샐러드"
+      ],
+      "price": 6000,
+      "kcal": 896
+    },
+    {
+      "id": "2026-09-22-changbo-dinner",
+      "date": "2026-09-22",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "menu": [
+        "떡볶이",
+        "튀김 3종",
+        "주먹밥",
+        "어묵국물"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-22-dorm-breakfast",
+      "date": "2026-09-22",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "동태국",
+        "계란찜",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 3500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-22-dorm-lunch",
+      "date": "2026-09-22",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "menu": [
+        "흰쌀밥",
+        "삼치구이",
+        "시래기국",
+        "멸치볶음",
+        "배추김치"
+      ],
+      "price": 5000,
+      "kcal": 587
+    },
+    {
+      "id": "2026-09-22-dorm-dinner",
+      "date": "2026-09-22",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "갈비탕",
+        "부추무침",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-22-faculty-lunch",
+      "date": "2026-09-22",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "고등어구이",
+        "아욱국",
+        "연근조림",
+        "배추김치",
+        "과일"
+      ],
+      "price": 7000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-23-haksik-breakfast",
+      "date": "2026-09-23",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "menu": [
+        "누룽지죽",
+        "장조림",
+        "김무침",
+        "단무지",
+        "우유"
+      ],
+      "price": 1000,
+      "kcal": 676
+    },
+    {
+      "id": "2026-09-23-haksik-lunch",
+      "date": "2026-09-23",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "menu": [
+        "김치볶음밥",
+        "계란후라이",
+        "미니우동",
+        "단무지",
+        "요구르트"
+      ],
+      "price": 4500,
+      "kcal": 871
+    },
+    {
+      "id": "2026-09-23-haksik-dinner",
+      "date": "2026-09-23",
+      "cafeteria": "haksik",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "스팸구이",
+        "김치찌개",
+        "콩자반",
+        "깍두기"
+      ],
+      "price": 4500,
+      "kcal": 713
+    },
+    {
+      "id": "2026-09-23-changbo-lunch",
+      "date": "2026-09-23",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "menu": [
+        "로제파스타",
+        "갈릭브레드",
+        "포테이토웨지",
+        "피클"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-23-changbo-dinner",
+      "date": "2026-09-23",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "menu": [
+        "새우볶음밥",
+        "짬뽕국",
+        "탕수육 5조각",
+        "단무지"
+      ],
+      "price": 6000,
+      "kcal": 685
+    },
+    {
+      "id": "2026-09-23-dorm-breakfast",
+      "date": "2026-09-23",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "시금치된장국",
+        "소시지야채볶음",
+        "깍두기",
+        "우유"
+      ],
+      "price": 3500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-23-dorm-lunch",
+      "date": "2026-09-23",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "menu": [
+        "오므라이스",
+        "데미글라스소스",
+        "미니돈까스",
+        "양송이스프",
+        "피클"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-23-dorm-dinner",
+      "date": "2026-09-23",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "비빔국수",
+        "수육 4점",
+        "삶은계란",
+        "동치미"
+      ],
+      "price": 5000,
+      "kcal": 529
+    },
+    {
+      "id": "2026-09-23-faculty-lunch",
+      "date": "2026-09-23",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "menu": [
+        "한방수육",
+        "쌈채소",
+        "된장국",
+        "공깃밥",
+        "배추김치",
+        "과일"
+      ],
+      "price": 7000,
+      "kcal": 787
+    },
+    {
+      "id": "2026-09-24-haksik-breakfast",
+      "date": "2026-09-24",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "소고기미역국",
+        "계란말이",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 1000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-24-haksik-lunch",
+      "date": "2026-09-24",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "고등어구이",
+        "시금치된장국",
+        "도라지무침",
+        "배추김치"
+      ],
+      "price": 4500,
+      "kcal": 768
+    },
+    {
+      "id": "2026-09-24-haksik-dinner",
+      "date": "2026-09-24",
+      "cafeteria": "haksik",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "순두부찌개",
+        "진미채볶음",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 4500,
+      "kcal": 625
+    },
+    {
+      "id": "2026-09-24-changbo-lunch",
+      "date": "2026-09-24",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "menu": [
+        "부대찌개",
+        "공깃밥",
+        "라면사리",
+        "떡사리",
+        "배추김치"
+      ],
+      "price": 6000,
+      "kcal": 846
+    },
+    {
+      "id": "2026-09-24-changbo-dinner",
+      "date": "2026-09-24",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "menu": [
+        "불닭볶음면 정식",
+        "치즈토핑",
+        "계란후라이",
+        "단무지"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-24-dorm-breakfast",
+      "date": "2026-09-24",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "모닝롤 2개",
+        "스크램블에그",
+        "베이컨",
+        "오렌지주스"
+      ],
+      "price": 3500,
+      "kcal": 829
+    },
+    {
+      "id": "2026-09-24-dorm-lunch",
+      "date": "2026-09-24",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "닭볶음탕",
+        "어묵볶음",
+        "배추김치",
+        "요구르트"
+      ],
+      "price": 5000,
+      "kcal": 718
+    },
+    {
+      "id": "2026-09-24-dorm-dinner",
+      "date": "2026-09-24",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "김치찌개",
+        "계란말이",
+        "콩나물무침",
+        "배추김치"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-24-faculty-lunch",
+      "date": "2026-09-24",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "갈치조림",
+        "된장찌개",
+        "도라지무침",
+        "배추김치",
+        "과일"
+      ],
+      "price": 7000,
+      "kcal": 750
+    },
+    {
+      "id": "2026-09-25-haksik-breakfast",
+      "date": "2026-09-25",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "북어채국",
+        "어묵볶음",
+        "깍두기",
+        "요구르트"
+      ],
+      "price": 1000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-25-haksik-lunch",
+      "date": "2026-09-25",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "menu": [
+        "흰쌀밥",
+        "닭갈비",
+        "어묵국",
+        "감자샐러드",
+        "깍두기"
+      ],
+      "price": 4500,
+      "kcal": 627
+    },
+    {
+      "id": "2026-09-25-haksik-dinner",
+      "date": "2026-09-25",
+      "cafeteria": "haksik",
+      "mealTime": "dinner",
+      "menu": [
+        "잡곡밥",
+        "치킨마요덮밥",
+        "단무지",
+        "미소된장국",
+        "깍두기"
+      ],
+      "price": 4500,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-25-changbo-lunch",
+      "date": "2026-09-25",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "menu": [
+        "규동",
+        "미소된장국",
+        "단무지",
+        "양배추샐러드"
+      ],
+      "price": 6000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-25-changbo-dinner",
+      "date": "2026-09-25",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "menu": [
+        "수제버거",
+        "감자튀김",
+        "콜슬로",
+        "피클"
+      ],
+      "price": 6000,
+      "kcal": 636
+    },
+    {
+      "id": "2026-09-25-dorm-breakfast",
+      "date": "2026-09-25",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "황태해장국",
+        "무생채",
+        "배추김치",
+        "요구르트"
+      ],
+      "price": 3500,
+      "kcal": 562
+    },
+    {
+      "id": "2026-09-25-dorm-lunch",
+      "date": "2026-09-25",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "menu": [
+        "흰쌀밥",
+        "동그랑땡",
+        "된장국",
+        "삼색나물",
+        "깍두기"
+      ],
+      "price": 5000,
+      "kcal": 722
+    },
+    {
+      "id": "2026-09-25-dorm-dinner",
+      "date": "2026-09-25",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "잡곡밥",
+        "탕수육",
+        "짬뽕국",
+        "단무지",
+        "깍두기"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-25-faculty-lunch",
+      "date": "2026-09-25",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "menu": [
+        "잡곡밥",
+        "소불고기",
+        "맑은국",
+        "삼색나물",
+        "깍두기",
+        "요구르트"
+      ],
+      "price": 7000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-26-dorm-breakfast",
+      "date": "2026-09-26",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "동태국",
+        "계란찜",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 3500,
+      "kcal": 836
+    },
+    {
+      "id": "2026-09-26-dorm-dinner",
+      "date": "2026-09-26",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "라면",
+        "공깃밥",
+        "김치",
+        "삶은계란"
+      ],
+      "price": 5000,
+      "kcal": null
+    },
+    {
+      "id": "2026-09-27-dorm-breakfast",
+      "date": "2026-09-27",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "menu": [
+        "흰쌀밥",
+        "시금치된장국",
+        "소시지야채볶음",
+        "깍두기",
+        "우유"
+      ],
+      "price": 3500,
+      "kcal": 707
+    },
+    {
+      "id": "2026-09-27-dorm-dinner",
+      "date": "2026-09-27",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "menu": [
+        "흰쌀밥",
+        "갈비탕",
+        "부추무침",
+        "배추김치",
+        "조미김"
+      ],
+      "price": 5000,
+      "kcal": 708
+    }
+  ]
+}

@@ -1,0 +1,902 @@
+{
+  "_warning": "합성 데이터입니다. 하네스 동작 확인 전용이며 모델 정확도의 근거가 될 수 없습니다. 발표 지표는 data/backtest.team.json(실제 팀원 성적)으로 다시 산출하세요.",
+  "generatedAt": "2026-09-23T11:53:39.157Z",
+  "cases": [
+    {
+      "id": "bt-01",
+      "course": {
+        "id": "c0",
+        "name": "자료구조",
+        "professor": "김선우",
+        "credits": 3,
+        "enrolled": 46,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "0-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 65,
+            "mean": 62,
+            "stdev": 10,
+            "ceilingClustered": false
+          },
+          {
+            "id": "0-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 56,
+            "mean": 70,
+            "stdev": 17,
+            "ceilingClustered": false
+          },
+          {
+            "id": "0-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 90,
+            "mean": 92,
+            "stdev": 7,
+            "ceilingClustered": true
+          },
+          {
+            "id": "0-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 96,
+            "stdev": 6,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 0,
+          "lateness": 1,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "B0",
+      "source": "sample",
+      "note": "공개수준=full · 생성 백분위 64.3%"
+    },
+    {
+      "id": "bt-02",
+      "course": {
+        "id": "c1",
+        "name": "공학수학1",
+        "professor": "박정민",
+        "credits": 3,
+        "enrolled": 58,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "1-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 77,
+            "mean": 74,
+            "stdev": 17,
+            "ceilingClustered": false
+          },
+          {
+            "id": "1-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 44,
+            "mean": 67,
+            "stdev": 18,
+            "ceilingClustered": false
+          },
+          {
+            "id": "1-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 92,
+            "stdev": 7,
+            "ceilingClustered": true
+          },
+          {
+            "id": "1-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 96,
+            "stdev": 6,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 0,
+          "lateness": 0,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "C+",
+      "source": "sample",
+      "note": "공개수준=full · 생성 백분위 75.0%"
+    },
+    {
+      "id": "bt-03",
+      "course": {
+        "id": "c2",
+        "name": "일반물리학",
+        "professor": "이도현",
+        "credits": 3,
+        "enrolled": 72,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "2-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 79,
+            "mean": 75,
+            "stdev": 11,
+            "ceilingClustered": false
+          },
+          {
+            "id": "2-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 54,
+            "mean": 68,
+            "stdev": 14,
+            "ceilingClustered": false
+          },
+          {
+            "id": "2-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 92,
+            "stdev": 7,
+            "ceilingClustered": true
+          },
+          {
+            "id": "2-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 80,
+            "mean": 96,
+            "stdev": 6,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 2,
+          "lateness": 0,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "B0",
+      "source": "sample",
+      "note": "공개수준=full · 생성 백분위 66.8%"
+    },
+    {
+      "id": "bt-04",
+      "course": {
+        "id": "c3",
+        "name": "컴퓨터구조",
+        "professor": "정하늘",
+        "credits": 3,
+        "enrolled": 41,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "3-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 72,
+            "mean": 73,
+            "stdev": null,
+            "ceilingClustered": false
+          },
+          {
+            "id": "3-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 73,
+            "mean": 74,
+            "stdev": null,
+            "ceilingClustered": false
+          },
+          {
+            "id": "3-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 80,
+            "mean": 92,
+            "stdev": null,
+            "ceilingClustered": true
+          },
+          {
+            "id": "3-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 96,
+            "stdev": null,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 0,
+          "lateness": 1,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "B0",
+      "source": "sample",
+      "note": "공개수준=meanOnly · 생성 백분위 54.4%"
+    },
+    {
+      "id": "bt-05",
+      "course": {
+        "id": "c4",
+        "name": "확률과통계",
+        "professor": "최윤서",
+        "credits": 3,
+        "enrolled": 63,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "4-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 84,
+            "mean": 78,
+            "stdev": 15,
+            "ceilingClustered": false
+          },
+          {
+            "id": "4-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 99,
+            "mean": 75,
+            "stdev": 17,
+            "ceilingClustered": false
+          },
+          {
+            "id": "4-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 92,
+            "stdev": 7,
+            "ceilingClustered": true
+          },
+          {
+            "id": "4-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 96,
+            "stdev": 6,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 0,
+          "lateness": 1,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "A0",
+      "source": "sample",
+      "note": "공개수준=full · 생성 백분위 15.1%"
+    },
+    {
+      "id": "bt-06",
+      "course": {
+        "id": "c5",
+        "name": "운영체제",
+        "professor": "한지우",
+        "credits": 3,
+        "enrolled": 38,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "5-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 52,
+            "mean": null,
+            "stdev": null,
+            "ceilingClustered": false
+          },
+          {
+            "id": "5-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 49,
+            "mean": null,
+            "stdev": null,
+            "ceilingClustered": false
+          },
+          {
+            "id": "5-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": null,
+            "stdev": null,
+            "ceilingClustered": true
+          },
+          {
+            "id": "5-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": null,
+            "stdev": null,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 0,
+          "lateness": 1,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "B0",
+      "source": "sample",
+      "note": "공개수준=none · 생성 백분위 63.1%"
+    },
+    {
+      "id": "bt-07",
+      "course": {
+        "id": "c6",
+        "name": "데이터베이스",
+        "professor": "오세훈",
+        "credits": 3,
+        "enrolled": 52,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "6-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 64,
+            "mean": 66,
+            "stdev": 16,
+            "ceilingClustered": false
+          },
+          {
+            "id": "6-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 94,
+            "mean": 69,
+            "stdev": 11,
+            "ceilingClustered": false
+          },
+          {
+            "id": "6-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 92,
+            "stdev": 7,
+            "ceilingClustered": true
+          },
+          {
+            "id": "6-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 80,
+            "mean": 96,
+            "stdev": 6,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 2,
+          "lateness": 1,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "A+",
+      "source": "sample",
+      "note": "공개수준=full · 생성 백분위 9.6%"
+    },
+    {
+      "id": "bt-08",
+      "course": {
+        "id": "c7",
+        "name": "알고리즘",
+        "professor": "김선우",
+        "credits": 3,
+        "enrolled": 44,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "7-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 57,
+            "mean": 76,
+            "stdev": null,
+            "ceilingClustered": false
+          },
+          {
+            "id": "7-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 60,
+            "mean": 62,
+            "stdev": null,
+            "ceilingClustered": false
+          },
+          {
+            "id": "7-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 85,
+            "mean": 92,
+            "stdev": null,
+            "ceilingClustered": true
+          },
+          {
+            "id": "7-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 96,
+            "stdev": null,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 0,
+          "lateness": 1,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "C+",
+      "source": "sample",
+      "note": "공개수준=meanOnly · 생성 백분위 74.0%"
+    },
+    {
+      "id": "bt-09",
+      "course": {
+        "id": "c8",
+        "name": "선형대수",
+        "professor": "배수진",
+        "credits": 3,
+        "enrolled": 67,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "8-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 48,
+            "mean": 56,
+            "stdev": 12,
+            "ceilingClustered": false
+          },
+          {
+            "id": "8-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 75,
+            "mean": 70,
+            "stdev": 18,
+            "ceilingClustered": false
+          },
+          {
+            "id": "8-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 92,
+            "stdev": 7,
+            "ceilingClustered": true
+          },
+          {
+            "id": "8-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 96,
+            "stdev": 6,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 0,
+          "lateness": 0,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "B0",
+      "source": "sample",
+      "note": "공개수준=full · 생성 백분위 56.4%"
+    },
+    {
+      "id": "bt-10",
+      "course": {
+        "id": "c9",
+        "name": "디지털논리회로",
+        "professor": "노경민",
+        "credits": 3,
+        "enrolled": 35,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "9-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 54,
+            "mean": 65,
+            "stdev": 14,
+            "ceilingClustered": false
+          },
+          {
+            "id": "9-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 67,
+            "mean": 77,
+            "stdev": 12,
+            "ceilingClustered": false
+          },
+          {
+            "id": "9-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 92,
+            "stdev": 7,
+            "ceilingClustered": true
+          },
+          {
+            "id": "9-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 96,
+            "stdev": 6,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 0,
+          "lateness": 1,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "C+",
+      "source": "sample",
+      "note": "공개수준=full · 생성 백분위 81.4%"
+    },
+    {
+      "id": "bt-11",
+      "course": {
+        "id": "c10",
+        "name": "소프트웨어공학",
+        "professor": "유진아",
+        "credits": 3,
+        "enrolled": 49,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "10-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 66,
+            "mean": 58,
+            "stdev": 13,
+            "ceilingClustered": false
+          },
+          {
+            "id": "10-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 46,
+            "mean": 66,
+            "stdev": 16,
+            "ceilingClustered": false
+          },
+          {
+            "id": "10-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 92,
+            "stdev": 7,
+            "ceilingClustered": true
+          },
+          {
+            "id": "10-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 96,
+            "stdev": 6,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 0,
+          "lateness": 0,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "B0",
+      "source": "sample",
+      "note": "공개수준=full · 생성 백분위 67.5%"
+    },
+    {
+      "id": "bt-12",
+      "course": {
+        "id": "c11",
+        "name": "인공지능개론",
+        "professor": "서동욱",
+        "credits": 3,
+        "enrolled": 88,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "11-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 85,
+            "mean": 77,
+            "stdev": null,
+            "ceilingClustered": false
+          },
+          {
+            "id": "11-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 70,
+            "stdev": null,
+            "ceilingClustered": false
+          },
+          {
+            "id": "11-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 92,
+            "stdev": null,
+            "ceilingClustered": true
+          },
+          {
+            "id": "11-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 70,
+            "mean": 96,
+            "stdev": null,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 3,
+          "lateness": 1,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "A+",
+      "source": "sample",
+      "note": "공개수준=meanOnly · 생성 백분위 5.6%"
+    },
+    {
+      "id": "bt-13",
+      "course": {
+        "id": "c12",
+        "name": "네트워크",
+        "professor": "강태오",
+        "credits": 3,
+        "enrolled": 40,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "12-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 32,
+            "mean": null,
+            "stdev": null,
+            "ceilingClustered": false
+          },
+          {
+            "id": "12-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 39,
+            "mean": null,
+            "stdev": null,
+            "ceilingClustered": false
+          },
+          {
+            "id": "12-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": null,
+            "stdev": null,
+            "ceilingClustered": true
+          },
+          {
+            "id": "12-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": null,
+            "stdev": null,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 0,
+          "lateness": 1,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "D0",
+      "source": "sample",
+      "note": "공개수준=none · 생성 백분위 98.5%"
+    },
+    {
+      "id": "bt-14",
+      "course": {
+        "id": "c13",
+        "name": "기술경영",
+        "professor": "문가영",
+        "credits": 2,
+        "enrolled": 95,
+        "isAbsolute": false,
+        "assessments": [
+          {
+            "id": "13-mid",
+            "name": "중간고사",
+            "weight": 0.35,
+            "maxScore": 100,
+            "myScore": 74,
+            "mean": 60,
+            "stdev": 14,
+            "ceilingClustered": false
+          },
+          {
+            "id": "13-fin",
+            "name": "기말고사",
+            "weight": 0.4,
+            "maxScore": 100,
+            "myScore": 91,
+            "mean": 76,
+            "stdev": 17,
+            "ceilingClustered": false
+          },
+          {
+            "id": "13-hw",
+            "name": "과제",
+            "weight": 0.15,
+            "maxScore": 100,
+            "myScore": 100,
+            "mean": 92,
+            "stdev": 7,
+            "ceilingClustered": true
+          },
+          {
+            "id": "13-att",
+            "name": "출석",
+            "weight": 0.1,
+            "maxScore": 100,
+            "myScore": 90,
+            "mean": 96,
+            "stdev": 6,
+            "ceilingClustered": true
+          }
+        ],
+        "attendance": {
+          "totalSessions": 30,
+          "absences": 1,
+          "lateness": 0,
+          "allowedAbsences": 6,
+          "penaltyPerAbsence": 3.3,
+          "latePerAbsence": 3
+        }
+      },
+      "actualGrade": "A+",
+      "source": "sample",
+      "note": "공개수준=full · 생성 백분위 15.0%"
+    }
+  ]
+}

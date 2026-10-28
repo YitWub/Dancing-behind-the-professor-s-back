@@ -1,12 +1,23 @@
 {
   "name": "erica-life",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --test --experimental-strip-types \"lib/**/__tests__/*.test.ts\"",
+    "seed": "node --experimental-strip-types scripts/make-seeds.ts",
+    "crawl": "node --experimental-strip-types scripts/crawl-meals.ts",
+    "score": "node --experimental-strip-types scripts/score-lectures.ts",
+    "verify:honey": "node --experimental-strip-types scripts/score-lectures.ts --verify",
+    "demo:refresh": "node --experimental-strip-types scripts/make-seeds.ts --anchor=today && npm run crawl && npm run score && echo '' && echo '✓ demo:refresh 완료 — 시드·식단·꿀강 3단계 모두 갱신됨' && echo '  (이 줄이 안 보이면 중간 단계가 끊긴 것입니다. CONTRACT 8장 참고)'",
+    "gen:backtest": "node --experimental-strip-types scripts/gen-backtest-sample.ts",
+    "backtest": "node --experimental-strip-types scripts/backtest.ts",
+    "sensitivity": "node --experimental-strip-types scripts/sensitivity.ts",
+    "data:all": "npm run seed && npm run crawl && npm run score && npm run gen:backtest && echo '' && echo '✓ data:all 완료 — 시드·식단·꿀강·백테스트 4단계 모두 갱신됨' && echo '  (이 줄이 안 보이면 중간 단계가 끊긴 것입니다. CONTRACT 8장 참고)'"
   },
   "dependencies": {
     "next": "16.3.6",

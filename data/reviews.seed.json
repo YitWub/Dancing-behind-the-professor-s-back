@@ -1,0 +1,3891 @@
+{
+  "note": "시드(가상) 강의평. 에브리타임 등 실제 사이트는 로그인·ToS 문제로 수집하지 않았다.",
+  "generatedBy": "scripts/make-seeds.ts",
+  "lectures": [
+    {
+      "id": "L01",
+      "name": "자료구조론",
+      "professor": "한도윤",
+      "department": "ICT융합학부",
+      "credits": 3,
+      "type": "전공필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L02",
+      "name": "운영체제",
+      "professor": "서지환",
+      "department": "ICT융합학부",
+      "credits": 3,
+      "type": "전공필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L03",
+      "name": "데이터베이스시스템",
+      "professor": "오세림",
+      "department": "ICT융합학부",
+      "credits": 3,
+      "type": "전공선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L04",
+      "name": "기계학습개론",
+      "professor": "윤가온",
+      "department": "인공지능학과",
+      "credits": 3,
+      "type": "전공선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L05",
+      "name": "컴퓨터네트워크",
+      "professor": "배시현",
+      "department": "ICT융합학부",
+      "credits": 3,
+      "type": "전공선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L06",
+      "name": "파이썬프로그래밍",
+      "professor": "노하린",
+      "department": "소프트웨어학부",
+      "credits": 3,
+      "type": "전공선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L07",
+      "name": "알고리즘분석",
+      "professor": "한도윤",
+      "department": "소프트웨어학부",
+      "credits": 3,
+      "type": "전공필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L08",
+      "name": "소프트웨어공학",
+      "professor": "정민찬",
+      "department": "소프트웨어학부",
+      "credits": 3,
+      "type": "전공선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L09",
+      "name": "공업수학1",
+      "professor": "강태오",
+      "department": "기계공학과",
+      "credits": 3,
+      "type": "전공필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L10",
+      "name": "재료역학",
+      "professor": "문세아",
+      "department": "기계공학과",
+      "credits": 3,
+      "type": "전공필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L11",
+      "name": "전자회로",
+      "professor": "임주혁",
+      "department": "전자공학부",
+      "credits": 3,
+      "type": "전공선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L12",
+      "name": "창의적공학설계",
+      "professor": "유채원",
+      "department": "공학대학",
+      "credits": 2,
+      "type": "전공선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L13",
+      "name": "경영학원론",
+      "professor": "조은결",
+      "department": "경영학부",
+      "credits": 3,
+      "type": "전공필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L14",
+      "name": "회계원리",
+      "professor": "신유담",
+      "department": "경영학부",
+      "credits": 3,
+      "type": "전공필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L15",
+      "name": "마케팅관리",
+      "professor": "천보람",
+      "department": "경영학부",
+      "credits": 3,
+      "type": "전공선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L16",
+      "name": "미시경제학",
+      "professor": "구성후",
+      "department": "경제학부",
+      "credits": 3,
+      "type": "전공필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L17",
+      "name": "기초디자인",
+      "professor": "남지오",
+      "department": "산업디자인학과",
+      "credits": 3,
+      "type": "전공필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L18",
+      "name": "영상제작실습",
+      "professor": "권다미",
+      "department": "정보사회미디어학과",
+      "credits": 3,
+      "type": "전공선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L19",
+      "name": "광고론",
+      "professor": "표하늘",
+      "department": "광고홍보학과",
+      "credits": 3,
+      "type": "전공선택",
+      "professorChanged": true
+    },
+    {
+      "id": "L20",
+      "name": "과학기술의철학적이해",
+      "professor": "석유진",
+      "department": "교양학부",
+      "credits": 2,
+      "type": "교양필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L21",
+      "name": "한양인의삶과비전",
+      "professor": "봉시우",
+      "department": "교양학부",
+      "credits": 1,
+      "type": "교양필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L22",
+      "name": "실용영어회화",
+      "professor": "Daniel Whitmore",
+      "department": "국제문화대학",
+      "credits": 2,
+      "type": "교양필수",
+      "professorChanged": false
+    },
+    {
+      "id": "L23",
+      "name": "세계의음식문화",
+      "professor": "반예서",
+      "department": "교양학부",
+      "credits": 2,
+      "type": "교양선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L24",
+      "name": "스포츠와건강",
+      "professor": "길도현",
+      "department": "교양학부",
+      "credits": 1,
+      "type": "교양선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L25",
+      "name": "인공지능과사회",
+      "professor": "윤가온",
+      "department": "교양학부",
+      "credits": 2,
+      "type": "교양선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L26",
+      "name": "통계학입문",
+      "professor": "하은별",
+      "department": "응용통계학과",
+      "credits": 3,
+      "type": "일반선택",
+      "professorChanged": false
+    },
+    {
+      "id": "L27",
+      "name": "심리학개론",
+      "professor": "탁소윤",
+      "department": "교양학부",
+      "credits": 3,
+      "type": "교양선택",
+      "professorChanged": false
+    }
+  ],
+  "reviews": [
+    {
+      "id": "L01-R001",
+      "lectureId": "L01",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 실습 과제가 무거워서 주말이 통째로 날아갑니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L01-R002",
+      "lectureId": "L01",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 결석 한 번에 감점이 커서 무조건 가야 해요. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L01-R003",
+      "lectureId": "L01",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L01-R004",
+      "lectureId": "L01",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 시험이 어렵습니다. 응용 문제가 많이 나와요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L01-R005",
+      "lectureId": "L01",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 레포트 분량이 많고 피드백도 빡빡합니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 기말 범위가 넓고 문제도 까다로웠어요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L01-R006",
+      "lectureId": "L01",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 기말 범위가 넓고 문제도 까다로웠어요. 무난하게 들을 만합니다.",
+      "reportedGrade": "F"
+    },
+    {
+      "id": "L01-R007",
+      "lectureId": "L01",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "제출물이 계속 있어서 과제 부담이 큽니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 수업 준비가 성실하신 게 느껴집니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L01-R008",
+      "lectureId": "L01",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": "F"
+    },
+    {
+      "id": "L01-R009",
+      "lectureId": "L01",
+      "semester": "2024-2",
+      "rating": 2,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L01-R010",
+      "lectureId": "L01",
+      "semester": "2025-2",
+      "rating": 2,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 수업이 지루하고 교재를 그대로 읽으십니다. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L01-R011",
+      "lectureId": "L01",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L01-R012",
+      "lectureId": "L01",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "무난하게 들을 만합니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L01-R013",
+      "lectureId": "L01",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 진도가 너무 빨라서 따라가기 힘들었습니다. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L01-R014",
+      "lectureId": "L01",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L01-R015",
+      "lectureId": "L01",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L01-R016",
+      "lectureId": "L01",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 강의력이 좋으시고 질문도 잘 받아주세요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L01-R017",
+      "lectureId": "L01",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "과제는 학기당 한 번 정도라 여유롭습니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L01-R018",
+      "lectureId": "L01",
+      "semester": "2026-1",
+      "rating": 2,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 결석 한 번에 감점이 커서 무조건 가야 해요. 설명이 깔끔해서 이해가 정말 잘 됩니다. 전반적으로 추천합니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L01-R019",
+      "lectureId": "L01",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 결석 한 번에 감점이 커서 무조건 가야 해요. 수업 준비가 성실하신 게 느껴집니다. 시험은 수업에서 다룬 것만 나옵니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L01-R020",
+      "lectureId": "L01",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 과제가 매주 나와서 학기 내내 쫓겼습니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 수업 준비가 성실하신 게 느껴집니다. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L01-R021",
+      "lectureId": "L01",
+      "semester": "2024-2",
+      "rating": 2,
+      "text": "제출물이 계속 있어서 과제 부담이 큽니다. 결석해도 크게 불이익은 없었어요. 설명이 깔끔해서 이해가 정말 잘 됩니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "F"
+    },
+    {
+      "id": "L01-R022",
+      "lectureId": "L01",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요. 강의력이 좋으시고 질문도 잘 받아주세요. 시험이 어렵습니다. 응용 문제가 많이 나와요. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L01-R023",
+      "lectureId": "L01",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 과제가 매주 나와서 학기 내내 쫓겼습니다. 수업 준비가 성실하신 게 느껴집니다. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L01-R024",
+      "lectureId": "L01",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "지각 세 번이면 결석 한 번으로 처리됩니다. 전반적으로 추천합니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L02-R001",
+      "lectureId": "L02",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 과제가 매주 나와서 학기 내내 쫓겼습니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L02-R002",
+      "lectureId": "L02",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L02-R003",
+      "lectureId": "L02",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L02-R004",
+      "lectureId": "L02",
+      "semester": "2025-2",
+      "rating": 2,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": "D+"
+    },
+    {
+      "id": "L02-R005",
+      "lectureId": "L02",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "수업 준비가 성실하신 게 느껴집니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L02-R006",
+      "lectureId": "L02",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "시험이 어렵습니다. 응용 문제가 많이 나와요. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L02-R007",
+      "lectureId": "L02",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "레포트 분량이 많고 피드백도 빡빡합니다. 무난하게 들을 만합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L02-R008",
+      "lectureId": "L02",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "지각 세 번이면 결석 한 번으로 처리됩니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L02-R009",
+      "lectureId": "L02",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "레포트 분량이 많고 피드백도 빡빡합니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L02-R010",
+      "lectureId": "L02",
+      "semester": "2025-2",
+      "rating": 2,
+      "text": "학점 때문에 재수강 고민 중입니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L02-R011",
+      "lectureId": "L02",
+      "semester": "2024-2",
+      "rating": 2,
+      "text": "판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 전반적으로 추천합니다.",
+      "reportedGrade": "F"
+    },
+    {
+      "id": "L02-R012",
+      "lectureId": "L02",
+      "semester": "2025-2",
+      "rating": 2,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L02-R013",
+      "lectureId": "L02",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "전자출결로 출석을 빡세게 체크하십니다.",
+      "reportedGrade": "D+"
+    },
+    {
+      "id": "L02-R014",
+      "lectureId": "L02",
+      "semester": "2024-2",
+      "rating": 2,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L02-R015",
+      "lectureId": "L02",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L02-R016",
+      "lectureId": "L02",
+      "semester": "2026-1",
+      "rating": 2,
+      "text": "녹화 강의로 대체돼서 출석 스트레스가 없습니다. 족보 없으면 시간 안에 못 풉니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L02-R017",
+      "lectureId": "L02",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "다시 들으라면 고민될 것 같습니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L02-R018",
+      "lectureId": "L02",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 수업이 지루하고 교재를 그대로 읽으십니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R001",
+      "lectureId": "L03",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L03-R002",
+      "lectureId": "L03",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "학점 때문에 재수강 고민 중입니다. 제출물이 계속 있어서 과제 부담이 큽니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R003",
+      "lectureId": "L03",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R004",
+      "lectureId": "L03",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 출결이 자유로운 편이라 시간표 짜기 편해요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L03-R005",
+      "lectureId": "L03",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "중간고사 평균이 많이 낮았습니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L03-R006",
+      "lectureId": "L03",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 설명이 깔끔해서 이해가 정말 잘 됩니다. 시험은 수업에서 다룬 것만 나옵니다. 전반적으로 추천합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L03-R007",
+      "lectureId": "L03",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "결석해도 크게 불이익은 없었어요. 강의력이 좋으시고 질문도 잘 받아주세요. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R008",
+      "lectureId": "L03",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R009",
+      "lectureId": "L03",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "무난하게 들을 만합니다. 무난하게 들을 만합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R010",
+      "lectureId": "L03",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L03-R011",
+      "lectureId": "L03",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L03-R012",
+      "lectureId": "L03",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R013",
+      "lectureId": "L03",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 수업 준비가 성실하신 게 느껴집니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R014",
+      "lectureId": "L03",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 수업 준비가 성실하신 게 느껴집니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R015",
+      "lectureId": "L03",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "출석을 거의 안 부르셔서 출결 부담이 없습니다. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L03-R016",
+      "lectureId": "L03",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "수업 준비가 성실하신 게 느껴집니다. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R017",
+      "lectureId": "L03",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R018",
+      "lectureId": "L03",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R019",
+      "lectureId": "L03",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L03-R020",
+      "lectureId": "L03",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 수업 준비가 성실하신 게 느껴집니다. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L03-R021",
+      "lectureId": "L03",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "노력 대비 학점이 안 나오는 과목입니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L04-R001",
+      "lectureId": "L04",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "레포트 분량이 많고 피드백도 빡빡합니다. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L04-R002",
+      "lectureId": "L04",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요. 전달력이 아쉬워서 집중이 잘 안 됩니다. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L04-R003",
+      "lectureId": "L04",
+      "semester": "2025-2",
+      "rating": 2,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 실습 과제가 무거워서 주말이 통째로 날아갑니다. 수업이 지루하고 교재를 그대로 읽으십니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L04-R004",
+      "lectureId": "L04",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L04-R005",
+      "lectureId": "L04",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "학점 때문에 재수강 고민 중입니다. 제출물이 계속 있어서 과제 부담이 큽니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L04-R006",
+      "lectureId": "L04",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "레포트 분량이 많고 피드백도 빡빡합니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L04-R007",
+      "lectureId": "L04",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 과제가 매주 나와서 학기 내내 쫓겼습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L04-R008",
+      "lectureId": "L04",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "제출물이 계속 있어서 과제 부담이 큽니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L04-R009",
+      "lectureId": "L04",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 설명이 깔끔해서 이해가 정말 잘 됩니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L04-R010",
+      "lectureId": "L04",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "시험이 어렵습니다. 응용 문제가 많이 나와요. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L04-R011",
+      "lectureId": "L04",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 레포트 분량이 많고 피드백도 빡빡합니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 시험이 어렵습니다. 응용 문제가 많이 나와요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L04-R012",
+      "lectureId": "L04",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "제출물이 계속 있어서 과제 부담이 큽니다. 중간고사 평균이 많이 낮았습니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L04-R013",
+      "lectureId": "L04",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 수업이 지루하고 교재를 그대로 읽으십니다. 오픈북이라 시험 부담이 거의 없어요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L04-R014",
+      "lectureId": "L04",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "출석을 거의 안 부르셔서 출결 부담이 없습니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L04-R015",
+      "lectureId": "L04",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L04-R016",
+      "lectureId": "L04",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L05-R001",
+      "lectureId": "L05",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "전자출결로 출석을 빡세게 체크하십니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L05-R002",
+      "lectureId": "L05",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "전자출결로 출석을 빡세게 체크하십니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L05-R003",
+      "lectureId": "L05",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "결석해도 크게 불이익은 없었어요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L05-R004",
+      "lectureId": "L05",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "진도가 너무 빨라서 따라가기 힘들었습니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L06-R001",
+      "lectureId": "L06",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "전자출결로 출석을 빡세게 체크하십니다. 강의력이 좋으시고 질문도 잘 받아주세요. 시험이 어렵습니다. 응용 문제가 많이 나와요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R002",
+      "lectureId": "L06",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 별도 제출물이 적어서 시간 부담이 없습니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 수업 준비가 성실하신 게 느껴집니다. 무난하게 들을 만합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L06-R003",
+      "lectureId": "L06",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R004",
+      "lectureId": "L06",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R005",
+      "lectureId": "L06",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "노력 대비 학점이 안 나오는 과목입니다. 강의력이 좋으시고 질문도 잘 받아주세요. 시험 난이도가 평이해서 복습만 해도 됩니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R006",
+      "lectureId": "L06",
+      "semester": "2024-2",
+      "rating": 5,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 강의력이 좋으시고 질문도 잘 받아주세요. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R007",
+      "lectureId": "L06",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "진도가 너무 빨라서 따라가기 힘들었습니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R008",
+      "lectureId": "L06",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 과제가 매주 나와서 학기 내내 쫓겼습니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 시험은 수업에서 다룬 것만 나옵니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L06-R009",
+      "lectureId": "L06",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L06-R010",
+      "lectureId": "L06",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 강의력이 좋으시고 질문도 잘 받아주세요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L06-R011",
+      "lectureId": "L06",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 과제는 학기당 한 번 정도라 여유롭습니다. 출결이 자유로운 편이라 시간표 짜기 편해요. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L06-R012",
+      "lectureId": "L06",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "지각 세 번이면 결석 한 번으로 처리됩니다. 강의력이 좋으시고 질문도 잘 받아주세요. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R013",
+      "lectureId": "L06",
+      "semester": "2024-2",
+      "rating": 5,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R014",
+      "lectureId": "L06",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R015",
+      "lectureId": "L06",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 과제는 학기당 한 번 정도라 여유롭습니다. 결석해도 크게 불이익은 없었어요. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R016",
+      "lectureId": "L06",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "팀플이 없어서 정말 좋았어요. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R017",
+      "lectureId": "L06",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 녹화 강의로 대체돼서 출석 스트레스가 없습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L06-R018",
+      "lectureId": "L06",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L06-R019",
+      "lectureId": "L06",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 결석해도 크게 불이익은 없었어요.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L06-R020",
+      "lectureId": "L06",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 결석해도 크게 불이익은 없었어요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L06-R021",
+      "lectureId": "L06",
+      "semester": "2024-1",
+      "rating": 5,
+      "text": "노력 대비 학점이 안 나오는 과목입니다. 별도 제출물이 적어서 시간 부담이 없습니다. 무난하게 들을 만합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R022",
+      "lectureId": "L06",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R023",
+      "lectureId": "L06",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "과제는 학기당 한 번 정도라 여유롭습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R024",
+      "lectureId": "L06",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "과제가 거의 없어서 부담이 적습니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R025",
+      "lectureId": "L06",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "수업 준비가 성실하신 게 느껴집니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R026",
+      "lectureId": "L06",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "팀플이 없어서 정말 좋았어요. 결석 한 번에 감점이 커서 무조건 가야 해요. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R027",
+      "lectureId": "L06",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L06-R028",
+      "lectureId": "L06",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 제출물이 계속 있어서 과제 부담이 큽니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L06-R029",
+      "lectureId": "L06",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 레포트 분량이 많고 피드백도 빡빡합니다. 결석해도 크게 불이익은 없었어요. 기말 범위가 넓고 문제도 까다로웠어요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L06-R030",
+      "lectureId": "L06",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 기말 범위가 넓고 문제도 까다로웠어요. 전반적으로 추천합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L06-R031",
+      "lectureId": "L06",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 과제는 학기당 한 번 정도라 여유롭습니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L07-R001",
+      "lectureId": "L07",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "과제는 학기당 한 번 정도라 여유롭습니다. 결석해도 크게 불이익은 없었어요. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 중간고사 평균이 많이 낮았습니다. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L07-R002",
+      "lectureId": "L07",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "녹화 강의로 대체돼서 출석 스트레스가 없습니다. 강의력이 좋으시고 질문도 잘 받아주세요. 족보 없으면 시간 안에 못 풉니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L07-R003",
+      "lectureId": "L07",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "과제가 거의 없어서 부담이 적습니다. 수업 준비가 성실하신 게 느껴집니다. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L07-R004",
+      "lectureId": "L07",
+      "semester": "2025-2",
+      "rating": 2,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 레포트 분량이 많고 피드백도 빡빡합니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 시험이 어렵습니다. 응용 문제가 많이 나와요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L07-R005",
+      "lectureId": "L07",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 지각 세 번이면 결석 한 번으로 처리됩니다. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L07-R006",
+      "lectureId": "L07",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "녹화 강의로 대체돼서 출석 스트레스가 없습니다. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L07-R007",
+      "lectureId": "L07",
+      "semester": "2026-1",
+      "rating": 2,
+      "text": "학점 때문에 재수강 고민 중입니다. 팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 강의력이 좋으시고 질문도 잘 받아주세요. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L07-R008",
+      "lectureId": "L07",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다. 과제가 거의 없어서 부담이 적습니다. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L07-R009",
+      "lectureId": "L07",
+      "semester": "2026-1",
+      "rating": 2,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 과제는 학기당 한 번 정도라 여유롭습니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 시험이 어렵습니다. 응용 문제가 많이 나와요. 전반적으로 추천합니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L07-R010",
+      "lectureId": "L07",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 중간고사 평균이 많이 낮았습니다. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L07-R011",
+      "lectureId": "L07",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 결석 한 번에 감점이 커서 무조건 가야 해요. 기말 범위가 넓고 문제도 까다로웠어요. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L07-R012",
+      "lectureId": "L07",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "학점 때문에 재수강 고민 중입니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L07-R013",
+      "lectureId": "L07",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요. 기말 범위가 넓고 문제도 까다로웠어요. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L08-R001",
+      "lectureId": "L08",
+      "semester": "2026-2",
+      "rating": 1,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 실습 과제가 무거워서 주말이 통째로 날아갑니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L08-R002",
+      "lectureId": "L08",
+      "semester": "2025-1",
+      "rating": 5,
+      "text": "학점 때문에 재수강 고민 중입니다. 과제가 거의 없어서 부담이 적습니다. 수업이 지루하고 교재를 그대로 읽으십니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L08-R003",
+      "lectureId": "L08",
+      "semester": "2025-1",
+      "rating": 5,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 과제가 거의 없어서 부담이 적습니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L08-R004",
+      "lectureId": "L08",
+      "semester": "2026-2",
+      "rating": 5,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L08-R005",
+      "lectureId": "L08",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 팀플이 없어서 정말 좋았어요. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L08-R006",
+      "lectureId": "L08",
+      "semester": "2026-2",
+      "rating": 5,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L08-R007",
+      "lectureId": "L08",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 전달력이 아쉬워서 집중이 잘 안 됩니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L08-R008",
+      "lectureId": "L08",
+      "semester": "2026-1",
+      "rating": 2,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 전달력이 아쉬워서 집중이 잘 안 됩니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L08-R009",
+      "lectureId": "L08",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 별도 제출물이 적어서 시간 부담이 없습니다. 결석해도 크게 불이익은 없었어요. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L08-R010",
+      "lectureId": "L08",
+      "semester": "2025-1",
+      "rating": 5,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L08-R011",
+      "lectureId": "L08",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 별도 제출물이 적어서 시간 부담이 없습니다. 시험은 수업에서 다룬 것만 나옵니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L09-R001",
+      "lectureId": "L09",
+      "semester": "2023-2",
+      "rating": 2,
+      "text": "기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L09-R002",
+      "lectureId": "L09",
+      "semester": "2024-2",
+      "rating": 2,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 출석을 거의 안 부르셔서 출결 부담이 없습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L09-R003",
+      "lectureId": "L09",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "과제는 학기당 한 번 정도라 여유롭습니다. 결석 한 번에 감점이 커서 무조건 가야 해요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L09-R004",
+      "lectureId": "L09",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "팀플이 없어서 정말 좋았어요. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 설명이 부족해서 결국 혼자 공부해야 했어요.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L09-R005",
+      "lectureId": "L09",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 기출과 비슷하게 나와서 무난했습니다. 무난하게 들을 만합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L09-R006",
+      "lectureId": "L09",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "노력 대비 학점이 안 나오는 과목입니다. 전달력이 아쉬워서 집중이 잘 안 됩니다. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L09-R007",
+      "lectureId": "L09",
+      "semester": "2024-2",
+      "rating": 2,
+      "text": "수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L09-R008",
+      "lectureId": "L09",
+      "semester": "2023-2",
+      "rating": 2,
+      "text": "학점 때문에 재수강 고민 중입니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L09-R009",
+      "lectureId": "L09",
+      "semester": "2023-2",
+      "rating": 2,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 과제가 거의 없어서 부담이 적습니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 시험은 수업에서 다룬 것만 나옵니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "D+"
+    },
+    {
+      "id": "L09-R010",
+      "lectureId": "L09",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "팀플이 없어서 정말 좋았어요. 수업 준비가 성실하신 게 느껴집니다. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L09-R011",
+      "lectureId": "L09",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 전자출결로 출석을 빡세게 체크하십니다. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L09-R012",
+      "lectureId": "L09",
+      "semester": "2025-2",
+      "rating": 2,
+      "text": "강의력이 좋으시고 질문도 잘 받아주세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L09-R013",
+      "lectureId": "L09",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "팀플이 없어서 정말 좋았어요. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L09-R014",
+      "lectureId": "L09",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "전달력이 아쉬워서 집중이 잘 안 됩니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L09-R015",
+      "lectureId": "L09",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "팀플이 없어서 정말 좋았어요. 전자출결로 출석을 빡세게 체크하십니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L09-R016",
+      "lectureId": "L09",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다. 과제가 거의 없어서 부담이 적습니다. 진도가 너무 빨라서 따라가기 힘들었습니다. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L09-R017",
+      "lectureId": "L09",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 설명이 깔끔해서 이해가 정말 잘 됩니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L09-R018",
+      "lectureId": "L09",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "지각 세 번이면 결석 한 번으로 처리됩니다. 수업이 지루하고 교재를 그대로 읽으십니다. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": "D+"
+    },
+    {
+      "id": "L09-R019",
+      "lectureId": "L09",
+      "semester": "2025-2",
+      "rating": 2,
+      "text": "과제가 거의 없어서 부담이 적습니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L09-R020",
+      "lectureId": "L09",
+      "semester": "2023-2",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L09-R021",
+      "lectureId": "L09",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 과제가 매주 나와서 학기 내내 쫓겼습니다. 족보 없으면 시간 안에 못 풉니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L09-R022",
+      "lectureId": "L09",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 과제는 학기당 한 번 정도라 여유롭습니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L09-R023",
+      "lectureId": "L09",
+      "semester": "2024-2",
+      "rating": 2,
+      "text": "학점 때문에 재수강 고민 중입니다. 실습 과제가 무거워서 주말이 통째로 날아갑니다. 족보 없으면 시간 안에 못 풉니다. 무난하게 들을 만합니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L09-R024",
+      "lectureId": "L09",
+      "semester": "2023-1",
+      "rating": 3,
+      "text": "강의력이 좋으시고 질문도 잘 받아주세요. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "D+"
+    },
+    {
+      "id": "L09-R025",
+      "lectureId": "L09",
+      "semester": "2023-1",
+      "rating": 3,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 레포트 분량이 많고 피드백도 빡빡합니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L09-R026",
+      "lectureId": "L09",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "과제는 학기당 한 번 정도라 여유롭습니다. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 무난하게 들을 만합니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L09-R027",
+      "lectureId": "L09",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L10-R001",
+      "lectureId": "L10",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "전자출결로 출석을 빡세게 체크하십니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L10-R002",
+      "lectureId": "L10",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 시험이 어렵습니다. 응용 문제가 많이 나와요. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L10-R003",
+      "lectureId": "L10",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "수업이 지루하고 교재를 그대로 읽으십니다. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L10-R004",
+      "lectureId": "L10",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 시험이 어렵습니다. 응용 문제가 많이 나와요. 전반적으로 추천합니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L10-R005",
+      "lectureId": "L10",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다. 수업 준비가 성실하신 게 느껴집니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L10-R006",
+      "lectureId": "L10",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 수업 준비가 성실하신 게 느껴집니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L10-R007",
+      "lectureId": "L10",
+      "semester": "2026-1",
+      "rating": 2,
+      "text": "결석해도 크게 불이익은 없었어요. 오픈북이라 시험 부담이 거의 없어요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L10-R008",
+      "lectureId": "L10",
+      "semester": "2025-2",
+      "rating": 2,
+      "text": "사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L10-R009",
+      "lectureId": "L10",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "시험이 어렵습니다. 응용 문제가 많이 나와요. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L11-R001",
+      "lectureId": "L11",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 별도 제출물이 적어서 시간 부담이 없습니다. 족보 없으면 시간 안에 못 풉니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L11-R002",
+      "lectureId": "L11",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L11-R003",
+      "lectureId": "L11",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L11-R004",
+      "lectureId": "L11",
+      "semester": "2023-1",
+      "rating": 2,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 기말 범위가 넓고 문제도 까다로웠어요. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L11-R005",
+      "lectureId": "L11",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 제출물이 계속 있어서 과제 부담이 큽니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L11-R006",
+      "lectureId": "L11",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 과제가 매주 나와서 학기 내내 쫓겼습니다. 설명이 부족해서 결국 혼자 공부해야 했어요. 기출과 비슷하게 나와서 무난했습니다. 전반적으로 추천합니다.",
+      "reportedGrade": "D+"
+    },
+    {
+      "id": "L11-R007",
+      "lectureId": "L11",
+      "semester": "2023-1",
+      "rating": 3,
+      "text": "출석을 매 차시 부르시고 대리출석은 바로 잡힙니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L12-R001",
+      "lectureId": "L12",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "학점 때문에 재수강 고민 중입니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L12-R002",
+      "lectureId": "L12",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L12-R003",
+      "lectureId": "L12",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "기말 범위가 넓고 문제도 까다로웠어요. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L12-R004",
+      "lectureId": "L12",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 실습 과제가 무거워서 주말이 통째로 날아갑니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L12-R005",
+      "lectureId": "L12",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 제출물이 계속 있어서 과제 부담이 큽니다. 족보 없으면 시간 안에 못 풉니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L12-R006",
+      "lectureId": "L12",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "레포트 분량이 많고 피드백도 빡빡합니다. 오픈북이라 시험 부담이 거의 없어요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L12-R007",
+      "lectureId": "L12",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 오픈북이라 시험 부담이 거의 없어요. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L12-R008",
+      "lectureId": "L12",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 결석 한 번에 감점이 커서 무조건 가야 해요. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L12-R009",
+      "lectureId": "L12",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "오픈북이라 시험 부담이 거의 없어요. 무난하게 들을 만합니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L12-R010",
+      "lectureId": "L12",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 수업이 지루하고 교재를 그대로 읽으십니다. 오픈북이라 시험 부담이 거의 없어요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L12-R011",
+      "lectureId": "L12",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 팀플이 없어서 정말 좋았어요. 출결이 자유로운 편이라 시간표 짜기 편해요. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L12-R012",
+      "lectureId": "L12",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "팀플이 없어서 정말 좋았어요. 진도가 너무 빨라서 따라가기 힘들었습니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L12-R013",
+      "lectureId": "L12",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 강의력이 좋으시고 질문도 잘 받아주세요. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L12-R014",
+      "lectureId": "L12",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L12-R015",
+      "lectureId": "L12",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 출결이 자유로운 편이라 시간표 짜기 편해요. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L12-R016",
+      "lectureId": "L12",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 진도가 너무 빨라서 따라가기 힘들었습니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L12-R017",
+      "lectureId": "L12",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L12-R018",
+      "lectureId": "L12",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L12-R019",
+      "lectureId": "L12",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L13-R001",
+      "lectureId": "L13",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "사람마다 호불호가 갈릴 것 같아요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L13-R002",
+      "lectureId": "L13",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L13-R003",
+      "lectureId": "L13",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "전자출결로 출석을 빡세게 체크하십니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L13-R004",
+      "lectureId": "L13",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 과제는 학기당 한 번 정도라 여유롭습니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L13-R005",
+      "lectureId": "L13",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요. 무난하게 들을 만합니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L13-R006",
+      "lectureId": "L13",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 결석 한 번에 감점이 커서 무조건 가야 해요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L13-R007",
+      "lectureId": "L13",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L13-R008",
+      "lectureId": "L13",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "강의력이 좋으시고 질문도 잘 받아주세요. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L13-R009",
+      "lectureId": "L13",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "결석해도 크게 불이익은 없었어요. 수업 준비가 성실하신 게 느껴집니다. 시험 난이도가 평이해서 복습만 해도 됩니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L13-R010",
+      "lectureId": "L13",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 과제는 학기당 한 번 정도라 여유롭습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L13-R011",
+      "lectureId": "L13",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "출석을 거의 안 부르셔서 출결 부담이 없습니다. 진도가 너무 빨라서 따라가기 힘들었습니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L13-R012",
+      "lectureId": "L13",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "진도가 너무 빨라서 따라가기 힘들었습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L13-R013",
+      "lectureId": "L13",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "과제는 학기당 한 번 정도라 여유롭습니다. 설명이 부족해서 결국 혼자 공부해야 했어요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L13-R014",
+      "lectureId": "L13",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "전반적으로 추천합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L13-R015",
+      "lectureId": "L13",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 설명이 부족해서 결국 혼자 공부해야 했어요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L13-R016",
+      "lectureId": "L13",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "지각 세 번이면 결석 한 번으로 처리됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L13-R017",
+      "lectureId": "L13",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L13-R018",
+      "lectureId": "L13",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "전반적으로 추천합니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L13-R019",
+      "lectureId": "L13",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "제출물이 계속 있어서 과제 부담이 큽니다. 전반적으로 추천합니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L13-R020",
+      "lectureId": "L13",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "전반적으로 추천합니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L13-R021",
+      "lectureId": "L13",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "과제는 학기당 한 번 정도라 여유롭습니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L13-R022",
+      "lectureId": "L13",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "전자출결로 출석을 빡세게 체크하십니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L14-R001",
+      "lectureId": "L14",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L14-R002",
+      "lectureId": "L14",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "사람마다 호불호가 갈릴 것 같아요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L14-R003",
+      "lectureId": "L14",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "설명이 깔끔해서 이해가 정말 잘 됩니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L14-R004",
+      "lectureId": "L14",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "과제는 학기당 한 번 정도라 여유롭습니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L14-R005",
+      "lectureId": "L14",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 제출물이 계속 있어서 과제 부담이 큽니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L14-R006",
+      "lectureId": "L14",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L14-R007",
+      "lectureId": "L14",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L14-R008",
+      "lectureId": "L14",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 결석 한 번에 감점이 커서 무조건 가야 해요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L14-R009",
+      "lectureId": "L14",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 시험이 어렵습니다. 응용 문제가 많이 나와요. 무난하게 들을 만합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L14-R010",
+      "lectureId": "L14",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요.",
+      "reportedGrade": "D+"
+    },
+    {
+      "id": "L14-R011",
+      "lectureId": "L14",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "전자출결로 출석을 빡세게 체크하십니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L14-R012",
+      "lectureId": "L14",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L14-R013",
+      "lectureId": "L14",
+      "semester": "2026-2",
+      "rating": 2,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 별도 제출물이 적어서 시간 부담이 없습니다. 수업 준비가 성실하신 게 느껴집니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L14-R014",
+      "lectureId": "L14",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L14-R015",
+      "lectureId": "L14",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 제출물이 계속 있어서 과제 부담이 큽니다. 시험이 어렵습니다. 응용 문제가 많이 나와요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L15-R001",
+      "lectureId": "L15",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 과제가 매주 나와서 학기 내내 쫓겼습니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L15-R002",
+      "lectureId": "L15",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다. 전자출결로 출석을 빡세게 체크하십니다. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L15-R003",
+      "lectureId": "L15",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 과제는 학기당 한 번 정도라 여유롭습니다. 진도가 너무 빨라서 따라가기 힘들었습니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L15-R004",
+      "lectureId": "L15",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "노력 대비 학점이 안 나오는 과목입니다. 팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 전반적으로 추천합니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L15-R005",
+      "lectureId": "L15",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 결석해도 크게 불이익은 없었어요. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L15-R006",
+      "lectureId": "L15",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "노력 대비 학점이 안 나오는 과목입니다. 과제는 학기당 한 번 정도라 여유롭습니다. 출결이 자유로운 편이라 시간표 짜기 편해요. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L15-R007",
+      "lectureId": "L15",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L15-R008",
+      "lectureId": "L15",
+      "semester": "2025-1",
+      "rating": 5,
+      "text": "시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L15-R009",
+      "lectureId": "L15",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 결석해도 크게 불이익은 없었어요. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L15-R010",
+      "lectureId": "L15",
+      "semester": "2025-2",
+      "rating": 5,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L15-R011",
+      "lectureId": "L15",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 결석 한 번에 감점이 커서 무조건 가야 해요. 설명이 부족해서 결국 혼자 공부해야 했어요. 전반적으로 추천합니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L15-R012",
+      "lectureId": "L15",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L15-R013",
+      "lectureId": "L15",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "레포트 분량이 많고 피드백도 빡빡합니다. 전달력이 아쉬워서 집중이 잘 안 됩니다.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L15-R014",
+      "lectureId": "L15",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 설명이 부족해서 결국 혼자 공부해야 했어요. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L15-R015",
+      "lectureId": "L15",
+      "semester": "2026-2",
+      "rating": 5,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L15-R016",
+      "lectureId": "L15",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "출석을 거의 안 부르셔서 출결 부담이 없습니다.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L15-R017",
+      "lectureId": "L15",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "전반적으로 추천합니다.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L16-R001",
+      "lectureId": "L16",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L16-R002",
+      "lectureId": "L16",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "결석해도 크게 불이익은 없었어요. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L16-R003",
+      "lectureId": "L16",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 결석해도 크게 불이익은 없었어요. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L16-R004",
+      "lectureId": "L16",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L16-R005",
+      "lectureId": "L16",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L16-R006",
+      "lectureId": "L16",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 기말 범위가 넓고 문제도 까다로웠어요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L16-R007",
+      "lectureId": "L16",
+      "semester": "2025-1",
+      "rating": 2,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L16-R008",
+      "lectureId": "L16",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L16-R009",
+      "lectureId": "L16",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L16-R010",
+      "lectureId": "L16",
+      "semester": "2024-1",
+      "rating": 2,
+      "text": "중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L16-R011",
+      "lectureId": "L16",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L16-R012",
+      "lectureId": "L16",
+      "semester": "2026-1",
+      "rating": 2,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 족보 없으면 시간 안에 못 풉니다. 무난하게 들을 만합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L17-R001",
+      "lectureId": "L17",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "제출물이 계속 있어서 과제 부담이 큽니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 시험은 수업에서 다룬 것만 나옵니다. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L17-R002",
+      "lectureId": "L17",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "전자출결로 출석을 빡세게 체크하십니다. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L17-R003",
+      "lectureId": "L17",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L17-R004",
+      "lectureId": "L17",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "레포트 분량이 많고 피드백도 빡빡합니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L17-R005",
+      "lectureId": "L17",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L17-R006",
+      "lectureId": "L17",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다. 레포트 분량이 많고 피드백도 빡빡합니다. 결석 한 번에 감점이 커서 무조건 가야 해요. 오픈북이라 시험 부담이 거의 없어요. 무난하게 들을 만합니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L17-R007",
+      "lectureId": "L17",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L17-R008",
+      "lectureId": "L17",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L17-R009",
+      "lectureId": "L17",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "학점 때문에 재수강 고민 중입니다. 실습 과제가 무거워서 주말이 통째로 날아갑니다. 전자출결로 출석을 빡세게 체크하십니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L17-R010",
+      "lectureId": "L17",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 오픈북이라 시험 부담이 거의 없어요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L17-R011",
+      "lectureId": "L17",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L17-R012",
+      "lectureId": "L17",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 제출물이 계속 있어서 과제 부담이 큽니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L17-R013",
+      "lectureId": "L17",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "제출물이 계속 있어서 과제 부담이 큽니다. 전자출결로 출석을 빡세게 체크하십니다. 전달력이 아쉬워서 집중이 잘 안 됩니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L17-R014",
+      "lectureId": "L17",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 제출물이 계속 있어서 과제 부담이 큽니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L18-R001",
+      "lectureId": "L18",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 레포트 분량이 많고 피드백도 빡빡합니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L18-R002",
+      "lectureId": "L18",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 팀플이 없어서 정말 좋았어요. 전자출결로 출석을 빡세게 체크하십니다. 설명이 부족해서 결국 혼자 공부해야 했어요. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L18-R003",
+      "lectureId": "L18",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L18-R004",
+      "lectureId": "L18",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L18-R005",
+      "lectureId": "L18",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L18-R006",
+      "lectureId": "L18",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다. 전달력이 아쉬워서 집중이 잘 안 됩니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L18-R007",
+      "lectureId": "L18",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "전달력이 아쉬워서 집중이 잘 안 됩니다. 족보 없으면 시간 안에 못 풉니다. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L18-R008",
+      "lectureId": "L18",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L18-R009",
+      "lectureId": "L18",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 과제가 거의 없어서 부담이 적습니다. 수업 준비가 성실하신 게 느껴집니다. 시험 난이도가 평이해서 복습만 해도 됩니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L18-R010",
+      "lectureId": "L18",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "기출과 비슷하게 나와서 무난했습니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R001",
+      "lectureId": "L19",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R002",
+      "lectureId": "L19",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "노력 대비 학점이 안 나오는 과목입니다. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L19-R003",
+      "lectureId": "L19",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L19-R004",
+      "lectureId": "L19",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 결석해도 크게 불이익은 없었어요. 전달력이 아쉬워서 집중이 잘 안 됩니다. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R005",
+      "lectureId": "L19",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R006",
+      "lectureId": "L19",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 팀플이 없어서 정말 좋았어요. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R007",
+      "lectureId": "L19",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "레포트 분량이 많고 피드백도 빡빡합니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R008",
+      "lectureId": "L19",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R009",
+      "lectureId": "L19",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "진도가 너무 빨라서 따라가기 힘들었습니다. 기말 범위가 넓고 문제도 까다로웠어요. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R010",
+      "lectureId": "L19",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "출석을 매 차시 부르시고 대리출석은 바로 잡힙니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L19-R011",
+      "lectureId": "L19",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "출결이 자유로운 편이라 시간표 짜기 편해요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R012",
+      "lectureId": "L19",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L19-R013",
+      "lectureId": "L19",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R014",
+      "lectureId": "L19",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R015",
+      "lectureId": "L19",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L19-R016",
+      "lectureId": "L19",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L19-R017",
+      "lectureId": "L19",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "중간고사 평균이 많이 낮았습니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R018",
+      "lectureId": "L19",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 결석해도 크게 불이익은 없었어요. 설명이 부족해서 결국 혼자 공부해야 했어요. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L19-R019",
+      "lectureId": "L19",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "노력 대비 학점이 안 나오는 과목입니다. 팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L19-R020",
+      "lectureId": "L19",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "과제가 거의 없어서 부담이 적습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L19-R901",
+      "lectureId": "L19",
+      "semester": "2023-1",
+      "rating": 2,
+      "text": "수업이 지루하고 교재를 그대로 읽으십니다. 학점이 짭니다. 나름 열심히 했는데 B+ 받았어요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L19-R902",
+      "lectureId": "L19",
+      "semester": "2023-2",
+      "rating": 2,
+      "text": "설명이 부족해서 결국 혼자 공부해야 했어요. 성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L19-R903",
+      "lectureId": "L19",
+      "semester": "2023-1",
+      "rating": 2,
+      "text": "전달력이 아쉬워서 집중이 잘 안 됩니다. 상대평가가 빡세게 걸려서 A 받기 정말 어려워요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L19-R904",
+      "lectureId": "L19",
+      "semester": "2023-2",
+      "rating": 2,
+      "text": "진도가 너무 빨라서 따라가기 힘들었습니다. 노력 대비 학점이 안 나오는 과목입니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L19-R905",
+      "lectureId": "L19",
+      "semester": "2023-1",
+      "rating": 2,
+      "text": "수업이 지루하고 교재를 그대로 읽으십니다. 학점 때문에 재수강 고민 중입니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L20-R001",
+      "lectureId": "L20",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "녹화 강의로 대체돼서 출석 스트레스가 없습니다. 진도가 너무 빨라서 따라가기 힘들었습니다. 기말 범위가 넓고 문제도 까다로웠어요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R002",
+      "lectureId": "L20",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 과제가 매주 나와서 학기 내내 쫓겼습니다. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L20-R003",
+      "lectureId": "L20",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다. 기출과 비슷하게 나와서 무난했습니다. 무난하게 들을 만합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R004",
+      "lectureId": "L20",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "제출물이 계속 있어서 과제 부담이 큽니다. 결석해도 크게 불이익은 없었어요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L20-R005",
+      "lectureId": "L20",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "출석을 거의 안 부르셔서 출결 부담이 없습니다. 오픈북이라 시험 부담이 거의 없어요. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L20-R006",
+      "lectureId": "L20",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 결석해도 크게 불이익은 없었어요. 설명이 부족해서 결국 혼자 공부해야 했어요.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L20-R007",
+      "lectureId": "L20",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 팀플이 없어서 정말 좋았어요. 출결이 자유로운 편이라 시간표 짜기 편해요. 강의력이 좋으시고 질문도 잘 받아주세요. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L20-R008",
+      "lectureId": "L20",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "무난하게 들을 만합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R009",
+      "lectureId": "L20",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "녹화 강의로 대체돼서 출석 스트레스가 없습니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R010",
+      "lectureId": "L20",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 팀플이 없어서 정말 좋았어요. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R011",
+      "lectureId": "L20",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 기출과 비슷하게 나와서 무난했습니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L20-R012",
+      "lectureId": "L20",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "과제가 거의 없어서 부담이 적습니다. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R013",
+      "lectureId": "L20",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "녹화 강의로 대체돼서 출석 스트레스가 없습니다. 기말 범위가 넓고 문제도 까다로웠어요. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L20-R014",
+      "lectureId": "L20",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 실습 과제가 무거워서 주말이 통째로 날아갑니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 시험 난이도가 평이해서 복습만 해도 됩니다. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R015",
+      "lectureId": "L20",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "지각 세 번이면 결석 한 번으로 처리됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R016",
+      "lectureId": "L20",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 레포트 분량이 많고 피드백도 빡빡합니다. 설명이 부족해서 결국 혼자 공부해야 했어요. 오픈북이라 시험 부담이 거의 없어요. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L20-R017",
+      "lectureId": "L20",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 결석 한 번에 감점이 커서 무조건 가야 해요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R018",
+      "lectureId": "L20",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 과제는 학기당 한 번 정도라 여유롭습니다. 출석을 거의 안 부르셔서 출결 부담이 없습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R019",
+      "lectureId": "L20",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "팀플이 없어서 정말 좋았어요. 설명이 깔끔해서 이해가 정말 잘 됩니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R020",
+      "lectureId": "L20",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "팀플이 없어서 정말 좋았어요. 출결이 자유로운 편이라 시간표 짜기 편해요. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R021",
+      "lectureId": "L20",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "과제가 거의 없어서 부담이 적습니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L20-R022",
+      "lectureId": "L20",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 실습 과제가 무거워서 주말이 통째로 날아갑니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L20-R023",
+      "lectureId": "L20",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 전달력이 아쉬워서 집중이 잘 안 됩니다. 오픈북이라 시험 부담이 거의 없어요. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L20-R024",
+      "lectureId": "L20",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R025",
+      "lectureId": "L20",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "시험 난이도가 평이해서 복습만 해도 됩니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L20-R026",
+      "lectureId": "L20",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 과제는 학기당 한 번 정도라 여유롭습니다. 출결이 자유로운 편이라 시간표 짜기 편해요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L20-R027",
+      "lectureId": "L20",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 수업이 지루하고 교재를 그대로 읽으십니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L20-R028",
+      "lectureId": "L20",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 과제가 매주 나와서 학기 내내 쫓겼습니다. 출결이 자유로운 편이라 시간표 짜기 편해요. 기출과 비슷하게 나와서 무난했습니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L20-R029",
+      "lectureId": "L20",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "레포트 분량이 많고 피드백도 빡빡합니다. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L21-R001",
+      "lectureId": "L21",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 별도 제출물이 적어서 시간 부담이 없습니다. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L21-R002",
+      "lectureId": "L21",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 과제가 거의 없어서 부담이 적습니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 수업 준비가 성실하신 게 느껴집니다. 시험이 어렵습니다. 응용 문제가 많이 나와요. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L21-R003",
+      "lectureId": "L21",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다. 전자출결로 출석을 빡세게 체크하십니다. 수업이 지루하고 교재를 그대로 읽으십니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L21-R004",
+      "lectureId": "L21",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 별도 제출물이 적어서 시간 부담이 없습니다. 전자출결로 출석을 빡세게 체크하십니다. 강의력이 좋으시고 질문도 잘 받아주세요. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L21-R005",
+      "lectureId": "L21",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "과제는 학기당 한 번 정도라 여유롭습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L21-R006",
+      "lectureId": "L21",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L21-R007",
+      "lectureId": "L21",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 전자출결로 출석을 빡세게 체크하십니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L21-R008",
+      "lectureId": "L21",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 과제는 학기당 한 번 정도라 여유롭습니다. 결석 한 번에 감점이 커서 무조건 가야 해요. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L21-R009",
+      "lectureId": "L21",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L21-R010",
+      "lectureId": "L21",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 별도 제출물이 적어서 시간 부담이 없습니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 시험은 수업에서 다룬 것만 나옵니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L21-R011",
+      "lectureId": "L21",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 별도 제출물이 적어서 시간 부담이 없습니다. 전자출결로 출석을 빡세게 체크하십니다. 설명이 부족해서 결국 혼자 공부해야 했어요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L21-R012",
+      "lectureId": "L21",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 별도 제출물이 적어서 시간 부담이 없습니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L21-R013",
+      "lectureId": "L21",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 별도 제출물이 적어서 시간 부담이 없습니다. 전달력이 아쉬워서 집중이 잘 안 됩니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L21-R014",
+      "lectureId": "L21",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L21-R015",
+      "lectureId": "L21",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 과제는 학기당 한 번 정도라 여유롭습니다. 설명이 부족해서 결국 혼자 공부해야 했어요. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L21-R016",
+      "lectureId": "L21",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 강의력이 좋으시고 질문도 잘 받아주세요. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L21-R017",
+      "lectureId": "L21",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 과제가 매주 나와서 학기 내내 쫓겼습니다. 오픈북이라 시험 부담이 거의 없어요. 전반적으로 추천합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L21-R018",
+      "lectureId": "L21",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 중간고사 평균이 많이 낮았습니다. 전반적으로 추천합니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L21-R019",
+      "lectureId": "L21",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 시험 난이도가 평이해서 복습만 해도 됩니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L21-R020",
+      "lectureId": "L21",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "과제가 거의 없어서 부담이 적습니다. 오픈북이라 시험 부담이 거의 없어요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L21-R021",
+      "lectureId": "L21",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L21-R022",
+      "lectureId": "L21",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 설명이 깔끔해서 이해가 정말 잘 됩니다. 중간고사 평균이 많이 낮았습니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L21-R023",
+      "lectureId": "L21",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 과제는 학기당 한 번 정도라 여유롭습니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 전달력이 아쉬워서 집중이 잘 안 됩니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L21-R024",
+      "lectureId": "L21",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "실습 과제가 무거워서 주말이 통째로 날아갑니다. 전자출결로 출석을 빡세게 체크하십니다. 기말 범위가 넓고 문제도 까다로웠어요. 무난하게 들을 만합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L21-R025",
+      "lectureId": "L21",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 별도 제출물이 적어서 시간 부담이 없습니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L21-R026",
+      "lectureId": "L21",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "과제가 거의 없어서 부담이 적습니다. 시험 난이도가 평이해서 복습만 해도 됩니다. 무난하게 들을 만합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L22-R001",
+      "lectureId": "L22",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L22-R002",
+      "lectureId": "L22",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "출결이 자유로운 편이라 시간표 짜기 편해요. 수업이 지루하고 교재를 그대로 읽으십니다. 전반적으로 추천합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L22-R003",
+      "lectureId": "L22",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L22-R004",
+      "lectureId": "L22",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요. 수업이 지루하고 교재를 그대로 읽으십니다. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L22-R005",
+      "lectureId": "L22",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "지각 세 번이면 결석 한 번으로 처리됩니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L22-R006",
+      "lectureId": "L22",
+      "semester": "2024-1",
+      "rating": 3,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L22-R007",
+      "lectureId": "L22",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 전자출결로 출석을 빡세게 체크하십니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L22-R008",
+      "lectureId": "L22",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 수업이 지루하고 교재를 그대로 읽으십니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L22-R009",
+      "lectureId": "L22",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "지각 세 번이면 결석 한 번으로 처리됩니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L22-R010",
+      "lectureId": "L22",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "과제가 매주 나와서 학기 내내 쫓겼습니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L22-R011",
+      "lectureId": "L22",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "노력 대비 학점이 안 나오는 과목입니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 족보 없으면 시간 안에 못 풉니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L22-R012",
+      "lectureId": "L22",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "출석을 거의 안 부르셔서 출결 부담이 없습니다. 설명이 부족해서 결국 혼자 공부해야 했어요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L22-R013",
+      "lectureId": "L22",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "전자출결로 출석을 빡세게 체크하십니다. 전달력이 아쉬워서 집중이 잘 안 됩니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L22-R014",
+      "lectureId": "L22",
+      "semester": "2025-2",
+      "rating": 3,
+      "text": "무난하게 들을 만합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L22-R015",
+      "lectureId": "L22",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "지각 세 번이면 결석 한 번으로 처리됩니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 무난하게 들을 만합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L22-R016",
+      "lectureId": "L22",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "학점 때문에 재수강 고민 중입니다. 전달력이 아쉬워서 집중이 잘 안 됩니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L22-R017",
+      "lectureId": "L22",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L22-R018",
+      "lectureId": "L22",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 제출물이 계속 있어서 과제 부담이 큽니다. 출석을 거의 안 부르셔서 출결 부담이 없습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L22-R019",
+      "lectureId": "L22",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L22-R020",
+      "lectureId": "L22",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "수업 준비가 성실하신 게 느껴집니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L22-R021",
+      "lectureId": "L22",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "상대평가가 빡세게 걸려서 A 받기 정말 어려워요. 지각 세 번이면 결석 한 번으로 처리됩니다. 진도가 너무 빨라서 따라가기 힘들었습니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L22-R022",
+      "lectureId": "L22",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "결석해도 크게 불이익은 없었어요. 수업 준비가 성실하신 게 느껴집니다. 오픈북이라 시험 부담이 거의 없어요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L22-R023",
+      "lectureId": "L22",
+      "semester": "2024-2",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다. 과제가 거의 없어서 부담이 적습니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 시험 난이도가 평이해서 복습만 해도 됩니다. 전반적으로 추천합니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L23-R001",
+      "lectureId": "L23",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L23-R002",
+      "lectureId": "L23",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 지각 세 번이면 결석 한 번으로 처리됩니다. 강의력이 좋으시고 질문도 잘 받아주세요. 기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "A+"
+    },
+    {
+      "id": "L23-R003",
+      "lectureId": "L23",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L23-R004",
+      "lectureId": "L23",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 과제가 매주 나와서 학기 내내 쫓겼습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L23-R005",
+      "lectureId": "L23",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 지각 세 번이면 결석 한 번으로 처리됩니다. 전달력이 아쉬워서 집중이 잘 안 됩니다. 시험은 수업에서 다룬 것만 나옵니다. 전반적으로 추천합니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L23-R006",
+      "lectureId": "L23",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 과제가 매주 나와서 학기 내내 쫓겼습니다. 결석해도 크게 불이익은 없었어요. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L24-R001",
+      "lectureId": "L24",
+      "semester": "2026-2",
+      "rating": 5,
+      "text": "과제가 거의 없어서 부담이 적습니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L24-R002",
+      "lectureId": "L24",
+      "semester": "2026-2",
+      "rating": 5,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 과제는 학기당 한 번 정도라 여유롭습니다. 시험 난이도가 평이해서 복습만 해도 됩니다. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L24-R003",
+      "lectureId": "L24",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 팀플이 없어서 정말 좋았어요. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 전달력이 아쉬워서 집중이 잘 안 됩니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L24-R004",
+      "lectureId": "L24",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L24-R005",
+      "lectureId": "L24",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L24-R006",
+      "lectureId": "L24",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 과제는 학기당 한 번 정도라 여유롭습니다. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L24-R007",
+      "lectureId": "L24",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 결석 한 번에 감점이 커서 무조건 가야 해요. 시험은 수업에서 다룬 것만 나옵니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L24-R008",
+      "lectureId": "L24",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 팀플이 없어서 정말 좋았어요. 전자출결로 출석을 빡세게 체크하십니다. 수업이 지루하고 교재를 그대로 읽으십니다. 오픈북이라 시험 부담이 거의 없어요. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L24-R009",
+      "lectureId": "L24",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L24-R010",
+      "lectureId": "L24",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 팀플이 없어서 정말 좋았어요. 전달력이 아쉬워서 집중이 잘 안 됩니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L24-R011",
+      "lectureId": "L24",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 과제가 매주 나와서 학기 내내 쫓겼습니다. 시험 난이도가 평이해서 복습만 해도 됩니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L24-R012",
+      "lectureId": "L24",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 별도 제출물이 적어서 시간 부담이 없습니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L24-R013",
+      "lectureId": "L24",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L24-R014",
+      "lectureId": "L24",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 지각 세 번이면 결석 한 번으로 처리됩니다. 전달력이 아쉬워서 집중이 잘 안 됩니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L24-R015",
+      "lectureId": "L24",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "팀플이 없어서 정말 좋았어요. 결석 한 번에 감점이 커서 무조건 가야 해요. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L24-R016",
+      "lectureId": "L24",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 지각 세 번이면 결석 한 번으로 처리됩니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L24-R017",
+      "lectureId": "L24",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "학점 때문에 재수강 고민 중입니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 오픈북이라 시험 부담이 거의 없어요. 무난하게 들을 만합니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L24-R018",
+      "lectureId": "L24",
+      "semester": "2025-2",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 전자출결로 출석을 빡세게 체크하십니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L25-R001",
+      "lectureId": "L25",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 제출물이 계속 있어서 과제 부담이 큽니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 강의력이 좋으시고 질문도 잘 받아주세요. 시험이 어렵습니다. 응용 문제가 많이 나와요. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L25-R002",
+      "lectureId": "L25",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다. 강의력이 좋으시고 질문도 잘 받아주세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L25-R003",
+      "lectureId": "L25",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 출결이 자유로운 편이라 시간표 짜기 편해요. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L25-R004",
+      "lectureId": "L25",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "출결이 자유로운 편이라 시간표 짜기 편해요. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L25-R005",
+      "lectureId": "L25",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "별도 제출물이 적어서 시간 부담이 없습니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다. 강의력이 좋으시고 질문도 잘 받아주세요. 시험은 수업에서 다룬 것만 나옵니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L25-R006",
+      "lectureId": "L25",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "결석해도 크게 불이익은 없었어요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L25-R007",
+      "lectureId": "L25",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "결석 한 번에 감점이 커서 무조건 가야 해요. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L25-R008",
+      "lectureId": "L25",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 시험은 수업에서 다룬 것만 나옵니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L26-R001",
+      "lectureId": "L26",
+      "semester": "2021-1",
+      "rating": 3,
+      "text": "기출과 비슷하게 나와서 무난했습니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L26-R002",
+      "lectureId": "L26",
+      "semester": "2021-2",
+      "rating": 4,
+      "text": "무난하게 들을 만합니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L26-R003",
+      "lectureId": "L26",
+      "semester": "2022-1",
+      "rating": 3,
+      "text": "학점 때문에 재수강 고민 중입니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L26-R004",
+      "lectureId": "L26",
+      "semester": "2022-2",
+      "rating": 3,
+      "text": "수업이 지루하고 교재를 그대로 읽으십니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "D+"
+    },
+    {
+      "id": "L26-R005",
+      "lectureId": "L26",
+      "semester": "2021-1",
+      "rating": 2,
+      "text": "결석해도 크게 불이익은 없었어요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L27-R001",
+      "lectureId": "L27",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "과제가 거의 없어서 부담이 적습니다. 출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 오픈북이라 시험 부담이 거의 없어요. 다시 들으라면 고민될 것 같습니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R002",
+      "lectureId": "L27",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "과제가 거의 없어서 부담이 적습니다.",
+      "reportedGrade": "C0"
+    },
+    {
+      "id": "L27-R003",
+      "lectureId": "L27",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "성적이 인색하셔서 학점 기대는 안 하는 게 좋습니다. 팀플이 없어서 정말 좋았어요. 기말 범위가 넓고 문제도 까다로웠어요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L27-R004",
+      "lectureId": "L27",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "성적 잘 주시는 편이라 부담 없이 들었습니다. 과제는 학기당 한 번 정도라 여유롭습니다. 전달력이 아쉬워서 집중이 잘 안 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R005",
+      "lectureId": "L27",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 팀플이 없어서 정말 좋았어요. 출석을 거의 안 부르셔서 출결 부담이 없습니다. 설명이 깔끔해서 이해가 정말 잘 됩니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L27-R006",
+      "lectureId": "L27",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "팀플이 두 개나 있어서 시간 투자를 많이 해야 해요. 결석해도 크게 불이익은 없었어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R007",
+      "lectureId": "L27",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "학점 퍼주는 꿀강 맞습니다. 재수강생도 많이 살아나요. 전자출결로 출석을 빡세게 체크하십니다. 예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R008",
+      "lectureId": "L27",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "과제는 학기당 한 번 정도라 여유롭습니다. 설명이 깔끔해서 이해가 정말 잘 됩니다. 중간고사 평균이 많이 낮았습니다. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R009",
+      "lectureId": "L27",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "출석을 매 차시 부르시고 대리출석은 바로 잡힙니다. 전공필수라 어쩔 수 없이 들었는데 나쁘지 않았습니다.",
+      "reportedGrade": "C+"
+    },
+    {
+      "id": "L27-R010",
+      "lectureId": "L27",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "수업이 지루하고 교재를 그대로 읽으십니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L27-R011",
+      "lectureId": "L27",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "출석을 거의 안 부르셔서 출결 부담이 없습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L27-R012",
+      "lectureId": "L27",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "전자출결로 출석을 빡세게 체크하십니다.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L27-R013",
+      "lectureId": "L27",
+      "semester": "2026-1",
+      "rating": 4,
+      "text": "팀플이 없어서 정말 좋았어요. 시험이 어렵습니다. 응용 문제가 많이 나와요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L27-R014",
+      "lectureId": "L27",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 레포트 분량이 많고 피드백도 빡빡합니다. 녹화 강의로 대체돼서 출석 스트레스가 없습니다.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L27-R015",
+      "lectureId": "L27",
+      "semester": "2024-1",
+      "rating": 4,
+      "text": "학점을 진짜 후하게 주십니다. 웬만큼만 하면 A는 나와요. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 중간고사 평균이 많이 낮았습니다.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L27-R016",
+      "lectureId": "L27",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "A+ 비율이 높아서 학점 방어용으로 딱입니다. 전달력이 아쉬워서 집중이 잘 안 됩니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R017",
+      "lectureId": "L27",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "제출물이 계속 있어서 과제 부담이 큽니다. 설명이 부족해서 결국 혼자 공부해야 했어요.",
+      "reportedGrade": "B0"
+    },
+    {
+      "id": "L27-R018",
+      "lectureId": "L27",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "설명이 깔끔해서 이해가 정말 잘 됩니다. 오픈북이라 시험 부담이 거의 없어요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R019",
+      "lectureId": "L27",
+      "semester": "2026-2",
+      "rating": 3,
+      "text": "시험이 어렵습니다. 응용 문제가 많이 나와요. 사람마다 호불호가 갈릴 것 같아요.",
+      "reportedGrade": "A0"
+    },
+    {
+      "id": "L27-R020",
+      "lectureId": "L27",
+      "semester": "2026-1",
+      "rating": 3,
+      "text": "상대평가인데도 성적이 넉넉하게 나왔어요. 지각 세 번이면 결석 한 번으로 처리됩니다. 기출과 비슷하게 나와서 무난했습니다. 수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R021",
+      "lectureId": "L27",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "출결이 자유로운 편이라 시간표 짜기 편해요.",
+      "reportedGrade": "B+"
+    },
+    {
+      "id": "L27-R022",
+      "lectureId": "L27",
+      "semester": "2025-1",
+      "rating": 3,
+      "text": "수강 전에 시간표 여유가 있는지 확인하세요.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R023",
+      "lectureId": "L27",
+      "semester": "2024-2",
+      "rating": 4,
+      "text": "예시를 많이 들어주셔서 어려운 개념도 따라갈 수 있었어요. 무난하게 들을 만합니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R024",
+      "lectureId": "L27",
+      "semester": "2026-2",
+      "rating": 4,
+      "text": "학점이 짭니다. 나름 열심히 했는데 B+ 받았어요. 과제가 거의 없어서 부담이 적습니다. 판서와 PPT 정리가 잘 되어 있어서 복습하기 좋습니다. 족보 없으면 시간 안에 못 풉니다.",
+      "reportedGrade": null
+    },
+    {
+      "id": "L27-R025",
+      "lectureId": "L27",
+      "semester": "2025-1",
+      "rating": 4,
+      "text": "수강 전에 시간표 여유가 있는지 확인하세요. 전반적으로 추천합니다.",
+      "reportedGrade": null
+    }
+  ]
+}

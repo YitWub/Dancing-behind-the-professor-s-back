@@ -1,0 +1,640 @@
+{
+  "note": "휴리스틱 축 추출의 정확도 검증. `node scripts/score-lectures.ts --verify` 로 재생성.",
+  "caveat": "이 수치는 우리가 만든 시드 강의평을 상대로 잰 것이라 상한선에 가깝다. 실제 강의평에서는 더 낮게 나올 것이므로 \"휴리스틱 정확도\"로 일반화하면 안 된다.",
+  "method": "시드 생성에 쓴 \"진짜 축\"(LECTURE_SEEDS.truth)과 키워드 휴리스틱 추출값의 피어슨 상관계수. 강의평 8건 이상인 강의만 대상.",
+  "generatedAt": "2026-09-23T11:36:29.681Z",
+  "minReviews": 8,
+  "lectureCount": 23,
+  "axes": [
+    {
+      "axis": "gradeGenerosity",
+      "label": "학점 후함",
+      "correlation": 0.764,
+      "lectureCount": 23
+    },
+    {
+      "axis": "workload",
+      "label": "과제량",
+      "correlation": 0.786,
+      "lectureCount": 23
+    },
+    {
+      "axis": "attendanceStrictness",
+      "label": "출결 빡셈",
+      "correlation": 0.872,
+      "lectureCount": 23
+    },
+    {
+      "axis": "teachingQuality",
+      "label": "강의력",
+      "correlation": 0.555,
+      "lectureCount": 23
+    },
+    {
+      "axis": "examDifficulty",
+      "label": "시험 난이도",
+      "correlation": 0.934,
+      "lectureCount": 23
+    }
+  ],
+  "perLecture": [
+    {
+      "id": "L01",
+      "name": "자료구조론",
+      "reviewCount": 24,
+      "truth": {
+        "gradeGenerosity": 0.35,
+        "workload": 0.75,
+        "attendanceStrictness": 0.7,
+        "teachingQuality": 0.8,
+        "examDifficulty": 0.8
+      },
+      "extracted": {
+        "gradeGenerosity": 0.43,
+        "workload": 0.92,
+        "attendanceStrictness": 0.87,
+        "teachingQuality": 0.98,
+        "examDifficulty": 0.94
+      },
+      "keywordHits": {
+        "gradeGenerosity": 19,
+        "workload": 17,
+        "attendanceStrictness": 17,
+        "teachingQuality": 31,
+        "examDifficulty": 27
+      }
+    },
+    {
+      "id": "L02",
+      "name": "운영체제",
+      "reviewCount": 18,
+      "truth": {
+        "gradeGenerosity": 0.3,
+        "workload": 0.7,
+        "attendanceStrictness": 0.55,
+        "teachingQuality": 0.55,
+        "examDifficulty": 0.85
+      },
+      "extracted": {
+        "gradeGenerosity": 0.46,
+        "workload": 0.88,
+        "attendanceStrictness": 0.74,
+        "teachingQuality": 0.49,
+        "examDifficulty": 0.86
+      },
+      "keywordHits": {
+        "gradeGenerosity": 5,
+        "workload": 11,
+        "attendanceStrictness": 9,
+        "teachingQuality": 5,
+        "examDifficulty": 13
+      }
+    },
+    {
+      "id": "L03",
+      "name": "데이터베이스시스템",
+      "reviewCount": 21,
+      "truth": {
+        "gradeGenerosity": 0.6,
+        "workload": 0.5,
+        "attendanceStrictness": 0.4,
+        "teachingQuality": 0.85,
+        "examDifficulty": 0.45
+      },
+      "extracted": {
+        "gradeGenerosity": 0.81,
+        "workload": 0.34,
+        "attendanceStrictness": 0.28,
+        "teachingQuality": 0.98,
+        "examDifficulty": 0.61
+      },
+      "keywordHits": {
+        "gradeGenerosity": 19,
+        "workload": 7,
+        "attendanceStrictness": 8,
+        "teachingQuality": 24,
+        "examDifficulty": 5
+      }
+    },
+    {
+      "id": "L04",
+      "name": "기계학습개론",
+      "reviewCount": 16,
+      "truth": {
+        "gradeGenerosity": 0.55,
+        "workload": 0.8,
+        "attendanceStrictness": 0.35,
+        "teachingQuality": 0.75,
+        "examDifficulty": 0.7
+      },
+      "extracted": {
+        "gradeGenerosity": 0.57,
+        "workload": 0.89,
+        "attendanceStrictness": 0.33,
+        "teachingQuality": 0.3,
+        "examDifficulty": 0.81
+      },
+      "keywordHits": {
+        "gradeGenerosity": 3,
+        "workload": 14,
+        "attendanceStrictness": 9,
+        "teachingQuality": 8,
+        "examDifficulty": 11
+      }
+    },
+    {
+      "id": "L06",
+      "name": "파이썬프로그래밍",
+      "reviewCount": 31,
+      "truth": {
+        "gradeGenerosity": 0.8,
+        "workload": 0.35,
+        "attendanceStrictness": 0.3,
+        "teachingQuality": 0.8,
+        "examDifficulty": 0.25
+      },
+      "extracted": {
+        "gradeGenerosity": 0.86,
+        "workload": 0.39,
+        "attendanceStrictness": 0.49,
+        "teachingQuality": 0.99,
+        "examDifficulty": 0.21
+      },
+      "keywordHits": {
+        "gradeGenerosity": 29,
+        "workload": 19,
+        "attendanceStrictness": 22,
+        "teachingQuality": 35,
+        "examDifficulty": 22
+      }
+    },
+    {
+      "id": "L07",
+      "name": "알고리즘분석",
+      "reviewCount": 13,
+      "truth": {
+        "gradeGenerosity": 0.3,
+        "workload": 0.65,
+        "attendanceStrictness": 0.6,
+        "teachingQuality": 0.7,
+        "examDifficulty": 0.9
+      },
+      "extracted": {
+        "gradeGenerosity": 0.31,
+        "workload": 0.71,
+        "attendanceStrictness": 0.54,
+        "teachingQuality": 0.96,
+        "examDifficulty": 0.98
+      },
+      "keywordHits": {
+        "gradeGenerosity": 5,
+        "workload": 13,
+        "attendanceStrictness": 10,
+        "teachingQuality": 15,
+        "examDifficulty": 18
+      }
+    },
+    {
+      "id": "L08",
+      "name": "소프트웨어공학",
+      "reviewCount": 11,
+      "truth": {
+        "gradeGenerosity": 0.7,
+        "workload": 0.85,
+        "attendanceStrictness": 0.5,
+        "teachingQuality": 0.45,
+        "examDifficulty": 0.35
+      },
+      "extracted": {
+        "gradeGenerosity": 0.7,
+        "workload": 0.44,
+        "attendanceStrictness": 0.43,
+        "teachingQuality": 0.25,
+        "examDifficulty": 0.26
+      },
+      "keywordHits": {
+        "gradeGenerosity": 11,
+        "workload": 17,
+        "attendanceStrictness": 1,
+        "teachingQuality": 8,
+        "examDifficulty": 11
+      }
+    },
+    {
+      "id": "L09",
+      "name": "공업수학1",
+      "reviewCount": 27,
+      "truth": {
+        "gradeGenerosity": 0.25,
+        "workload": 0.6,
+        "attendanceStrictness": 0.75,
+        "teachingQuality": 0.6,
+        "examDifficulty": 0.85
+      },
+      "extracted": {
+        "gradeGenerosity": 0.33,
+        "workload": 0.33,
+        "attendanceStrictness": 0.74,
+        "teachingQuality": 0.48,
+        "examDifficulty": 0.84
+      },
+      "keywordHits": {
+        "gradeGenerosity": 18,
+        "workload": 20,
+        "attendanceStrictness": 23,
+        "teachingQuality": 18,
+        "examDifficulty": 23
+      }
+    },
+    {
+      "id": "L10",
+      "name": "재료역학",
+      "reviewCount": 9,
+      "truth": {
+        "gradeGenerosity": 0.35,
+        "workload": 0.55,
+        "attendanceStrictness": 0.6,
+        "teachingQuality": 0.7,
+        "examDifficulty": 0.75
+      },
+      "extracted": {
+        "gradeGenerosity": 0.46,
+        "workload": 0.82,
+        "attendanceStrictness": 0.66,
+        "teachingQuality": 0.48,
+        "examDifficulty": 0.92
+      },
+      "keywordHits": {
+        "gradeGenerosity": 1,
+        "workload": 7,
+        "attendanceStrictness": 4,
+        "teachingQuality": 4,
+        "examDifficulty": 11
+      }
+    },
+    {
+      "id": "L12",
+      "name": "창의적공학설계",
+      "reviewCount": 19,
+      "truth": {
+        "gradeGenerosity": 0.75,
+        "workload": 0.8,
+        "attendanceStrictness": 0.55,
+        "teachingQuality": 0.6,
+        "examDifficulty": 0.2
+      },
+      "extracted": {
+        "gradeGenerosity": 0.83,
+        "workload": 0.79,
+        "attendanceStrictness": 0.37,
+        "teachingQuality": 0.61,
+        "examDifficulty": 0.08
+      },
+      "keywordHits": {
+        "gradeGenerosity": 19,
+        "workload": 14,
+        "attendanceStrictness": 6,
+        "teachingQuality": 11,
+        "examDifficulty": 21
+      }
+    },
+    {
+      "id": "L13",
+      "name": "경영학원론",
+      "reviewCount": 22,
+      "truth": {
+        "gradeGenerosity": 0.6,
+        "workload": 0.4,
+        "attendanceStrictness": 0.7,
+        "teachingQuality": 0.65,
+        "examDifficulty": 0.45
+      },
+      "extracted": {
+        "gradeGenerosity": 0.52,
+        "workload": 0.39,
+        "attendanceStrictness": 0.83,
+        "teachingQuality": 0.51,
+        "examDifficulty": 0.21
+      },
+      "keywordHits": {
+        "gradeGenerosity": 13,
+        "workload": 6,
+        "attendanceStrictness": 20,
+        "teachingQuality": 11,
+        "examDifficulty": 7
+      }
+    },
+    {
+      "id": "L14",
+      "name": "회계원리",
+      "reviewCount": 15,
+      "truth": {
+        "gradeGenerosity": 0.3,
+        "workload": 0.55,
+        "attendanceStrictness": 0.65,
+        "teachingQuality": 0.75,
+        "examDifficulty": 0.8
+      },
+      "extracted": {
+        "gradeGenerosity": 0.68,
+        "workload": 0.49,
+        "attendanceStrictness": 0.84,
+        "teachingQuality": 0.86,
+        "examDifficulty": 0.93
+      },
+      "keywordHits": {
+        "gradeGenerosity": 5,
+        "workload": 5,
+        "attendanceStrictness": 8,
+        "teachingQuality": 8,
+        "examDifficulty": 13
+      }
+    },
+    {
+      "id": "L15",
+      "name": "마케팅관리",
+      "reviewCount": 17,
+      "truth": {
+        "gradeGenerosity": 0.7,
+        "workload": 0.75,
+        "attendanceStrictness": 0.35,
+        "teachingQuality": 0.7,
+        "examDifficulty": 0.35
+      },
+      "extracted": {
+        "gradeGenerosity": 0.55,
+        "workload": 0.72,
+        "attendanceStrictness": 0.34,
+        "teachingQuality": 0.79,
+        "examDifficulty": 0.27
+      },
+      "keywordHits": {
+        "gradeGenerosity": 12,
+        "workload": 15,
+        "attendanceStrictness": 15,
+        "teachingQuality": 21,
+        "examDifficulty": 6
+      }
+    },
+    {
+      "id": "L16",
+      "name": "미시경제학",
+      "reviewCount": 12,
+      "truth": {
+        "gradeGenerosity": 0.35,
+        "workload": 0.45,
+        "attendanceStrictness": 0.5,
+        "teachingQuality": 0.55,
+        "examDifficulty": 0.85
+      },
+      "extracted": {
+        "gradeGenerosity": 0.74,
+        "workload": 0.58,
+        "attendanceStrictness": 0.41,
+        "teachingQuality": 0.74,
+        "examDifficulty": 0.79
+      },
+      "keywordHits": {
+        "gradeGenerosity": 15,
+        "workload": 1,
+        "attendanceStrictness": 2,
+        "teachingQuality": 5,
+        "examDifficulty": 12
+      }
+    },
+    {
+      "id": "L17",
+      "name": "기초디자인",
+      "reviewCount": 14,
+      "truth": {
+        "gradeGenerosity": 0.55,
+        "workload": 0.9,
+        "attendanceStrictness": 0.8,
+        "teachingQuality": 0.65,
+        "examDifficulty": 0.15
+      },
+      "extracted": {
+        "gradeGenerosity": 0.62,
+        "workload": 0.96,
+        "attendanceStrictness": 0.96,
+        "teachingQuality": 0.56,
+        "examDifficulty": 0.1
+      },
+      "keywordHits": {
+        "gradeGenerosity": 7,
+        "workload": 15,
+        "attendanceStrictness": 15,
+        "teachingQuality": 6,
+        "examDifficulty": 19
+      }
+    },
+    {
+      "id": "L18",
+      "name": "영상제작실습",
+      "reviewCount": 10,
+      "truth": {
+        "gradeGenerosity": 0.65,
+        "workload": 0.85,
+        "attendanceStrictness": 0.6,
+        "teachingQuality": 0.75,
+        "examDifficulty": 0.2
+      },
+      "extracted": {
+        "gradeGenerosity": 0.73,
+        "workload": 0.66,
+        "attendanceStrictness": 0.69,
+        "teachingQuality": 0.22,
+        "examDifficulty": 0.16
+      },
+      "keywordHits": {
+        "gradeGenerosity": 11,
+        "workload": 8,
+        "attendanceStrictness": 3,
+        "teachingQuality": 7,
+        "examDifficulty": 11
+      }
+    },
+    {
+      "id": "L19",
+      "name": "광고론",
+      "reviewCount": 25,
+      "truth": {
+        "gradeGenerosity": 0.75,
+        "workload": 0.45,
+        "attendanceStrictness": 0.4,
+        "teachingQuality": 0.6,
+        "examDifficulty": 0.35
+      },
+      "extracted": {
+        "gradeGenerosity": 0.53,
+        "workload": 0.5,
+        "attendanceStrictness": 0.22,
+        "teachingQuality": 0.17,
+        "examDifficulty": 0.55
+      },
+      "keywordHits": {
+        "gradeGenerosity": 20,
+        "workload": 9,
+        "attendanceStrictness": 11,
+        "teachingQuality": 19,
+        "examDifficulty": 12
+      }
+    },
+    {
+      "id": "L20",
+      "name": "과학기술의철학적이해",
+      "reviewCount": 29,
+      "truth": {
+        "gradeGenerosity": 0.8,
+        "workload": 0.3,
+        "attendanceStrictness": 0.25,
+        "teachingQuality": 0.55,
+        "examDifficulty": 0.25
+      },
+      "extracted": {
+        "gradeGenerosity": 0.97,
+        "workload": 0.41,
+        "attendanceStrictness": 0.02,
+        "teachingQuality": 0.44,
+        "examDifficulty": 0.07
+      },
+      "keywordHits": {
+        "gradeGenerosity": 27,
+        "workload": 29,
+        "attendanceStrictness": 29,
+        "teachingQuality": 15,
+        "examDifficulty": 28
+      }
+    },
+    {
+      "id": "L21",
+      "name": "한양인의삶과비전",
+      "reviewCount": 26,
+      "truth": {
+        "gradeGenerosity": 0.85,
+        "workload": 0.2,
+        "attendanceStrictness": 0.85,
+        "teachingQuality": 0.4,
+        "examDifficulty": 0.15
+      },
+      "extracted": {
+        "gradeGenerosity": 0.97,
+        "workload": 0.06,
+        "attendanceStrictness": 0.89,
+        "teachingQuality": 0.54,
+        "examDifficulty": 0.06
+      },
+      "keywordHits": {
+        "gradeGenerosity": 37,
+        "workload": 29,
+        "attendanceStrictness": 25,
+        "teachingQuality": 21,
+        "examDifficulty": 31
+      }
+    },
+    {
+      "id": "L22",
+      "name": "실용영어회화",
+      "reviewCount": 23,
+      "truth": {
+        "gradeGenerosity": 0.55,
+        "workload": 0.5,
+        "attendanceStrictness": 0.9,
+        "teachingQuality": 0.7,
+        "examDifficulty": 0.4
+      },
+      "extracted": {
+        "gradeGenerosity": 0.56,
+        "workload": 0.41,
+        "attendanceStrictness": 0.86,
+        "teachingQuality": 0.3,
+        "examDifficulty": 0.22
+      },
+      "keywordHits": {
+        "gradeGenerosity": 10,
+        "workload": 7,
+        "attendanceStrictness": 28,
+        "teachingQuality": 21,
+        "examDifficulty": 16
+      }
+    },
+    {
+      "id": "L24",
+      "name": "스포츠와건강",
+      "reviewCount": 18,
+      "truth": {
+        "gradeGenerosity": 0.9,
+        "workload": 0.15,
+        "attendanceStrictness": 0.75,
+        "teachingQuality": 0.5,
+        "examDifficulty": 0.1
+      },
+      "extracted": {
+        "gradeGenerosity": 0.98,
+        "workload": 0.24,
+        "attendanceStrictness": 0.95,
+        "teachingQuality": 0.2,
+        "examDifficulty": 0.02
+      },
+      "keywordHits": {
+        "gradeGenerosity": 26,
+        "workload": 14,
+        "attendanceStrictness": 16,
+        "teachingQuality": 8,
+        "examDifficulty": 23
+      }
+    },
+    {
+      "id": "L25",
+      "name": "인공지능과사회",
+      "reviewCount": 8,
+      "truth": {
+        "gradeGenerosity": 0.7,
+        "workload": 0.4,
+        "attendanceStrictness": 0.35,
+        "teachingQuality": 0.8,
+        "examDifficulty": 0.3
+      },
+      "extracted": {
+        "gradeGenerosity": 0.87,
+        "workload": 0.33,
+        "attendanceStrictness": 0.52,
+        "teachingQuality": 0.97,
+        "examDifficulty": 0.46
+      },
+      "keywordHits": {
+        "gradeGenerosity": 6,
+        "workload": 5,
+        "attendanceStrictness": 11,
+        "teachingQuality": 12,
+        "examDifficulty": 4
+      }
+    },
+    {
+      "id": "L27",
+      "name": "심리학개론",
+      "reviewCount": 25,
+      "truth": {
+        "gradeGenerosity": 0.65,
+        "workload": 0.35,
+        "attendanceStrictness": 0.4,
+        "teachingQuality": 0.75,
+        "examDifficulty": 0.45
+      },
+      "extracted": {
+        "gradeGenerosity": 0.81,
+        "workload": 0.34,
+        "attendanceStrictness": 0.49,
+        "teachingQuality": 0.71,
+        "examDifficulty": 0.68
+      },
+      "keywordHits": {
+        "gradeGenerosity": 14,
+        "workload": 18,
+        "attendanceStrictness": 17,
+        "teachingQuality": 22,
+        "examDifficulty": 13
+      }
+    }
+  ]
+}

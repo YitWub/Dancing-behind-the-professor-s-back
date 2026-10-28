@@ -1,0 +1,131 @@
+/* ==========================================================================
+ *  components/theme.css — "슬기로운 에리카 생활" 색 토큰
+ * --------------------------------------------------------------------------
+ *  app/globals.css 는 조율자 소유라 건드리지 않는다. 이 파일은 팀원3 소유이고
+ *  AppShell 에서만 import 한다. 내용이 CSS 변수 + 유틸뿐이라
+ *  globals.css 의 --background/--foreground 와 충돌하지 않는다.
+ *
+ *  시리즈 색은 임의로 고른 게 아니라 dataviz 팔레트 검증기를 통과한 값이다.
+ *    학식↔창보  (#2a78d6 / #eb6834) : 명/암 모두 전 항목 PASS
+ *    확보↔상실  (#1baf7a / #e34948) : CVD ΔE 6.9 — 경고 구간.
+ *               → 막대에 직접 라벨 + 2px 간격을 "반드시" 붙이는 조건으로만 합법.
+ *                 BalanceBar 에서 라벨이나 간격을 빼면 접근성이 깨진다.
+ *    꿀강 5축 순서 램프(--e-ord-*) : 단일 색상, 명도 단조 증가 PASS
+ * ========================================================================== */
+
+.erica {
+  color-scheme: light;
+
+  /* 표면 */
+  --e-bg: #f5f4f0;
+  --e-surface: #fcfcfb;
+  --e-surface-2: #f0efec;
+  --e-border: #e4e2dc;
+  --e-border-strong: #cfccc3;
+
+  /* 잉크 */
+  --e-ink: #0b0b0b;
+  --e-ink-2: #52514e;
+  --e-muted: #78766f;
+
+  /* 강조 */
+  --e-accent: #2a78d6;
+  --e-accent-soft: #e8f0fc;
+
+  /* 시리즈 — 대결 */
+  --e-haksik: #2a78d6;
+  --e-changbo: #eb6834;
+
+  /* 시리즈 — 학점 잔고 */
+  --e-secured: #1baf7a;
+  --e-lost: #e34948;
+  --e-remaining: #cfccc3;
+
+  /* 순서 램프 — 꿀강 5축 */
+  --e-ord-1: #86b6ef;
+  --e-ord-2: #5598e7;
+  --e-ord-3: #2a78d6;
+  --e-ord-4: #1c5cab;
+  --e-ord-5: #104281;
+
+  /* 상태 — 아이콘/라벨과 항상 같이 쓴다. 색 단독으로 의미를 나르지 않는다 */
+  --e-good: #0ca30c;
+  --e-warn: #fab219;
+  --e-serious: #ec835a;
+  --e-critical: #d03b3b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .erica {
+    color-scheme: dark;
+
+    --e-bg: #121211;
+    --e-surface: #1a1a19;
+    --e-surface-2: #232320;
+    --e-border: #302f2c;
+    --e-border-strong: #45443f;
+
+    --e-ink: #ffffff;
+    --e-ink-2: #c3c2b7;
+    --e-muted: #8f8d83;
+
+    --e-accent: #3987e5;
+    --e-accent-soft: #16243a;
+
+    --e-haksik: #3987e5;
+    --e-changbo: #d95926;
+
+    --e-secured: #199e70;
+    --e-lost: #e66767;
+    --e-remaining: #45443f;
+
+    --e-ord-1: #cde2fb;
+    --e-ord-2: #9ec5f4;
+    --e-ord-3: #6da7ec;
+    --e-ord-4: #3987e5;
+    --e-ord-5: #184f95;
+  }
+}
+
+:root[data-theme="dark"] .erica {
+  color-scheme: dark;
+
+  --e-bg: #121211;
+  --e-surface: #1a1a19;
+  --e-surface-2: #232320;
+  --e-border: #302f2c;
+  --e-border-strong: #45443f;
+
+  --e-ink: #ffffff;
+  --e-ink-2: #c3c2b7;
+  --e-muted: #8f8d83;
+
+  --e-accent: #3987e5;
+  --e-accent-soft: #16243a;
+
+  --e-haksik: #3987e5;
+  --e-changbo: #d95926;
+
+  --e-secured: #199e70;
+  --e-lost: #e66767;
+  --e-remaining: #45443f;
+
+  --e-ord-1: #cde2fb;
+  --e-ord-2: #9ec5f4;
+  --e-ord-3: #6da7ec;
+  --e-ord-4: #3987e5;
+  --e-ord-5: #184f95;
+}
+
+/* "모르면 흐리게" — 정직성 4원칙의 물리적 구현.
+   blur 된 칸은 hover 해도 선명해지지 않는다. 데이터를 넣어야 보인다. */
+.e-blur {
+  filter: blur(6px);
+  opacity: 0.55;
+  user-select: none;
+  pointer-events: none;
+}
+
+.erica ::selection {
+  background: var(--e-accent-soft);
+}

@@ -1,0 +1,812 @@
+{
+  "note": "빌드 타임 산출물. 앱은 이 파일만 읽는다 (런타임에 API 키 불필요).",
+  "generatedAt": "2026-09-23T11:53:38.844Z",
+  "mode": "heuristic",
+  "model": null,
+  "source": "data/reviews.seed.json (시드/가상 강의평)",
+  "llmOk": 0,
+  "llmFail": 0,
+  "lectures": [
+    {
+      "id": "L01",
+      "name": "자료구조론",
+      "professor": "한도윤",
+      "department": "ICT융합학부",
+      "credits": 3,
+      "type": "전공필수",
+      "reviewCount": 24,
+      "avgRating": 2.54,
+      "axes": {
+        "gradeGenerosity": 0.43,
+        "workload": 0.92,
+        "attendanceStrictness": 0.87,
+        "teachingQuality": 0.98,
+        "examDifficulty": 0.94
+      },
+      "reliability": {
+        "score": 0.86,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 24건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 43,
+      "summary": "강의력이 좋음, 시험이 어려움, 과제 부담이 큼.\n강의력은 장점이지만 시험 난이도는 감안해야 합니다.\n강의평 24건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L02",
+      "name": "운영체제",
+      "professor": "서지환",
+      "department": "ICT융합학부",
+      "credits": 3,
+      "type": "전공필수",
+      "reviewCount": 18,
+      "avgRating": 2.28,
+      "axes": {
+        "gradeGenerosity": 0.46,
+        "workload": 0.88,
+        "attendanceStrictness": 0.74,
+        "teachingQuality": 0.49,
+        "examDifficulty": 0.86
+      },
+      "reliability": {
+        "score": 0.82,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 18건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 41,
+      "summary": "과제 부담이 큼, 시험이 어려움, 출결이 엄격.\n전반적으로 부담이 있는 강의입니다.\n강의평 18건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L03",
+      "name": "데이터베이스시스템",
+      "professor": "오세림",
+      "department": "ICT융합학부",
+      "credits": 3,
+      "type": "전공선택",
+      "reviewCount": 21,
+      "avgRating": 3.71,
+      "axes": {
+        "gradeGenerosity": 0.81,
+        "workload": 0.34,
+        "attendanceStrictness": 0.28,
+        "teachingQuality": 0.98,
+        "examDifficulty": 0.61
+      },
+      "reliability": {
+        "score": 0.84,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 21건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 65,
+      "summary": "강의력이 좋음, 학점은 후한 편, 출결이 느슨.\n강의력·학점 후함·출결 빡셈 쪽에서 점수를 얻는 강의입니다.\n강의평 21건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L04",
+      "name": "기계학습개론",
+      "professor": "윤가온",
+      "department": "인공지능학과",
+      "credits": 3,
+      "type": "전공선택",
+      "reviewCount": 16,
+      "avgRating": 2.88,
+      "axes": {
+        "gradeGenerosity": 0.57,
+        "workload": 0.89,
+        "attendanceStrictness": 0.33,
+        "teachingQuality": 0.3,
+        "examDifficulty": 0.81
+      },
+      "reliability": {
+        "score": 0.8,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 16건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 45,
+      "summary": "과제 부담이 큼, 시험이 어려움, 강의력이 아쉬움.\n전반적으로 부담이 있는 강의입니다.\n강의평 16건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L05",
+      "name": "컴퓨터네트워크",
+      "professor": "배시현",
+      "department": "ICT융합학부",
+      "credits": 3,
+      "type": "전공선택",
+      "reviewCount": 4,
+      "avgRating": 3,
+      "axes": {
+        "gradeGenerosity": 0.5,
+        "workload": 0.5,
+        "attendanceStrictness": 0.8,
+        "teachingQuality": 0.42,
+        "examDifficulty": 0.36
+      },
+      "reliability": {
+        "score": 0.5,
+        "band": "medium",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "표본 4건 — 평균을 신뢰하기엔 적습니다"
+        ],
+        "flags": [
+          "SMALL_SAMPLE"
+        ]
+      },
+      "honeyScore": 49,
+      "summary": "출결이 엄격, 시험이 쉬운 편.\n시험 난이도는 장점이지만 출결 빡셈은 감안해야 합니다.\n주의: 표본 부족 (강의평 4건)."
+    },
+    {
+      "id": "L06",
+      "name": "파이썬프로그래밍",
+      "professor": "노하린",
+      "department": "소프트웨어학부",
+      "credits": 3,
+      "type": "전공선택",
+      "reviewCount": 31,
+      "avgRating": 4.03,
+      "axes": {
+        "gradeGenerosity": 0.86,
+        "workload": 0.39,
+        "attendanceStrictness": 0.49,
+        "teachingQuality": 0.99,
+        "examDifficulty": 0.21
+      },
+      "reliability": {
+        "score": 0.89,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 31건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 69,
+      "summary": "강의력이 좋음, 학점은 후한 편, 시험이 쉬운 편.\n강의력·학점 후함·시험 난이도 쪽에서 점수를 얻는 강의입니다.\n강의평 31건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L07",
+      "name": "알고리즘분석",
+      "professor": "한도윤",
+      "department": "소프트웨어학부",
+      "credits": 3,
+      "type": "전공필수",
+      "reviewCount": 13,
+      "avgRating": 2.46,
+      "axes": {
+        "gradeGenerosity": 0.31,
+        "workload": 0.71,
+        "attendanceStrictness": 0.54,
+        "teachingQuality": 0.96,
+        "examDifficulty": 0.98
+      },
+      "reliability": {
+        "score": 0.76,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 13건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 47,
+      "summary": "시험이 어려움, 강의력이 좋음, 과제 부담이 큼.\n강의력은 장점이지만 시험 난이도는 감안해야 합니다.\n강의평 13건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L08",
+      "name": "소프트웨어공학",
+      "professor": "정민찬",
+      "department": "소프트웨어학부",
+      "credits": 3,
+      "type": "전공선택",
+      "reviewCount": 11,
+      "avgRating": 3.45,
+      "axes": {
+        "gradeGenerosity": 0.7,
+        "workload": 0.44,
+        "attendanceStrictness": 0.43,
+        "teachingQuality": 0.25,
+        "examDifficulty": 0.26
+      },
+      "reliability": {
+        "score": 0.59,
+        "band": "medium",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "호불호가 갈립니다 — 1~2점 45% / 4~5점 55%. 평균이 아무도 대표하지 못합니다"
+        ],
+        "flags": [
+          "POLARIZED"
+        ]
+      },
+      "honeyScore": 52,
+      "summary": "강의력이 아쉬움, 시험이 쉬운 편, 학점은 후한 편.\n시험 난이도는 장점이지만 강의력은 감안해야 합니다.\n주의: 호불호 갈림 (강의평 11건)."
+    },
+    {
+      "id": "L09",
+      "name": "공업수학1",
+      "professor": "강태오",
+      "department": "기계공학과",
+      "credits": 3,
+      "type": "전공필수",
+      "reviewCount": 27,
+      "avgRating": 2.41,
+      "axes": {
+        "gradeGenerosity": 0.33,
+        "workload": 0.33,
+        "attendanceStrictness": 0.74,
+        "teachingQuality": 0.48,
+        "examDifficulty": 0.84
+      },
+      "reliability": {
+        "score": 0.87,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 27건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 43,
+      "summary": "시험이 어려움, 출결이 엄격, 학점은 짠 편.\n전반적으로 부담이 있는 강의입니다.\n강의평 27건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L10",
+      "name": "재료역학",
+      "professor": "문세아",
+      "department": "기계공학과",
+      "credits": 3,
+      "type": "전공필수",
+      "reviewCount": 9,
+      "avgRating": 2.78,
+      "axes": {
+        "gradeGenerosity": 0.46,
+        "workload": 0.82,
+        "attendanceStrictness": 0.66,
+        "teachingQuality": 0.48,
+        "examDifficulty": 0.92
+      },
+      "reliability": {
+        "score": 0.69,
+        "band": "medium",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 9건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 45,
+      "summary": "시험이 어려움, 과제 부담이 큼, 출결이 엄격.\n전반적으로 부담이 있는 강의입니다.\n강의평 9건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L11",
+      "name": "전자회로",
+      "professor": "임주혁",
+      "department": "전자공학부",
+      "credits": 3,
+      "type": "전공선택",
+      "reviewCount": 7,
+      "avgRating": 2.29,
+      "axes": {
+        "gradeGenerosity": 0.41,
+        "workload": 0.73,
+        "attendanceStrictness": 0.52,
+        "teachingQuality": 0.44,
+        "examDifficulty": 0.73
+      },
+      "reliability": {
+        "score": 0.48,
+        "band": "medium",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "표본 7건 — 평균을 신뢰하기엔 적습니다",
+          "최근 강의평이 2024년입니다 — 지금과 다를 수 있습니다"
+        ],
+        "flags": [
+          "SMALL_SAMPLE",
+          "STALE"
+        ]
+      },
+      "honeyScore": 47,
+      "summary": "과제 부담이 큼, 시험이 어려움.\n전반적으로 부담이 있는 강의입니다.\n주의: 표본 부족, 오래된 강의평 (강의평 7건)."
+    },
+    {
+      "id": "L12",
+      "name": "창의적공학설계",
+      "professor": "유채원",
+      "department": "공학대학",
+      "credits": 2,
+      "type": "전공선택",
+      "reviewCount": 19,
+      "avgRating": 3.42,
+      "axes": {
+        "gradeGenerosity": 0.83,
+        "workload": 0.79,
+        "attendanceStrictness": 0.37,
+        "teachingQuality": 0.61,
+        "examDifficulty": 0.08
+      },
+      "reliability": {
+        "score": 0.83,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 19건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 58,
+      "summary": "시험이 쉬운 편, 학점은 후한 편, 과제 부담이 큼.\n시험 난이도는 장점이지만 과제량은 감안해야 합니다.\n강의평 19건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L13",
+      "name": "경영학원론",
+      "professor": "조은결",
+      "department": "경영학부",
+      "credits": 3,
+      "type": "전공필수",
+      "reviewCount": 22,
+      "avgRating": 3.55,
+      "axes": {
+        "gradeGenerosity": 0.52,
+        "workload": 0.39,
+        "attendanceStrictness": 0.83,
+        "teachingQuality": 0.51,
+        "examDifficulty": 0.21
+      },
+      "reliability": {
+        "score": 0.85,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 22건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 51,
+      "summary": "출결이 엄격, 시험이 쉬운 편.\n시험 난이도는 장점이지만 출결 빡셈은 감안해야 합니다.\n강의평 22건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L14",
+      "name": "회계원리",
+      "professor": "신유담",
+      "department": "경영학부",
+      "credits": 3,
+      "type": "전공필수",
+      "reviewCount": 15,
+      "avgRating": 2.93,
+      "axes": {
+        "gradeGenerosity": 0.68,
+        "workload": 0.49,
+        "attendanceStrictness": 0.84,
+        "teachingQuality": 0.86,
+        "examDifficulty": 0.93
+      },
+      "reliability": {
+        "score": 0.79,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 15건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 52,
+      "summary": "시험이 어려움, 강의력이 좋음, 출결이 엄격.\n강의력은 장점이지만 시험 난이도는 감안해야 합니다.\n강의평 15건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L15",
+      "name": "마케팅관리",
+      "professor": "천보람",
+      "department": "경영학부",
+      "credits": 3,
+      "type": "전공선택",
+      "reviewCount": 17,
+      "avgRating": 3.76,
+      "axes": {
+        "gradeGenerosity": 0.55,
+        "workload": 0.72,
+        "attendanceStrictness": 0.34,
+        "teachingQuality": 0.79,
+        "examDifficulty": 0.27
+      },
+      "reliability": {
+        "score": 0.69,
+        "band": "medium",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "학점을 밝힌 15명 중 100%가 A 계열입니다 — 잘 받은 사람만 썼을 가능성(상방 편향)"
+        ],
+        "flags": [
+          "SELF_SELECTION"
+        ]
+      },
+      "honeyScore": 54,
+      "summary": "강의력이 좋음, 시험이 쉬운 편, 과제 부담이 큼.\n강의력은 장점이지만 과제량은 감안해야 합니다.\n주의: 상방 편향 의심 (강의평 17건)."
+    },
+    {
+      "id": "L16",
+      "name": "미시경제학",
+      "professor": "구성후",
+      "department": "경제학부",
+      "credits": 3,
+      "type": "전공필수",
+      "reviewCount": 12,
+      "avgRating": 2.67,
+      "axes": {
+        "gradeGenerosity": 0.74,
+        "workload": 0.58,
+        "attendanceStrictness": 0.41,
+        "teachingQuality": 0.74,
+        "examDifficulty": 0.79
+      },
+      "reliability": {
+        "score": 0.75,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 12건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 54,
+      "summary": "시험이 어려움, 학점은 후한 편, 강의력이 좋음.\n학점 후함은 장점이지만 시험 난이도는 감안해야 합니다.\n강의평 12건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L17",
+      "name": "기초디자인",
+      "professor": "남지오",
+      "department": "산업디자인학과",
+      "credits": 3,
+      "type": "전공필수",
+      "reviewCount": 14,
+      "avgRating": 3.14,
+      "axes": {
+        "gradeGenerosity": 0.62,
+        "workload": 0.96,
+        "attendanceStrictness": 0.96,
+        "teachingQuality": 0.56,
+        "examDifficulty": 0.1
+      },
+      "reliability": {
+        "score": 0.78,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 14건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 47,
+      "summary": "과제 부담이 큼, 출결이 엄격, 시험이 쉬운 편.\n시험 난이도는 장점이지만 과제량은 감안해야 합니다.\n강의평 14건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L18",
+      "name": "영상제작실습",
+      "professor": "권다미",
+      "department": "정보사회미디어학과",
+      "credits": 3,
+      "type": "전공선택",
+      "reviewCount": 10,
+      "avgRating": 3.1,
+      "axes": {
+        "gradeGenerosity": 0.73,
+        "workload": 0.66,
+        "attendanceStrictness": 0.69,
+        "teachingQuality": 0.22,
+        "examDifficulty": 0.16
+      },
+      "reliability": {
+        "score": 0.71,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 10건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 50,
+      "summary": "시험이 쉬운 편, 강의력이 아쉬움, 학점은 후한 편.\n시험 난이도는 장점이지만 강의력은 감안해야 합니다.\n강의평 10건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L19",
+      "name": "광고론",
+      "professor": "표하늘",
+      "department": "광고홍보학과",
+      "credits": 3,
+      "type": "전공선택",
+      "reviewCount": 25,
+      "avgRating": 3.36,
+      "axes": {
+        "gradeGenerosity": 0.53,
+        "workload": 0.5,
+        "attendanceStrictness": 0.22,
+        "teachingQuality": 0.17,
+        "examDifficulty": 0.55
+      },
+      "reliability": {
+        "score": 0.6,
+        "band": "medium",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "교수 변경 이력이 있습니다 — 이전 학기 강의평은 다른 강의에 대한 평가입니다"
+        ],
+        "flags": [
+          "PROFESSOR_CHANGED"
+        ]
+      },
+      "honeyScore": 49,
+      "summary": "강의력이 아쉬움, 출결이 느슨.\n출결 빡셈은 장점이지만 강의력은 감안해야 합니다.\n주의: 교수 변경 (강의평 25건)."
+    },
+    {
+      "id": "L20",
+      "name": "과학기술의철학적이해",
+      "professor": "석유진",
+      "department": "교양학부",
+      "credits": 2,
+      "type": "교양필수",
+      "reviewCount": 29,
+      "avgRating": 3.79,
+      "axes": {
+        "gradeGenerosity": 0.97,
+        "workload": 0.41,
+        "attendanceStrictness": 0.02,
+        "teachingQuality": 0.44,
+        "examDifficulty": 0.07
+      },
+      "reliability": {
+        "score": 0.88,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 29건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 69,
+      "summary": "출결이 느슨, 학점은 후한 편, 시험이 쉬운 편.\n출결 빡셈·학점 후함·시험 난이도 쪽에서 점수를 얻는 강의입니다.\n강의평 29건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L21",
+      "name": "한양인의삶과비전",
+      "professor": "봉시우",
+      "department": "교양학부",
+      "credits": 1,
+      "type": "교양필수",
+      "reviewCount": 26,
+      "avgRating": 3.81,
+      "axes": {
+        "gradeGenerosity": 0.97,
+        "workload": 0.06,
+        "attendanceStrictness": 0.89,
+        "teachingQuality": 0.54,
+        "examDifficulty": 0.06
+      },
+      "reliability": {
+        "score": 0.87,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 26건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 66,
+      "summary": "학점은 후한 편, 과제 부담이 작음, 시험이 쉬운 편.\n학점 후함·과제량·시험 난이도 쪽에서 점수를 얻는 강의입니다.\n강의평 26건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L22",
+      "name": "실용영어회화",
+      "professor": "Daniel Whitmore",
+      "department": "국제문화대학",
+      "credits": 2,
+      "type": "교양필수",
+      "reviewCount": 23,
+      "avgRating": 3.35,
+      "axes": {
+        "gradeGenerosity": 0.56,
+        "workload": 0.41,
+        "attendanceStrictness": 0.86,
+        "teachingQuality": 0.3,
+        "examDifficulty": 0.22
+      },
+      "reliability": {
+        "score": 0.85,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 23건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 48,
+      "summary": "출결이 엄격, 시험이 쉬운 편, 강의력이 아쉬움.\n시험 난이도는 장점이지만 출결 빡셈은 감안해야 합니다.\n강의평 23건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L23",
+      "name": "세계의음식문화",
+      "professor": "반예서",
+      "department": "교양학부",
+      "credits": 2,
+      "type": "교양선택",
+      "reviewCount": 6,
+      "avgRating": 3.83,
+      "axes": {
+        "gradeGenerosity": 0.92,
+        "workload": 0.65,
+        "attendanceStrictness": 0.57,
+        "teachingQuality": 0.54,
+        "examDifficulty": 0.11
+      },
+      "reliability": {
+        "score": 0.6,
+        "band": "medium",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "표본 6건 — 평균을 신뢰하기엔 적습니다"
+        ],
+        "flags": [
+          "SMALL_SAMPLE"
+        ]
+      },
+      "honeyScore": 54,
+      "summary": "학점은 후한 편, 시험이 쉬운 편, 과제 부담이 큼.\n학점 후함은 장점이지만 과제량은 감안해야 합니다.\n주의: 표본 부족 (강의평 6건)."
+    },
+    {
+      "id": "L24",
+      "name": "스포츠와건강",
+      "professor": "길도현",
+      "department": "교양학부",
+      "credits": 1,
+      "type": "교양선택",
+      "reviewCount": 18,
+      "avgRating": 4.11,
+      "axes": {
+        "gradeGenerosity": 0.98,
+        "workload": 0.24,
+        "attendanceStrictness": 0.95,
+        "teachingQuality": 0.2,
+        "examDifficulty": 0.02
+      },
+      "reliability": {
+        "score": 0.82,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 18건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 58,
+      "summary": "학점은 후한 편, 시험이 쉬운 편, 출결이 엄격.\n학점 후함은 장점이지만 출결 빡셈은 감안해야 합니다.\n강의평 18건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L25",
+      "name": "인공지능과사회",
+      "professor": "윤가온",
+      "department": "교양학부",
+      "credits": 2,
+      "type": "교양선택",
+      "reviewCount": 8,
+      "avgRating": 3.88,
+      "axes": {
+        "gradeGenerosity": 0.87,
+        "workload": 0.33,
+        "attendanceStrictness": 0.52,
+        "teachingQuality": 0.97,
+        "examDifficulty": 0.46
+      },
+      "reliability": {
+        "score": 0.67,
+        "band": "medium",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 8건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 58,
+      "summary": "강의력이 좋음, 학점은 후한 편, 과제 부담이 작음.\n강의력·학점 후함·과제량 쪽에서 점수를 얻는 강의입니다.\n강의평 8건 기준이며 특별한 편향 신호는 없습니다."
+    },
+    {
+      "id": "L26",
+      "name": "통계학입문",
+      "professor": "하은별",
+      "department": "응용통계학과",
+      "credits": 3,
+      "type": "일반선택",
+      "reviewCount": 5,
+      "avgRating": 3,
+      "axes": {
+        "gradeGenerosity": 0.46,
+        "workload": 0.5,
+        "attendanceStrictness": 0.42,
+        "teachingQuality": 0.31,
+        "examDifficulty": 0.46
+      },
+      "reliability": {
+        "score": 0.42,
+        "band": "low",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "표본 5건 — 평균을 신뢰하기엔 적습니다",
+          "최근 강의평이 2022년입니다 — 지금과 다를 수 있습니다"
+        ],
+        "flags": [
+          "SMALL_SAMPLE",
+          "STALE"
+        ]
+      },
+      "honeyScore": 49,
+      "summary": "강의력이 아쉬움.\n전반적으로 부담이 있는 강의입니다.\n주의: 표본 부족, 오래된 강의평 (강의평 5건)."
+    },
+    {
+      "id": "L27",
+      "name": "심리학개론",
+      "professor": "탁소윤",
+      "department": "교양학부",
+      "credits": 3,
+      "type": "교양선택",
+      "reviewCount": 25,
+      "avgRating": 3.76,
+      "axes": {
+        "gradeGenerosity": 0.81,
+        "workload": 0.34,
+        "attendanceStrictness": 0.49,
+        "teachingQuality": 0.71,
+        "examDifficulty": 0.68
+      },
+      "reliability": {
+        "score": 0.86,
+        "band": "high",
+        "reasons": [
+          "데이터 출처: 시드(가상) 강의평 — 실제 수집 데이터가 아닙니다",
+          "축 추출: 키워드 휴리스틱 (LLM 미사용)",
+          "강의평 25건, 특별한 편향 신호 없음"
+        ],
+        "flags": []
+      },
+      "honeyScore": 61,
+      "summary": "학점은 후한 편, 강의력이 좋음, 시험이 어려움.\n학점 후함은 장점이지만 시험 난이도는 감안해야 합니다.\n강의평 25건 기준이며 특별한 편향 신호는 없습니다."
+    }
+  ]
+}
