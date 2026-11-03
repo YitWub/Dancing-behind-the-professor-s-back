@@ -125,21 +125,44 @@ export function HomeScreen({ initialDate }: { initialDate: string }) {
           <p className="text-[13px] text-[var(--e-muted)]">식단을 아직 못 가져왔습니다.</p>
         ) : (
           <ul className="flex flex-col gap-2">
-            {todayMeals.slice(0, 2).map((m) => (
-              <li key={m.id} className="rounded-xl bg-[var(--e-surface-2)] px-3 py-2.5">
-                <div className="flex items-baseline justify-between gap-2">
-                  <span className="text-[12.5px] font-semibold text-[var(--e-ink)]">
-                    {cafeteriaLabel(m.cafeteria)}
-                  </span>
-                  {m.price != null ? (
-                    <span className="text-[12px] tabular-nums text-[var(--e-muted)]">
-                      {m.price.toLocaleString('ko-KR')}원
-                    </span>
-                  ) : null}
-                </div>
-                <p className="mt-1 line-clamp-1 text-[12.5px] text-[var(--e-ink-2)]">{m.menu.join(' · ')}</p>
-              </li>
-            ))}
+            {todayMeals.slice(0, 4).map((m) => {
+              const photo = m.imageUrl ?? m.imageSourceUrl ?? null;
+              return (
+                <li key={m.id} className="flex items-center gap-3 rounded-xl bg-[var(--e-surface-2)] px-3 py-2.5">
+                  <div className="h-14 w-16 shrink-0 overflow-hidden rounded-lg border border-[var(--e-border)] bg-[var(--e-surface)]">
+                    {photo ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={photo}
+                        alt={m.name ?? cafeteriaLabel(m.cafeteria)}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center px-1 text-center text-[10px] leading-tight text-[var(--e-muted)]">
+                        이미지가 없습니다.
+                      </div>
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <span className="text-[12.5px] font-semibold text-[var(--e-ink)]">
+                        {cafeteriaLabel(m.cafeteria)}
+                      </span>
+                      {m.price != null ? (
+                        <span className="text-[12px] tabular-nums text-[var(--e-muted)]">
+                          {m.price.toLocaleString('ko-KR')}원
+                        </span>
+                      ) : null}
+                    </div>
+                    {m.name ? (
+                      <p className="mt-0.5 truncate text-[12.5px] font-medium text-[var(--e-ink)]">{m.name}</p>
+                    ) : null}
+                    <p className="mt-0.5 line-clamp-1 text-[12px] text-[var(--e-ink-2)]">{m.menu.join(' · ')}</p>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
 

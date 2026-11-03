@@ -43,12 +43,37 @@ const TREND_MIN_N = 3;
 export const CAFETERIA_LABELS: Record<Cafeteria, string> = {
   haksik: '학생식당',
   changbo: '창업보육센터',
-  dorm: '창의인재원식당',
+  dorm: '기숙사식당',
   faculty: '교직원식당',
 };
 
+export const CAFETERIA_ORDER: Cafeteria[] = ['haksik', 'changbo', 'dorm', 'faculty'];
+
 /** 대결의 주인공 두 진영. 나머지 식당은 스코어보드에만 함께 표시한다. */
 export const BATTLE_SIDES: [Cafeteria, Cafeteria] = ['changbo', 'haksik'];
+
+/** 식단별 4단계 평점 버튼 (좋좋 / 느좋 / 안좋 / 좆) */
+export type MealRatingLabel = '좋좋' | '느좋' | '안좋' | '좆';
+
+export interface MealRatingOption {
+  label: MealRatingLabel;
+  rating: number;
+  desc: string;
+}
+
+export const MEAL_RATING_OPTIONS: readonly MealRatingOption[] = [
+  { label: '좋좋', rating: 5, desc: '최고' },
+  { label: '느좋', rating: 4, desc: '괜찮음' },
+  { label: '안좋', rating: 2, desc: '별로' },
+  { label: '좆', rating: 1, desc: '최악' },
+] as const;
+
+export function ratingToLabel(rating: number): MealRatingLabel {
+  if (rating >= 5) return '좋좋';
+  if (rating >= 3) return '느좋';
+  if (rating === 2) return '안좋';
+  return '좆';
+}
 
 const MEAL_TIME_LABELS: Record<MealTime, string> = {
   breakfast: '조식',
@@ -89,6 +114,11 @@ interface Side {
   ratings: number[];
 }
 
+/**
+ * 하나의 구내식당에 해당 날짜·끼니의 식단 메뉴(MealItem)가 두 개 이상이라면,
+ * 가장 평점이 높은 식단 메뉴의 평점 목록으로 비교한다.
+ * (평균 평점이 같을 경우 후기 수가 더 많은 식단 메뉴를 선택)
+ */
 function ratingsFor(
   items: MealItem[],
   reviews: MealReview[],
@@ -96,10 +126,32 @@ function ratingsFor(
   mealTime: MealTime,
   cafeteria: Cafeteria,
 ): number[] {
-  const ids = new Set(
-    items.filter((m) => m.date === date && m.mealTime === mealTime && m.cafeteria === cafeteria).map((m) => m.id),
+  const matchingItems = items.filter(
+    (m) => m.date === date && m.mealTime === mealTime && m.cafeteria === cafeteria,
   );
-  return reviews.filter((r) => ids.has(r.mealItemId)).map((r) => r.rating);
+  if (matchingItems.length === 0) return [];
+  if (matchingItems.length === 1) {
+    const onlyId = matchingItems[0].id;
+    return reviews.filter((r) => r.mealItemId === onlyId).map((r) => r.rating);
+  }
+
+  let bestRatings: number[] = [];
+  let bestMean = -Infinity;
+
+  for (const item of matchingItems) {
+    const itemRatings = reviews.filter((r) => r.mealItemId === item.id).map((r) => r.rating);
+    if (itemRatings.length === 0) continue;
+    const itemMean = mean(itemRatings) as number;
+    if (
+      itemMean > bestMean ||
+      (itemMean === bestMean && itemRatings.length > bestRatings.length)
+    ) {
+      bestMean = itemMean;
+      bestRatings = itemRatings;
+    }
+  }
+
+  return bestRatings;
 }
 
 /** 최근 7일(당일 제외 직전 7일 + 당일) 추세. 표본이 모자라면 정직하게 flat. */

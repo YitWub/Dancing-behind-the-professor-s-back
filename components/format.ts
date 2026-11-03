@@ -150,7 +150,7 @@ export function cafeteriaShort(c: Cafeteria): string {
     case 'changbo':
       return '창보';
     case 'dorm':
-      return '인재원';
+      return '기숙사';
     case 'faculty':
       return '교직원';
   }

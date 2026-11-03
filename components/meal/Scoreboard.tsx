@@ -12,16 +12,16 @@
 
 import type { BattleResult, BattleStanding } from '@/lib/types';
 import { BATTLE_SIDES } from '@/lib/meal/battle';
-import { cafeteriaShort, mealTimeLabel } from '@/components/format';
+import { cafeteriaShort } from '@/components/format';
 import { TrendGlyph } from '@/components/charts';
-import { Card, Icon, SectionTitle } from '@/components/ui';
+import { Card, Icon } from '@/components/ui';
 
 function sideColor(c: BattleStanding['cafeteria']): string {
   return c === 'changbo' ? 'var(--e-changbo)' : 'var(--e-haksik)';
 }
 
 export function Scoreboard({ battle, compact = false }: { battle: BattleResult; compact?: boolean }) {
-  // 대결의 주인공은 창보와 학식 둘뿐. standings 에는 인재원식당 등이 같이 온다.
+  // 대결의 주인공은 창보와 학식 둘뿐. standings 에는 기숙사식당 등이 같이 온다.
   const [leftId, rightId] = BATTLE_SIDES;
   const a = battle.standings.find((s) => s.cafeteria === leftId);
   const b = battle.standings.find((s) => s.cafeteria === rightId);
@@ -41,9 +41,6 @@ export function Scoreboard({ battle, compact = false }: { battle: BattleResult; 
           {!battle.decisive ? <Icon name="warn" className="mt-[2px] h-3.5 w-3.5 shrink-0" /> : null}
           <p className="text-[13.5px] font-bold leading-snug text-[var(--e-ink)]">{battle.headline}</p>
         </div>
-        <p className="mt-0.5 text-[11px] text-[var(--e-muted)]">
-          {mealTimeLabel(battle.mealTime)} · 후기 기준
-        </p>
       </div>
 
       {/* 스코어 */}

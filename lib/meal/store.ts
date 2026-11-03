@@ -1,5 +1,5 @@
 /**
- * lib/meal/store.ts — data/*.json 파일 저장소 (DB 없음)
+ * lib/meal/store.ts — data/*.json 파일 저장소 (DB 없음 / 추후 DB 이관 대응 설계)
  *
  * ⚠️ 서버 전용 모듈입니다. 'node:fs' 를 쓰므로 클라이언트 컴포넌트에서
  *    import 하면 빌드가 깨집니다. Route Handler / 서버 컴포넌트에서만 쓰세요.
@@ -7,19 +7,93 @@
  * 읽기 대상
  *   data/meals.json           크롤러 산출물 (CrawlResult)
  *   data/meals.seed.json      시드 식단 (크롤링 실패 시 폴백)
+ *   data/meal-photo-db.json   식단 사진이 존재할 때 식단+사진을 함께 저장하는 DB 매핑 테이블
  *   data/meal-reviews.json    사용자 후기 (쓰기 대상, 없으면 시드에서 초기화)
  *   data/meal-reviews.seed.json
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 
-import type { BattleResult, CrawlResult, MealItem, MealReview, MealTime } from '../types.ts';
+import type {
+  BattleResult,
+  Cafeteria,
+  CrawlResult,
+  MealItem,
+  MealReview,
+  MealTime,
+} from '../types.ts';
 import { computeBattle } from './battle.ts';
 
 const DATA_DIR = join(process.cwd(), 'data');
 
 export const SEED_SOURCE_LABEL = 'seed:data/meals.seed.json';
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * 식단 + 사진 DB 연동 스키마 (사진이 존재하는 식단 전용 매핑 레코드)
+ * ────────────────────────────────────────────────────────────────────────────
+ * 그날의 식단 사진이 존재할 때, 식단 정보와 그 식단에 맞는 사진을
+ * 추후 DB(RDBMS / NoSQL)에 함께 저장(INSERT / UPSERT)할 수 있도록 설계한 모델.
+ *
+ * [추후 RDBMS 연동 시 테이블 DDL 예시]
+ * CREATE TABLE meal_with_photos (
+ *   meal_item_id     VARCHAR(64) PRIMARY KEY,
+ *   target_date      DATE NOT NULL,
+ *   cafeteria        VARCHAR(32) NOT NULL,
+ *   meal_time        VARCHAR(16) NOT NULL,
+ *   menu_name        VARCHAR(255),
+ *   menu_items_json  TEXT NOT NULL,
+ *   price            INTEGER,
+ *   kcal             INTEGER,
+ *   image_local_url  VARCHAR(512) NOT NULL,
+ *   image_source_url VARCHAR(1024) NOT NULL,
+ *   image_file_name  VARCHAR(255) NOT NULL,
+ *   image_mime_type  VARCHAR(64) DEFAULT 'image/jpeg',
+ *   image_size_bytes INTEGER,
+ *   synced_at        TIMESTAMP NOT NULL
+ * );
+ * ──────────────────────────────────────────────────────────────────────────*/
+
+export interface MealPhotoDbRecord {
+  /** 식단 고유 ID (PK, 예: "2026-11-03-haksik-lunch") */
+  mealItemId: string;
+  /** 식단 날짜 (YYYY-MM-DD) */
+  date: string;
+  /** 구내식당 구분 */
+  cafeteria: Cafeteria;
+  /** 끼니 구분 (breakfast | lunch | dinner) */
+  mealTime: MealTime;
+  /** 대표 메뉴명 */
+  name: string | null;
+  /** 상세 반찬/구성 메뉴 배열 */
+  menu: string[];
+  /** 가격(원) */
+  price: number | null;
+  /** 열량(kcal) */
+  kcal: number | null;
+  /** 식단과 1:1 매칭된 사진 데이터 (사진이 존재할 때만 생성) */
+  photo: {
+    /** 앱에서 서빙하는 로컬 이미지 경로 (예: "/meals/2026-11-03-haksik-lunch.jpg") */
+    imageUrl: string;
+    /** 학교 포털 원본 이미지 URL */
+    imageSourceUrl: string;
+    /** 저장된 파일명 */
+    fileName: string;
+    /** 이미지 MIME 타입 */
+    mimeType: string;
+    /** 파일 크기 (bytes) */
+    sizeBytes: number | null;
+  };
+  /** 수집 및 매핑 시각 (ISO 8601) */
+  syncedAt: string;
+}
+
+interface MealPhotoDbFile {
+  note: string;
+  schemaVersion: number;
+  updatedAt: string;
+  records: MealPhotoDbRecord[];
+}
 
 function readJson<T>(file: string): T | null {
   const path = join(DATA_DIR, file);
@@ -82,6 +156,69 @@ export function readMealsByDate(date: string): { crawl: CrawlResult; items: Meal
 
 export function findMealItem(mealItemId: string): MealItem | null {
   return readMealCrawl().items.find((m) => m.id === mealItemId) ?? null;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * 식단 + 사진 DB 매핑 레코드 읽기/쓰기
+ * ──────────────────────────────────────────────────────────────────────────*/
+
+/**
+ * 식단에 사진이 존재할 때만 식단+사진 DB 레코드로 변환한다.
+ * 사진이 없는 식단(imageUrl === null)은 null 을 반환하여 제외한다.
+ */
+export function toMealPhotoDbRecord(
+  item: MealItem,
+  meta?: { mimeType?: string; sizeBytes?: number | null; syncedAt?: string },
+): MealPhotoDbRecord | null {
+  const imageUrl = item.imageUrl ?? null;
+  const imageSourceUrl = item.imageSourceUrl ?? imageUrl;
+  if (!imageUrl || !imageSourceUrl) return null;
+
+  return {
+    mealItemId: item.id,
+    date: item.date,
+    cafeteria: item.cafeteria,
+    mealTime: item.mealTime,
+    name: item.name,
+    menu: [...item.menu],
+    price: item.price,
+    kcal: item.kcal,
+    photo: {
+      imageUrl,
+      imageSourceUrl,
+      fileName: basename(imageUrl.split('?')[0]),
+      mimeType: meta?.mimeType ?? 'image/jpeg',
+      sizeBytes: meta?.sizeBytes ?? null,
+    },
+    syncedAt: meta?.syncedAt ?? new Date().toISOString(),
+  };
+}
+
+export function readMealPhotoDb(): MealPhotoDbRecord[] {
+  return readJson<MealPhotoDbFile>('meal-photo-db.json')?.records ?? [];
+}
+
+export function writeMealPhotoDb(records: MealPhotoDbRecord[]): void {
+  const payload: MealPhotoDbFile = {
+    note: '식단 사진이 존재할 때 식단 정보와 매칭된 사진 메타데이터를 함께 DB에 적재할 수 있도록 저장한 테이블입니다.',
+    schemaVersion: 1,
+    updatedAt: new Date().toISOString(),
+    records,
+  };
+  writeJson('meal-photo-db.json', payload);
+}
+
+/**
+ * 새로 수집된 식단 목록에서 사진이 존재하는 식단만 추출해
+ * 기존 meal-photo-db 레코드에 mealItemId 기준으로 UPSERT 한다.
+ */
+export function upsertMealPhotoDb(newRecords: MealPhotoDbRecord[]): MealPhotoDbRecord[] {
+  const byId = new Map<string, MealPhotoDbRecord>();
+  for (const r of readMealPhotoDb()) byId.set(r.mealItemId, r);
+  for (const r of newRecords) byId.set(r.mealItemId, r);
+  const merged = [...byId.values()].sort((a, b) => a.mealItemId.localeCompare(b.mealItemId));
+  writeMealPhotoDb(merged);
+  return merged;
 }
 
 /* ────────────────────────────────────────────────────────────────────────────
