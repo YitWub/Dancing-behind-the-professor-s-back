@@ -48,6 +48,12 @@
   --e-ord-4: #1c5cab;
   --e-ord-5: #104281;
 
+  /* 캐릭터 홈 — 하트(출석 목숨). 숫자 라벨과 항상 같이 쓴다 */
+  --e-hp: #e03e55;
+  --e-hp-empty: #d8d5cc;
+  --e-stage-top: #eef1f6;
+  --e-stage-bottom: #e3e7ee;
+
   /* 상태 — 아이콘/라벨과 항상 같이 쓴다. 색 단독으로 의미를 나르지 않는다 */
   --e-good: #0ca30c;
   --e-warn: #fab219;
@@ -71,6 +77,11 @@
 
     --e-accent: #3987e5;
     --e-accent-soft: #16243a;
+
+    --e-hp: #ff5f73;
+    --e-hp-empty: #3a3934;
+    --e-stage-top: #20232a;
+    --e-stage-bottom: #171a1f;
 
     --e-haksik: #3987e5;
     --e-changbo: #d95926;
@@ -103,6 +114,11 @@
   --e-accent: #3987e5;
   --e-accent-soft: #16243a;
 
+  --e-hp: #ff5f73;
+  --e-hp-empty: #3a3934;
+  --e-stage-top: #20232a;
+  --e-stage-bottom: #171a1f;
+
   --e-haksik: #3987e5;
   --e-changbo: #d95926;
 
@@ -128,4 +144,48 @@
 
 .erica ::selection {
   background: var(--e-accent-soft);
+}
+
+/* ==========================================================================
+ *  캐릭터 홈 — 움직임
+ * --------------------------------------------------------------------------
+ *  장식용이라 꺼져도 정보가 하나도 안 사라지게 만든다.
+ *  (하트 개수·문구·게이지는 전부 정적 DOM 에 이미 적혀 있다)
+ * ========================================================================== */
+
+@keyframes e-bob {
+  0%, 100% { transform: translateY(0) }
+  50%      { transform: translateY(-5px) }
+}
+
+/* 밥 먹인 직후 한 번 쪼그라들었다 펴진다 */
+@keyframes e-munch {
+  0%   { transform: scale(1, 1) }
+  25%  { transform: scale(1.07, 0.9) }
+  55%  { transform: scale(0.95, 1.06) }
+  100% { transform: scale(1, 1) }
+}
+
+/* F 구간 — 떨고 있다 */
+@keyframes e-shake {
+  0%, 100% { transform: translateX(0) }
+  20%      { transform: translateX(-2.5px) }
+  40%      { transform: translateX(2.5px) }
+  60%      { transform: translateX(-1.5px) }
+  80%      { transform: translateX(1.5px) }
+}
+
+@keyframes e-pop {
+  0%   { transform: scale(0.6); opacity: 0 }
+  60%  { transform: scale(1.08); opacity: 1 }
+  100% { transform: scale(1); opacity: 1 }
+}
+
+.e-bob   { animation: e-bob 3.4s ease-in-out infinite; transform-origin: 50% 100% }
+.e-munch { animation: e-munch 520ms ease-out 1; transform-origin: 50% 100% }
+.e-shake { animation: e-shake 1.8s ease-in-out infinite }
+.e-pop   { animation: e-pop 240ms ease-out 1 }
+
+@media (prefers-reduced-motion: reduce) {
+  .e-bob, .e-munch, .e-shake, .e-pop { animation: none }
 }
