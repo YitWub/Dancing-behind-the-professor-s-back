@@ -55,9 +55,16 @@ function reason(e: unknown): string {
  * 본문만 보면 200 + 식단 배열이라 "정상"으로 보이기 때문에, 헤더를 읽어
  * CrawlResult 로 복원해서 화면이 배너를 띄울 수 있게 한다.
  */
-export async function loadMeals(date: string): Promise<Sourced<CrawlResult>> {
+export async function loadMeals(
+  date: string,
+  options?: { refresh?: boolean },
+): Promise<Sourced<CrawlResult>> {
   try {
-    const res = await fetch(`/api/meals?date=${encodeURIComponent(date)}`, { cache: 'no-store' });
+    const refreshParam = options?.refresh ? '&refresh=1' : '';
+    const res = await fetch(
+      `/api/meals?date=${encodeURIComponent(date)}${refreshParam}`,
+      { cache: 'no-store' },
+    );
     if (!res.ok) throw new Error(`${res.status}`);
     const body = (await res.json()) as ApiResponse<MealItem[]>;
     if (!body.ok) throw new Error(body.error);
@@ -69,7 +76,7 @@ export async function loadMeals(date: string): Promise<Sourced<CrawlResult>> {
       data: {
         ok: crawledOk,
         fetchedAt: res.headers.get('x-meal-fetched-at') ?? new Date().toISOString(),
-        source: '/api/meals',
+        source: 'https://life.hanyang.ac.kr/theme/pages/home.php',
         items: body.data,
         fallback: fb === 'seed' || fb === 'cache' ? fb : undefined,
       },
@@ -80,9 +87,10 @@ export async function loadMeals(date: string): Promise<Sourced<CrawlResult>> {
 }
 
 /** 배너에 쓸 상세 사유(시도한 원본 URL 포함). items 는 전체 시드라 쓰지 않는다. */
-export async function loadMealStatus(): Promise<CrawlResult | null> {
+export async function loadMealStatus(options?: { refresh?: boolean }): Promise<CrawlResult | null> {
   try {
-    return await getJson<CrawlResult>('/api/meals/status');
+    const q = options?.refresh ? '?refresh=1' : '';
+    return await getJson<CrawlResult>(`/api/meals/status${q}`);
   } catch {
     return null;
   }
@@ -101,10 +109,12 @@ export async function loadMealReviews(mealItemId?: string): Promise<Sourced<Meal
 export async function loadBattle(
   date: string,
   mealTime: MealTime,
+  options?: { refresh?: boolean },
 ): Promise<Sourced<BattleResult>> {
   try {
+    const refreshParam = options?.refresh ? '&refresh=1' : '';
     const data = await getJson<BattleResult>(
-      `/api/meals/battle?date=${date}&mealTime=${mealTime}`,
+      `/api/meals/battle?date=${date}&mealTime=${mealTime}${refreshParam}`,
     );
     return { source: 'api', data };
   } catch (e) {

@@ -4,8 +4,11 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "predev": "npm run crawl",
     "dev": "next dev",
+    "prebuild": "npm run crawl",
     "build": "next build",
+    "prestart": "npm run crawl",
     "start": "next start",
     "lint": "eslint",
     "test": "node --test --experimental-strip-types \"lib/**/__tests__/*.test.ts\"",
@@ -20,9 +23,9 @@
     "data:all": "npm run seed && npm run crawl && npm run score && npm run gen:backtest && echo '' && echo '✓ data:all 완료 — 시드·식단·꿀강·백테스트 4단계 모두 갱신됨' && echo '  (이 줄이 안 보이면 중간 단계가 끊긴 것입니다. CONTRACT 8장 참고)'"
   },
   "dependencies": {
-    "next": "16.3.6",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "next": "^16.3.6",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

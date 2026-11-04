@@ -1,212 +1,93 @@
 {
   "ok": true,
-  "fetchedAt": "2026-11-03T10:07:10.956Z",
+  "fetchedAt": "2026-11-04T00:45:55.851Z",
   "source": "https://life.hanyang.ac.kr/theme/pages/home.php",
   "items": [
     {
-      "id": "2026-11-03-dorm-breakfast",
-      "date": "2026-11-03",
+      "id": "2026-11-04-dorm-breakfast",
+      "date": "2026-11-04",
       "cafeteria": "dorm",
       "mealTime": "breakfast",
-      "name": "[천원의 아침밥] 스팸야채볶음밥*계란후라이",
+      "name": "[천원의 아침밥] 사골떡국",
       "menu": [
-        "팽이미소국",
+        "쌀밥",
         "야채샐러드*드레싱",
-        "배추김치",
-        "시리얼*우유"
+        "깍두기",
+        "시리얼*우유",
+        "삶은계란*소금"
       ],
       "price": 1000,
       "kcal": null,
-      "imageUrl": "/meals/2026-11-03-dorm-breakfast.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793659298_6ae911a274723.jpg",
-      "soldOut": false
+      "imageUrl": "/meals/2026-11-04-dorm-breakfast.jpg",
+      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793746064_6aea64902d836.jpg",
+      "soldOut": true
     },
     {
-      "id": "2026-11-03-dorm-dinner",
-      "date": "2026-11-03",
+      "id": "2026-11-04-dorm-breakfast-2",
+      "date": "2026-11-04",
       "cafeteria": "dorm",
-      "mealTime": "dinner",
-      "name": "(뚝)안동찜닭*당면사리",
-      "menu": [
-        "쌀밥",
-        "스모크햄마늘쫑볶음",
-        "깍두기",
-        "도시락김"
-      ],
-      "price": 4500,
-      "kcal": null,
-      "imageUrl": "/meals/2026-11-03-dorm-dinner.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793692600_6ae993b804652.jpg",
-      "soldOut": false
-    },
-    {
-      "id": "2026-11-03-dorm-lunch",
-      "date": "2026-11-03",
-      "cafeteria": "dorm",
-      "mealTime": "lunch",
-      "name": "치즈닭갈비깻잎덮밥",
-      "menu": [
-        "쌀밥",
-        "얼갈이국",
-        "삼색푸실리샐러드",
-        "깍두기",
-        "요거트"
-      ],
-      "price": 5000,
-      "kcal": null,
-      "imageUrl": "/meals/2026-11-03-dorm-lunch.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793671922_6ae942f224337.jpg",
-      "soldOut": false
-    },
-    {
-      "id": "2026-11-03-dorm-lunch-2",
-      "date": "2026-11-03",
-      "cafeteria": "dorm",
-      "mealTime": "lunch",
-      "name": "오리김치주물럭",
-      "menu": [
-        "쌀밥",
-        "얼갈이국",
-        "삼색푸실리샐러드",
-        "깍두기"
-      ],
-      "price": 4500,
-      "kcal": null,
-      "imageUrl": "/meals/2026-11-03-dorm-lunch-2.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793671935_6ae942ff5cd89.jpg",
-      "soldOut": false
-    },
-    {
-      "id": "2026-11-03-haksik-breakfast",
-      "date": "2026-11-03",
-      "cafeteria": "haksik",
       "mealTime": "breakfast",
-      "name": "[천원의 아침밥] 토스트/단팥빵 (Brunch Set)",
+      "name": "[천원의 아침밥] 간편식-통밀햄치즈샌드위치/두유-40개 한정",
       "menu": [
-        "양배추샐러드&드레싱",
-        "흰우유",
-        "콘시리얼바",
-        "비엔나양송이볶음",
-        "단호박꿀조림",
-        "양념밥"
+        "삶은계란*소금"
       ],
       "price": 1000,
       "kcal": null,
-      "imageUrl": "/meals/2026-11-03-haksik-breakfast.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793661607_6ae91aa71c413.jpg",
-      "soldOut": false
+      "imageUrl": "/meals/2026-11-04-dorm-breakfast-2.jpg",
+      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793746051_6aea6483adbeb.jpg",
+      "soldOut": true
     },
     {
-      "id": "2026-11-03-haksik-lunch",
-      "date": "2026-11-03",
-      "cafeteria": "haksik",
-      "mealTime": "lunch",
-      "name": "새우튀김카레라이스 (Deep-fried Shrimp with Curry Rice)",
+      "id": "2026-11-04-dorm-dinner",
+      "date": "2026-11-04",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "name": "굴소스소고기덮밥",
       "menu": [
-        "오이맛고추무침",
-        "배추김치",
-        "일식장국"
-      ],
-      "price": 4500,
-      "kcal": null,
-      "imageUrl": "/meals/2026-11-03-haksik-lunch.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793672613_6ae945a598998.jpg",
-      "soldOut": false
-    },
-    {
-      "id": "2026-11-03-haksik-lunch-2",
-      "date": "2026-11-03",
-      "cafeteria": "haksik",
-      "mealTime": "lunch",
-      "name": "돼지고기김치찜 (Braised Pork with Kimchi)",
-      "menu": [
-        "쌀밥",
-        "햄구이&케찹",
-        "사각어묵볶음",
-        "오이맛고추무침",
+        "다시마뭇국",
+        "만두강정",
         "깍두기"
       ],
-      "price": 6500,
-      "kcal": null,
-      "imageUrl": "/meals/2026-11-03-haksik-lunch-2.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793672631_6ae945b782713.jpg",
-      "soldOut": false
-    },
-    {
-      "id": "2026-11-03-faculty-lunch",
-      "date": "2026-11-03",
-      "cafeteria": "faculty",
-      "mealTime": "lunch",
-      "name": "김치제육볶음 Spicy Pork with Kimchi",
-      "menu": [
-        "온두부찜",
-        "북어콩나물국",
-        "산고추지",
-        "깍두기",
-        "잡곡밥",
-        "그린샐러드"
-      ],
-      "price": 7000,
-      "kcal": null,
-      "imageUrl": "/meals/2026-11-03-faculty-lunch.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793671112_6ae93fc8af362.jpg",
-      "soldOut": false
-    },
-    {
-      "id": "2026-11-03-faculty-lunch-2",
-      "date": "2026-11-03",
-      "cafeteria": "faculty",
-      "mealTime": "lunch",
-      "name": "마제덮밥 Mazesoba Rice Bowl",
-      "menu": [
-        "고구마맛탕",
-        "콩나물국",
-        "단무지"
-      ],
-      "price": 5500,
-      "kcal": null,
-      "imageUrl": "/meals/2026-11-03-faculty-lunch-2.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793671120_6ae93fd02cdbc.jpg",
-      "soldOut": false
-    },
-    {
-      "id": "2026-11-03-changbo-dinner",
-      "date": "2026-11-03",
-      "cafeteria": "changbo",
-      "mealTime": "dinner",
-      "name": "뚝)얼큰대파닭개장 Spicy Chicken Soup",
-      "menu": [
-        "메밀전병*초간장",
-        "총알새송이메추리알조림",
-        "치커리유자청무침",
-        "쌀밥",
-        "깍두기",
-        "*양배추샐러드+드레싱"
-      ],
-      "price": 6500,
+      "price": 4500,
       "kcal": null,
       "imageUrl": null,
       "imageSourceUrl": null,
       "soldOut": false
     },
     {
-      "id": "2026-11-03-changbo-lunch",
-      "date": "2026-11-03",
-      "cafeteria": "changbo",
+      "id": "2026-11-04-dorm-lunch",
+      "date": "2026-11-04",
+      "cafeteria": "dorm",
       "mealTime": "lunch",
-      "name": "등심돈까스*경양식소스 Pork Loin Cutlet",
+      "name": "야채비빔밥*계란후라이",
       "menu": [
-        "치즈펜네그라탕",
-        "미니김치우동",
-        "무생채",
-        "잡곡밥",
-        "*양배추샐러드+드레싱",
-        "잡곡밥"
+        "쌀밥",
+        "미소된장국",
+        "콩나물무침",
+        "깍두기"
       ],
-      "price": 6500,
+      "price": 4500,
       "kcal": null,
-      "imageUrl": "/meals/2026-11-03-changbo-lunch.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793671669_6ae941f50f36b.jpg",
+      "imageUrl": null,
+      "imageSourceUrl": null,
+      "soldOut": false
+    },
+    {
+      "id": "2026-11-04-dorm-lunch-2",
+      "date": "2026-11-04",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "name": "돼지고기그린빈스볶음",
+      "menu": [
+        "쌀밥",
+        "미소된장국",
+        "콩나물무침",
+        "깍두기"
+      ],
+      "price": 4500,
+      "kcal": null,
+      "imageUrl": null,
+      "imageSourceUrl": null,
       "soldOut": false
     },
     {
@@ -224,8 +105,8 @@
       ],
       "price": 1000,
       "kcal": null,
-      "imageUrl": null,
-      "imageSourceUrl": null,
+      "imageUrl": "/meals/2026-11-04-haksik-breakfast.jpg",
+      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793748184_6aea6cd83c46b.jpg",
       "soldOut": false
     },
     {
@@ -301,26 +182,6 @@
       "soldOut": false
     },
     {
-      "id": "2026-11-04-changbo-lunch",
-      "date": "2026-11-04",
-      "cafeteria": "changbo",
-      "mealTime": "lunch",
-      "name": "뚝)뼈없는얼큰시래기감자탕 Spicy pork bone soup",
-      "menu": [
-        "분홍소시지전*케찹",
-        "브로콜리맛살무침",
-        "고추장아찌",
-        "배추김치",
-        "*양배추샐러드+드레싱",
-        "잡곡밥"
-      ],
-      "price": 6500,
-      "kcal": null,
-      "imageUrl": null,
-      "imageSourceUrl": null,
-      "soldOut": false
-    },
-    {
       "id": "2026-11-04-changbo-dinner",
       "date": "2026-11-04",
       "cafeteria": "changbo",
@@ -341,17 +202,37 @@
       "soldOut": false
     },
     {
-      "id": "2026-11-04-dorm-breakfast",
+      "id": "2026-11-04-changbo-lunch",
       "date": "2026-11-04",
-      "cafeteria": "dorm",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "name": "뚝)뼈없는얼큰시래기감자탕 Spicy pork bone soup",
+      "menu": [
+        "분홍소시지전*케찹",
+        "브로콜리맛살무침",
+        "고추장아찌",
+        "배추김치",
+        "*양배추샐러드+드레싱",
+        "잡곡밥"
+      ],
+      "price": 6500,
+      "kcal": null,
+      "imageUrl": null,
+      "imageSourceUrl": null,
+      "soldOut": false
+    },
+    {
+      "id": "2026-11-05-haksik-breakfast",
+      "date": "2026-11-05",
+      "cafeteria": "haksik",
       "mealTime": "breakfast",
-      "name": "[천원의 아침밥] 사골떡국",
+      "name": "[천원의 아침밥] 닭고기춘장볶음 (Stir-fried Chicken with Black Bean Paste)",
       "menu": [
         "쌀밥",
-        "야채샐러드*드레싱",
-        "깍두기",
-        "시리얼*우유",
-        "삶은계란*소금"
+        "김치전",
+        "도시락김",
+        "오이생채",
+        "깍두기"
       ],
       "price": 1000,
       "kcal": null,
@@ -360,17 +241,129 @@
       "soldOut": false
     },
     {
-      "id": "2026-11-04-dorm-breakfast-2",
-      "date": "2026-11-04",
+      "id": "2026-11-05-haksik-lunch",
+      "date": "2026-11-05",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "name": "훈제오리블랙빈볶음밥 (Smoked Duck Fried Rice)",
+      "menu": [
+        "엄지새송이버섯장아찌",
+        "배추김치",
+        "일식장국"
+      ],
+      "price": 4500,
+      "kcal": null,
+      "imageUrl": null,
+      "imageSourceUrl": null,
+      "soldOut": false
+    },
+    {
+      "id": "2026-11-05-haksik-lunch-2",
+      "date": "2026-11-05",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "name": "제육생채소비빔밥 (Fresh Vegetable and Spicy Stir-fried Pork Bibimbap)",
+      "menu": [
+        "오징어문어핫바",
+        "엄지새송이버섯장아찌",
+        "배추김치",
+        "일식장국"
+      ],
+      "price": 6500,
+      "kcal": null,
+      "imageUrl": null,
+      "imageSourceUrl": null,
+      "soldOut": false
+    },
+    {
+      "id": "2026-11-05-faculty-lunch",
+      "date": "2026-11-05",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "name": "청양굴소스돈육볶음 Spicy Oyster Sauce Pork",
+      "menu": [
+        "김치비빔국수",
+        "시래기된장국",
+        "볼어묵곤약조림",
+        "깍두기",
+        "잡곡밥",
+        "그린샐러드"
+      ],
+      "price": 7000,
+      "kcal": null,
+      "imageUrl": null,
+      "imageSourceUrl": null,
+      "soldOut": false
+    },
+    {
+      "id": "2026-11-05-faculty-lunch-2",
+      "date": "2026-11-05",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "name": "치즈돈가스 Cheese Pork Cutlet",
+      "menu": [
+        "마카로니콘샐러드",
+        "시래기된장국",
+        "깍두기",
+        "추가밥"
+      ],
+      "price": 5500,
+      "kcal": null,
+      "imageUrl": null,
+      "imageSourceUrl": null,
+      "soldOut": false
+    },
+    {
+      "id": "2026-11-05-changbo-lunch",
+      "date": "2026-11-05",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "name": "돈육장조림*삶은달걀조림 Braised Pork and Egg",
+      "menu": [
+        "두부된장찌개",
+        "매콤순대볶음",
+        "얼갈이겉절이",
+        "깍두기",
+        "*양배추샐러드+드레싱",
+        "잡곡밥"
+      ],
+      "price": 6500,
+      "kcal": null,
+      "imageUrl": null,
+      "imageSourceUrl": null,
+      "soldOut": false
+    },
+    {
+      "id": "2026-11-05-changbo-dinner",
+      "date": "2026-11-05",
+      "cafeteria": "changbo",
+      "mealTime": "dinner",
+      "name": "뚝)부산식돼지수육국밥 Pork and Rice Soup",
+      "menu": [
+        "왕만두찜*초간장",
+        "부추겉절이",
+        "양념깻잎지",
+        "쌀밥",
+        "배추김치",
+        "*양배추샐러드+드레싱"
+      ],
+      "price": 6500,
+      "kcal": null,
+      "imageUrl": null,
+      "imageSourceUrl": null,
+      "soldOut": false
+    },
+    {
+      "id": "2026-11-05-dorm-breakfast",
+      "date": "2026-11-05",
       "cafeteria": "dorm",
       "mealTime": "breakfast",
-      "name": "[천원의 아침밥] 간편식-통밀햄치즈샌드위치/두유-40개 한정",
+      "name": "[천원의 아침밥] 매콤소불고기낙지전골*우동사리",
       "menu": [
         "쌀밥",
         "야채샐러드*드레싱",
-        "깍두기",
-        "시리얼*우유",
-        "삶은계란*소금"
+        "배추김치",
+        "시리얼*우유"
       ],
       "price": 1000,
       "kcal": null,
@@ -379,15 +372,34 @@
       "soldOut": false
     },
     {
-      "id": "2026-11-04-dorm-lunch",
-      "date": "2026-11-04",
+      "id": "2026-11-05-dorm-lunch",
+      "date": "2026-11-05",
       "cafeteria": "dorm",
       "mealTime": "lunch",
-      "name": "야채비빔밥*계란후라이",
+      "name": "코코넛플레이크새우오므라이스",
       "menu": [
         "쌀밥",
-        "미소된장국",
-        "콩나물무침",
+        "우동다시국",
+        "연근땅콩조림",
+        "깍두기",
+        "과수원청포도"
+      ],
+      "price": 5000,
+      "kcal": null,
+      "imageUrl": null,
+      "imageSourceUrl": null,
+      "soldOut": false
+    },
+    {
+      "id": "2026-11-05-dorm-lunch-2",
+      "date": "2026-11-05",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "name": "불닭야채볶음",
+      "menu": [
+        "쌀밥",
+        "우동다시국",
+        "연근땅콩조림",
         "깍두기"
       ],
       "price": 4500,
@@ -397,33 +409,15 @@
       "soldOut": false
     },
     {
-      "id": "2026-11-04-dorm-lunch-2",
-      "date": "2026-11-04",
-      "cafeteria": "dorm",
-      "mealTime": "lunch",
-      "name": "돼지고기그린빈스볶음",
-      "menu": [
-        "쌀밥",
-        "미소된장국",
-        "콩나물무침",
-        "깍두기"
-      ],
-      "price": 4500,
-      "kcal": null,
-      "imageUrl": null,
-      "imageSourceUrl": null,
-      "soldOut": false
-    },
-    {
-      "id": "2026-11-04-dorm-dinner",
-      "date": "2026-11-04",
+      "id": "2026-11-05-dorm-dinner",
+      "date": "2026-11-05",
       "cafeteria": "dorm",
       "mealTime": "dinner",
-      "name": "굴소스소고기덮밥",
+      "name": "훈제오리마라볶음",
       "menu": [
-        "다시마뭇국",
-        "만두강정",
-        "깍두기"
+        "파장국",
+        "해초샐러드",
+        "배추김치"
       ],
       "price": 4500,
       "kcal": null,
@@ -433,23 +427,6 @@
     }
   ],
   "cafeterias": [
-    {
-      "cafeteria": "haksik",
-      "facilityId": 1,
-      "name": "학생식당",
-      "location": "학생복지관 2층",
-      "buildingNo": "102",
-      "operatingTime": [
-        "조식  08:30~09:40 (학기중)",
-        "중식  11:30~13:30"
-      ],
-      "operatingStatus": "영업중",
-      "notice": "든든한 캠퍼스 생활, 삼성웰스토리가 함께합니다.",
-      "contact": "",
-      "imageUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8db8926ecae.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8db8926ecae.jpg",
-      "sourceUrl": "https://life.hanyang.ac.kr/theme/pages/facilities/detail.php?id=1"
-    },
     {
       "cafeteria": "faculty",
       "facilityId": 2,
@@ -461,27 +438,10 @@
       ],
       "operatingStatus": "영업중",
       "notice": "아라마크는 고객이 만족하는 창의적인 솔루션을 제공합니다.",
-      "contact": "",
+      "contact": "010-8864-5974 (영양사 번호)",
       "imageUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8759226d44b.jpg",
       "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8759226d44b.jpg",
       "sourceUrl": "https://life.hanyang.ac.kr/theme/pages/facilities/detail.php?id=2"
-    },
-    {
-      "cafeteria": "changbo",
-      "facilityId": 3,
-      "name": "창업보육센터식당",
-      "location": "창업보육센터 지하1층",
-      "buildingNo": "308",
-      "operatingTime": [
-        "중식 11:30~13:30",
-        "석식 17:00~19:00 (18:30배식대마감)"
-      ],
-      "operatingStatus": "영업중",
-      "notice": "매일의 정성과 철저한 청결로 안심하고 맛있게 먹을 수 있는 건강한 한 끼를 만듭니다.",
-      "contact": "",
-      "imageUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8de00b21f8e.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8de00b21f8e.jpg",
-      "sourceUrl": "https://life.hanyang.ac.kr/theme/pages/facilities/detail.php?id=3"
     },
     {
       "cafeteria": "dorm",
@@ -500,6 +460,40 @@
       "imageUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8de930d639b.jpg",
       "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8de930d639b.jpg",
       "sourceUrl": "https://life.hanyang.ac.kr/theme/pages/facilities/detail.php?id=4"
+    },
+    {
+      "cafeteria": "changbo",
+      "facilityId": 3,
+      "name": "창업보육센터식당",
+      "location": "창업보육센터 지하1층",
+      "buildingNo": "308",
+      "operatingTime": [
+        "중식 11:30~13:30",
+        "석식 17:00~19:00 (18:30배식대마감)"
+      ],
+      "operatingStatus": "영업중",
+      "notice": "매일의 정성과 철저한 청결로 안심하고 맛있게 먹을 수 있는 건강한 한 끼를 만듭니다.",
+      "contact": "010-2828-6269",
+      "imageUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8de00b21f8e.jpg",
+      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8de00b21f8e.jpg",
+      "sourceUrl": "https://life.hanyang.ac.kr/theme/pages/facilities/detail.php?id=3"
+    },
+    {
+      "cafeteria": "haksik",
+      "facilityId": 1,
+      "name": "학생식당",
+      "location": "학생복지관 2층",
+      "buildingNo": "102",
+      "operatingTime": [
+        "조식  08:30~09:40 (학기중)",
+        "중식  11:30~13:30"
+      ],
+      "operatingStatus": "영업중",
+      "notice": "든든한 캠퍼스 생활, 삼성웰스토리가 함께합니다.",
+      "contact": "",
+      "imageUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8db8926ecae.jpg",
+      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8db8926ecae.jpg",
+      "sourceUrl": "https://life.hanyang.ac.kr/theme/pages/facilities/detail.php?id=1"
     }
   ]
 }

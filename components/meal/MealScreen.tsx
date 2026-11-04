@@ -46,6 +46,17 @@ function defaultMealTime(): MealTime {
   return 'dinner';
 }
 
+function formatFetchedTime(iso?: string): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleTimeString('ko-KR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+}
+
 export function MealScreen({ initialDate }: { initialDate: string }) {
   const [today, setToday] = useState(initialDate);
   const [date, setDate] = useState(initialDate);
@@ -60,6 +71,7 @@ export function MealScreen({ initialDate }: { initialDate: string }) {
   const [battle, setBattle] = useState<BattleResult | null>(null);
   const [reviews, setReviews] = useState<MealReview[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const tomorrow = shiftDate(today, 1);
 
@@ -83,18 +95,40 @@ export function MealScreen({ initialDate }: { initialDate: string }) {
   useEffect(() => {
     let alive = true;
     setLoading(true);
-    Promise.all([loadMeals(date), loadBattle(date, mealTime)]).then(([m, b]) => {
-      if (!alive) return;
-      setCrawl(m.data);
-      setMealSource(m.source);
-      setMealNote(m.note);
-      setBattle(b.data);
-      setLoading(false);
-    });
+    Promise.all([loadMeals(date), loadBattle(date, mealTime), loadMealStatus()]).then(
+      ([m, b, st]) => {
+        if (!alive) return;
+        setCrawl(m.data);
+        setMealSource(m.source);
+        setMealNote(m.note);
+        setBattle(b.data);
+        if (st) setStatus(st);
+        setLoading(false);
+      },
+    );
     return () => {
       alive = false;
     };
   }, [date, mealTime]);
+
+  const handleManualCrawlRefresh = useCallback(async () => {
+    if (refreshing) return;
+    setRefreshing(true);
+    try {
+      const [m, b, st] = await Promise.all([
+        loadMeals(date, { refresh: true }),
+        loadBattle(date, mealTime, { refresh: true }),
+        loadMealStatus({ refresh: true }),
+      ]);
+      setCrawl(m.data);
+      setMealSource(m.source);
+      setMealNote(m.note);
+      setBattle(b.data);
+      if (st) setStatus(st);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [date, mealTime, refreshing]);
 
   const handleReviewAdded = useCallback(
     (newReview: MealReview) => {
@@ -116,6 +150,7 @@ export function MealScreen({ initialDate }: { initialDate: string }) {
 
   const isToday = date === today;
   const isTomorrow = date === tomorrow;
+  const fetchedTimeLabel = formatFetchedTime(crawl?.fetchedAt ?? status?.fetchedAt);
 
   return (
     <div className="flex flex-col gap-3">
@@ -179,6 +214,22 @@ export function MealScreen({ initialDate }: { initialDate: string }) {
             ariaLabel="식사 시간"
             options={MEAL_TIMES.map((t) => ({ value: t, label: mealTimeLabel(t) }))}
           />
+        </div>
+
+        {/* 실시간 크롤링 출처 및 즉시 재수집 버튼 */}
+        <div className="mt-2.5 flex items-center justify-between gap-2 border-t border-[var(--e-border)] pt-2 text-[11px] text-[var(--e-muted)]">
+          <span className="truncate">
+            실시간 연동: life.hanyang.ac.kr/theme/pages/home.php
+            {fetchedTimeLabel ? ` (${fetchedTimeLabel} 수집)` : ''}
+          </span>
+          <button
+            type="button"
+            disabled={refreshing || loading}
+            onClick={handleManualCrawlRefresh}
+            className="shrink-0 rounded-md border border-[var(--e-border)] bg-[var(--e-surface-2)] px-2 py-1 text-[11px] font-semibold text-[var(--e-ink-2)] transition-colors hover:border-[var(--e-accent)] hover:text-[var(--e-accent)] disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {refreshing ? '크롤링 중…' : '실시간 다시 가져오기'}
+          </button>
         </div>
       </Card>
 

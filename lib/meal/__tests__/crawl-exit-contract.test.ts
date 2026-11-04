@@ -22,7 +22,12 @@ import { after, describe, it } from 'node:test';
 import type { CrawlResult, MealItem, MealReview } from '../../types.ts';
 import { CAFETERIA_LABELS, MEAL_RATING_OPTIONS, computeBattle, ratingToLabel } from '../battle.ts';
 import { toMealPhotoDbRecord } from '../store.ts';
-import { parseDetailPhp } from '../../../scripts/crawl-meals.ts';
+import {
+  parseDetailPhp,
+  parseFacilitiesIndexPhp,
+  parseHomePhp,
+  parseSubpageFacilityIds,
+} from '../../../scripts/crawl-meals.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const SCRIPT = join(ROOT, 'scripts', 'crawl-meals.ts');
@@ -154,6 +159,36 @@ describe('식단 사진 DB 매칭 및 4버튼 평점 요구사항 검증', () =>
     );
     assert.equal(parsed.items[1].imageSourceUrl, null);
     assert.equal(parsed.items[1].imageUrl, null);
+  });
+
+  it('home.php 및 하위 페이지(facilities/index.php, ticket-shops.php) 파서가 정상 동작한다', () => {
+    const homeSample = `
+      <a href="/theme/pages/facilities/index.php">시설안내</a>
+      <a href="/theme/pages/payment/ticket-shops.php">식권구매</a>
+      <script>
+        const dbMenus = [{"target_date":"2026-11-04","facility_id":1,"facility_name":"학생식당","meal_type":"중식","name":"돈까스","description":"밥/국/김치","price":5500,"image_url":"/uploads/facilities/menu_1.jpg","is_sold_out":0}];
+        const dbFacilitiesList = [{"id":1,"category":"구내식당","name":"학생식당","location":"학생복지관 2층","facility_no":"102","image_url":"/uploads/facilities/fac_1.jpg"}];
+      </script>
+    `;
+    const homeParsed = parseHomePhp(homeSample);
+    assert.equal(homeParsed.items.length, 1);
+    assert.equal(homeParsed.facilities.length, 1);
+    assert.ok(
+      homeParsed.subpageUrls.includes('https://life.hanyang.ac.kr/theme/pages/facilities/index.php'),
+    );
+
+    const facIndexSample = `
+      <script>
+        const dbFacilities = [{"id":3,"category":"구내식당","name":"창업보육센터식당","location":"창업보육센터 지하1층","facility_no":"308","operating_time":"중식 11:30~13:30","operating_status":"영업중","notice":"정성껏 준비합니다.","contact":"010-2828-6269","image_url":"/uploads/facilities/fac_3.jpg"}];
+      </script>
+    `;
+    const facInfos = parseFacilitiesIndexPhp(facIndexSample);
+    assert.equal(facInfos.length, 1);
+    assert.equal(facInfos[0].cafeteria, 'changbo');
+    assert.equal(facInfos[0].contact, '010-2828-6269');
+
+    const ticketSample = `<a href="/theme/pages/facilities/detail.php?id=4">창의인재원식당</a>`;
+    assert.deepEqual(parseSubpageFacilityIds(ticketSample), [4]);
   });
 
   it('4단계 평점 버튼(좋좋, 느좋, 안좋, 좆)이 정의되어 있고 점수와 매핑된다', () => {
