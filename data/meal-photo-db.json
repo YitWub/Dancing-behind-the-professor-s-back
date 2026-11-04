@@ -1,7 +1,7 @@
 {
   "note": "식단 사진이 존재할 때 식단 정보와 매칭된 사진 메타데이터를 함께 DB에 적재할 수 있도록 저장한 테이블입니다.",
   "schemaVersion": 1,
-  "updatedAt": "2026-11-04T00:45:55.852Z",
+  "updatedAt": "2026-11-04T00:49:48.649Z",
   "records": [
     {
       "mealItemId": "2026-11-03-changbo-lunch",
@@ -261,7 +261,7 @@
         "mimeType": "image/jpeg",
         "sizeBytes": 127327
       },
-      "syncedAt": "2026-11-04T00:45:55.848Z"
+      "syncedAt": "2026-11-04T00:49:48.645Z"
     },
     {
       "mealItemId": "2026-11-04-dorm-breakfast-2",
@@ -281,7 +281,7 @@
         "mimeType": "image/jpeg",
         "sizeBytes": 86341
       },
-      "syncedAt": "2026-11-04T00:45:55.848Z"
+      "syncedAt": "2026-11-04T00:49:48.645Z"
     },
     {
       "mealItemId": "2026-11-04-haksik-breakfast",
@@ -305,7 +305,7 @@
         "mimeType": "image/jpeg",
         "sizeBytes": 135276
       },
-      "syncedAt": "2026-11-04T00:45:55.848Z"
+      "syncedAt": "2026-11-04T00:49:48.645Z"
     }
   ]
 }

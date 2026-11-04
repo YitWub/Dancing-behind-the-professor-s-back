@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "fetchedAt": "2026-11-04T00:45:55.851Z",
+  "fetchedAt": "2026-11-04T00:49:48.648Z",
   "source": "https://life.hanyang.ac.kr/theme/pages/home.php",
   "items": [
     {
@@ -428,6 +428,23 @@
   ],
   "cafeterias": [
     {
+      "cafeteria": "haksik",
+      "facilityId": 1,
+      "name": "학생식당",
+      "location": "학생복지관 2층",
+      "buildingNo": "102",
+      "operatingTime": [
+        "조식  08:30~09:40 (학기중)",
+        "중식  11:30~13:30"
+      ],
+      "operatingStatus": "영업중",
+      "notice": "든든한 캠퍼스 생활, 삼성웰스토리가 함께합니다.",
+      "contact": "",
+      "imageUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8db8926ecae.jpg",
+      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8db8926ecae.jpg",
+      "sourceUrl": "https://life.hanyang.ac.kr/theme/pages/facilities/detail.php?id=1"
+    },
+    {
       "cafeteria": "faculty",
       "facilityId": 2,
       "name": "교직원식당",
@@ -477,23 +494,6 @@
       "imageUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8de00b21f8e.jpg",
       "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8de00b21f8e.jpg",
       "sourceUrl": "https://life.hanyang.ac.kr/theme/pages/facilities/detail.php?id=3"
-    },
-    {
-      "cafeteria": "haksik",
-      "facilityId": 1,
-      "name": "학생식당",
-      "location": "학생복지관 2층",
-      "buildingNo": "102",
-      "operatingTime": [
-        "조식  08:30~09:40 (학기중)",
-        "중식  11:30~13:30"
-      ],
-      "operatingStatus": "영업중",
-      "notice": "든든한 캠퍼스 생활, 삼성웰스토리가 함께합니다.",
-      "contact": "",
-      "imageUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8db8926ecae.jpg",
-      "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/fac_6a8db8926ecae.jpg",
-      "sourceUrl": "https://life.hanyang.ac.kr/theme/pages/facilities/detail.php?id=1"
     }
   ]
 }
