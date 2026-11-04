@@ -1,0 +1,243 @@
+{
+  "note": "식단 사진이 존재할 때 식단 정보와 매칭된 사진 메타데이터를 함께 DB에 적재할 수 있도록 저장한 테이블입니다.",
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-03T10:07:10.962Z",
+  "records": [
+    {
+      "mealItemId": "2026-11-03-changbo-lunch",
+      "date": "2026-11-03",
+      "cafeteria": "changbo",
+      "mealTime": "lunch",
+      "name": "등심돈까스*경양식소스 Pork Loin Cutlet",
+      "menu": [
+        "치즈펜네그라탕",
+        "미니김치우동",
+        "무생채",
+        "잡곡밥",
+        "*양배추샐러드+드레싱",
+        "잡곡밥"
+      ],
+      "price": 6500,
+      "kcal": null,
+      "photo": {
+        "imageUrl": "/meals/2026-11-03-changbo-lunch.jpg",
+        "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793671669_6ae941f50f36b.jpg",
+        "fileName": "2026-11-03-changbo-lunch.jpg",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 125664
+      },
+      "syncedAt": "2026-11-03T10:07:10.879Z"
+    },
+    {
+      "mealItemId": "2026-11-03-dorm-breakfast",
+      "date": "2026-11-03",
+      "cafeteria": "dorm",
+      "mealTime": "breakfast",
+      "name": "[천원의 아침밥] 스팸야채볶음밥*계란후라이",
+      "menu": [
+        "팽이미소국",
+        "야채샐러드*드레싱",
+        "배추김치",
+        "시리얼*우유"
+      ],
+      "price": 1000,
+      "kcal": null,
+      "photo": {
+        "imageUrl": "/meals/2026-11-03-dorm-breakfast.jpg",
+        "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793659298_6ae911a274723.jpg",
+        "fileName": "2026-11-03-dorm-breakfast.jpg",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 104654
+      },
+      "syncedAt": "2026-11-03T10:07:10.879Z"
+    },
+    {
+      "mealItemId": "2026-11-03-dorm-dinner",
+      "date": "2026-11-03",
+      "cafeteria": "dorm",
+      "mealTime": "dinner",
+      "name": "(뚝)안동찜닭*당면사리",
+      "menu": [
+        "쌀밥",
+        "스모크햄마늘쫑볶음",
+        "깍두기",
+        "도시락김"
+      ],
+      "price": 4500,
+      "kcal": null,
+      "photo": {
+        "imageUrl": "/meals/2026-11-03-dorm-dinner.jpg",
+        "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793692600_6ae993b804652.jpg",
+        "fileName": "2026-11-03-dorm-dinner.jpg",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 107214
+      },
+      "syncedAt": "2026-11-03T10:07:10.879Z"
+    },
+    {
+      "mealItemId": "2026-11-03-dorm-lunch",
+      "date": "2026-11-03",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "name": "치즈닭갈비깻잎덮밥",
+      "menu": [
+        "쌀밥",
+        "얼갈이국",
+        "삼색푸실리샐러드",
+        "깍두기",
+        "요거트"
+      ],
+      "price": 5000,
+      "kcal": null,
+      "photo": {
+        "imageUrl": "/meals/2026-11-03-dorm-lunch.jpg",
+        "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793671922_6ae942f224337.jpg",
+        "fileName": "2026-11-03-dorm-lunch.jpg",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 86046
+      },
+      "syncedAt": "2026-11-03T10:07:10.879Z"
+    },
+    {
+      "mealItemId": "2026-11-03-dorm-lunch-2",
+      "date": "2026-11-03",
+      "cafeteria": "dorm",
+      "mealTime": "lunch",
+      "name": "오리김치주물럭",
+      "menu": [
+        "쌀밥",
+        "얼갈이국",
+        "삼색푸실리샐러드",
+        "깍두기"
+      ],
+      "price": 4500,
+      "kcal": null,
+      "photo": {
+        "imageUrl": "/meals/2026-11-03-dorm-lunch-2.jpg",
+        "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793671935_6ae942ff5cd89.jpg",
+        "fileName": "2026-11-03-dorm-lunch-2.jpg",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 88815
+      },
+      "syncedAt": "2026-11-03T10:07:10.879Z"
+    },
+    {
+      "mealItemId": "2026-11-03-faculty-lunch",
+      "date": "2026-11-03",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "name": "김치제육볶음 Spicy Pork with Kimchi",
+      "menu": [
+        "온두부찜",
+        "북어콩나물국",
+        "산고추지",
+        "깍두기",
+        "잡곡밥",
+        "그린샐러드"
+      ],
+      "price": 7000,
+      "kcal": null,
+      "photo": {
+        "imageUrl": "/meals/2026-11-03-faculty-lunch.jpg",
+        "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793671112_6ae93fc8af362.jpg",
+        "fileName": "2026-11-03-faculty-lunch.jpg",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 135115
+      },
+      "syncedAt": "2026-11-03T10:07:10.879Z"
+    },
+    {
+      "mealItemId": "2026-11-03-faculty-lunch-2",
+      "date": "2026-11-03",
+      "cafeteria": "faculty",
+      "mealTime": "lunch",
+      "name": "마제덮밥 Mazesoba Rice Bowl",
+      "menu": [
+        "고구마맛탕",
+        "콩나물국",
+        "단무지"
+      ],
+      "price": 5500,
+      "kcal": null,
+      "photo": {
+        "imageUrl": "/meals/2026-11-03-faculty-lunch-2.jpg",
+        "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793671120_6ae93fd02cdbc.jpg",
+        "fileName": "2026-11-03-faculty-lunch-2.jpg",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 102281
+      },
+      "syncedAt": "2026-11-03T10:07:10.879Z"
+    },
+    {
+      "mealItemId": "2026-11-03-haksik-breakfast",
+      "date": "2026-11-03",
+      "cafeteria": "haksik",
+      "mealTime": "breakfast",
+      "name": "[천원의 아침밥] 토스트/단팥빵 (Brunch Set)",
+      "menu": [
+        "양배추샐러드&드레싱",
+        "흰우유",
+        "콘시리얼바",
+        "비엔나양송이볶음",
+        "단호박꿀조림",
+        "양념밥"
+      ],
+      "price": 1000,
+      "kcal": null,
+      "photo": {
+        "imageUrl": "/meals/2026-11-03-haksik-breakfast.jpg",
+        "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793661607_6ae91aa71c413.jpg",
+        "fileName": "2026-11-03-haksik-breakfast.jpg",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 124339
+      },
+      "syncedAt": "2026-11-03T10:07:10.879Z"
+    },
+    {
+      "mealItemId": "2026-11-03-haksik-lunch",
+      "date": "2026-11-03",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "name": "새우튀김카레라이스 (Deep-fried Shrimp with Curry Rice)",
+      "menu": [
+        "오이맛고추무침",
+        "배추김치",
+        "일식장국"
+      ],
+      "price": 4500,
+      "kcal": null,
+      "photo": {
+        "imageUrl": "/meals/2026-11-03-haksik-lunch.jpg",
+        "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793672613_6ae945a598998.jpg",
+        "fileName": "2026-11-03-haksik-lunch.jpg",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 96333
+      },
+      "syncedAt": "2026-11-03T10:07:10.879Z"
+    },
+    {
+      "mealItemId": "2026-11-03-haksik-lunch-2",
+      "date": "2026-11-03",
+      "cafeteria": "haksik",
+      "mealTime": "lunch",
+      "name": "돼지고기김치찜 (Braised Pork with Kimchi)",
+      "menu": [
+        "쌀밥",
+        "햄구이&케찹",
+        "사각어묵볶음",
+        "오이맛고추무침",
+        "깍두기"
+      ],
+      "price": 6500,
+      "kcal": null,
+      "photo": {
+        "imageUrl": "/meals/2026-11-03-haksik-lunch-2.jpg",
+        "imageSourceUrl": "https://life.hanyang.ac.kr/uploads/facilities/menu_1793672631_6ae945b782713.jpg",
+        "fileName": "2026-11-03-haksik-lunch-2.jpg",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 134490
+      },
+      "syncedAt": "2026-11-03T10:07:10.879Z"
+    }
+  ]
+}

@@ -50,61 +50,6 @@ import {
 } from '@/lib/grade';
 
 /* ==========================================================================
- *  0. 통계 유틸 (임시)
- * ========================================================================== */
-
-/** 표준정규 CDF. Abramowitz–Stegun 7.1.26 erf 근사. */
-function phi(x: number): number {
-  const sign = x < 0 ? -1 : 1;
-  const z = Math.abs(x) / Math.SQRT2;
-  const t = 1 / (1 + 0.3275911 * z);
-  const y =
-    1 -
-    ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t +
-      0.254829592) *
-      t *
-      Math.exp(-z * z);
-  return 0.5 * (1 + sign * y);
-}
-
-/** 표준정규 CDF 역함수. Acklam 근사(중앙부만 씀 — 꼬리는 이 앱에서 안 쓴다). */
-function probit(p: number): number {
-  const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687,
-             138.3577518672690, -30.66479806614716, 2.506628277459239];
-  const b = [-54.47609879822406, 161.5858368580409, -155.6989798598866,
-             66.80131188771972, -13.28068155288572];
-  const c = [-0.007784894002430293, -0.3223964580411365, -2.400758277161838,
-             -2.549732539343734, 4.374664141464968, 2.938163982698783];
-  const d = [0.007784695709041462, 0.3224671290700398, 2.445134137142996,
-             3.754408661907416];
-  const pl = 0.02425;
-  if (p < pl) {
-    const q = Math.sqrt(-2 * Math.log(p));
-    return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
-           ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
-  }
-  if (p > 1 - pl) return -probit(1 - p);
-  const q = p - 0.5;
-  const r = q * q;
-  return ((((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * q) /
-         (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
-}
-
-/**
- * ERICA 상대평가 누적 정원(대략치). "상위 몇 %까지 이 등급 이상"인지.
- * 학과·교수마다 다르므로 엔진에서는 과목별 설정으로 빼야 한다.
- */
-const CUM_QUOTA: { grade: GradeLetter; topPct: number }[] = [
-  { grade: 'A+', topPct: 0.12 },
-  { grade: 'A0', topPct: 0.35 },
-  { grade: 'B+', topPct: 0.52 },
-  { grade: 'B0', topPct: 0.70 },
-  { grade: 'C+', topPct: 0.82 },
-  { grade: 'C0', topPct: 0.90 },
-  { grade: 'D+', topPct: 0.96 },
-];
-
-/* ==========================================================================
  *  §A. 학점 — lib/grade 가 생기면 이 블록을 통째로 교체
  * ========================================================================== */
 
@@ -136,26 +81,10 @@ export interface QuickResult {
   completeness: Completeness;
 }
 
-/**
- * 3칸 비로그인 진단.
- *
- * ★통합(조율자): 여기는 더 이상 임시 계산이 아니다. lib/grade 엔진에 위임한다.
- *  QuickInput 을 평가요소 1개짜리 Course 로 감싸 predict() 를 부른다.
- *  "전체 과목 등록은 끝까지 선택사항"(회의록 4-6(3))이라는 요구를,
- *  과목을 만들지 않고도 같은 엔진을 태우는 방식으로 만족시킨다.
- *
- * ⚠ tier 는 엔진 규약(= lib/types.ts PrecisionTier)을 그대로 따른다.
- *   0 점수 또는 평균 없음 → 절대점수 계산기
- *   1 평균 O·표편 X      → blur          ← 이게 blur 다 (2가 아니다)
- *   2 친구 점수          → 구현 안 함. 엔진이 절대 내보내지 않는다
- *   3 평균+표편          → 정석
- *   4 등수 공개          → 백분위 직행
- */
 export function diagnose(input: QuickInput): QuickResult {
   const { myScore, mean, stdev } = input;
   const p = predict(quickCourse(input));
 
-  // z 는 화면 표시용이라 엔진 출력이 아니라 입력에서 직접 낸다.
   const z =
     myScore != null && mean != null && stdev != null && stdev > 0
       ? (myScore - mean) / stdev
@@ -219,12 +148,6 @@ export function computeCompleteness(input: QuickInput): Completeness {
 }
 
 /** 과목 단위 예측(등록은 어디까지나 선택사항인 심화 경로). */
-/* ── 과목 단위 경로 — 전부 lib/grade 엔진에 위임 ──────────────────────────
- *  통합(조율자): 아래 5개는 임시 계산이었으나 이제 정본 엔진을 그대로 부른다.
- *  UI 는 import 경로가 그대로라 손대지 않았다.
- * ------------------------------------------------------------------------ */
-
-/** 과목 단위 예측(등록은 어디까지나 선택사항인 심화 경로). */
 export function predictCourse(course: Course): GradePrediction {
   return predict(course);
 }
@@ -234,11 +157,6 @@ export function computeBalance(course: Course): GradeBalance {
   return engineBalance(course);
 }
 
-/**
- * "째도 되나" 비교 예측.
- * 시나리오 목록은 엔진이 과목을 보고 만든다(defaultScenarios).
- * 출결 규칙이 없는 과목이면 결석 시나리오가 빠지므로 화면이 알아서 줄어든다.
- */
 export function whatIf(course: Course): WhatIfDelta[] {
   return defaultScenarios(course).map((s) => engineWhatIf(course, s));
 }
@@ -518,58 +436,38 @@ export function mockCrawl(date: string, seedFallback = false): CrawlResult {
 }
 
 /**
- * 대결 스코어보드. 표본이 적으면 decisive=false 로 내려보내
- * 화면이 "승부 유보"를 띄우도록 만든다 — 정직성 3원칙.
+ * 대결 스코어보드 (폴백용). 덤프 평점 데이터를 두지 않으므로 초기에는 후기 0건으로 내려보낸다.
  */
 export function mockBattle(date: string, mealTime: MealTime): BattleResult {
-  const i = dayIndex(date);
-  const seed = i + mealTime.length * 3;
-
-  // 조식은 후기가 원래 잘 안 달린다 → 자연스럽게 표본 부족 케이스가 된다
-  const hkCount = mealTime === 'breakfast' ? 3 : 18 + (seed % 22);
-  const cbCount = mealTime === 'breakfast' ? 2 : 14 + ((seed * 7) % 19);
-
-  const hkAvg = hkCount === 0 ? null : 3.2 + ((seed * 13) % 16) / 20;
-  const cbAvg = cbCount === 0 ? null : 3.4 + ((seed * 17) % 16) / 20;
-
+  const mt = mealTime === 'breakfast' ? '조식' : mealTime === 'lunch' ? '중식' : '석식';
   const standings = [
     {
-      cafeteria: 'haksik' as const, label: '학생식당',
-      avgRating: hkAvg, reviewCount: hkCount,
-      trend: (['up', 'flat', 'down'] as const)[seed % 3],
+      cafeteria: 'changbo' as const,
+      label: '창업보육센터',
+      avgRating: null,
+      reviewCount: 0,
+      trend: 'flat' as const,
     },
     {
-      cafeteria: 'changbo' as const, label: '창업보육센터',
-      avgRating: cbAvg, reviewCount: cbCount,
-      trend: (['flat', 'up', 'up'] as const)[seed % 3],
+      cafeteria: 'haksik' as const,
+      label: '학생식당',
+      avgRating: null,
+      reviewCount: 0,
+      trend: 'flat' as const,
     },
   ];
 
-  const minCount = Math.min(hkCount, cbCount);
-  const gap = hkAvg != null && cbAvg != null ? Math.abs(hkAvg - cbAvg) : 0;
-
-  // 표본이 10건 미만이거나 평점 차가 0.3 미만이면 승부를 판정하지 않는다.
-  const decisive = minCount >= 10 && gap >= 0.3;
-  const winner = !decisive ? null : hkAvg! > cbAvg! ? ('haksik' as const) : ('changbo' as const);
-
-  const mt = mealTime === 'breakfast' ? '조식' : mealTime === 'lunch' ? '중식' : '석식';
-  const headline = !decisive
-    ? minCount < 10
-      ? `오늘 ${mt}은 아직 후기가 모자랍니다 — 승부 유보`
-      : `오늘 ${mt}은 차이가 너무 작습니다 — 승부 유보`
-    : winner === 'haksik'
-      ? `오늘 ${mt}은 학식 판정승`
-      : `오늘 ${mt}은 창보 판정승`;
-
-  return { date, mealTime, standings, winner, decisive, headline };
+  return {
+    date,
+    mealTime,
+    standings,
+    winner: null,
+    decisive: false,
+    headline: `오늘 ${mt}은 아직 후기가 없습니다 — 첫 후기를 남겨보세요`,
+  };
 }
 
-export const MOCK_MEAL_REVIEWS: MealReview[] = [
-  { id: 'r1', mealItemId: 'seed-1', rating: 4, text: '돈까스 튀김옷이 바삭했음. 줄은 좀 길었다', createdAt: '2026-09-23T12:14:00+09:00', nickname: '에리카러버' },
-  { id: 'r2', mealItemId: 'seed-1', rating: 2, text: '크림스프가 미지근했어요', createdAt: '2026-09-23T12:31:00+09:00', nickname: '3학년생존자' },
-  { id: 'r3', mealItemId: 'seed-2', rating: 5, text: '창보 로제파스타 진짜 괜찮다. 가격값은 함', createdAt: '2026-09-23T12:47:00+09:00', nickname: '파스타파' },
-  { id: 'r4', mealItemId: 'seed-2', rating: 3, text: '양이 좀 적음. 맛은 무난', createdAt: '2026-09-23T13:02:00+09:00', nickname: '익명' },
-];
+export const MOCK_MEAL_REVIEWS: MealReview[] = [];
 
 /* ==========================================================================
  *  §A-2. 3칸 진단 위에서 도는 비교 예측 — 학점 화면의 주인공
@@ -650,10 +548,6 @@ export function whatIfQuick(
   });
 }
 
-/**
- * 규칙 5의 문장 생성기. 등급을 단정하는 문장은 여기서 만들어질 수 없다.
- * 10% 버킷으로 움직였을 때만 "줄어든다/늘어난다"라고 말한다.
- */
 function shiftText(grade: GradeLetter, before: number, after: number | null): string {
   if (after == null) return '지금 입력으로는 등급이 어떻게 움직이는지 말할 수 없습니다';
 
@@ -680,7 +574,7 @@ export function skipVerdict(w: QuickWhatIf | undefined): {
     };
   }
   const b = Math.round(w.probBefore * 10) * 10;
-  const a = Math.round(w.probAfter * 10) * 10;
+  const a = Math.round(afterOf(w) * 10) * 10;
 
   if (w.borderlineFlag) {
     return { line: '지금은 경계선이라 한 번이 그대로 표가 납니다 — 가는 쪽을 권합니다', tone: 'careful' };
@@ -689,4 +583,8 @@ export function skipVerdict(w: QuickWhatIf | undefined): {
     return { line: `한 번 빠지면 ${w.pivotGrade} 이상 가능성이 눈에 띄게 줄어듭니다`, tone: 'careful' };
   }
   return { line: '한 번 빠진다고 등급이 움직일 자리는 아닙니다', tone: 'ok' };
+}
+
+function afterOf(w: QuickWhatIf): number {
+  return w.probAfter ?? 0;
 }

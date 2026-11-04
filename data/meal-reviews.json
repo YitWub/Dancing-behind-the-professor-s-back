@@ -1,0 +1,46 @@
+{
+  "note": "학식 후기. 시드에서 출발해 POST /api/meals/review 로 누적된다.",
+  "updatedAt": "2026-11-03T12:03:05.921Z",
+  "reviews": [
+    {
+      "id": "MR0001",
+      "mealItemId": "2026-11-03-dorm-lunch-2",
+      "rating": 5,
+      "text": "[좋좋]",
+      "createdAt": "2026-11-03T12:02:52.269Z",
+      "nickname": "익명"
+    },
+    {
+      "id": "MR0002",
+      "mealItemId": "2026-11-03-dorm-lunch",
+      "rating": 4,
+      "text": "[느좋]",
+      "createdAt": "2026-11-03T12:02:57.798Z",
+      "nickname": "익명"
+    },
+    {
+      "id": "MR0003",
+      "mealItemId": "2026-11-03-changbo-lunch",
+      "rating": 4,
+      "text": "[느좋]",
+      "createdAt": "2026-11-03T12:02:59.840Z",
+      "nickname": "익명"
+    },
+    {
+      "id": "MR0004",
+      "mealItemId": "2026-11-03-haksik-lunch",
+      "rating": 4,
+      "text": "[느좋]",
+      "createdAt": "2026-11-03T12:03:04.908Z",
+      "nickname": "익명"
+    },
+    {
+      "id": "MR0005",
+      "mealItemId": "2026-11-03-haksik-lunch-2",
+      "rating": 2,
+      "text": "[안좋]",
+      "createdAt": "2026-11-03T12:03:05.921Z",
+      "nickname": "익명"
+    }
+  ]
+}

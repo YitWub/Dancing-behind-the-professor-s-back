@@ -20,6 +20,7 @@ import type {
 } from '@/lib/types';
 import {
   MOCK_LECTURES,
+  MOCK_MEAL_REVIEWS,
   mockBattle,
   mockCrawl,
 } from '@/components/mock';
@@ -84,6 +85,16 @@ export async function loadMealStatus(): Promise<CrawlResult | null> {
     return await getJson<CrawlResult>('/api/meals/status');
   } catch {
     return null;
+  }
+}
+
+export async function loadMealReviews(mealItemId?: string): Promise<Sourced<MealReview[]>> {
+  try {
+    const q = mealItemId ? `?mealItemId=${encodeURIComponent(mealItemId)}` : '';
+    const data = await getJson<MealReview[]>(`/api/meals/review${q}`);
+    return { source: 'api', data };
+  } catch (e) {
+    return { source: 'mock', data: MOCK_MEAL_REVIEWS, note: reason(e) };
   }
 }
 

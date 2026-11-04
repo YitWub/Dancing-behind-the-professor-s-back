@@ -40,7 +40,7 @@ export const CAFETERIAS: CafeteriaSpec[] = [
   },
   {
     id: 'dorm',
-    label: '창의인재원식당',
+    label: '기숙사식당',
     serves: ['breakfast', 'lunch', 'dinner'],
     weekend: true,
     priceByMeal: { breakfast: 3500, lunch: 5000, dinner: 5000 },

@@ -103,15 +103,14 @@ export function FeedPanel({
                   background: eaten ? 'var(--e-accent-soft)' : 'var(--e-surface-2)',
                 }}
               >
-                <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-[var(--e-border)] bg-[var(--e-surface)]">
+                {/* 썸네일 크기·없을 때 문구는 haksik 브랜치가 실제 사진에 맞춰둔 값을 그대로 쓴다 */}
+                <div className="h-14 w-16 shrink-0 overflow-hidden rounded-lg border border-[var(--e-border)] bg-[var(--e-surface)]">
                   {photo ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={photo} alt={title} className="h-full w-full object-cover" loading="lazy" />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-[9.5px] leading-tight text-[var(--e-muted)]">
-                      사진
-                      <br />
-                      없음
+                    <div className="flex h-full w-full items-center justify-center px-1 text-center text-[10px] leading-tight text-[var(--e-muted)]">
+                      이미지가 없습니다.
                     </div>
                   )}
                 </div>
