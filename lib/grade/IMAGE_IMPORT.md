@@ -103,3 +103,10 @@ ID·점수·과제 그룹·통계·출석 연결을 유지하고 이름·반영�
 [요금·데이터 사용](https://ai.google.dev/gemini-api/docs/pricing),
 [요청 한도](https://ai.google.dev/gemini-api/docs/rate-limits),
 [Tesseract.js](https://tesseract.projectnaptha.com/).
+
+## 출석 연결 보존
+
+AI는 원래 항목명과 비율을 추출하며 주차학습·학습참여도를 출석으로 분류하지 않는다.
+설정 탭의 출석 점수 드롭다운을 통해 사용자가 연결한다. 명시적 연결 해제도 유지한다.
+수동 연결 ID 또는 이전 확정 출석 스냅샷이 있는 항목은 이미지에 없더라도 0%로 보존하며,
+기존 선택을 다른 새 항목으로 임의 교체하지 않는다. 미리보기·취소 중 과목은 변경하지 않는다.

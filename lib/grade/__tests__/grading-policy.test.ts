@@ -66,7 +66,7 @@ test('invalid caps, custom cuts and pass marks are rejected',()=>{
 test('existing confirmed attendance bounds and zero-point goals survive hypothetical projections',()=>{
   const c=course();c.gradingPolicy=officialPolicy('absolute');c.attendanceEstimate!.confirmed={weight:10,secured:4,lost:2,ungraded:0,finalDeduction:0};
   let r=projectRemaining(c,1);assert.ok(r.ok);close(r.value.low,92);
-  c.attendanceEstimate!.absences=15;r=projectRemaining(c,1);assert.ok(r.ok);close(r.value.low,88);
+  c.attendanceEstimate!.absences=15;r=projectRemaining(c,1);assert.ok(r.ok);close(r.value.low,84);
   c.attendanceEstimate!.confirmed.finalDeduction=100;assert.equal(planGoal(c,{kind:'points',points:0}).kind,'already');
 });
 

@@ -6,7 +6,8 @@ import { IMAGE_MAX_BYTES,IMAGE_TYPES,parseImageExtraction,buildWeightPreview,val
 import type { AssignmentGroup, AssignmentTask, AssessmentProgress, ManagedAssessment, ManagedCourse } from '@/lib/grade/management-types';
 import { validateManagedCourse } from '@/lib/grade/management';
 import { assignmentChangeMessages } from '@/lib/grade/assignments';
-import { prepareAttendanceEstimate, estimateAttendance, estimateChangeMessages, ATTENDANCE_REFERENCE_URL } from '@/lib/grade/attendance-estimate';
+import { prepareAttendanceEstimate, estimateAttendance, confirmedAttendanceBalance, estimateChangeMessages, ATTENDANCE_REFERENCE_URL } from '@/lib/grade/attendance-estimate';
+import { resolveAttendanceAssessmentId, reconcileAttendanceLink, attendanceLinkOptions, attendanceLinkChangeError, selectAttendanceAssessment, removeAssessmentWithAttendanceLink } from '@/lib/grade/attendance-link';
 import { Card } from '@/components/ui';
 import { resolvePolicy, officialPolicy, policyCuts, policyCaps, GRADE_CUTOFFS, POLICY_LABELS, POLICY_URL, type GradingPolicy } from '@/lib/grade/grading-policy';
 
@@ -71,6 +72,7 @@ export function CourseEditor({ course, isNew, migration = false, mode = 'setting
   const [savedKey,setSavedKey]=useState(encodeDraft(initial));
   const [saveStatus,setSaveStatus]=useState('저장됨 ✓');
   const [retry,setRetry]=useState(0);
+  const [linkNotice,setLinkNotice]=useState('');
   const urgent=useRef(false);
   const lastSaved=useRef(course);
   const acknowledged=useRef(encodeDraft(initial));
@@ -94,8 +96,7 @@ export function CourseEditor({ course, isNew, migration = false, mode = 'setting
   const baseCourse = { ...course };
   delete baseCourse.semester;
   delete baseCourse.myRank;
-  const namedAttendance=draft.assessments.filter((a)=>!a.group&&/출석|attendance/i.test(a.name));
-  const attendanceId = draft.assessments.some((a)=>a.id===draft.estimate.assessmentId)?draft.estimate.assessmentId:namedAttendance.length===1?namedAttendance[0].id:null;
+  const attendanceId = resolveAttendanceAssessmentId(draft.assessments.map((a)=>({id:a.id,name:a.name,weight:requiredNumber(a.percent)/100,assignmentGroup:a.group,progress:a.status?{status:a.status}:null})),draft.estimate);
   const candidate: ManagedCourse = {
     ...baseCourse, attendanceEstimate: {...draft.estimate,assessmentId:attendanceId,...(attendanceId!==draft.estimate.assessmentId?{confirmed:undefined}:{})}, name: draft.name.trim(), professor: draft.professor.trim(),
     credits: requiredNumber(draft.credits), enrolled: optionalNumber(draft.enrolled), isAbsolute: draft.grading.kind==='absolute'||draft.grading.kind==='pass_fail'?true:draft.grading.kind.startsWith('relative')?false:course.isAbsolute,
@@ -159,7 +160,11 @@ export function CourseEditor({ course, isNew, migration = false, mode = 'setting
   },[raw,retry,auto,queue,course.id]);
   useEffect(()=>{const flush=()=>queue.flush();window.addEventListener('pagehide',flush);return()=>{window.removeEventListener('pagehide',flush);queue.flush();};},[queue]);
   const updateAssessment = (id: string, patch: Partial<RowDraft>) => {
-    setDraft((d) => ({ ...d, assessments: d.assessments.map((a) => a.id === id ? { ...a, ...patch } : a) }));
+    setDraft((d) => {
+      const assessments=d.assessments.map((a) => a.id === id ? { ...a, ...patch } : a);
+      const estimate=reconcileAttendanceLink(assessments.map((a)=>({id:a.id,name:a.name,weight:requiredNumber(a.percent)/100,assignmentGroup:a.group,progress:a.status?{status:a.status}:null})),d.estimate);
+      return {...d,assessments,estimate};
+    });
   };
   const addAssessment = (name: string) => {
     setDraft((d) => ({ ...d, assessments: [...d.assessments, {
@@ -167,6 +172,18 @@ export function CourseEditor({ course, isNew, migration = false, mode = 'setting
       ceilingClustered: name === '출석', status: 'scheduled', score: '', reason: '',
       group: null,
     }] }));
+  };
+  const linkChangeError=attendanceLinkChangeError(candidate);
+  const chooseAttendance=(id:string|null)=>{
+    const next=selectAttendanceAssessment(candidate,id);
+    if(!next.ok){setLinkNotice(next.errors.join(' '));return;}
+    setLinkNotice('');urgent.current=true;
+    setDraft((d)=>({...d,estimate:next.value.attendanceEstimate!,assessments:d.assessments.map((row)=>{
+      const before=candidate.assessments.find((a)=>a.id===row.id),after=next.value.assessments.find((a)=>a.id===row.id);
+      if(!after||JSON.stringify(before?.progress)===JSON.stringify(after.progress))return row;
+      const restored=rowDraft(after);
+      return {...row,status:restored.status,score:restored.score,reason:restored.reason};
+    })}));
   };
 
   return (
@@ -189,7 +206,7 @@ export function CourseEditor({ course, isNew, migration = false, mode = 'setting
           onSave(candidate, changes.length > 0, attendanceChanges.length > 0);
         }
       }} className="flex flex-col gap-4">
-        {!recordsOnly&&!migration?<AssessmentImageImport assessments={candidate.assessments} onApply={(assessments)=>setDraft((d)=>({...d,assessments:assessments.map((a)=>{const previous=d.assessments.find((r)=>r.id===a.id);return previous?{...previous,name:a.name,percent:String(Number((a.weight*100).toFixed(8)))}:rowDraft(a);})}))} />:null}
+        {!recordsOnly&&!migration?<AssessmentImageImport assessments={candidate.assessments} preserveAssessmentIds={attendanceId&&(draft.estimate.selection==='manual'||draft.estimate.confirmed)?[attendanceId]:[]} onApply={(assessments)=>setDraft((d)=>({...d,estimate:reconcileAttendanceLink(assessments,d.estimate.assessmentId&&!assessments.some((a)=>a.id===d.estimate.assessmentId)?{...d.estimate,assessmentId:null,confirmed:undefined}:d.estimate),assessments:assessments.map((a)=>{const previous=d.assessments.find((r)=>r.id===a.id);return previous?{...previous,name:a.name,percent:String(Number((a.weight*100).toFixed(8)))}:rowDraft(a);})}))} />:null}
         <div hidden={recordsOnly} className={recordsOnly ? 'hidden' : 'grid grid-cols-1 gap-3 sm:grid-cols-2'}>
           <Field label="과목명" value={draft.name} onChange={(name) => setDraft((d) => ({ ...d, name }))} required />
           <Field label="학점" type="number" value={draft.credits} onChange={(credits) => setDraft((d) => ({ ...d, credits }))} required />
@@ -226,7 +243,20 @@ export function CourseEditor({ course, isNew, migration = false, mode = 'setting
           <Field label="현재 등수 (선택)" type="number" value={draft.rank} onChange={(rank)=>setDraft((d)=>({...d,rank}))} />
         </div></details> : null}
         {resultsEditable ? <AttendanceEstimateCard course={candidate} onChange={(key, delta) => setDraft((d)=>({...d,estimate:{...d.estimate,[key]:Math.max(0,d.estimate[key]+delta)}}))} review={prepared.review} /> : null}
-        {!recordsOnly ? <fieldset className="rounded-xl border border-[var(--e-border)] p-3"><legend className="px-1 text-[14px] font-semibold">출석 계산 조건</legend><Field label="총 수업 횟수" type="number" value={Number.isFinite(draft.estimate.totalSessions??15)?String(draft.estimate.totalSessions??15):''} onChange={(value)=>setDraft((d)=>({...d,estimate:{...d.estimate,totalSessions:requiredNumber(value)}}))} /><p className="mt-2 text-[12px] text-[var(--e-muted)]">기본 추정 15회 · 같은 길이의 수업을 가정합니다. 결석·지각은 기록 탭에서 수정하세요.</p></fieldset> : null}
+        {!recordsOnly ? <fieldset className="min-w-0 rounded-xl border border-[var(--e-border)] p-3"><legend className="px-1 text-[14px] font-semibold">출석 관리</legend>
+          <label className="flex min-w-0 flex-col gap-1.5 text-[12px] text-[var(--e-ink-2)]"><span>출석 점수 항목 선택</span>
+            <select aria-label="출석 점수 항목 선택" className={fieldClass+' min-h-11 min-w-0 max-w-full'} value={attendanceId??(draft.estimate.selection==='manual'?'':'__unselected')} disabled={!!linkChangeError} onChange={(event)=>chooseAttendance(event.target.value||null)}>
+              {/* A distinct hidden initial value lets explicitly choosing none emit onChange. */}
+              {attendanceId===null&&draft.estimate.selection!=='manual'?<option value="__unselected" hidden disabled>연결 안 함</option>:null}
+              <option value="">연결 안 함</option>
+              {attendanceLinkOptions(candidate.assessments,attendanceId).map((option)=><option key={option.id} value={option.id} disabled={!!option.reason}>{option.name} ({Number.isFinite(option.weight)?Number((option.weight*100).toFixed(2)):'?'}%){option.reason?` · ${option.reason}`:''}</option>)}
+            </select>
+          </label>
+          <p className="mt-2 text-[12px] text-[var(--e-muted)]">{attendanceId?'선택한 항목을 기준으로 출석 점수를 예상해요.':'출석 점수와 연결된 평가항목이 없어요. 결석·지각 기록은 계속할 수 있어요.'}</p>
+          {linkChangeError||linkNotice?<p role="status" className="mt-2 text-[12px]">{linkChangeError||linkNotice}</p>:null}
+          <div className="mt-3"><Field label="총 수업 횟수" type="number" value={Number.isFinite(draft.estimate.totalSessions??15)?String(draft.estimate.totalSessions??15):''} onChange={(value)=>setDraft((d)=>({...d,estimate:{...d.estimate,totalSessions:requiredNumber(value)}}))} /></div>
+          <p className="mt-2 text-[12px] text-[var(--e-muted)]">기본 15회 · 지각 3회당 결석 1회</p>
+        </fieldset> : null}
         <fieldset className="flex min-w-0 flex-col gap-3">
           <legend className="mb-2 text-[14px] font-semibold">평가항목</legend>
           {draft.assessments.filter((a)=>!recordsOnly||a.id!==attendanceId).map((a, index) => (
@@ -262,7 +292,7 @@ export function CourseEditor({ course, isNew, migration = false, mode = 'setting
                   </label>
                 ) : null}
               </div>
-              {a.id === attendanceId ? <p className="mt-2 text-[12px]">이 비율을 출석 카드에서 사용합니다. 간이 추정과 기존 확정 점수는 분리합니다.</p> : null}
+              {a.id === attendanceId ? <p className="mt-2 text-[12px]">이 비율을 출석 카드에서 사용합니다. 출석 만점에서 기록된 결석·지각만큼 차감합니다.</p> : null}
               {!simple && a.id !== attendanceId && (a.group || /과제|assignment|homework/i.test(a.name)) ? <div className="mt-3 rounded-lg bg-[var(--e-surface-2)] p-3">
                 {a.group ? (
                   <details>
@@ -318,9 +348,11 @@ export function CourseEditor({ course, isNew, migration = false, mode = 'setting
                   대부분 만점인 항목 (천장 밀집: 분포 합성에서 제외하고 감점 반영)
                 </label>
               </details> : null}
-              {!recordsOnly ? <button type="button" className="mt-3 text-[12px] underline underline-offset-2" aria-label={`평가항목 ${index + 1} 삭제`} onClick={() => {
+              {!recordsOnly ? <button type="button" className="mt-3 text-[12px] underline underline-offset-2 disabled:opacity-40" aria-label={`평가항목 ${index + 1} 삭제`} disabled={!removeAssessmentWithAttendanceLink(candidate,a.id).ok} title={!removeAssessmentWithAttendanceLink(candidate,a.id).ok?'기존 출석 기록 보존을 위해 먼저 연결을 해제해 주세요.':undefined} onClick={() => {
+                const next=removeAssessmentWithAttendanceLink(candidate,a.id);
+                if(!next.ok){setLinkNotice(next.errors.join(' '));return;}
                 if (!window.confirm('이 평가항목을 삭제할까요? 저장된 점수도 함께 제거됩니다.')) return;
-                setDraft((d) => ({ ...d, assessments: d.assessments.filter((item) => item.id !== a.id) }));
+                setDraft((d) => ({ ...d, estimate:next.value.attendanceEstimate??d.estimate,assessments: d.assessments.filter((item) => item.id !== a.id) }));
               }}>항목 삭제</button> : null}
             </fieldset>
           ))}
@@ -344,17 +376,18 @@ export function CourseEditor({ course, isNew, migration = false, mode = 'setting
 
 export function AttendanceEstimateCard({course,onChange,review=[]}:{course:ManagedCourse;onChange?:(key:'absences'|'lateness',delta:number)=>void;review?:string[]}) {
   const e=course.attendanceEstimate??prepareAttendanceEstimate(course).value;
-  const result=estimateAttendance({...course,attendanceEstimate:e});
-  const show=(n:number)=>Number(n.toFixed(1));
+  const recorded=confirmedAttendanceBalance({...course,attendanceEstimate:e});
+  const result={...estimateAttendance({...course,attendanceEstimate:e}),score:recorded.secured,deduction:recorded.lost};
+  const show=(n:number)=>Number(n.toFixed(2));
   if(!result.valid)return <p role="alert">총 수업 횟수를 설정 탭에서 확인해 주세요.</p>;
   return <section aria-label="출석 관리" className="rounded-xl border border-[var(--e-border)] bg-[var(--e-surface)] p-4">
-    <div className="flex items-center justify-between"><h4 className="text-[14px] font-semibold">출석 관리</h4><span className="rounded-full bg-[var(--e-surface-2)] px-2 py-1 text-[11px]">간이 추정</span></div>
-    {result.maximum>0?<div className="mt-3" aria-live="polite"><p className="text-[12px] text-[var(--e-muted)]">잠정 출석 점수</p><p className="mt-1 text-[30px] font-bold text-[var(--e-secured)]" data-attendance="estimate">{show(result.score)} <span className="text-[14px] font-normal text-[var(--e-ink)]">/ {show(result.maximum)}점</span></p><div role="img" aria-label={`출석 간이 추정 ${show(result.score)} / ${show(result.maximum)}점`} className="mt-2 h-3 overflow-hidden rounded-full bg-[#d9e5df]"><div className="h-full bg-[var(--e-secured)]" style={{width:`${100*result.score/result.maximum}%`}} /></div><p className="mt-2 text-[13px]">추정 감점: −{show(result.deduction)}점</p></div>:<p className="mt-3 text-[13px]">출석 점수 미반영 · 결석·지각만 기록할 수 있습니다.</p>}
+    <div className="flex items-center justify-between"><h4 className="text-[14px] font-semibold">출석 관리</h4><span className="rounded-full bg-[var(--e-surface-2)] px-2 py-1 text-[11px]">기록 반영</span></div>
+    {result.maximum>0?<div className="mt-3" aria-live="polite"><p className="text-[12px] text-[var(--e-muted)]">출석 점수</p><p className="mt-1 text-[30px] font-bold text-[var(--e-secured)]" data-attendance="estimate">{show(result.score)} <span className="text-[14px] font-normal text-[var(--e-ink)]">/ {show(result.maximum)}점</span></p><div role="img" aria-label={`출석 기록 점수 ${show(result.score)} / ${show(result.maximum)}점`} className="mt-2 h-3 overflow-hidden rounded-full bg-[#d9e5df]"><div className="h-full bg-[var(--e-secured)]" style={{width:`${100*result.score/result.maximum}%`}} /></div><p className="mt-2 text-[13px]">출석 감점: −{show(result.deduction)}점</p></div>:<p className="mt-3 text-[13px]">출석 점수와 연결된 평가항목이 없어요. 결석·지각 기록은 계속할 수 있어요.</p>}
     <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">{(['absences','lateness'] as const).map((key,i)=><div key={key} className="flex items-center justify-between gap-2 rounded-lg bg-[var(--e-surface-2)] p-2"><span className="text-[13px]">{['결석','지각'][i]}</span><div className="flex items-center gap-2">{onChange?<button type="button" aria-label={`${['결석','지각'][i]} 1 감소`} className={buttonClass+' min-h-11 min-w-11 disabled:opacity-40'} disabled={e[key]===0} onClick={()=>onChange(key,-1)}>−</button>:null}<output aria-live="polite" data-attendance-count={key} className="min-w-6 text-center text-[18px] font-semibold tabular-nums">{e[key]}</output>{onChange?<button type="button" aria-label={`${['결석','지각'][i]} 1 증가`} className={buttonClass+' min-h-11 min-w-11'} onClick={()=>onChange(key,1)}>+</button>:null}</div></div>)}</div>
     <p className="mt-2 text-[12px] text-[var(--e-muted)]">총 {result.totalSessions}회 가정 · 지각 3회당 결석 1회 가정</p>
     <div className="mt-3 rounded-lg bg-[var(--e-surface-2)] p-3"><p className="text-[13px] font-semibold">남은 결석 여유: {result.remainingAllowance}회 / {result.allowedAbsences}회</p><div className="mt-2 text-[18px]" role="img" aria-label={`결석 여유 ${result.remainingAllowance}회, 추정 허용 ${result.allowedAbsences}회`}>{result.allowedAbsences<=8?Array.from({length:result.allowedAbsences},(_,i)=><span key={i} aria-hidden="true" style={{color:i<result.remainingAllowance?'var(--e-secured)':'#c3ccc6'}}>♥ </span>):<span aria-hidden="true" className="text-[14px]">♥ {result.remainingAllowance} / {result.allowedAbsences}</span>}</div></div>
     {result.caution!=='none'?<p role={result.caution==='below_reference'?'alert':'status'} className={'mt-3 rounded-lg p-3 text-[13px] '+(result.caution==='below_reference'?'border border-red-300 bg-red-50 font-semibold text-red-900':'bg-amber-50 text-amber-900')} data-attendance="caution">{result.caution==='boundary'?`허용 경계: 유효 결석 ${result.effectiveAbsences}회입니다. 다음 결석 시 가정상 기준을 초과합니다.`:result.caution==='warning'?`주의: 결석 여유가 ${result.remainingAllowance}회 남았습니다.`:`출석 기준 미달 추정: 유효 결석 ${result.effectiveAbsences}회로 허용 ${result.allowedAbsences}회를 초과했습니다. 실제 시험 응시 가능 여부를 확인하세요. F 확정은 아닙니다.`}</p>:null}
-    <p className="mt-3 text-[12px] text-[var(--e-muted)]">미기록 수업은 정상 출석으로 가정합니다. 이 추정은 전체 HP바의 확정 점수에 반영하지 않습니다.</p>
+    <p className="mt-3 text-[12px] text-[var(--e-muted)]">출석은 만점으로 시작하고 기록한 결석·지각만큼 차감합니다. 요약·성적 전망·목표 점수에 바로 반영합니다.</p>
     <details className="mt-2 text-[12px]"><summary className="cursor-pointer">계산 가정 보기</summary><p className="mt-2">동일 길이 수업 {result.totalSessions}회, 지각 3회당 결석 1회로 가정합니다. 유효 결석은 결석 + floor(지각 / 3), 감점은 출석 배점 × 유효 결석 / {result.totalSessions}입니다. 주당 수업 횟수·시간·교수자의 실제 감점 방식에 따라 달라집니다.</p><p className="mt-2">총 수업시간의 2/3 출석 기준을 참고하면 위 가정에서는 {result.minimumAttendance}회 이상 출석이 필요합니다. 실제 출석 확인이나 F 확정 판정이 아닙니다. 공결은 여기서 감점하지 않습니다.</p><a className="mt-2 inline-block underline" href={ATTENDANCE_REFERENCE_URL} target="_blank" rel="noreferrer">ERICA 공식 학사 안내</a></details>
     {review.length?<details className="mt-3 text-[12px]"><summary className="cursor-pointer">기존 기록 전환 내용 · 저장 전에 확인</summary><ul className="mt-2 list-disc space-y-1 pl-4">{review.map((message,i)=><li key={i}>{message}</li>)}</ul><p className="mt-2">저장 확인 전에는 기존 데이터를 변경하지 않습니다.</p></details>:null}
   </section>;
@@ -366,7 +399,7 @@ function Field({ label, value, onChange, type = 'text', required = false }: {
   return <label className="flex min-w-0 flex-col gap-1.5 text-[12px] text-[var(--e-ink-2)]"><span>{label}</span><input className={fieldClass} type={type} step={type === 'number' ? 'any' : undefined} inputMode={type === 'number' ? 'decimal' : undefined} value={value} required={required} onChange={(e) => onChange(e.target.value)} /></label>;
 }
 
-function AssessmentImageImport({assessments,onApply}:{assessments:ManagedAssessment[];onApply:(rows:ManagedAssessment[])=>void}) {
+function AssessmentImageImport({assessments,onApply,preserveAssessmentIds=[]}:{assessments:ManagedAssessment[];onApply:(rows:ManagedAssessment[])=>void;preserveAssessmentIds?:string[]}) {
   const [available,setAvailable]=useState<boolean|null>(null);
   const [rows,setRows]=useState<WeightPreview[]|null>(null);
   const [busy,setBusy]=useState(false);
@@ -414,7 +447,7 @@ function AssessmentImageImport({assessments,onApply}:{assessments:ManagedAssessm
       <p role="status" className="text-[14px] font-semibold">합계 {Number(check!.total.toFixed(4))}% {check!.errors.length===0?'✓':''}</p>
       {check!.errors.length?<ul className="space-y-1 text-[12px]">{check!.errors.map((e,i)=><li key={i}>{e}</li>)}</ul>:null}
       <div className="flex flex-wrap gap-2"><button type="button" className={buttonClass+' min-h-11 bg-[var(--e-secured)] text-white disabled:opacity-40'} disabled={check!.errors.length>0} onClick={()=>{
-        const planned=applyWeightPreview(assessments,rows,()=>crypto.randomUUID());if(!planned.ok){setError(planned.errors.join(' '));return;}
+        const planned=applyWeightPreview(assessments,rows,()=>crypto.randomUUID(),preserveAssessmentIds);if(!planned.ok){setError(planned.errors.join(' '));return;}
         const changes=planned.value.flatMap((a)=>{const old=assessments.find((x)=>x.id===a.id);return old&&Math.abs(old.weight-a.weight)>1e-8?[`${old.name}: ${Number((old.weight*100).toFixed(4))}% → ${Number((a.weight*100).toFixed(4))}% (기존 기록 유지)`]:[];});
         if(changes.length&&!window.confirm(`평가비율을 변경할까요?\n\n${changes.join('\n')}\n\n이미 입력한 점수와 과제 기록은 유지됩니다.`))return;
         onApply(planned.value);cancel();

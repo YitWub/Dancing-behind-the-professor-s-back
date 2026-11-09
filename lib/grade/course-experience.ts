@@ -28,7 +28,7 @@ export function validateCourseExperience(value: Record<string, unknown>): string
 
 export function assessmentSummary(a: ManagedAssessment, course: ManagedCourse): string {
   const e=course.attendanceEstimate??prepareAttendanceEstimate(course).value;
-  if(a.id===e.assessmentId)return `\uACB0\uC11D ${e.absences} ? \uC9C0\uAC01 ${e.lateness} ? \uAC04\uC774 \uCD94\uC815 \uBCC4\uB3C4`;
+  if(a.id===e.assessmentId)return `결석 ${e.absences}회 · 지각 ${e.lateness}회 · 기록 반영`;
   if (a.assignmentGroup) {
     const tasks = a.assignmentGroup.tasks;
     const done = tasks.filter((t) => t.progress.status === 'graded' || t.progress.status === 'zero_confirmed').length;

@@ -6,7 +6,7 @@ import { assignmentAggregateScore, validateAssignmentGroup } from './assignments
 import { computeAttendance, validateAttendanceManagement } from './attendance.ts';
 import { validateCourseExperience } from './course-experience.ts';
 import { validateSimpleAttendance } from './simple-attendance.ts';
-import { validateAttendanceEstimate, confirmedAttendanceBalance } from './attendance-estimate.ts';
+import { validateAttendanceEstimate, confirmedAttendanceBalance, prepareAttendanceEstimate } from './attendance-estimate.ts';
 
 const record = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -87,6 +87,7 @@ export function transitionAssessment(
 export function toEngineCourse(course: ManagedCourse): ManagementResult<Course> {
   const errors = validateManagedCourse(course);
   if (errors.length) return { ok: false, errors };
+  if (course.attendanceEstimate) course = { ...course, attendanceEstimate: prepareAttendanceEstimate(course).value };
   const attendanceId=course.attendanceEstimate ? course.attendanceEstimate.assessmentId : course.simpleAttendance?.assessmentId ?? course.attendanceManagement?.assessmentId;
   if (course.assessments.some((a) => a.id !== attendanceId && !a.assignmentGroup && a.progress === null)) {
     return { ok: false, errors: ['기존 평가항목의 진행 상태를 확인한 뒤 엔진에 연결해 주세요.'] };

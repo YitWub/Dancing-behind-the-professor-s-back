@@ -11,6 +11,10 @@ export interface CourseScenario {
   /** Before the final zero clamp; needed to invert a target with external deductions. */
   subtotal: number;
   attendance: ReturnType<typeof estimateAttendance>;
+  /** Projected contribution bounded by previously confirmed attendance records. */
+  attendanceContribution: number;
+  /** Recorded attendance loss, including a separate final deduction exactly once. */
+  attendanceDeduction: number;
   usesEstimatedAttendance: boolean;
   distribution: GradePrediction['distribution'];
   warnings: GradePrediction['warnings'];
@@ -40,8 +44,7 @@ export function simulateCourse(course: ManagedCourse, input: SimulationInput = {
   const linked=copy.assessments.find((a)=>a.id===copy.attendanceEstimate!.assessmentId);
   const actual=balance.value.items.find((item)=>item.assessmentId===linked?.id);
   const actualAttendance=actual?.balance??{secured:0,lost:0,ungraded:0,remaining:0};
-  const hasFinalAttendance=!!copy.attendanceEstimate.confirmed&&actualAttendance.remaining<1e-8&&actualAttendance.ungraded<1e-8;
-  const attendancePoints=hasFinalAttendance?actualAttendance.secured:Math.max(actualAttendance.secured,Math.min(estimate.score,estimate.maximum-actualAttendance.lost));
+  const attendancePoints=actualAttendance.secured;
   const unknownPoints=Math.max(0,balance.value.balance.remaining+balance.value.balance.ungraded+balance.value.review.unclassifiedPoints-actualAttendance.remaining-actualAttendance.ungraded-(actual?.unclassifiedPoints??0));
   const external=copy.attendanceEstimate.confirmed?.finalDeduction??0;
   const subtotal=balance.value.balance.secured-actualAttendance.secured+attendancePoints-external;
@@ -53,8 +56,8 @@ export function simulateCourse(course: ManagedCourse, input: SimulationInput = {
   const policyPrediction=adapted.ok?predictWithPolicy(adapted.value,course):null;
   const prediction=policyPrediction?.prediction??null;
   const distribution=prediction?.distribution??null;
-  const probabilityNote=(!adapted.ok?adapted.errors.join(' '):policyPrediction!.note)+(Math.abs(attendancePoints-estimate.score)>1e-8?' 총점 계산에서는 기존 확정 출석의 확보·상실 범위를 보존합니다.':'')+(estimate.caution==='below_reference'?' 시험 응시 제한 가능성은 이 점수 기반 확률에 반영하지 않았습니다.':'');
-  return {ok:true,value:{low,high,subtotal,unknownPoints,attendance:estimate,usesEstimatedAttendance:!hasFinalAttendance&&estimate.maximum>0,distribution,families:policyPrediction?.families??[],warnings:prediction?.warnings??[],probabilityNote}};
+  const probabilityNote=(!adapted.ok?adapted.errors.join(' '):policyPrediction!.note)+(Math.abs(attendancePoints-estimate.score)>1e-8?' 총점 계산에서는 기존 출석 상실과 중복 차감하지 않습니다.':'')+(estimate.caution==='below_reference'?' 시험 응시 제한 가능성은 이 점수 기반 확률에 반영하지 않았습니다.':'');
+  return {ok:true,value:{low,high,subtotal,unknownPoints,attendance:estimate,attendanceContribution:attendancePoints,attendanceDeduction:actualAttendance.lost+external,usesEstimatedAttendance:false,distribution,families:policyPrediction?.families??[],warnings:prediction?.warnings??[],probabilityNote}};
 }
 
 export function analyzeTarget(course:ManagedCourse, target:'A+'|'A0'|'B+'|'B0', assessmentId:string|undefined, extraAbsences=0) {

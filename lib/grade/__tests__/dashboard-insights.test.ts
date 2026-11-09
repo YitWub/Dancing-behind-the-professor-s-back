@@ -29,7 +29,7 @@ test('midterm-only record projects final and untouched assignments instead of gr
  assert.equal(f.score,91);assert.equal(f.label,'A0');
  assert.deepEqual(f.projections.map((p)=>[p.name,p.score]),[['기말고사',90],['과제',90]]);
  assert.match(f.projections[1].basis,/같은 종류 기록 없음/);
- const actual=computeManagedBalance(c);assert.ok(actual.ok);assert.equal(actual.value.balance.secured,27);
+ const actual=computeManagedBalance(c);assert.ok(actual.ok);assert.equal(actual.value.balance.secured,37);
 });
 test('partial assignment completion uses its own average, final uses midterm average, raw scales respected',()=>{
  const c=course();c.assessments[0].maxScore=50;c.assessments[0].progress={status:'graded',score:45};

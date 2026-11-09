@@ -4,7 +4,7 @@ import { computeAssignmentBalance } from './assignments.ts';
 import { progressBalance } from './assessment-progress.ts';
 import type { FourAreaBalance } from './management-types.ts';
 import { computeAttendance } from './attendance.ts';
-import { confirmedAttendanceBalance } from './attendance-estimate.ts';
+import { confirmedAttendanceBalance, prepareAttendanceEstimate } from './attendance-estimate.ts';
 
 /** Deterministic assessment accounting. No estimates or probability model are involved.
  * Do not round individual components: 4 areas + unclassifiedPoints conserve total weight.
@@ -13,6 +13,7 @@ import { confirmedAttendanceBalance } from './attendance-estimate.ts';
 export function computeManagedBalance(course: ManagedCourse): ManagementResult<ManagedBalance> {
   const errors = validateManagedCourse(course);
   if (errors.length) return { ok: false, errors };
+  if (course.attendanceEstimate) course = { ...course, attendanceEstimate: prepareAttendanceEstimate(course).value };
   const balance = { secured: 0, lost: 0, ungraded: 0, remaining: 0 };
   const attendance = !course.attendanceEstimate && (course.simpleAttendance || course.attendanceManagement) ? computeAttendance(course) : null;
   const attendanceId=course.attendanceEstimate ? course.attendanceEstimate.assessmentId : course.simpleAttendance?.assessmentId ?? course.attendanceManagement?.assessmentId;

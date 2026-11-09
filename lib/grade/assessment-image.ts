@@ -29,12 +29,12 @@ export function validateWeightPreview(rows:WeightPreview[]) {
   return {errors,total};
 }
 /** The image defines the weights; retain unmatched recorded assessments at zero weight. */
-export function applyWeightPreview(existing:ManagedAssessment[],rows:WeightPreview[],newId:()=>string) {
+export function applyWeightPreview(existing:ManagedAssessment[],rows:WeightPreview[],newId:()=>string,preserveAssessmentIds:readonly string[]=[]) {
   const checked=validateWeightPreview(rows);if(checked.errors.length)return {ok:false as const,errors:checked.errors};
   const selected=rows.filter((r)=>r.included);
   if(selected.some((r)=>r.targetId&&!existing.some((a)=>a.id===r.targetId)))return {ok:false as const,errors:['기존 평가항목이 변경되었습니다. 이미지를 다시 검토해 주세요.']};
   const value=selected.map((r):ManagedAssessment=>{const old=existing.find((a)=>a.id===r.targetId);return old?{...old,name:r.name.trim(),weight:Number(r.percent)/100}:{id:newId(),name:r.name.trim(),weight:Number(r.percent)/100,maxScore:100,mean:null,stdev:null,ceilingClustered:/출석|attendance/i.test(r.name),progress:{status:'scheduled'}};});
-  const retained=existing.filter((a)=>!selected.some((r)=>r.targetId===a.id)&&(a.progress?.status!=='scheduled'||!!a.assignmentGroup?.tasks.length));
+  const retained=existing.filter((a)=>!selected.some((r)=>r.targetId===a.id)&&(a.progress?.status!=='scheduled'||!!a.assignmentGroup?.tasks.length||preserveAssessmentIds.includes(a.id)));
   value.push(...retained.map((a)=>({...a,weight:0})));
   return {ok:true as const,value};
 }

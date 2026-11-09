@@ -46,9 +46,12 @@ export type ManagedCourse = Omit<Course, 'assessments'> & {
   attendanceManagement?: AttendanceManagement;
   /** Explicit opt-in. Old rules/scores remain archived and are not applied twice. */
   simpleAttendance?: SimpleAttendance;
-  /** One current attendance workflow. Estimates never enter confirmed grade accounting. */
+  /** One attendance workflow; the assessment ID is independent of its display name. */
   attendanceEstimate?: {
+    /** Versioned app rule, not a verified instructor policy; totalSessions defaults to 15. */
     model: 'equal-15-v1'; assessmentId: string | null; absences: number; lateness: number;
+    /** A manual null is intentional and must never trigger name-based relinking. */
+    selection?: 'manual';
     /** Missing in older v2 documents means the original 15-session assumption. */
     totalSessions?: number;
     /** Previously confirmed contribution, preserved on explicit legacy conversion. */

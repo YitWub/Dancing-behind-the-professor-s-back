@@ -1,13 +1,14 @@
 import type { ManagedCourse } from './management-types.ts';
 import { assignmentChangeMessages } from './assignments.ts';
 import { estimateChangeMessages } from './attendance-estimate.ts';
+import { isSafeAttendanceSelectionChange } from './attendance-link.ts';
 
 export function autoSaveChanges(before:ManagedCourse,after:ManagedCourse) {
   const assignments=assignmentChangeMessages([before],[after]);
   const attendance=estimateChangeMessages([before],[after]);
   const withoutCounts=(c:ManagedCourse)=>c.attendanceEstimate?{...c.attendanceEstimate,absences:0,lateness:0}:null;
   const simpleCounts=!!before.attendanceEstimate&&!!after.attendanceEstimate&&JSON.stringify(withoutCounts(before))===JSON.stringify(withoutCounts(after));
-  return {assignments:assignments.length>0,attendance:attendance.length>0,messages:[...assignments,...(simpleCounts?[]:attendance)]};
+  return {assignments:assignments.length>0,attendance:attendance.length>0,messages:[...assignments,...(simpleCounts||isSafeAttendanceSelectionChange(before,after)?[]:attendance)]};
 }
 
 export const draftKey=(id:string)=>`erica.grade.editor-draft.v1.${id}`;
