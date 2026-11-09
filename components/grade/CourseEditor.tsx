@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { autoSaveChanges, createAutoSaveQueue, encodeDraft, readEditorDraft, writeEditorDraft, removeEditorDraft } from '@/lib/grade/autosave';
-import { IMAGE_MAX_BYTES,IMAGE_TYPES,parseImageExtraction,buildWeightPreview,validateWeightPreview,applyWeightPreview,type WeightPreview } from '@/lib/grade/assessment-image';
+import { AssessmentImageImport } from './AssessmentImageImport';
 import type { AssignmentGroup, AssignmentTask, AssessmentProgress, ManagedAssessment, ManagedCourse } from '@/lib/grade/management-types';
 import { validateManagedCourse } from '@/lib/grade/management';
 import { assignmentChangeMessages } from '@/lib/grade/assignments';
@@ -397,61 +397,4 @@ function Field({ label, value, onChange, type = 'text', required = false }: {
   label: string; value: string; onChange: (value: string) => void; type?: 'text' | 'number'; required?: boolean;
 }) {
   return <label className="flex min-w-0 flex-col gap-1.5 text-[12px] text-[var(--e-ink-2)]"><span>{label}</span><input className={fieldClass} type={type} step={type === 'number' ? 'any' : undefined} inputMode={type === 'number' ? 'decimal' : undefined} value={value} required={required} onChange={(e) => onChange(e.target.value)} /></label>;
-}
-
-function AssessmentImageImport({assessments,onApply,preserveAssessmentIds=[]}:{assessments:ManagedAssessment[];onApply:(rows:ManagedAssessment[])=>void;preserveAssessmentIds?:string[]}) {
-  const [available,setAvailable]=useState<boolean|null>(null);
-  const [rows,setRows]=useState<WeightPreview[]|null>(null);
-  const [busy,setBusy]=useState(false);
-  const [error,setError]=useState('');
-  const request=useRef<AbortController|null>(null);
-  const revision=useRef(0);
-  useEffect(()=>{const controller=new AbortController();fetch('/api/grade/assessment-image',{signal:controller.signal,cache:'no-store'}).then((r)=>r.ok?r.json():null).then((v)=>{if(!controller.signal.aborted)setAvailable(v?.available===true);}).catch(()=>{if(!controller.signal.aborted)setAvailable(false);});return()=>{controller.abort();request.current?.abort();};},[]);
-  const cancel=()=>{revision.current++;request.current?.abort();setBusy(false);setRows(null);setError('');};
-  const upload=async(file:File)=>{
-    cancel();const version=revision.current;
-    if(!IMAGE_TYPES.includes(file.type as typeof IMAGE_TYPES[number])||file.size===0||file.size>IMAGE_MAX_BYTES){setError('3MB 이하 PNG·JPEG·WebP 이미지를 선택해 주세요.');return;}
-    const controller=new AbortController();request.current=controller;setBusy(true);
-    try{
-      const bitmap=await createImageBitmap(file);
-      let data:string;
-      try{
-        if(bitmap.width*bitmap.height>20000000||Math.max(bitmap.width,bitmap.height)>8000)throw Error('이미지가 너무 큽니다. 평가표만 잘라서 올려 주세요.');
-        const scale=Math.min(1,2000/Math.max(bitmap.width,bitmap.height)),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));const context=canvas.getContext('2d');if(!context)throw Error('이 브라우저에서는 이미지 처리를 지원하지 않습니다.');context.fillStyle='#ffffff';context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(bitmap,0,0,canvas.width,canvas.height);data=canvas.toDataURL('image/jpeg',.94).split(',')[1];
-      }finally{bitmap.close();}
-      if(version!==revision.current||controller.signal.aborted)return;
-      if(data.length>Math.ceil(IMAGE_MAX_BYTES*4/3))throw Error('이미지가 너무 큽니다. 평가표만 잘라서 올려 주세요.');
-      const response=await fetch('/api/grade/assessment-image',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mediaType:'image/jpeg',data}),signal:controller.signal});
-      const result=await response.json();if(!response.ok)throw Error(typeof result.error==='string'?result.error:'이미지 분석에 실패했습니다.');
-      const parsed=parseImageExtraction(result);
-      if(parsed.status!=='ok'||!parsed.items.length)throw Error(parsed.status==='ambiguous'?'평가표가 여러 개이거나 구분이 어렵습니다. 적용할 표 하나만 잘라 올려 주세요.':parsed.status==='unreadable'?'글자가 흐릿합니다. 선명한 평가표를 올려 주세요.':'평가항목과 반영비율을 찾지 못했습니다. 수동 입력도 가능합니다.');
-      if(version===revision.current)setRows(buildWeightPreview(assessments,parsed));
-    }catch(e){if(version===revision.current&&!controller.signal.aborted)setError(e instanceof Error?e.message:'네트워크를 확인하거나 수동 입력해 주세요.');}
-    finally{if(version===revision.current)setBusy(false);}
-  };
-  const check=rows?validateWeightPreview(rows):null;
-  const patch=(id:string,value:Partial<WeightPreview>)=>setRows((r)=>r?.map((x)=>x.id===id?{...x,...value}:x)??null);
-  return <section aria-label="평가비율 사진으로 입력" className="rounded-xl border border-[var(--e-border)] p-3">
-    <h4 className="text-[14px] font-semibold">평가비율 사진으로 입력</h4><p className="mt-1 text-[12px] text-[var(--e-muted)]">평가표만 잘라 올리면 AI가 항목과 비율을 읽어요. 개인정보가 없는 캡처를 사용해 주세요.</p>
-    <p className="mt-2 text-[12px]">선택한 이미지는 Google Gemini로 전송됩니다. 무료 등급에서는 서비스 개선에 사용될 수 있으니 개인정보를 제외해 주세요. 이 앱은 원본을 저장하지 않습니다.</p>
-    <label className={buttonClass+' mt-3 inline-flex min-h-11 items-center '+(available!==true||busy?'opacity-50':'cursor-pointer')}><span>{busy?'인식 중…':'이미지 선택'}</span><input aria-label="평가비율 이미지 선택" className="sr-only" type="file" accept="image/png,image/jpeg,image/webp" disabled={available!==true||busy} onChange={(e)=>{const file=e.target.files?.[0];e.target.value='';if(file)void upload(file);}} /></label>
-    {available===false?<p className="mt-2 text-[12px]">이미지 분석이 아직 준비되지 않았어요. 아래에서 직접 입력할 수 있습니다.</p>:null}
-    {busy?<button type="button" className={buttonClass+' ml-2'} onClick={cancel}>분석 취소</button>:null}
-    {error?<p role="alert" className="mt-2 text-[13px]">{error}</p>:null}
-    {rows?<div className="mt-3 space-y-3"><h5 className="text-[14px] font-semibold">인식 결과를 확인해 주세요</h5><p className="text-[12px]">아직 반영되지 않았어요. 사진의 항목과 비율을 기준으로 적용합니다. 사진에 없는 기본 항목은 제외하고, 입력한 점수·과제 기록이 있는 항목만 0%로 보관합니다.</p>
-      {rows.map((r)=><div key={r.id} className="rounded-lg bg-[var(--e-surface-2)] p-3"><div className="grid grid-cols-[1fr_5rem] gap-2"><label className="min-w-0 text-[12px]">항목명<input aria-label={`인식 항목명 ${r.id}`} className={fieldClass} value={r.name} onChange={(e)=>patch(r.id,{name:e.target.value})} /></label><label className="text-[12px]">비율 (%)<input aria-label={`인식 비율 ${r.id}`} className={fieldClass} type="number" min={0} max={100} value={r.percent} onChange={(e)=>patch(r.id,{percent:e.target.value})} /></label></div>
-        <p className="mt-1 text-[12px] text-[var(--e-muted)]">{r.parent?`${r.parent}의 세부 항목 · 중복 합산 방지를 위해 제외`:r.source==='existing'?'사진에 없는 기존 항목 · 점수·과제 기록 유지':r.targetId?'기존 항목 연결 · 점수·과제 기록 유지':'새 평가항목'}</p>
-        {r.source==='image'&&!r.parent?<label className="mt-1 flex min-h-9 items-center gap-2 text-[12px]"><input type="checkbox" checked={r.included} onChange={(e)=>patch(r.id,{included:e.target.checked})} />적용에 포함</label>:null}
-        {r.needsReview&&r.included?<label className="mt-1 flex min-h-9 items-center gap-2 text-[12px]"><input type="checkbox" checked={false} onChange={()=>patch(r.id,{needsReview:false})} />확인 필요 · 이미지와 대조했어요</label>:null}
-      </div>)}
-      <p role="status" className="text-[14px] font-semibold">합계 {Number(check!.total.toFixed(4))}% {check!.errors.length===0?'✓':''}</p>
-      {check!.errors.length?<ul className="space-y-1 text-[12px]">{check!.errors.map((e,i)=><li key={i}>{e}</li>)}</ul>:null}
-      <div className="flex flex-wrap gap-2"><button type="button" className={buttonClass+' min-h-11 bg-[var(--e-secured)] text-white disabled:opacity-40'} disabled={check!.errors.length>0} onClick={()=>{
-        const planned=applyWeightPreview(assessments,rows,()=>crypto.randomUUID(),preserveAssessmentIds);if(!planned.ok){setError(planned.errors.join(' '));return;}
-        const changes=planned.value.flatMap((a)=>{const old=assessments.find((x)=>x.id===a.id);return old&&Math.abs(old.weight-a.weight)>1e-8?[`${old.name}: ${Number((old.weight*100).toFixed(4))}% → ${Number((a.weight*100).toFixed(4))}% (기존 기록 유지)`]:[];});
-        if(changes.length&&!window.confirm(`평가비율을 변경할까요?\n\n${changes.join('\n')}\n\n이미 입력한 점수와 과제 기록은 유지됩니다.`))return;
-        onApply(planned.value);cancel();
-      }}>이대로 적용</button><button type="button" className={buttonClass+' min-h-11'} onClick={cancel}>적용 취소</button></div>
-    </div>:null}
-  </section>;
 }
