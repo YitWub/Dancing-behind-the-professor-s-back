@@ -3,21 +3,18 @@
 /* ==========================================================================
  *  학점 화면 본체
  * --------------------------------------------------------------------------
- *  회의록이 꼽은 최대 실무 리스크가 온보딩이다. 그래서 첫 화면은
- *  "전체 과목 등록"이 아니라 칸 세 개짜리 비로그인 진단이다.
- *  과목 등록은 화면 맨 아래에 접혀 있고 끝까지 선택사항으로 남는다.
+ *  과목 목록과 v2 관리가 기본 진입점이다.
+ *  기존 빠른 진단은 저장 키와 계산 경로를 유지한 접이식 보조 메뉴다.
  * ========================================================================== */
 
 import { useEffect, useRef, useState } from 'react';
 import type { QuickInput, WhatIfAssumptions } from '@/components/mock';
-import { DEFAULT_ASSUMPTIONS, MOCK_COURSES, diagnose } from '@/components/mock';
+import { DEFAULT_ASSUMPTIONS, diagnose } from '@/components/mock';
 import { Meter } from '@/components/charts';
-import { Badge, Card, Icon, SectionTitle } from '@/components/ui';
+import { Card, SectionTitle } from '@/components/ui';
 import { GradeResult } from '@/components/grade/GradeResult';
 import { WhatIfPanel } from '@/components/grade/WhatIfPanel';
-import { BalanceCard } from '@/components/grade/BalanceCard';
-import { DiscriminationList } from '@/components/grade/DiscriminationList';
-import { AllocationBoard } from '@/components/grade/AllocationBoard';
+import { CourseList } from '@/components/grade/CourseList';
 
 const STORAGE_KEY = 'erica.grade.quick.v1';
 
@@ -40,28 +37,46 @@ function num(s: string): number | null {
 
 export function GradeScreen() {
   const [draft, setDraft] = useState<Draft>(EMPTY);
+  const [quickReady, setQuickReady] = useState(false);
   const [assumptions, setAssumptions] = useState<WhatIfAssumptions>(DEFAULT_ASSUMPTIONS);
-  const [showCourses, setShowCourses] = useState(false);
   const stdevRef = useRef<HTMLInputElement>(null);
 
   // 브라우저 저장은 "다시 켰을 때 다시 안 쓰게" 하는 편의일 뿐이라
   // 실패해도 화면은 그대로 동작해야 한다.
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setDraft({ ...EMPTY, ...(JSON.parse(raw) as Partial<Draft>) });
-    } catch {
-      /* 저장소를 못 읽어도 그냥 빈 칸에서 시작하면 된다 */
-    }
+    let active = true;
+    queueMicrotask(() => {
+      if (!active) return;
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed: unknown = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            const restored = { ...EMPTY };
+            for (const key of Object.keys(EMPTY) as (keyof Draft)[]) {
+              if (key in parsed && typeof (parsed as Record<string, unknown>)[key] === 'string') {
+                restored[key] = (parsed as Record<string, string>)[key];
+              }
+            }
+            setDraft(restored);
+          }
+        }
+      } catch {
+        /* 저장소를 못 읽어도 그냥 빈 칸에서 시작하면 된다 */
+      }
+      setQuickReady(true);
+    });
+    return () => { active = false; };
   }, []);
 
   useEffect(() => {
+    if (!quickReady) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
     } catch {
       /* 시크릿 모드 등 — 무시 */
     }
-  }, [draft]);
+  }, [draft, quickReady]);
 
   const input: QuickInput = {
     myScore: num(draft.myScore),
@@ -76,6 +91,10 @@ export function GradeScreen() {
 
   return (
     <div className="flex flex-col gap-3">
+      <CourseList />
+      <details className="rounded-2xl border border-[var(--e-border)] bg-[var(--e-surface)] p-4">
+        <summary className="cursor-pointer text-[14px] font-semibold">간단 성적 분석</summary>
+        <div className="mt-3 flex flex-col gap-3">
       {/* ── 3칸 진단 ───────────────────────────────────────────────────── */}
       <Card className="p-4">
         <SectionTitle
@@ -84,7 +103,7 @@ export function GradeScreen() {
         />
 
         <div className="grid grid-cols-3 gap-2">
-          <BigField label="내 점수" value={draft.myScore} onChange={set('myScore')} placeholder="78" autoFocus />
+          <BigField label="내 점수" value={draft.myScore} onChange={set('myScore')} placeholder="78" />
           <BigField label="반 평균" value={draft.mean} onChange={set('mean')} placeholder="71" />
           <BigField label="표준편차" value={draft.stdev} onChange={set('stdev')} placeholder="12" inputRef={stdevRef} />
         </div>
@@ -130,43 +149,8 @@ export function GradeScreen() {
       {/* ── 주인공 ─────────────────────────────────────────────────────── */}
       <WhatIfPanel input={input} assumptions={assumptions} onAssumptions={setAssumptions} />
 
-      {/* ── 여기부터는 끝까지 선택사항 ──────────────────────────────────── */}
-      <Card className="p-4">
-        <button
-          type="button"
-          onClick={() => setShowCourses((v) => !v)}
-          aria-expanded={showCourses}
-          className="flex w-full items-center gap-2 text-left"
-        >
-          <span className="min-w-0 flex-1">
-            <span className="block text-[14px] font-semibold text-[var(--e-ink)]">과목까지 등록하면</span>
-            <span className="mt-0.5 block text-[12px] leading-snug text-[var(--e-muted)]">
-              잔고·변별 기여도·배분 대시보드가 열립니다. 안 해도 위 결과는 그대로 씁니다.
-            </span>
-          </span>
-          <Icon
-            name="chevron"
-            className="h-4 w-4 shrink-0 text-[var(--e-muted)] transition-transform"
-          />
-        </button>
-        <div className="mt-3">
-          <Badge tone="neutral" icon="info">선택사항 — 안 채워도 앱이 반쪽이 되지 않습니다</Badge>
         </div>
-      </Card>
-
-      {showCourses ? (
-        <>
-          <div className="rounded-xl bg-[var(--e-surface-2)] px-3 py-2.5 text-[12px] leading-relaxed text-[var(--e-ink-2)]">
-            아래는 <b className="font-semibold">예시 과목</b>으로 미리 채워둔 화면입니다.
-            실제로는 직접 등록한 과목이 여기 들어옵니다.
-          </div>
-          <AllocationBoard courses={MOCK_COURSES} />
-          {MOCK_COURSES.map((c) => (
-            <BalanceCard key={c.id} course={c} />
-          ))}
-          <DiscriminationList course={MOCK_COURSES[0]} />
-        </>
-      ) : null}
+      </details>
     </div>
   );
 }
