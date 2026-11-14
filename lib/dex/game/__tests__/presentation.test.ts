@@ -135,5 +135,6 @@ test('실제 카드·디자인 샘플·성공 공개는 같은 앨범 프레임�
  test('개별 카드는 해당 경험의 별점과 빈 별을 표시하고 메뉴 요약은 평가 횟수로 구분한다',async()=>{
   const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!);
   for(const rating of [null,1,3,5]){const html=render(EditionCollectionCard,{name:'치즈돈가스',edition:'NORMAL',acquiredOn:'2026-11-14',rating});assert.ok(html.includes(rating===null?'☆☆☆☆☆':'★'.repeat(rating)+'☆'.repeat(5-rating)));assert.ok(html.includes(rating===null?'이 식사 미평가':'이 식사 별점 '+rating+'점'));}
-  const menu=render(EditionCollectionCard,{name:'치즈돈가스',count:3,evaluationCount:2,rating:5,acquiredOn:'2026-11-14'});assert.ok(menu.includes('평가 2회'));assert.ok(menu.includes('이 메뉴 평균 5.0점'));assert.ok(menu.includes('★★★★★'));assert.ok(menu.includes('평균 5.0'));
+  const menu=render(EditionCollectionCard,{name:'치즈돈가스',count:3,evaluationCount:2,rating:5,acquiredOn:'2026-11-14'});assert.ok(menu.includes('평가 2회'));assert.ok(menu.includes('이 메뉴 평균 5.0점'));assert.ok(menu.includes('★★★★★'));assert.ok(!menu.includes('dex-average-caption'));
+  const fractional=render(EditionCollectionCard,{name:'치즈돈가스',count:2,evaluationCount:2,rating:3.5,acquiredOn:'2026-11-14'});assert.ok(fractional.includes('width:70%'));assert.ok(fractional.includes('이 메뉴 평균 3.5점'));
  });
