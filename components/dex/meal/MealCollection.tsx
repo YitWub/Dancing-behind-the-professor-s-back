@@ -59,7 +59,7 @@ export function MealCollectionPanel({data,onExplore}:{data:DexDocument;onExplore
     <section className="dex-known"><div className="dex-section-heading"><div><span className="dex-eyebrow">다음에 만날 발견</span><h3>다음에 만날 메뉴</h3></div><span className="dex-tag">확인된 저장본</span></div>
       <p className="dex-muted">{knownDate?`${knownDate} 제공 식단에서 확인한 메뉴예요. 오늘 제공 여부와는 달라요.`:'확인 가능한 저장 식단을 기준으로 표시해요.'} 전체 메뉴 수나 완료율을 뜻하지 않아요.</p>
       <p className="dex-small dex-muted">{notice}</p>
-      {unknown.length?<div className="dex-card-grid">{unknown.map(row=><CollectionCard key={row.selection!.dishId} title={splitMenuLabel(row.selection!.dishName).title} rarity="UNKNOWN" locked artwork={<MealImageArtwork kind={mealArtwork(row.selection!.dishName)} locked/>} meta="직접 먹은 날, 나의 도감으로"/>)}</div>:<p className="dex-muted">현재 저장본에서 추가로 표시할 미수집 메뉴가 없어요.</p>}
+      {unknown.length?<div className="dex-card-grid">{unknown.map(row=><CollectionCard key={row.selection!.dishId} title={splitMenuLabel(row.selection!.dishName).title} rarity="UNKNOWN" locked artwork={<MealImageArtwork name={row.selection!.dishName} kind={mealArtwork(row.selection!.dishName)} locked/>} meta="직접 먹은 날, 나의 도감으로"/>)}</div>:<p className="dex-muted">현재 저장본에서 추가로 표시할 미수집 메뉴가 없어요.</p>}
     </section>
   </div>;
 }

@@ -34,7 +34,7 @@ for(const [name,path] of targets){
   const input=readFileSync(new URL('../../../../'+path,import.meta.url),'utf8');
   let output=ts.transpileModule(input,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText as string;
   output=output.replace(/from (["'])([^"']+)\1/g,(_match:string,_quote:string,specifier:string)=>{
-    const target=[...urls].find(([component])=>specifier.endsWith('/'+component)||specifier==='./'+component)?.[1];
+    const target=[...urls].find(([component])=>specifier.replace(/\.tsx?$/,'').endsWith('/'+component)||specifier==='./'+component)?.[1];
     return `from '${target??pathToFileURL(require.resolve(specifier)).href}'`;
   });
   writeFileSync(join(temporary,name+'.mjs'),output);

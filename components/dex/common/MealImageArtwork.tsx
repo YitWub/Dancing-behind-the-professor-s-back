@@ -6,8 +6,8 @@ import { foodArtSource } from '@/lib/dex/meal/artwork-assets';
 import type { ArtworkMode } from '@/lib/dex/meal/artwork-assets';
 
 /** Optional visual layer. Missing/unmapped images retain the existing SVG. */
-export function MealImageArtwork({kind,locked=false,mode='image'}:{kind:ArtworkKind;locked?:boolean;mode?:ArtworkMode}){
-  const source=foodArtSource(kind);
+export function MealImageArtwork({kind,name,locked=false,mode='image'}:{kind:ArtworkKind;name?:string;locked?:boolean;mode?:ArtworkMode}){
+  const source=foodArtSource(kind,name);
   return mode==='svg'||!source?<CollectionArtwork kind={kind} locked={locked}/>:<ImageCandidate key={source} kind={kind} locked={locked} source={source} soft={mode==='soft'}/>;
 }
 function ImageCandidate({kind,locked,source,soft}:{kind:ArtworkKind;locked:boolean;source:string;soft:boolean}){

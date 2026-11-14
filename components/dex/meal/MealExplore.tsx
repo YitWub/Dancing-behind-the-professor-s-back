@@ -114,7 +114,7 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
         const label=splitMenuLabel(name);
         const memory=row.selection?personal.find(card=>card.dishId===row.selection!.dishId):null;
         return <Card as="article" key={item.id} className="dex-offering-card">
-          <div className="dex-offering-head"><MealImageArtwork kind={mealArtwork(name)}/><span className="dex-tag">{collected?'수집 완료':'새로운 발견 후보'}</span></div>
+          <div className="dex-offering-head"><MealImageArtwork name={name} kind={mealArtwork(name)}/><span className="dex-tag">{collected?'수집 완료':'새로운 발견 후보'}</span></div>
           <p className="text-sm text-[var(--e-muted)]">{item.date} · {CAFETERIA_NAMES[item.cafeteria]} · {MEAL_TIME_NAMES[item.mealTime]}</p>
           <h3 className="dex-offering-title">{label.title}</h3>
           <div className="dex-offering-game-hint"><RarityBadge tier="UNKNOWN" hidden={!collected}/><span>{collected?'이미 발견한 메뉴!':'나의 도감에 없는 메뉴예요.'}</span></div>
@@ -132,7 +132,7 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
       })}
     </div>}
     </>:null}
-    <CollectionFeedback rarity="UNKNOWN" notices={feedback?.notices??[]} result={feedback?.result??null} itemName={feedback?.name??''} visitCount={feedback?.visitCount} title="새로운 메뉴 발견!" artwork={<MealImageArtwork kind={mealArtwork(feedback?.name??'')}/>} onDismiss={dismissFeedback} canDismiss={canDismissFeedback} detailHref={feedback?.result.ok?`/dex/meal/collection/${feedback.result.value.entry.id}`:undefined}>
+    <CollectionFeedback rarity="UNKNOWN" notices={feedback?.notices??[]} result={feedback?.result??null} itemName={feedback?.name??''} visitCount={feedback?.visitCount} title="새로운 메뉴 발견!" artwork={<MealImageArtwork name={feedback?.name} kind={mealArtwork(feedback?.name??'')}/>} onDismiss={dismissFeedback} canDismiss={canDismissFeedback} detailHref={feedback?.result.ok?`/dex/meal/collection/${feedback.result.value.entry.id}`:undefined}>
       {feedback?.result.ok&&!feedback.result.value.replayed&&feedback.result.value.experience.kind==='meal'?<QuickMealRating key={feedback.result.value.experience.id} experience={feedback.result.value.experience} onGuardChange={guard=>{ratingGuard.current=guard;}} onSaved={reload} onLater={()=>{if(canDismissFeedback())dismissFeedback();}}/>:null}
     </CollectionFeedback>
   </div>;
