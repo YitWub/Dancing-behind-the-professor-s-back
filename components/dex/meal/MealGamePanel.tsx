@@ -13,10 +13,10 @@ export function MealGamePanel({document}:{document:DexDocument}){
   const unlocked=achievements.filter(goal=>goal.status==='achieved');
   const achieved=unlocked.length;
   return <section className="dex-game-panel" aria-label="나의 학식 업적과 대표 메뉴">
-    <div className="dex-section-heading"><div><span className="dex-eyebrow">MY CAMPUS QUEST</span><h3>한 끼의 발견이, 나의 업적으로.</h3></div><span className="dex-tag">달성 {achieved}개</span></div>
+    <div className="dex-section-heading"><div><span className="dex-eyebrow">나의 수집 발자국</span><h3>한 끼의 발견이, 나의 업적으로.</h3></div><span className="dex-tag">달성 {achieved}개</span></div>
     <p className="dex-muted">직접 남긴 개인 기록으로 계산해요. 공식 식사 인증이나 메뉴의 맛 순위는 아니에요.</p>
     <div className="dex-highlight-grid">{slots.map(slot=><MealHighlightCard key={slot.id} slot={slot}/>)}</div>
-    <div className="dex-achievement-showcase" aria-label="달성한 업적 배지"><span className="dex-eyebrow">MY BADGES</span>{unlocked.length?<><div>{unlocked.slice(0,3).map(goal=><span key={goal.id} className="dex-unlocked-badge"><span aria-hidden="true">{goal.icon}</span>{goal.name}</span>)}{unlocked.length>3?<span className="dex-tag">외 {unlocked.length-3}개</span>:null}</div><p>내 기록으로 모은 배지 {achieved}개</p></>:<p>아직 빈 배지판 · 첫 메뉴부터 시작해 보세요.</p>}</div>
+    <div className="dex-achievement-showcase" aria-label="달성한 업적 배지"><span className="dex-eyebrow">모아둔 배지</span>{unlocked.length?<><div>{unlocked.slice(0,3).map(goal=><span key={goal.id} className="dex-unlocked-badge"><span aria-hidden="true">{goal.icon}</span>{goal.name}</span>)}{unlocked.length>3?<span className="dex-tag">외 {unlocked.length-3}개</span>:null}</div><p>내 기록으로 모은 배지 {achieved}개</p></>:<p>아직 빈 배지판 · 첫 메뉴부터 시작해 보세요.</p>}</div>
     <details className="dex-achievement-details"><summary>나의 업적 보기 <span>{achieved}개 달성 · 기록에 따라 갱신</span></summary>
       <div className="dex-achievement-grid">{achievements.map(goal=><article key={goal.id} className={`dex-achievement is-${goal.status}`}>
         <span className="dex-achievement-icon" aria-hidden="true">{goal.icon}</span><div><h4>{goal.name}</h4><p>{goal.condition}</p>

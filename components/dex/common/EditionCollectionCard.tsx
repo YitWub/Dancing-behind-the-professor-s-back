@@ -7,7 +7,7 @@ import { splitMenuLabel } from '@/lib/dex/meal/presentation';
 export function EditionCollectionCard({name,edition,count,acquiredOn,href,onSelect,selected=false,preview=false}:{name:string;edition?:CardEdition;count?:number;acquiredOn:string;href?:string;onSelect?:()=>void;selected?:boolean;preview?:boolean}){
   const label=splitMenuLabel(name);
   const content=<><CollectionArtwork kind={mealArtwork(name)}/><div className="dex-card-copy"><h3>{label.title}</h3><div className="dex-card-meta">{edition?<span className={`dex-edition-badge dex-edition--${edition.toLowerCase()}`}>{edition}</span>:<span className="dex-tag">카드 없음</span>}{count!==undefined?<span>보유 {count}장</span>:<time dateTime={acquiredOn}>획득 {acquiredOn}</time>}</div></div></>;
-  const className='dex-collect-card dex-edition-card-body';
+  const className='dex-collect-card dex-edition-card-body album-card-frame'+(edition?` album-edition--${edition.toLowerCase()}`:'');
   return <article data-preview={preview||undefined} className={`dex-edition-card dex-edition--${edition?.toLowerCase()??'normal'}${selected?' is-selected':''}`}>
     {href?<Link className={className} href={href} aria-label={`${label.title} ${edition??''} 상세`}>{content}</Link>:onSelect?<button className={className} type="button" aria-pressed={selected} aria-label={`${label.title} ${edition??''} 선택`} onClick={onSelect}>{content}</button>:<div className={className}>{content}</div>}
   </article>;

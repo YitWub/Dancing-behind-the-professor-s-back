@@ -84,7 +84,7 @@ test('랜덤 카드 4종은 실제 저장 결과로 최초·재방문 모두 공
     const value={...success,outcome,discovery:outcome==='revisit'?null:success.discovery,experience:{id:'edition-exp',kind:'meal',card:{edition}}};
     const props={itemName:'fixture',onDismiss:()=>{},result:{ok:true,value},visitCount:3,children:createElement('p',null,'빠른 평가 유지')};
     const html=render(CollectionFeedback,props);assert.ok(html.includes('dex-edition--'+edition.toLowerCase()));assert.ok(html.includes('새 카드 1장 획득 완료'));assert.ok(html.includes('빠른 평가 유지'));assert.ok(html.includes('<strong>3</strong>'));
-    assert.equal(html.includes('NEW DISCOVERY!'),outcome==='new-entry');
+    assert.equal(html.includes('처음 만난 메뉴'),outcome==='new-entry');
     assert.ok(!render(CollectionFeedback,{...props,result:{ok:true,value:{...value,replayed:true}}}).includes('dex-edition-badge'));
     const preview=render(DiscoveryReveal,{preview:true,edition,itemName:'test',title:'test',onDismiss:()=>{}});assert.ok(preview.includes('저장되지 않아요'));assert.ok(preview.includes('연출 건너뛰기'));
   }
@@ -112,4 +112,22 @@ test('개발 허브는 네 미리보기와 보존한 별도 저장 검증 도구
  const {DeveloperToolsHub}=await import(urls.get('DeveloperToolsHub')!);const html=render(DeveloperToolsHub,{});
  for(const route of ['design','collection','editions','rarity','storage'])assert.ok(html.includes('href="/dex/dev/'+route+'"'));
  assert.equal((html.match(/data-testid="devtool-card"/g)||[]).length,4);
+});
+
+test('음식 SVG 8종은 서로 다른 실루엣이며 시각 힌트는 모호한 이름을 합치지 않는다',async()=>{
+ const {CollectionArtwork,mealArtwork}=await import(urls.get('CollectionArtwork')!);
+ const samples=[['치즈돈가스','cutlet'],['김치볶음밥','fried-rice'],['치킨마요덮밥','rice-bowl'],['순두부찌개','stew'],['바지락칼국수','noodles'],['새우튀김카레라이스','curry'],['로제떡볶이','snack'],['제육볶음','meat']];
+ const art=[];for(const [name,kind] of samples){assert.equal(mealArtwork(name),kind);const html=render(CollectionArtwork,{kind});assert.ok(html.includes('<svg'));const svg=html.match(/<svg[\s\S]*?<\/svg>/)?.[0];assert.ok(svg);art.push(svg);}
+ assert.equal(new Set(art).size,8);assert.equal(mealArtwork('오늘의 특별 메뉴'),'food');assert.equal(mealArtwork('돈가스&떡볶이'),'food');assert.equal(mealArtwork('BBQ 정식'),'food');
+});
+test('실제 카드·디자인 샘플·성공 공개는 같은 앨범 프레임과 에디션 클래스를 사용',async()=>{
+ const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!),{DesignPreviewCard}=await import(urls.get('DesignPreviewCard')!);
+ for(const edition of ['NORMAL','SPECIAL','RARE','GOLDEN']){
+  const shared='album-edition--'+edition.toLowerCase();
+  const actual=render(EditionCollectionCard,{name:'치즈돈가스',edition,acquiredOn:'2026-11-14',count:2});
+  const preview=render(DesignPreviewCard,{sample:{kind:'meal',title:'치즈돈가스',edition,meta:'가상',stamp:'',note:''}});
+  const reveal=render(DiscoveryReveal,{edition,itemName:'치즈돈가스',title:'새 카드',onDismiss:()=>{}});
+  for(const html of [actual,preview,reveal]){assert.ok(html.includes('album-card-frame'));assert.ok(html.includes(shared));}
+ }
+ const person=render(DesignPreviewCard,{sample:{kind:'people',title:'친구',meta:'가상',stamp:'발견',note:''}});assert.ok(person.includes('album-card-frame'));assert.ok(!person.includes('album-edition--'));
 });

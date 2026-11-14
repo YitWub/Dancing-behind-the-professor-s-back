@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import '@/components/theme.css';
 import './dex.css';
+import '@/components/dex/common/AlbumFrame.css';
 import { DexNavigation } from '@/components/dex/common/DexNavigation';
 
 export default function DexLayout({children}:{children:ReactNode}) {

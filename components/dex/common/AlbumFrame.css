@@ -1,0 +1,55 @@
+/* Shared album surface: real cards, design preview and committed reveals opt in. */
+.album-card-frame{--album-paper:#fffdf2;--album-line:#b9c9a5;--album-ink:#385340;position:relative;isolation:isolate;box-sizing:border-box;border:2px solid var(--album-line)!important;border-radius:18px 13px 18px 13px!important;background:linear-gradient(150deg,#fffef7,#f1f4e6)!important;box-shadow:0 4px 0 #a9bb8d33,0 9px 22px #425c3510!important;color:var(--album-ink)}
+.album-card-frame::before,.album-card-frame::after{position:absolute;pointer-events:none;z-index:1}
+.album-card-frame::before{content:'';inset:5px;border:1px solid #d4dec533;border-radius:12px 8px 12px 8px}
+.album-card-frame::after{content:'✧';top:7px;right:10px;font-size:16px;color:#7b9661;line-height:1}
+.album-card-frame .dex-art{background:radial-gradient(ellipse at 50% 65%,#e4edcf 0,transparent 65%)!important;border-radius:12px}
+.album-card-frame .dex-card-copy,.album-card-frame .design-card-copy{position:relative;z-index:2}
+.album-card-frame.album-edition--normal{--album-line:#b7c8a0}
+.album-card-frame.album-edition--special{--album-line:#699c78;border-style:double!important;border-width:3px!important;border-radius:21px 11px 21px 11px!important}
+.album-card-frame.album-edition--special::before{border-color:#9fc6a0;border-style:dashed}
+.album-card-frame.album-edition--special::after{content:'✧ ✧';color:#4d8b62;font-size:14px}
+.album-card-frame.album-edition--rare{--album-line:#9a7ab8;background:radial-gradient(circle at 100% 0,#e4d8f4 0,transparent 40%),linear-gradient(145deg,#fffdf8,#f4effb)!important;box-shadow:0 4px 0 #ab8dc633,0 9px 22px #74578d14!important}
+.album-card-frame.album-edition--rare::before{border-color:#bca3d7;border-style:dashed}
+.album-card-frame.album-edition--rare::after{content:'✦';font-size:20px;color:#9370b1}
+.album-card-frame.album-edition--golden{--album-line:#c09a3f;border:3px double #bc9639!important;border-radius:20px 9px 20px 9px!important;background:repeating-linear-gradient(135deg,#f0dc9233 0 1px,transparent 1px 13px),linear-gradient(150deg,#fff7d7,#fffdf3 58%,#f4e5af)!important;box-shadow:0 4px 0 #c6a24f44,0 10px 25px #a27a2120!important}
+.album-card-frame.album-edition--golden::before{border-color:#d3b66b;inset:5px}
+.album-card-frame.album-edition--golden::after{content:'✦ ✧';font-size:18px;color:#b38b2d}
+.dex-edition-card .album-card-frame{padding:12px}
+.dex-edition-card .album-card-frame .dex-card-copy h3{font-size:15px;line-height:1.4;height:2.8em;min-height:2.8em}
+.dex-owned-grid .album-card-frame .dex-art{height:125px}
+.dex-owned-grid .album-card-frame .dex-card-meta{min-height:25px;align-items:center}
+.dex-owned-grid .album-card-frame time{font-size:10px;opacity:.8}
+.dex-collection-panel,.dex-meal-detail{--album-surface:#f7f7e9;padding:20px;border:1px solid #d6dfc8;border-radius:22px;background:var(--album-surface);min-width:0}
+.dex-collection-panel .dex-collection-switch{background:#e8eedb;border-color:#d2ddbf}
+.dex-collection-panel .dex-collection-switch button[aria-pressed=true]{background:#fffdf3;color:#3c6849;box-shadow:0 2px 7px #415f2e14}
+.dex-collection-panel .dex-collection-tools input,.dex-collection-panel .dex-collection-tools select{background:#fffef7;border-color:#d0dbbf;font-size:14px}
+.dex-collection-panel .dex-count{background:#e4edce;color:#3b5c42;white-space:nowrap}
+.dex-collection-panel .dex-owned-grid{gap:16px}
+.dex-meal-detail .dex-detail-rating .dex-experience-card{background:#fffef7;border-color:#d5dfc8;border-radius:18px}
+.dex-meal-detail .dex-detail-focus{gap:26px;padding:10px 0}
+.dex-meal-detail .dex-detail-feature{max-width:300px}
+.dex-meal-detail .dex-detail-feature .album-card-frame{padding:18px}
+.dex-meal-detail .dex-detail-feature .dex-art{height:220px}
+.dex-meal-detail .dex-quick-note textarea{border-color:#d7dfc8;background:#fffdf7;font-size:14px}
+.dex-meal-detail .dex-rating-stars label.is-selected{background:#e5edda;color:#51764e}
+.dex-meal-detail .dex-detail-card-strip{padding:7px 5px 14px}
+.dex-meal-detail .dex-detail-card-strip .dex-art{height:76px}
+.dex-meal-detail .dex-detail-secondary{border-top:1px dashed #ccd8bc;padding-top:14px}
+.dex-reveal-card.album-card-frame{animation:album-open .24s ease-out both}
+.dex-reveal-card.album-card-frame.album-edition--special{animation-duration:.34s}
+.dex-reveal-card.album-card-frame.album-edition--rare{animation:album-rare-open .42s ease-out both}
+.dex-reveal-card.album-card-frame.album-edition--golden{animation:album-rare-open .55s ease-out both}
+.dex-reveal-card.album-card-frame.album-edition--special::after,.dex-reveal-card.album-card-frame.album-edition--golden::after{animation:album-twinkle .6s ease-out 1 both}
+.dex-reveal-card.album-card-frame .dex-reveal-shine{animation:album-sheen .6s ease-out 1 both;background:linear-gradient(110deg,transparent 30%,#fff9d188 50%,transparent 65%);pointer-events:none}
+.dex-reveal-card.album-edition--normal .dex-reveal-shine{display:none}
+.dex-reveal-card.album-card-frame h3{font-size:19px;line-height:1.35;overflow-wrap:anywhere}
+.dex-reveal-card.album-card-frame .dex-new{background:#e4edcc;color:#456043}
+.dex-reveal-actions .dex-button{font-size:14px;white-space:nowrap}
+@keyframes album-open{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes album-rare-open{from{opacity:0;transform:translateY(12px) rotate(-2deg) scale(.94)}to{opacity:1;transform:none}}
+@keyframes album-twinkle{0%{opacity:.2;transform:scale(.8)}60%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:none}}
+@keyframes album-sheen{from{transform:translateX(-90%);opacity:0}50%{opacity:1}to{transform:translateX(90%);opacity:0}}
+.dex-reveal--skip .dex-reveal-card.album-card-frame,.dex-reveal--skip .dex-reveal-card.album-card-frame::after,.dex-reveal--skip .dex-reveal-card.album-card-frame .dex-reveal-shine{animation:none!important}
+@media(max-width:520px){.dex-collection-panel,.dex-meal-detail{padding:12px;border-radius:17px}.dex-collection-panel .dex-owned-grid{gap:10px}.dex-owned-grid .album-card-frame .dex-art{height:105px}.dex-edition-card .album-card-frame{padding:10px}.dex-edition-card .album-card-frame .dex-card-copy h3{font-size:14px}.dex-meal-detail .dex-detail-focus{gap:14px}.dex-meal-detail .dex-detail-feature{max-width:245px}.dex-meal-detail .dex-detail-feature .dex-art{height:170px}.dex-owned-grid .album-card-frame .dex-card-meta{align-items:flex-start}.dex-reveal-actions{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.dex-reveal-card.album-card-frame,.dex-reveal-card.album-card-frame::after,.dex-reveal-card.album-card-frame .dex-reveal-shine{animation:none!important;transition:none!important}.dex-reveal-card.album-card-frame .dex-reveal-shine{display:none}}
