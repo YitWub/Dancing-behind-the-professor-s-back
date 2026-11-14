@@ -26,6 +26,7 @@ const targets=new Map([
   ['MealImageArtwork','components/dex/common/MealImageArtwork.tsx'],
   ['artwork-assets','lib/dex/meal/artwork-assets.ts'],
   ['MealHighlightCard','components/dex/meal/MealHighlightCard.tsx'],
+  ['AchievementStamp','components/dex/common/AchievementStamp.tsx'],
 ]);
 const urls=new Map([...targets.keys()].map(name=>[name,pathToFileURL(join(temporary,name+'.mjs')).href]));
 for(const [name,path] of targets){
@@ -61,9 +62,9 @@ test('재방문은 카드 공개를 반복하지 않고 새 업적과 실제 횟
   const html=render(CollectionFeedback,{itemName:'fixture meal',onDismiss:()=>{},result:{ok:true,value:{...success,outcome:'revisit',discovery:null}},visitCount:5,notices:[{id:'fixture-regular',kind:'title',title:'돌아온 단골손님',description:'서로 다른 날 5일'}]});assert.ok(!html.includes('NEW DISCOVERY!'));assert.ok(html.includes('돌아온 단골손님'));assert.ok(html.includes('<strong>5</strong>'));
 });
 
-test('대표 메뉴 카드는 이미지·실제 상세 링크·짧은 동률 안내를 제공하고 빈 상태는 링크를 만들지 않는다',()=>{
+test('개인 기록은 작은 상징·실제 상세 링크·동률 안내를 제공하고 빈 상태는 링크를 만들지 않는다',()=>{
   const base={id:'first',title:'나의 첫 학식',badge:'FIRST DISCOVERY',others:2,metric:'컬렉션의 첫 페이지',emptyTitle:'아직 없어요',emptyHint:'기록을 기다려요',memorial:true};
-  const card=render(MealHighlightCard,{slot:{...base,card:{name:'테스트 국수',entryIds:['actual-entry']}}});assert.ok(card.includes('<img'));assert.ok(card.includes('/dex/meal/collection/actual-entry'));assert.ok(card.includes('공동 · 외 2종'));assert.ok(card.includes('dex-first-stamp'));
+  const card=render(MealHighlightCard,{slot:{...base,card:{name:'테스트 국수',entryIds:['actual-entry']}}});assert.ok(!card.includes('<img'));assert.ok(card.includes('dex-record-symbol'));assert.ok(card.includes('/dex/meal/collection/actual-entry'));assert.ok(card.includes('공동 · 외 2종'));assert.ok(card.includes('첫 페이지'));
   const empty=render(MealHighlightCard,{slot:{...base,card:null}});assert.ok(!empty.includes('href='));assert.ok(empty.includes('아직 없어요'));
 });
 test('다섯 등급 미리보기는 실제 수집 완료나 업적 획득으로 표시하지 않는다',()=>{
@@ -142,3 +143,5 @@ test('실제 카드·디자인 샘플·성공 공개는 같은 앨범 프레임�
  });
 
 test('실제 카드는 WebP와 공통 기본 이미지를 사용하고 SVG 비교 모드는 유지한다',async()=>{const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!);const base={name:'치즈돈가스',edition:'NORMAL',acquiredOn:'2026-11-14'};assert.ok(render(EditionCollectionCard,base).includes('<img'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'svg'}).includes('<svg'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'image'}).includes('/dex/food/cutlet.webp'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'soft'}).includes('is-soft'));assert.ok(render(EditionCollectionCard,{...base,name:'알 수 없는 메뉴',artworkMode:'image'}).includes('/dex/food/default.webp'));});
+
+test('공통 도장은 실제 달성·미달성·준비 상태를 색상 외 문구로 구분하고 엔진 진행률을 표시한다',async()=>{const {AchievementStamp}=await import(urls.get('AchievementStamp')!);const goal={id:'fixture',name:'첫 발견',icon:'✦',condition:'메뉴 1종 수집',progress:1,target:1,status:'achieved',achievedAt:null};const achieved=render(AchievementStamp,{achievement:goal});assert.ok(achieved.includes('✓ 달성'));assert.ok(achieved.includes('value="1"'));assert.ok(achieved.includes('<details>'));assert.ok(!achieved.includes('<img'));const locked=render(AchievementStamp,{achievement:{...goal,status:'locked',progress:0}});assert.ok(locked.includes('미달성'));assert.ok(locked.includes('value="0"'));const preparing=render(AchievementStamp,{achievement:{...goal,status:'preparing',progress:null}});assert.ok(preparing.includes('판정 대기'));assert.ok(!preparing.includes('<progress'));});
