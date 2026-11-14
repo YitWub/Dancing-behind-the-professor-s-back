@@ -64,7 +64,7 @@ test('다섯 등급 미리보기는 실제 수집 완료나 업적 획득으로 
   for(const tier of ['COMMON','UNCOMMON','RARE','LEGENDARY','UNKNOWN']){const html=render(DiscoveryReveal,{preview:true,itemName:'연출 테스트 카드',title:'희귀도 연출 미리보기',rarity:tier,onDismiss:()=>{}});assert.ok(html.includes('PREVIEW · TEST CARD'));assert.ok(html.includes('저장되지 않아요'));assert.ok(!html.includes('나의 컬렉션에 등록 완료'));assert.ok(html.includes('dex-rarity-frame--'+tier.toLowerCase()));}
 });
 test('미리보기 페이지는 프로덕션에서 컴포넌트를 열기 전에 404로 차단한다',async()=>{
-  for(const [route,componentName] of [['rarity','RarityPreview'],['editions','EditionPreview']]){
+  for(const [route,componentName] of [['rarity','RarityPreview'],['editions','EditionPreview'],['collection','CollectionPreviewLab']]){
   const source=readFileSync(new URL('../../../../app/dex/dev/'+route+'/page.tsx',import.meta.url),'utf8').replaceAll(componentName,'RarityPreview').replaceAll('/dev/EditionPreview','/dev/RarityPreview');
   const component=pathToFileURL(join(temporary,'preview-stub.mjs'));writeFileSync(component,"export function RarityPreview(){return null;}");
   let output=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText as string;

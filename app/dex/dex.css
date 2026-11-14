@@ -1134,3 +1134,39 @@ a.dex-highlight--first:hover{transform:rotate(0) translateY(-3px)}
 .dex-edition-badge{display:inline-block;border:1px solid var(--edition-border);background:var(--edition-bg);color:var(--edition-ink);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700}
 .dex-reveal-card[class*="dex-edition--"]{border:3px solid var(--edition-border);background:var(--edition-bg);box-shadow:0 8px 24px color-mix(in srgb,var(--edition-border) 30%,transparent)}
 .dex-owned-card{display:flex;flex-wrap:wrap;gap:8px 16px;border:1px solid var(--edition-border);background:var(--edition-bg);color:var(--edition-ink);padding:12px;border-radius:12px;font-size:13px;overflow-wrap:anywhere}
+
+/* Shared edition-card presentation; no storage or menu-rarity semantics. */
+.dex-edition-card{min-width:0}
+.dex-edition-card .dex-collect-card{height:100%;display:flex;flex-direction:column;border-color:var(--edition-border);background:linear-gradient(155deg,var(--edition-bg),var(--e-surface) 65%)}
+.dex-edition-card.is-selected .dex-collect-card{outline:3px solid var(--edition-border);outline-offset:2px}
+.dex-edition-card .dex-card-copy{display:flex;flex:1;flex-direction:column;min-width:0}
+.dex-edition-card .dex-card-copy h3{overflow-wrap:anywhere;word-break:keep-all;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;min-height:3.8em}
+.dex-edition-card .dex-card-meta{flex-wrap:wrap;gap:6px;font-size:12px}
+.dex-edition-card-open{margin-top:auto;padding:10px 0 0;text-align:left;font-size:12px;font-weight:700;color:var(--edition-ink);cursor:pointer}
+.dex-edition-card-open:focus-visible{outline:2px solid var(--edition-ink);outline-offset:3px}
+.dex-lab{display:grid;gap:18px;min-width:0}
+.dex-lab>h2{font-size:24px;font-weight:750}
+.dex-lab-warning{padding:12px 16px;border:1px dashed var(--e-border);border-radius:12px;background:var(--e-surface);font-size:14px}
+.dex-lab-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px;padding:16px;border:1px solid var(--e-border);border-radius:14px;min-width:0}
+.dex-lab-controls legend{font-size:14px;font-weight:700;padding:0 6px}
+.dex-lab-controls label{display:grid;gap:5px;font-size:13px;min-width:0}
+.dex-lab-controls input,.dex-lab-controls select{width:100%;min-width:0;box-sizing:border-box;border:1px solid var(--e-border);border-radius:8px;padding:9px;background:var(--e-surface);color:var(--e-ink)}
+.dex-lab-controls>p,.dex-lab-presets{grid-column:1/-1}
+.dex-lab-presets{display:flex;gap:12px;flex-wrap:wrap}
+.dex-lab-stage{width:100%;min-width:0;margin-inline:auto;border:1px solid var(--e-border);border-radius:16px;padding:16px;box-sizing:border-box;background:var(--e-surface-2);--lab-min:160px;--lab-art:125px;--lab-gap:14px}
+.dex-lab-stage .dex-section-heading{flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.dex-lab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--lab-min)),1fr));gap:var(--lab-gap);margin-top:16px;align-items:stretch}
+.dex-lab-grid .dex-art{height:var(--lab-art);min-height:0}
+.dex-lab-grid .dex-art svg{height:100%;max-width:100%}
+.dex-lab-grid .dex-collect-card{padding:12px}
+.dex-lab-grid .dex-card-copy h3{font-size:15px;line-height:1.3}
+.dex-lab-grid .dex-card-top,.dex-lab-grid .dex-card-foot{font-size:10px}
+.dex-lab-grid .dex-card-meta{display:flex;flex-direction:column;align-items:flex-start}
+.dex-lab-density--small{--lab-min:125px;--lab-art:85px;--lab-gap:10px}
+.dex-lab-density--small .dex-card-copy h3{font-size:13px}
+.dex-lab-density--large{--lab-min:260px;--lab-art:170px;--lab-gap:20px}
+.dex-lab-detail{margin-top:20px;padding:16px;border:1px solid var(--e-border);border-radius:12px;background:var(--e-surface);scroll-margin:20px;overflow-wrap:anywhere}
+.dex-lab-detail ul{display:grid;gap:10px;margin:12px 0}
+.dex-lab-detail li{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px;border-bottom:1px solid var(--e-border);font-size:13px}
+.dex-lab-detail li p{flex-basis:100%}
+@media(max-width:480px){.dex-lab-stage{padding:10px;--lab-min:145px}.dex-lab-density--small{--lab-min:120px}.dex-lab-density--large{--lab-min:240px}.dex-lab-grid .dex-collect-card{padding:10px}}
