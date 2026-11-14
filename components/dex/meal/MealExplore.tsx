@@ -11,7 +11,8 @@ import { MealCollectionRequests } from '@/lib/dex/meal/requests';
 import { CollectionFeedback } from '@/components/dex/discovery/CollectionFeedback';
 import { MealPhoto } from './MealPhoto';
 import { MealCollectionPanel } from './MealCollection';
-import { CollectionArtwork, mealArtwork } from '@/components/dex/common/CollectionArtwork';
+import { mealArtwork } from '@/components/dex/common/CollectionArtwork';
+import { MealImageArtwork } from '@/components/dex/common/MealImageArtwork';
 import { splitMenuLabel } from '@/lib/dex/meal/presentation';
 import { QuickMealRating } from './QuickMealRating';
 import type { RatingGuard } from './QuickMealRating';
@@ -79,7 +80,7 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
   return <div className="space-y-5 pb-28">
     <section className="dex-meal-intro">
       <div><span className="dex-eyebrow">THE CAMPUS TABLE · 01</span><h2>나의 학식도감<span>오늘의 한 끼도, 하나의 발견.</span></h2><p>직접 먹은 메뉴만 수집해요. 같은 메뉴를 다시 먹으면 경험이 쌓여요.</p></div>
-      <div className="dex-intro-art"><CollectionArtwork kind="rice"/></div>
+      <div className="dex-intro-art"><MealImageArtwork kind="rice"/></div>
     </section>
     <div className="dex-segments" aria-label="학식도감 보기">
       <button aria-pressed={tab==='collection'} onClick={()=>setTab('collection')}>나의 도감 <span>{data?entries.length:'–'}</span></button>
@@ -113,7 +114,7 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
         const label=splitMenuLabel(name);
         const memory=row.selection?personal.find(card=>card.dishId===row.selection!.dishId):null;
         return <Card as="article" key={item.id} className="dex-offering-card">
-          <div className="dex-offering-head"><CollectionArtwork kind={mealArtwork(name)}/><span className="dex-tag">{collected?'수집 완료':'새로운 발견 후보'}</span></div>
+          <div className="dex-offering-head"><MealImageArtwork kind={mealArtwork(name)}/><span className="dex-tag">{collected?'수집 완료':'새로운 발견 후보'}</span></div>
           <p className="text-sm text-[var(--e-muted)]">{item.date} · {CAFETERIA_NAMES[item.cafeteria]} · {MEAL_TIME_NAMES[item.mealTime]}</p>
           <h3 className="dex-offering-title">{label.title}</h3>
           <div className="dex-offering-game-hint"><RarityBadge tier="UNKNOWN" hidden={!collected}/><span>{collected?'이미 발견한 메뉴!':'나의 도감에 없는 메뉴예요.'}</span></div>
@@ -131,7 +132,7 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
       })}
     </div>}
     </>:null}
-    <CollectionFeedback rarity="UNKNOWN" notices={feedback?.notices??[]} result={feedback?.result??null} itemName={feedback?.name??''} visitCount={feedback?.visitCount} title="새로운 메뉴 발견!" artwork={<CollectionArtwork kind={mealArtwork(feedback?.name??'')}/>} onDismiss={dismissFeedback} canDismiss={canDismissFeedback} detailHref={feedback?.result.ok?`/dex/meal/collection/${feedback.result.value.entry.id}`:undefined}>
+    <CollectionFeedback rarity="UNKNOWN" notices={feedback?.notices??[]} result={feedback?.result??null} itemName={feedback?.name??''} visitCount={feedback?.visitCount} title="새로운 메뉴 발견!" artwork={<MealImageArtwork kind={mealArtwork(feedback?.name??'')}/>} onDismiss={dismissFeedback} canDismiss={canDismissFeedback} detailHref={feedback?.result.ok?`/dex/meal/collection/${feedback.result.value.entry.id}`:undefined}>
       {feedback?.result.ok&&!feedback.result.value.replayed&&feedback.result.value.experience.kind==='meal'?<QuickMealRating key={feedback.result.value.experience.id} experience={feedback.result.value.experience} onGuardChange={guard=>{ratingGuard.current=guard;}} onSaved={reload} onLater={()=>{if(canDismissFeedback())dismissFeedback();}}/>:null}
     </CollectionFeedback>
   </div>;

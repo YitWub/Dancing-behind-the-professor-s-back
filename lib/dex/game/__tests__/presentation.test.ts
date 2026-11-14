@@ -61,9 +61,9 @@ test('재방문은 카드 공개를 반복하지 않고 새 업적과 실제 횟
   const html=render(CollectionFeedback,{itemName:'fixture meal',onDismiss:()=>{},result:{ok:true,value:{...success,outcome:'revisit',discovery:null}},visitCount:5,notices:[{id:'fixture-regular',kind:'title',title:'돌아온 단골손님',description:'서로 다른 날 5일'}]});assert.ok(!html.includes('NEW DISCOVERY!'));assert.ok(html.includes('돌아온 단골손님'));assert.ok(html.includes('<strong>5</strong>'));
 });
 
-test('대표 메뉴 카드는 SVG·실제 상세 링크·짧은 동률 안내를 제공하고 빈 상태는 링크를 만들지 않는다',()=>{
+test('대표 메뉴 카드는 이미지·실제 상세 링크·짧은 동률 안내를 제공하고 빈 상태는 링크를 만들지 않는다',()=>{
   const base={id:'first',title:'나의 첫 학식',badge:'FIRST DISCOVERY',others:2,metric:'컬렉션의 첫 페이지',emptyTitle:'아직 없어요',emptyHint:'기록을 기다려요',memorial:true};
-  const card=render(MealHighlightCard,{slot:{...base,card:{name:'테스트 국수',entryIds:['actual-entry']}}});assert.ok(card.includes('<svg'));assert.ok(card.includes('/dex/meal/collection/actual-entry'));assert.ok(card.includes('공동 · 외 2종'));assert.ok(card.includes('dex-first-stamp'));
+  const card=render(MealHighlightCard,{slot:{...base,card:{name:'테스트 국수',entryIds:['actual-entry']}}});assert.ok(card.includes('<img'));assert.ok(card.includes('/dex/meal/collection/actual-entry'));assert.ok(card.includes('공동 · 외 2종'));assert.ok(card.includes('dex-first-stamp'));
   const empty=render(MealHighlightCard,{slot:{...base,card:null}});assert.ok(!empty.includes('href='));assert.ok(empty.includes('아직 없어요'));
 });
 test('다섯 등급 미리보기는 실제 수집 완료나 업적 획득으로 표시하지 않는다',()=>{
@@ -141,4 +141,4 @@ test('실제 카드·디자인 샘플·성공 공개는 같은 앨범 프레임�
   const fractional=render(EditionCollectionCard,{name:'치즈돈가스',count:2,evaluationCount:2,rating:3.5,acquiredOn:'2026-11-14'});assert.ok(fractional.includes('width:70%'));assert.ok(fractional.includes('이 메뉴 평균 3.5점'));
  });
 
-test('이미지 후보는 명시적으로 선택할 때만 사용하고 모호한 음식은 SVG를 유지한다',async()=>{const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!);const base={name:'치즈돈가스',edition:'NORMAL',acquiredOn:'2026-11-14'};assert.ok(render(EditionCollectionCard,base).includes('<svg'));assert.ok(!render(EditionCollectionCard,base).includes('<img'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'image'}).includes('/dex/food/cutlet.webp'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'soft'}).includes('is-soft'));assert.ok(render(EditionCollectionCard,{...base,name:'알 수 없는 메뉴',artworkMode:'image'}).includes('<svg'));});
+test('실제 카드는 WebP와 공통 기본 이미지를 사용하고 SVG 비교 모드는 유지한다',async()=>{const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!);const base={name:'치즈돈가스',edition:'NORMAL',acquiredOn:'2026-11-14'};assert.ok(render(EditionCollectionCard,base).includes('<img'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'svg'}).includes('<svg'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'image'}).includes('/dex/food/cutlet.webp'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'soft'}).includes('is-soft'));assert.ok(render(EditionCollectionCard,{...base,name:'알 수 없는 메뉴',artworkMode:'image'}).includes('/dex/food/default-meal.webp'));});

@@ -72,7 +72,7 @@
 /* A small inset for the menu title and stars; leave the edition row in place. */
 .dex-edition-card .album-card-frame .dex-card-copy h3,.dex-edition-card .album-card-frame .dex-card-rating-summary,.dex-edition-card .album-card-frame .dex-card-personal-stars{padding-inline-start:4px;box-sizing:border-box}
 
-/* Candidate artwork is opt-in; SVG remains the real collection default. */
+/* Shared food artwork; soft filtering is restricted to the optional preview. */
 .dex-food-image{display:flex;align-items:center;justify-content:center;overflow:hidden}
 .dex-food-image img{width:88%;height:88%;object-fit:contain;display:block;max-width:100%}
 .dex-food-image.is-soft img{width:76%;height:76%;filter:saturate(.72)}
