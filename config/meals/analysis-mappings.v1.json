@@ -1,0 +1,1153 @@
+{
+  "version": "identity-family-review-2026-11-14-v1",
+  "status": "analysis-only",
+  "identities": [
+    {
+      "id": "stat-same-v1-6c252192b8bee30f3c1ec8cdd0955a8afac5c7df6e1e4dbaf58b23d500e00a00",
+      "name": "가츠동",
+      "dishIds": [
+        "dish-v1-6c252192b8bee30f3c1ec8cdd0955a8afac5c7df6e1e4dbaf58b23d500e00a00",
+        "dish-v1-ee8a10dfc13aa7d4c6a54eeb92b49371c9b77619d3ae4982d0cf571e7900485f"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-cd746de5e048586183c3cc9d4d0ec8ba0feda08189e979258ffaaf7426cf39d6",
+      "name": "매운삼겹살볶음밥",
+      "dishIds": [
+        "dish-v1-f2a7840ecd37b9003360946d48f89e24da72618ae10781375d43cda8b2e68490",
+        "dish-v1-cd746de5e048586183c3cc9d4d0ec8ba0feda08189e979258ffaaf7426cf39d6"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-b99bf9c337ca4c9412ec4f50e0ecaba5dfb0b434d8e799a71dbcbd4dcd039c8b",
+      "name": "토스트/모카번",
+      "dishIds": [
+        "dish-v1-b1aa79142f89875ab725ed7d5865f16952a1357a33fbf4fb6825e00b220b0bc5",
+        "dish-v1-b99bf9c337ca4c9412ec4f50e0ecaba5dfb0b434d8e799a71dbcbd4dcd039c8b"
+      ],
+      "decision": "REVIEW",
+      "confidence": "medium",
+      "reason": "복합 세트의 구성·음료·부요리 차이가 있어 전체 세트 동일성은 보류",
+      "followUp": "B 담당자가 세트 카드의 동일성 기준과 구성 차이를 확인"
+    },
+    {
+      "id": "stat-same-v1-639aabbd7fee304244b1e76fa26b6010832f0eb97decfe6a942226c9527cf187",
+      "name": "돼지고기굴소스볶음",
+      "dishIds": [
+        "dish-v1-8e8fa7c697c021385c47d8ef7ef36aecd9194e4c259d266a8a99ad3b51ee3a9d",
+        "dish-v1-639aabbd7fee304244b1e76fa26b6010832f0eb97decfe6a942226c9527cf187"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-6d4a76ef9d9a677bfb155c192ce36029c052ff5061313b0bc2c8197e33122fe9",
+      "name": "베트남쌀국수",
+      "dishIds": [
+        "dish-v1-a5e47831b96c5730b52956406cf420664a3ca67998942fa0083e951f115f32aa",
+        "dish-v1-a90cbeb7b2ce39807b7eb355cb16824eaaf38235f1e8c117eb55c3b35440dc82"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-29b8ae34d722b66b250201a8754337fb8ecbcd42342bcd66ed57b1d85d115b06",
+      "name": "소고기당면국",
+      "dishIds": [
+        "dish-v1-4b3275b8ae1d9e4260fc9fd2e64135d78cb485703ebf312406b5d173ed90d64f",
+        "dish-v1-29b8ae34d722b66b250201a8754337fb8ecbcd42342bcd66ed57b1d85d115b06"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-a98642c5372a87db833587dd451931a2b3f85285aa8d87435bfdf64c11a3f378",
+      "name": "데리야끼치킨덮밥",
+      "dishIds": [
+        "dish-v1-ed0f3ea9882e9e193e05d5dd48ee2afa3ef2e906e7c9379e6f5b3f8f12b8d1fc",
+        "dish-v1-a98642c5372a87db833587dd451931a2b3f85285aa8d87435bfdf64c11a3f378"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-f678712945d8b8e2c48b396c4f971d1de858bb844b19ac4da0469e8e690a1d34",
+      "name": "해물된장찌개",
+      "dishIds": [
+        "dish-v1-c32dc9709e56d595a7fc014ea5253fe1237a44d3f69200d9e3013b1223d0fc16",
+        "dish-v1-f678712945d8b8e2c48b396c4f971d1de858bb844b19ac4da0469e8e690a1d34"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-80c9abe98c3dbc1d12ec861dafd0b941adbd48996aaee981efb66319709c05fd",
+      "name": "매콤모듬장조림",
+      "dishIds": [
+        "dish-v1-0b889f731c037efc4f088cd5d9e64908b9b46d229dddf906ae6f24b22ba59382",
+        "dish-v1-80c9abe98c3dbc1d12ec861dafd0b941adbd48996aaee981efb66319709c05fd"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-0b86408a1d6d9b2f64db76ba33183e10342757b3159369a8f4783d1dc2f836a2",
+      "name": "새우튀김카레라이스",
+      "dishIds": [
+        "dish-v1-b60fdccff9c6b614f22823f4f4fae9fd17f7c07c7fa893f631e5c90e791cd925",
+        "dish-v1-0b86408a1d6d9b2f64db76ba33183e10342757b3159369a8f4783d1dc2f836a2"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-5baa04660001733e82ef94131dca1f52028821ce8c03fd3b0de17aab24abf6c0",
+      "name": "토스트/단팥빵",
+      "dishIds": [
+        "dish-v1-e8a82e536894b2e170cc17e4433f9dbc258da8187020b62db2d51ae2f73d6aea",
+        "dish-v1-5baa04660001733e82ef94131dca1f52028821ce8c03fd3b0de17aab24abf6c0"
+      ],
+      "decision": "REVIEW",
+      "confidence": "medium",
+      "reason": "복합 세트의 구성·음료·부요리 차이가 있어 전체 세트 동일성은 보류",
+      "followUp": "B 담당자가 세트 카드의 동일성 기준과 구성 차이를 확인"
+    },
+    {
+      "id": "stat-same-v1-9ff153bb9a65559ed789bf57f4fd683ef0ff39d8176cfbff22a20ea441e5b142",
+      "name": "바지락칼국수",
+      "dishIds": [
+        "dish-v1-78d735e3fd8185fb79dc7910cbbd682c21b6d2b1d00ff9e1cc7cc5ed408b99a6",
+        "dish-v1-9ff153bb9a65559ed789bf57f4fd683ef0ff39d8176cfbff22a20ea441e5b142"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-f490c4ff42a37e58b2dbe48ec5f4faed38540001ef8d7ec25dec364fc9f47141",
+      "name": "등심돈가스&국물떡볶이",
+      "dishIds": [
+        "dish-v1-d356c23cb131956e87cb0d7e0288f547777cf4ed751065835f55802e0ab71fe9",
+        "dish-v1-f490c4ff42a37e58b2dbe48ec5f4faed38540001ef8d7ec25dec364fc9f47141"
+      ],
+      "decision": "REVIEW",
+      "confidence": "medium",
+      "reason": "복합 세트의 구성·음료·부요리 차이가 있어 전체 세트 동일성은 보류",
+      "followUp": "B 담당자가 세트 카드의 동일성 기준과 구성 차이를 확인"
+    },
+    {
+      "id": "stat-same-v1-3156ec7852b552b2031d2f3ac70b0e96c6c79868166f55148bc35d2665e01df0",
+      "name": "북어콩나물해장국",
+      "dishIds": [
+        "dish-v1-ed8bdb86097be104f67d22e55fbaf38a7a1cf0d1d179326fbd1d3ead86dd7680",
+        "dish-v1-3156ec7852b552b2031d2f3ac70b0e96c6c79868166f55148bc35d2665e01df0"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-b9e4548e91e102c888b04a4d44ffd5b8c719f2cf89cee3416d0dec5c904482c4",
+      "name": "마라돈육버섯덮밥",
+      "dishIds": [
+        "dish-v1-647c4e60c593fa7fd128795cea27f8118d9c1bfa011655c0c7a2cddf6e8430aa",
+        "dish-v1-b9e4548e91e102c888b04a4d44ffd5b8c719f2cf89cee3416d0dec5c904482c4"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-c995bd722b4b7690042d516090e34a4c65f030238fecf16c3ea2c4cdacce02b7",
+      "name": "스리라차치킨마요덮밥",
+      "dishIds": [
+        "dish-v1-d11c1b36db0a1ae5f314b87a394a801f0e898492b0d9e19b74699aed12b25c18",
+        "dish-v1-c995bd722b4b7690042d516090e34a4c65f030238fecf16c3ea2c4cdacce02b7"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-9dc77f6e2e3cb98f98db750748d39ae63a0153fbcd6e1460279d447fdae817b8",
+      "name": "들기름막국수",
+      "dishIds": [
+        "dish-v1-d7c5a2801bf4b87ee8c9c33c0b8006e96b2d2ee8793a6ca56efd812b593352e9",
+        "dish-v1-9dc77f6e2e3cb98f98db750748d39ae63a0153fbcd6e1460279d447fdae817b8"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-cfd3251d71107c84e6aa20d3092d92227b786813fc618fd4df461a3f9b679d7c",
+      "name": "소고기미역국",
+      "dishIds": [
+        "dish-v1-c0418b3ad9f05d08f5f7dd46e5dc312d2c24f21f85694718eca42b661efd82fa",
+        "dish-v1-cfd3251d71107c84e6aa20d3092d92227b786813fc618fd4df461a3f9b679d7c"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    },
+    {
+      "id": "stat-same-v1-f03ac87c24c79c441cb2faf650ae695a57eb1942b747cbd35e8e78141bbd2da9",
+      "name": "중화비빔밥&계란후라이",
+      "dishIds": [
+        "dish-v1-3b73364f7fe22fbc2eec5a837aa92c54fb2ebf1e1a0114b1100dcfeee1af1203",
+        "dish-v1-f03ac87c24c79c441cb2faf650ae695a57eb1942b747cbd35e8e78141bbd2da9"
+      ],
+      "decision": "SAME",
+      "confidence": "high",
+      "reason": "대표 한국어 요리·재료·조리명이 같고 차이는 영어 번역·괄호 표기; 반찬 변경은 별도 제공 구성으로 보존",
+      "followUp": "통계 비교 전용 판단; 레시피 동일성이나 개인 카드 병합 승인을 뜻하지 않음"
+    }
+  ],
+  "families": [
+    {
+      "dishFamilyId": "family-v1-pork-cutlet",
+      "name": "돈가스",
+      "description": "돈가스의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-fried-rice",
+      "name": "볶음밥",
+      "description": "볶음밥의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-bibimbap",
+      "name": "비빔밥",
+      "description": "비빔밥의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-rice-bowl",
+      "name": "덮밥",
+      "description": "덮밥의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-curry",
+      "name": "카레",
+      "description": "카레의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-stew",
+      "name": "찌개",
+      "description": "찌개의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-udon",
+      "name": "우동",
+      "description": "우동의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-kalguksu",
+      "name": "칼국수",
+      "description": "칼국수의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-korean-noodles",
+      "name": "국수",
+      "description": "국수의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-buckwheat-noodles",
+      "name": "막국수",
+      "description": "막국수의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-rice-noodles",
+      "name": "쌀국수",
+      "description": "쌀국수의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-ramen",
+      "name": "라멘",
+      "description": "라멘의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-chicken-galbi",
+      "name": "닭갈비",
+      "description": "닭갈비의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-pork-stir-fry",
+      "name": "돼지고기볶음",
+      "description": "돼지고기볶음의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-chicken-stir-fry",
+      "name": "닭고기볶음",
+      "description": "닭고기볶음의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-chicken-braise",
+      "name": "닭조림·찜닭",
+      "description": "닭조림·찜닭의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-pork-kimchi-braise",
+      "name": "돼지고기김치찜",
+      "description": "돼지고기김치찜의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-soy-braise",
+      "name": "장조림",
+      "description": "장조림의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-gukbap",
+      "name": "국밥",
+      "description": "국밥의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-chicken-soup",
+      "name": "닭곰탕·백숙",
+      "description": "닭곰탕·백숙의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-beef-spicy-soup",
+      "name": "육개장",
+      "description": "육개장의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-chicken-spicy-soup",
+      "name": "닭개장",
+      "description": "닭개장의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-beef-seaweed-soup",
+      "name": "소고기미역국",
+      "description": "소고기미역국의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-hangover-soup",
+      "name": "해장국",
+      "description": "해장국의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-porridge",
+      "name": "죽",
+      "description": "죽의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-roast-chicken",
+      "name": "닭다리구이",
+      "description": "닭다리구이의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    },
+    {
+      "dishFamilyId": "family-v1-rice-cake",
+      "name": "떡볶이",
+      "description": "떡볶이의 명시적 대표 요리 유형. 재료·소스 변형은 개별 카드 유지."
+    }
+  ],
+  "familyMappings": [
+    {
+      "dishId": "dish-v1-641407f5be08061f27bb0160c8b7bd577ab3769d2388d133a1a03a350c2640e2",
+      "dishFamilyId": "family-v1-soy-braise",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-eb98106af8264c35ed9c9f25b3ba5a458b6a027444615c7ed990a2d0d1ccfb96",
+      "dishFamilyId": "family-v1-chicken-galbi",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-3b9edc69564a2d2f22429cfb9e724ae2487537c76a7b1740562f3167f6e83f5b",
+      "dishFamilyId": "family-v1-chicken-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-565d7a8b52ca314fafd3b7269d7350a06940a2608b2c8ed230bad484f085b9d1",
+      "dishFamilyId": "family-v1-chicken-soup",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-ed07ecb9846e6fa6b45d0a761172ea5ecdadfa0ab31a54505dd4adc4eed61b3e",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-7ace83cd038c8bee2c2308613285150884a83f84d96634741706b49a6583c88f",
+      "dishFamilyId": "family-v1-pork-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-c07fb62afe382c24639b77b633b8a9a3dc18308bdabde5e20a29ab25ecf14d1c",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-8a5e3ca3ea6795339f401c9360472aeae492c0f9cbfb3c03db518e7865627ce3",
+      "dishFamilyId": "family-v1-fried-rice",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-8df5894acf35c8fb68955d5520e99114a8cbb4df5782ccd088250e202f898424",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-a3d13749826b8243b48b8cb1cda8e3214e634309dfb2df583326c63d53490e70",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-715e7b41e848a770ed17bd7f64ea831aec76725564f071412faf8323cbff0afa",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-ce86307eadcd4a51e86502812729cb6f1c46cff2eaf5ab2691dbfb46f8fbe49a",
+      "dishFamilyId": "family-v1-korean-noodles",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-7b05ce30f98b782f13a111718a2a6e2522b368675d28ae1c8f1814d329fe8290",
+      "dishFamilyId": "family-v1-korean-noodles",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-683e29bb7d0c0785a41a51945ce668c721a4d7cf32768e3f7ed0b12de6cf94fb",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-4c03bbcaa87339eb373f3c375a2a2d04a9944d47ce69591ec879026613c158eb",
+      "dishFamilyId": "family-v1-ramen",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-b9f991d113aa53c0af31e8d76e878b7fb50bb1b96a5e42cd5efa6fe7dcc8ffe6",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-6f9cd598fc4bfcae1f4def3f0c44b6aa62bfa9e5f63d935e5ff8ec463e8f65ad",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-b42616d87adffb5dc1d7f318593d6d2c450af1a3bcf2389786673c4b632c8cf9",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-a1d6ae2ee4c479b7b01f84566390d6f015801d239ead6623254b25d9b39a45d7",
+      "dishFamilyId": "family-v1-udon",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-d437ce9877f80a35089b0d9b49916557ddf9906e52fb66e8a4d99643290a68b0",
+      "dishFamilyId": "family-v1-fried-rice",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-6c252192b8bee30f3c1ec8cdd0955a8afac5c7df6e1e4dbaf58b23d500e00a00",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-ee8a10dfc13aa7d4c6a54eeb92b49371c9b77619d3ae4982d0cf571e7900485f",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-93f8a7716498c6086c8ddb6280c8952f27e6561b4e1810f27ed38e1d0eb52d8d",
+      "dishFamilyId": "family-v1-chicken-braise",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-4e17a0cfb2c5b3ec00d18b14db30f8c9290c552bdaed3de8d2a342ed16c3f52a",
+      "dishFamilyId": "family-v1-pork-cutlet",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-0654a17e03c2bd88a13ab4c70ad90a10e3ee0efc33e93dc341033463a1536d04",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-a10720f6193e8f85c810cfd59fee1b344eb65a5d0c00f95ab945ea85b558e070",
+      "dishFamilyId": "family-v1-pork-cutlet",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-9014c2dc2171ad6a475015153d92507316db4192421974b5b2e4d2f9c8180dc9",
+      "dishFamilyId": "family-v1-udon",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-28ebc8ef6bd1e0003b9c082aa10d775f881190baa15cc25e67af1bedfc4bcb97",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-58eb90b83de29915e879b2f650fb02c264a99ce16167a086db94e16f2fdf7897",
+      "dishFamilyId": "family-v1-bibimbap",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-0d28dcb624145f5b426b15b5d24312728fede5bbd864ecb069336659b1aefb41",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-a34e1c92b9ce5753737884c89de646577a12a25573617e0f04c920db6b25e29d",
+      "dishFamilyId": "family-v1-chicken-spicy-soup",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-576e22c39c8a309c9566839dafa2e74a2cf0376fcd40db7c225a80ed816244fc",
+      "dishFamilyId": "family-v1-chicken-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-f42de836f643c113be1d9880aca778ef2d7268cb5c382b80cc3a44975de658a9",
+      "dishFamilyId": "family-v1-chicken-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-948774516261c1ae767531dc2537788d2a767a98dac64a6c73041ca587e4dcd5",
+      "dishFamilyId": "family-v1-chicken-soup",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-abf07e54a14b42e3325bc5a007b1cbc7fc818e4652dd756a0f82b2cea8f0f786",
+      "dishFamilyId": "family-v1-beef-spicy-soup",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-a98642c5372a87db833587dd451931a2b3f85285aa8d87435bfdf64c11a3f378",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-ed0f3ea9882e9e193e05d5dd48ee2afa3ef2e906e7c9379e6f5b3f8f12b8d1fc",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-111042dbe352d406ab27171f6542f21de13cfaae024d2163a3fd36e5b6a02265",
+      "dishFamilyId": "family-v1-pork-cutlet",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-8343b6e8c61266de115179f4b102dc63b9854c83a4674a8c496c5f41b67bb02e",
+      "dishFamilyId": "family-v1-pork-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-639aabbd7fee304244b1e76fa26b6010832f0eb97decfe6a942226c9527cf187",
+      "dishFamilyId": "family-v1-pork-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-8e8fa7c697c021385c47d8ef7ef36aecd9194e4c259d266a8a99ad3b51ee3a9d",
+      "dishFamilyId": "family-v1-pork-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-9948a6d9bc69f6d72bb442240f0cff91005d22aa1d762adf114d2cf917fb36de",
+      "dishFamilyId": "family-v1-pork-kimchi-braise",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-d4426951684a78c009f1f66311a089e7ddc2687ea980c592eecd3f525b36b02c",
+      "dishFamilyId": "family-v1-pork-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-18cf62512a83dc6140dcdb8c7a8a6a8b316aa6fc9a8801585fcff35e5eac67c9",
+      "dishFamilyId": "family-v1-pork-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-c40640668380cff910a6228a679759794ac82bc6c6581dcb103ec0f3b7f50c82",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-a29fc6759bf2e1fb8c84e1757f6ed107e9b0cdc621a3cf4a5bc58888edd9d663",
+      "dishFamilyId": "family-v1-pork-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-4c25bdc9c8327bca5f8eeed290939b69c5810b8460e1bba0f0ef457a4bb583c9",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-1e21b61a1a6fe68e035b5b910ca0c6d6de12cd3efa389357660d0a2a7f3037ee",
+      "dishFamilyId": "family-v1-pork-kimchi-braise",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-9dc77f6e2e3cb98f98db750748d39ae63a0153fbcd6e1460279d447fdae817b8",
+      "dishFamilyId": "family-v1-buckwheat-noodles",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-d7c5a2801bf4b87ee8c9c33c0b8006e96b2d2ee8793a6ca56efd812b593352e9",
+      "dishFamilyId": "family-v1-buckwheat-noodles",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-f490c4ff42a37e58b2dbe48ec5f4faed38540001ef8d7ec25dec364fc9f47141",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-d356c23cb131956e87cb0d7e0288f547777cf4ed751065835f55802e0ab71fe9",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-21434e2180d32ec249aa9fd0e802f1ef633931c9fce9a2f3c17c989ecf8fdbbc",
+      "dishFamilyId": "family-v1-pork-cutlet",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-5d90a39d66a9e605ce3c65e2f0b3214f8f844beca326e33016e20dd5dd87b19c",
+      "dishFamilyId": "family-v1-fried-rice",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-05258650c3920aea21226a232ef8347230271e4b23bf46795dc738341cd1d977",
+      "dishFamilyId": "family-v1-rice-cake",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-b9e4548e91e102c888b04a4d44ffd5b8c719f2cf89cee3416d0dec5c904482c4",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-647c4e60c593fa7fd128795cea27f8118d9c1bfa011655c0c7a2cddf6e8430aa",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-cd746de5e048586183c3cc9d4d0ec8ba0feda08189e979258ffaaf7426cf39d6",
+      "dishFamilyId": "family-v1-fried-rice",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-f2a7840ecd37b9003360946d48f89e24da72618ae10781375d43cda8b2e68490",
+      "dishFamilyId": "family-v1-fried-rice",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-80c9abe98c3dbc1d12ec861dafd0b941adbd48996aaee981efb66319709c05fd",
+      "dishFamilyId": "family-v1-soy-braise",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-0b889f731c037efc4f088cd5d9e64908b9b46d229dddf906ae6f24b22ba59382",
+      "dishFamilyId": "family-v1-soy-braise",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-f3fb2fb47c871d34f4f4a19e461a419ea3e1632ab9aca283751b348223477f60",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-59b5e889ac4f93fae4c1171439744547b0b53ccb9249a69d02b970ec81696000",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-0ec143375e71fe7f4f390e855e633396dc488a46fbafb29d7fc6748efc48d3df",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-0cd325103f11842edc555efa730df80375a7bb95be8fca0927a37e3ed749aa23",
+      "dishFamilyId": "family-v1-gukbap",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-3862d80df518bdb1fa63903a512c164ac9d834603ee812300030fe5519716b23",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-9ff153bb9a65559ed789bf57f4fd683ef0ff39d8176cfbff22a20ea441e5b142",
+      "dishFamilyId": "family-v1-kalguksu",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-78d735e3fd8185fb79dc7910cbbd682c21b6d2b1d00ff9e1cc7cc5ed408b99a6",
+      "dishFamilyId": "family-v1-kalguksu",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-acbe109ee9b4f774b10e1d41156d419176800592ab8ea970f842ea3ac52d1257",
+      "dishFamilyId": "family-v1-fried-rice",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-9f2f7759583d57779de619106c5c795202978aa9274ee07939424a8c83711069",
+      "dishFamilyId": "family-v1-fried-rice",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-6540d6241ca9ddbb7ab1dee6e716ea449bb733ade7cd47cb0426eaf1d6f491a0",
+      "dishFamilyId": "family-v1-kalguksu",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-a90cbeb7b2ce39807b7eb355cb16824eaaf38235f1e8c117eb55c3b35440dc82",
+      "dishFamilyId": "family-v1-rice-noodles",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-a5e47831b96c5730b52956406cf420664a3ca67998942fa0083e951f115f32aa",
+      "dishFamilyId": "family-v1-rice-noodles",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-dc8999cefc37860bc9c72d1e8b1c6ee34870c2bd0a5082f5d0b0a4d1a9aea84f",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-8f5a65fe2716a40954dbbdcd96df032086f36a9a442eb366b33a62ad963033a3",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-3156ec7852b552b2031d2f3ac70b0e96c6c79868166f55148bc35d2665e01df0",
+      "dishFamilyId": "family-v1-hangover-soup",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-ed8bdb86097be104f67d22e55fbaf38a7a1cf0d1d179326fbd1d3ead86dd7680",
+      "dishFamilyId": "family-v1-hangover-soup",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-b81288d372b590741483d2fa1703f98193eb98edc02d0273adc8ac0b720e5ba2",
+      "dishFamilyId": "family-v1-bibimbap",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-0b86408a1d6d9b2f64db76ba33183e10342757b3159369a8f4783d1dc2f836a2",
+      "dishFamilyId": "family-v1-curry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-b60fdccff9c6b614f22823f4f4fae9fd17f7c07c7fa893f631e5c90e791cd925",
+      "dishFamilyId": "family-v1-curry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-5ddf52c792c2c3f6f2641edff72889018fbbfb0fe2395de0c46348b7665b6dd9",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-29b8ae34d722b66b250201a8754337fb8ecbcd42342bcd66ed57b1d85d115b06",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-4b3275b8ae1d9e4260fc9fd2e64135d78cb485703ebf312406b5d173ed90d64f",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-7a913a4ef6e842bcb3fefed3d5811dbaf7aea2ffffbf554bca4d8743b80b89a3",
+      "dishFamilyId": "family-v1-hangover-soup",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-cfd3251d71107c84e6aa20d3092d92227b786813fc618fd4df461a3f9b679d7c",
+      "dishFamilyId": "family-v1-beef-seaweed-soup",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-c0418b3ad9f05d08f5f7dd46e5dc312d2c24f21f85694718eca42b661efd82fa",
+      "dishFamilyId": "family-v1-beef-seaweed-soup",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-d667e4eadf9709670aed4ff6ff65bb3dac7a07f2495ad4d3b1798dafa63da648",
+      "dishFamilyId": "family-v1-fried-rice",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-a7af81da07794d301ce05442812f9cdf86407957d07f592ff6a53860f89377c1",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-b8bc7066bf89a4a7aa0b723ec76e7f4dd2be7a447cd4ec97c3793310d99fb76d",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-d89b9c59326ac0a5c50f377e19cc076cfd0fd1e9724a130acca31d842d9eb56e",
+      "dishFamilyId": null,
+      "state": "UNKNOWN_FAMILY",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-7fd08e5f39b201085fb73012614792d79a4036ee40423bed286226aa1e3cb0fd",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-c995bd722b4b7690042d516090e34a4c65f030238fecf16c3ea2c4cdacce02b7",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-d11c1b36db0a1ae5f314b87a394a801f0e898492b0d9e19b74699aed12b25c18",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-f83e98c9cc1d34dd6007916322688939e223f38bb2d4980b10a1e341e3ea7701",
+      "dishFamilyId": "family-v1-chicken-braise",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-5ec456a45802b4e2ddb1d64b61d595f3c24e8e7f8ad7c2fe032bb6d9915cc951",
+      "dishFamilyId": "family-v1-chicken-braise",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-6cb38254c986bd0507b41199f50b3675dc071b966098f4c78a20f39edd3765cd",
+      "dishFamilyId": "family-v1-korean-noodles",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-69d96bb0c564efba2f4b23896a6693e9f806253fa300b0300dc352c99a96a408",
+      "dishFamilyId": "family-v1-gukbap",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-ca271261c56aa62f77315fc885e2fa1d37783d4fda0a828cd62bca1384519512",
+      "dishFamilyId": "family-v1-korean-noodles",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-2322f66ee525511835718a7be3b210c9dd245df296779d89df879efd9fa6a15f",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-911692ad8a7147a2569756e7b29e3f0ba34ab7b60466acf95492e4301f29cca4",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-63291c883860d74ed164aec9127714039ef11d9e751dbbe3551bdf5b84d2f3b0",
+      "dishFamilyId": "family-v1-kalguksu",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-1af610ca8c2318b38284558eddce1f3f1a29fa75b440f514a11f4cdfa29e5c45",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-5d55a85633c374f958e756f2d5ba1acb777880d01be60e185b073e9494cd53e6",
+      "dishFamilyId": "family-v1-bibimbap",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-f03ac87c24c79c441cb2faf650ae695a57eb1942b747cbd35e8e78141bbd2da9",
+      "dishFamilyId": "family-v1-bibimbap",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-3b73364f7fe22fbc2eec5a837aa92c54fb2ebf1e1a0114b1100dcfeee1af1203",
+      "dishFamilyId": "family-v1-bibimbap",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-f1a87e9cde8cbae5e3ec81da842af7b4cd24e3b7e626bdb14fe7e7ff2cf6aeb9",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-ad8bd86786c374b5e06adedae07a47e98aa1337408783faefd17d5eb0191e56f",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-a8da78362041d0a577eacb7f1cdfc6bdf8b879884619f92fd9d5718fd4469fb4",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-37a272f9d296422338d54974562e78caee8781ebd043a9fd013f3b12633bb306",
+      "dishFamilyId": "family-v1-bibimbap",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-fd3eb9a66f4c526a69dc5d34834409ff2971d165e6841a989f7ca0ea249c97ef",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-fe276f0ba6230da5cc2c4b44813d8731a6433fd41eb116079774888814935832",
+      "dishFamilyId": "family-v1-porridge",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-f5c967854c38befe67d45d58fdc9482c66579bcc3d4c74492b2c5c83efc89cd5",
+      "dishFamilyId": "family-v1-porridge",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-1fc5fb7cb6fa0f85137fc0bcfcfa235a2764a17f76028e934c79b7410eec65fb",
+      "dishFamilyId": "family-v1-rice-bowl",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-a996e6b687b7329f3ccc4af60cba6c9532aa5666fdc30ebf792402152f918705",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-e8c6bf64b6caac1e20e119c95b3ce83b10e606e1eb67908e98388e1136684105",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-ea8901f4c848f053e6ab79383c3bfaeb7ddfb849df9e240fda0cd9cfa166fa10",
+      "dishFamilyId": "family-v1-roast-chicken",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-7021b08ec6319b85d25f2ad323e3e63c1b85abf0fd66fae004df9a116f896a79",
+      "dishFamilyId": "family-v1-pork-stir-fry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-5baa04660001733e82ef94131dca1f52028821ce8c03fd3b0de17aab24abf6c0",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-e8a82e536894b2e170cc17e4433f9dbc258da8187020b62db2d51ae2f73d6aea",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-0aeb82f18ed995ba914ded15d7ffe5710f029ff1367e0a65ce5831e6a2c9d0c4",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-b99bf9c337ca4c9412ec4f50e0ecaba5dfb0b434d8e799a71dbcbd4dcd039c8b",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-b1aa79142f89875ab725ed7d5865f16952a1357a33fbf4fb6825e00b220b0bc5",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-489eb952c3b2c10318a4c9f1451500a89eb25993b1e00e98d324c2c647f12464",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-ed77ffeaf5470b9df42ce78b9b5cb867c1dea718d723bb99c0b2d10f89da7d83",
+      "dishFamilyId": null,
+      "state": "REVIEW",
+      "reason": "복합 세트 또는 현재 명시 목록 밖: 추정 분류하지 않음"
+    },
+    {
+      "dishId": "dish-v1-10fb871432742990af1193ff3b05e67a3f9a71992ed72f3a2a39d2f4e8ee98aa",
+      "dishFamilyId": "family-v1-roast-chicken",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-9e87b7bd093538d999bdc5de9c4b10bfeb17444fab895010b99444fed730a21d",
+      "dishFamilyId": "family-v1-curry",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-f678712945d8b8e2c48b396c4f971d1de858bb844b19ac4da0469e8e690a1d34",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-c32dc9709e56d595a7fc014ea5253fe1237a44d3f69200d9e3013b1223d0fc16",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-c0b5dbe304348da23e191ab913de9be4b550f9291924aac1edaa5c4c36b62b02",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    },
+    {
+      "dishId": "dish-v1-ea81dd37a44a3d59aa5e1707db6ce57b24abe8c8be33f1b8f73e86ab26388378",
+      "dishFamilyId": "family-v1-stew",
+      "state": "MAPPED",
+      "reason": "검토한 정확한 메뉴명 목록에 명시; 주 요리 유형 기준 (영문은 조회 키에서만 제외)"
+    }
+  ]
+}

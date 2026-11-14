@@ -16,15 +16,15 @@
  *      - 주간 식단표(#view-pane-weekly) 보조 추출
  */
 
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
-import { dirname, extname, join, relative, resolve } from 'node:path';
+import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs';
+import { extname, join, resolve } from 'node:path';
 
 import type { Cafeteria, CafeteriaInfo, CrawlResult, MealItem, MealTime } from '../types.ts';
 import { kstToday } from '../datetime.ts';
+import { synchronizeMeals } from './sync.ts';
 import {
   readMealPhotoDb,
   toMealPhotoDbRecord,
-  upsertMealPhotoDb,
   type MealPhotoDbRecord,
 } from './store.ts';
 
@@ -672,6 +672,7 @@ export async function crawlHomeAndSubpages(
     rootDir?: string;
     allowWriteAssets?: boolean;
     silent?: boolean;
+    requireComplete?: boolean;
   },
 ): Promise<{
   items: MealItem[];
@@ -761,6 +762,7 @@ export async function crawlHomeAndSubpages(
   const detailResults = await Promise.allSettled(
     detailTasks.map(async (task) => {
       const detailHtml = await fetchText(task.url);
+      if(options?.requireComplete&&!/id=["']view-pane-daily|등록된 (?:메뉴|식단)이 없|식단이 없습니다/.test(detailHtml))throw Error('식당 식단 페이지 구조를 확인할 수 없습니다.');
       return {
         task,
         parsed: parseDetailPhp(detailHtml, task.date, task.fac.id, task.fac.cafeteria),
@@ -768,6 +770,7 @@ export async function crawlHomeAndSubpages(
     }),
   );
 
+  if(options?.requireComplete&&detailResults.some(result=>result.status==='rejected'))throw Error('일부 식당 상세 조회 실패: 부분 수집 결과를 게시하지 않습니다.');
   for (const res of detailResults) {
     if (res.status === 'fulfilled') {
       const { items, weeklyItems, cafeteriaInfo } = res.value.parsed;
@@ -799,7 +802,7 @@ export async function crawlHomeAndSubpages(
     collectedItems.filter((item) => allowedDates.has(item.date)),
   );
 
-  if (mergedItems.length === 0) {
+  if (mergedItems.length === 0 && !options?.requireComplete) {
     throw new Error(`대상 날짜(${targetDates.join(', ')}) 식단이 0건입니다.`);
   }
 
@@ -857,117 +860,19 @@ export async function crawlHomeAndSubpages(
   };
 }
 
-function readJsonFile<T>(dataDir: string, file: string): T | null {
-  const p = join(dataDir, file);
-  if (!existsSync(p)) return null;
-  try {
-    return JSON.parse(readFileSync(p, 'utf8')) as T;
-  } catch {
-    return null;
-  }
-}
-
 export interface RunCrawlOptions {
-  /** 기준일 (생략 시 KST 오늘) */
   baseDate?: string;
-  /** 추가로 함께 수집할 날짜 목록 */
   extraDates?: string[];
-  /** 네트워크 요청 생략 여부 (테스트용) */
   offline?: boolean;
-  /** 결과 저장 경로 (기본: data/meals.json) */
   outPath?: string;
-  /** 프로젝트 루트 경로 (기본: process.cwd()) */
   rootDir?: string;
-  /** 콘솔 로그 숨김 여부 */
   silent?: boolean;
+  scheduledSlot?: string;
 }
-
-/**
- * 크롤링을 수행하고 결과(CrawlResult)를 파일에 기록한 뒤 반환한다.
- * 실패 시에도 예외를 던지지 않고 캐시 또는 시드 폴백 결과를 기록·반환한다.
- */
-export async function runMealCrawler(options: RunCrawlOptions = {}): Promise<CrawlResult> {
-  const rootDir = options.rootDir ?? process.cwd();
-  const dataDir = join(rootDir, 'data');
-  const outPath = options.outPath ? resolve(options.outPath) : join(dataDir, 'meals.json');
-  const isDefaultOut = !options.outPath;
-  const log = options.silent ? () => {} : console.log;
-
-  const today = options.baseDate ?? kstToday();
-  const tomorrow = addDays(today, 1);
-  const targetDates = [...new Set([today, tomorrow, ...(options.extraDates ?? [])])];
-
-  const attempts: string[] = [];
-  let result: CrawlResult | null = null;
-
-  if (!options.offline) {
-    try {
-      const { items, cafeterias, dbRecords, source } = await crawlHomeAndSubpages(targetDates, {
-        rootDir,
-        allowWriteAssets: isDefaultOut,
-        silent: options.silent,
-      });
-      result = {
-        ok: true,
-        fetchedAt: new Date().toISOString(),
-        source,
-        items,
-        cafeterias,
-      };
-      if (isDefaultOut && dbRecords.length > 0) {
-        const totalDb = upsertMealPhotoDb(dbRecords);
-        log(
-          `  ✓ 식단 사진 매칭 DB(data/meal-photo-db.json) 저장 완료 — 금회 ${dbRecords.length}건 (누적 ${totalDb.length}건)`,
-        );
-      }
-      log(`  ✓ 성공 — 대상(${targetDates.join(', ')}) 식단 총 ${items.length}건`);
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      attempts.push(`${HOME_URL} → ${msg}`);
-      log(`  ✗ 실패 — ${msg}`);
-    }
-  } else {
-    attempts.push('--offline 플래그로 네트워크 요청을 건너뛰었습니다');
-  }
-
-  if (!result) {
-    const prev = readJsonFile<CrawlResult>(dataDir, 'meals.json');
-    const cached =
-      prev && prev.ok && Array.isArray(prev.items) && prev.items.length > 0 ? prev : null;
-
-    if (cached) {
-      result = {
-        ...cached,
-        ok: false,
-        fetchedAt: new Date().toISOString(),
-        error: `크롤링 실패 — 직전 성공분을 그대로 씁니다. ${attempts.join(' | ')}`,
-        fallback: 'cache',
-      };
-      log(`· 폴백: 캐시 ${cached.items.length}건`);
-    } else {
-      const seed = readJsonFile<{ items: MealItem[] }>(dataDir, 'meals.seed.json')?.items ?? [];
-      result = {
-        ok: false,
-        fetchedAt: new Date().toISOString(),
-        source: 'seed:data/meals.seed.json',
-        items: seed,
-        error: `크롤링 실패 — 시드 데이터로 대체했습니다. ${attempts.join(' | ')}`,
-        fallback: seed.length > 0 ? 'seed' : undefined,
-      };
-      log(`· 폴백: 시드 ${seed.length}건`);
-    }
-  }
-
-  mkdirSync(dirname(outPath), { recursive: true });
-  writeFileSync(outPath, `${JSON.stringify(result, null, 2)}\n`, 'utf8');
-
-  log(
-    `\n→ ${relative(rootDir, outPath)} 저장 (ok=${result.ok}${result.fallback ? `, fallback=${result.fallback}` : ''}, items=${result.items.length})`,
-  );
-  if (!result.ok) {
-    log('  화면에는 "식단을 못 가져왔습니다(시드 데이터 표시 중)" 배지가 떠야 합니다.');
-  }
-
-  return result;
+/** Manual CLI and the dedicated scheduler share one locked, staged publication path. */
+export async function runMealCrawler(options:RunCrawlOptions={}):Promise<CrawlResult>{
+  const rootDir=options.rootDir??process.cwd();
+  const today=options.baseDate??kstToday();
+  const dates=[...new Set([today,addDays(today,1),...(options.extraDates??[])])];
+  return synchronizeMeals({rootDir,dates,offline:options.offline,outPath:options.outPath?resolve(options.outPath):undefined,silent:options.silent,scheduledSlot:options.scheduledSlot},()=>crawlHomeAndSubpages(dates,{rootDir,allowWriteAssets:false,silent:options.silent,requireComplete:true}));
 }
-

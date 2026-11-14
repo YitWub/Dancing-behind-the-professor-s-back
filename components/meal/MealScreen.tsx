@@ -6,6 +6,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import type { BattleResult, Cafeteria, CrawlResult, MealItem, MealReview, MealTime } from '@/lib/types';
+import { mealDataNotice } from '@/lib/meal/status';
 import {
   CAFETERIA_ORDER,
   MEAL_RATING_OPTIONS,
@@ -44,17 +45,6 @@ function defaultMealTime(): MealTime {
   if (h < 10) return 'breakfast';
   if (h < 15) return 'lunch';
   return 'dinner';
-}
-
-function formatFetchedTime(iso?: string): string | null {
-  if (!iso) return null;
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return null;
-  return d.toLocaleTimeString('ko-KR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  });
 }
 
 export function MealScreen({ initialDate }: { initialDate: string }) {
@@ -111,7 +101,7 @@ export function MealScreen({ initialDate }: { initialDate: string }) {
     };
   }, [date, mealTime]);
 
-  const handleManualCrawlRefresh = useCallback(async () => {
+  const handleStoredReload = useCallback(async () => {
     if (refreshing) return;
     setRefreshing(true);
     try {
@@ -150,7 +140,6 @@ export function MealScreen({ initialDate }: { initialDate: string }) {
 
   const isToday = date === today;
   const isTomorrow = date === tomorrow;
-  const fetchedTimeLabel = formatFetchedTime(crawl?.fetchedAt ?? status?.fetchedAt);
 
   return (
     <div className="flex flex-col gap-3">
@@ -216,19 +205,18 @@ export function MealScreen({ initialDate }: { initialDate: string }) {
           />
         </div>
 
-        {/* 실시간 크롤링 출처 및 즉시 재수집 버튼 */}
+        {/* 저장본 상태 안내와 재조회. 네트워크 수집은 명시적 CLI로만 실행한다. */}
         <div className="mt-2.5 flex items-center justify-between gap-2 border-t border-[var(--e-border)] pt-2 text-[11px] text-[var(--e-muted)]">
-          <span className="truncate">
-            실시간 연동: life.hanyang.ac.kr/theme/pages/home.php
-            {fetchedTimeLabel ? ` (${fetchedTimeLabel} 수집)` : ''}
+          <span>
+            {crawl ? mealDataNotice(crawl) : '저장된 식단 조회 중…'}
           </span>
           <button
             type="button"
             disabled={refreshing || loading}
-            onClick={handleManualCrawlRefresh}
+            onClick={handleStoredReload}
             className="shrink-0 rounded-md border border-[var(--e-border)] bg-[var(--e-surface-2)] px-2 py-1 text-[11px] font-semibold text-[var(--e-ink-2)] transition-colors hover:border-[var(--e-accent)] hover:text-[var(--e-accent)] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {refreshing ? '크롤링 중…' : '실시간 다시 가져오기'}
+            {refreshing ? '조회 중…' : '저장본 다시 읽기'}
           </button>
         </div>
       </Card>
@@ -243,7 +231,7 @@ export function MealScreen({ initialDate }: { initialDate: string }) {
         >
           <Icon name="warn" className="mt-[1px] h-3.5 w-3.5 shrink-0" />
           <span>
-            <b className="font-semibold">오늘 식단을 못 가져왔습니다.</b>{' '}
+            <b className="font-semibold">저장된 데이터의 출처를 확인해 주세요.</b>{' '}
             {crawl.fallback === 'seed'
               ? '미리 저장해둔 시드 데이터를 대신 띄우는 중이라 실제 메뉴와 다를 수 있습니다.'
               : '보여줄 수 있는 건 예전에 받아둔 값뿐입니다.'}

@@ -1,0 +1,150 @@
+import { strict as assert } from 'node:assert';
+import { test, after } from 'node:test';
+import { mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
+import { createElement, isValidElement } from 'react';
+import type { ComponentType } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+
+// Render the real UI source with fixture props, never install fixture rarity in the app.
+const require=createRequire(import.meta.url),ts=require('typescript');
+const temporary=mkdtempSync(join(tmpdir(),'bokak-game-ui-'));
+after(()=>rmSync(temporary,{recursive:true,force:true}));
+const targets=new Map([
+  ['RarityBadge','components/dex/common/RarityBadge.tsx'],
+  ['CollectionCard','components/dex/common/CollectionCard.tsx'],
+  ['EditionCollectionCard','components/dex/common/EditionCollectionCard.tsx'],
+  ['DesignPreviewCard','components/dex/common/DesignPreviewCard.tsx'],
+  ['DeveloperToolsHub','components/dex/dev/DeveloperToolsHub.tsx'],
+  ['presentation','lib/dex/meal/presentation.ts'],
+  ['GameNoticeList','components/dex/discovery/GameNoticeList.tsx'],
+  ['CollectionFeedback','components/dex/discovery/CollectionFeedback.tsx'],
+  ['CollectionArtwork','components/dex/common/CollectionArtwork.tsx'],
+  ['MealImageArtwork','components/dex/common/MealImageArtwork.tsx'],
+  ['artwork-assets','lib/dex/meal/artwork-assets.ts'],
+  ['MealHighlightCard','components/dex/meal/MealHighlightCard.tsx'],
+  ['AchievementStamp','components/dex/common/AchievementStamp.tsx'],
+  ['AchievementArtwork','components/dex/common/AchievementArtwork.tsx'],
+]);
+const urls=new Map([...targets.keys()].map(name=>[name,pathToFileURL(join(temporary,name+'.mjs')).href]));
+for(const [name,path] of targets){
+  const input=readFileSync(new URL('../../../../'+path,import.meta.url),'utf8');
+  let output=ts.transpileModule(input,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText as string;
+  output=output.replace(/from (["'])([^"']+)\1/g,(_match:string,_quote:string,specifier:string)=>{
+    const target=[...urls].find(([component])=>specifier.replace(/\.tsx?$/,'').endsWith('/'+component)||specifier==='./'+component)?.[1];
+    return `from '${target??pathToFileURL(require.resolve(specifier)).href}'`;
+  });
+  writeFileSync(join(temporary,name+'.mjs'),output);
+}
+const {RarityBadge}=await import(urls.get('RarityBadge')!);
+const {CollectionCard}=await import(urls.get('CollectionCard')!);
+const {CollectionFeedback,DiscoveryReveal}=await import(urls.get('CollectionFeedback')!);
+const {MealHighlightCard}=await import(urls.get('MealHighlightCard')!);
+const render=(component:ComponentType<Record<string,unknown>>,props:Record<string,unknown>)=>renderToStaticMarkup(createElement(component,props));
+const success={entry:{id:'fixture-entry'},experience:{id:'fixture-experience'},outcome:'new-entry',replayed:false,committedAt:'2026-11-14T00:00:00Z',discovery:{key:'fixture-request',entryId:'fixture-entry',title:'fixture'}};
+test('희귀도 다섯 상태의 실제 공통 배지·프레임은 fixture에서만 검증하고 잠긴 등급은 노출하지 않는다',()=>{
+  for(const tier of ['UNKNOWN','COMMON','UNCOMMON','RARE','LEGENDARY']){
+    assert.ok(render(RarityBadge,{tier}).includes('dex-rarity--'+tier.toLowerCase()));
+    assert.ok(render(CollectionCard,{title:'fixture',artwork:createElement('span'),rarity:tier}).includes('dex-rarity-frame--'+tier.toLowerCase()));
+    const hidden=render(CollectionCard,{title:'이름은 공개',artwork:createElement('span'),rarity:tier,locked:true});assert.ok(hidden.includes('??? · 미발견'));assert.ok(hidden.includes('이름은 공개'));assert.ok(!hidden.includes('dex-rarity-frame--'));assert.ok(!hidden.includes('dex-rarity--'+tier.toLowerCase()));
+  }
+});
+test('신규 성공만 희귀도·업적을 한 발견 화면에 표시하며 실패·재전송은 공개하지 않는다',()=>{
+  const notices=[{id:'fixture-award',kind:'achievement',title:'테스트 업적',description:'fixture only'}];
+  const props={itemName:'fixture meal',onDismiss:()=>{},rarity:'LEGENDARY',notices};
+  const fresh=render(CollectionFeedback,{...props,result:{ok:true,value:success}});assert.ok(fresh.includes('NEW DISCOVERY!'));assert.ok(fresh.includes('LEGENDARY · 전설'));assert.ok(fresh.includes('테스트 업적'));
+  const replay=render(CollectionFeedback,{...props,result:{ok:true,value:{...success,replayed:true}}});assert.ok(!replay.includes('LEGENDARY'));assert.ok(!replay.includes('테스트 업적'));
+  const failure=render(CollectionFeedback,{...props,result:{ok:false,error:{code:'STORAGE_UNAVAILABLE',message:'fixture failure'}}});assert.ok(!failure.includes('NEW DISCOVERY!'));assert.ok(!failure.includes('테스트 업적'));
+});
+test('재방문은 카드 공개를 반복하지 않고 새 업적과 실제 횟수만 표시한다',()=>{
+  const html=render(CollectionFeedback,{itemName:'fixture meal',onDismiss:()=>{},result:{ok:true,value:{...success,outcome:'revisit',discovery:null}},visitCount:5,notices:[{id:'fixture-regular',kind:'title',title:'돌아온 단골손님',description:'서로 다른 날 5일'}]});assert.ok(!html.includes('NEW DISCOVERY!'));assert.ok(html.includes('돌아온 단골손님'));assert.ok(html.includes('<strong>5</strong>'));
+});
+
+test('개인 기록은 작은 상징·실제 상세 링크·동률 안내를 제공하고 빈 상태는 링크를 만들지 않는다',()=>{
+  const base={id:'first',title:'나의 첫 학식',badge:'FIRST DISCOVERY',others:2,metric:'컬렉션의 첫 페이지',emptyTitle:'아직 없어요',emptyHint:'기록을 기다려요',memorial:true};
+  const card=render(MealHighlightCard,{slot:{...base,card:{name:'테스트 국수',entryIds:['actual-entry']}}});assert.ok(!card.includes('<img'));assert.ok(card.includes('dex-record-symbol'));assert.ok(card.includes('/dex/meal/collection/actual-entry'));assert.ok(card.includes('공동 · 외 2종'));assert.ok(card.includes('첫 페이지'));
+  const empty=render(MealHighlightCard,{slot:{...base,card:null}});assert.ok(!empty.includes('href='));assert.ok(empty.includes('아직 없어요'));
+});
+test('다섯 등급 미리보기는 실제 수집 완료나 업적 획득으로 표시하지 않는다',()=>{
+  for(const tier of ['COMMON','UNCOMMON','RARE','LEGENDARY','UNKNOWN']){const html=render(DiscoveryReveal,{preview:true,itemName:'연출 테스트 카드',title:'희귀도 연출 미리보기',rarity:tier,onDismiss:()=>{}});assert.ok(html.includes('PREVIEW · TEST CARD'));assert.ok(html.includes('저장되지 않아요'));assert.ok(!html.includes('나의 컬렉션에 등록 완료'));assert.ok(html.includes('dex-rarity-frame--'+tier.toLowerCase()));}
+});
+test('미리보기 페이지는 프로덕션에서 컴포넌트를 열기 전에 404로 차단한다',async()=>{
+  for(const [route,componentName] of [['rarity','RarityPreview'],['editions','EditionPreview'],['collection','CollectionPreviewLab'],['design','DesignPreviewLab'],['','DeveloperToolsHub'],['storage','DevCollectionLab']]){
+  const source=readFileSync(new URL('../../../../app/dex/dev/'+(route?route+'/':'')+'page.tsx',import.meta.url),'utf8').replaceAll(componentName,'RarityPreview').replaceAll('/dev/EditionPreview','/dev/RarityPreview').replaceAll('/scaffold/RarityPreview','/dev/RarityPreview');
+  const component=pathToFileURL(join(temporary,'preview-stub.mjs'));writeFileSync(component,"export function RarityPreview(){return null;}");
+  let output=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText as string;
+  for(const specifier of ['next/navigation','next/link','react/jsx-runtime'])output=output.replaceAll(`from '${specifier}'`,`from '${pathToFileURL(require.resolve(specifier)).href}'`).replaceAll(`from "${specifier}"`,`from "${pathToFileURL(require.resolve(specifier)).href}"`);
+  output=output.replace("import('@/components/dex/dev/RarityPreview')",`import('${component.href}')`);
+  const file=pathToFileURL(join(temporary,'preview-page-'+route+'.mjs'));writeFileSync(file,output);const {default:Page}=await import(file.href);
+  const env=process.env as Record<string,string|undefined>;const previous=env['NODE_ENV'];try{env['NODE_ENV']='production';await assert.rejects(()=>Page(),{digest:'NEXT_HTTP_ERROR_FALLBACK;404'});env['NODE_ENV']='development';assert.ok(isValidElement(await Page()));}finally{if(previous===undefined)delete env['NODE_ENV'];else env['NODE_ENV']=previous;}
+  }
+});
+
+test('랜덤 카드 4종은 실제 저장 결과로 최초·재방문 모두 공개하며 재전송은 숨긴다',()=>{
+  for(const edition of ['NORMAL','SPECIAL','RARE','GOLDEN'])for(const outcome of ['new-entry','revisit']){
+    const value={...success,outcome,discovery:outcome==='revisit'?null:success.discovery,experience:{id:'edition-exp',kind:'meal',card:{edition}}};
+    const props={itemName:'fixture',onDismiss:()=>{},result:{ok:true,value},visitCount:3,children:createElement('p',null,'빠른 평가 유지')};
+    const html=render(CollectionFeedback,props);assert.ok(html.includes('dex-edition--'+edition.toLowerCase()));assert.ok(html.includes('새 카드 1장 획득 완료'));assert.ok(html.includes('빠른 평가 유지'));assert.ok(html.includes('<strong>3</strong>'));
+    assert.equal(html.includes('처음 만난 메뉴'),outcome==='new-entry');
+    assert.ok(!render(CollectionFeedback,{...props,result:{ok:true,value:{...value,replayed:true}}}).includes('dex-edition-badge'));
+    const preview=render(DiscoveryReveal,{preview:true,edition,itemName:'test',title:'test',onDismiss:()=>{}});assert.ok(preview.includes('저장되지 않아요'));assert.ok(preview.includes('연출 건너뛰기'));
+  }
+});
+
+test('공용 에디션 카드는 전체 링크·버튼으로 선택하며 반복 문구·가상 표시를 앞면에서 제거',async()=>{
+  const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!);
+  const props={name:'만두카츠&소스 Fried Dumplings Cutlet & Sauce',edition:'RARE',count:3,acquiredOn:'2026-11-14'};
+  const html=render(EditionCollectionCard,{...props,href:'/dex/meal/collection/actual?experience=visit'});
+  assert.ok(html.includes('href="/dex/meal/collection/actual?experience=visit"'));assert.ok(html.includes('만두카츠'));assert.ok(html.includes('보유 3장'));assert.ok(html.includes('RARE'));
+  for(const text of ['나의 컬렉션','수집 완료','보유 카드 보기','TEST','Fried Dumplings'])assert.ok(!html.includes(text));
+  const button=render(EditionCollectionCard,{...props,onSelect:()=>{},selected:true,preview:true});assert.ok(button.includes('<button'));assert.ok(button.includes('aria-pressed="true"'));assert.ok(!button.includes('TEST'));
+});
+
+test('공통 디자인 프레임은 학식만 에디션을 표시하고 인연·강의는 기록 문구를 사용',async()=>{
+  const {DesignPreviewCard}=await import(urls.get('DesignPreviewCard')!);
+  for(const kind of ['meal','people','course']){
+    const sample={id:'design-test',kind,title:'가상 샘플',meta:kind==='course'?'2026년 2학기':'함께한 순간',stamp:'소중한 기록',note:'기억할 이야기',edition:kind==='meal'?'GOLDEN':undefined};
+    const html=render(DesignPreviewCard,{sample,showRecord:true,onSelect:()=>{}});assert.ok(html.includes('기억할 이야기'));assert.ok(html.includes('<button'));
+    assert.equal(html.includes('dex-edition-badge'),kind==='meal');if(kind!=='meal')assert.ok(!html.includes('GOLDEN'));
+  }
+});
+
+test('개발 허브는 네 미리보기와 보존한 별도 저장 검증 도구를 연결한다',async()=>{
+ const {DeveloperToolsHub}=await import(urls.get('DeveloperToolsHub')!);const html=render(DeveloperToolsHub,{});
+ for(const route of ['design','collection','editions','rarity','storage'])assert.ok(html.includes('href="/dex/dev/'+route+'"'));
+ assert.equal((html.match(/data-testid="devtool-card"/g)||[]).length,4);
+});
+
+test('음식 SVG 8종은 서로 다른 실루엣이며 시각 힌트는 모호한 이름을 합치지 않는다',async()=>{
+ const {CollectionArtwork,mealArtwork}=await import(urls.get('CollectionArtwork')!);
+ const samples=[['치즈돈가스','cutlet'],['김치볶음밥','fried-rice'],['치킨마요덮밥','rice-bowl'],['순두부찌개','stew'],['바지락칼국수','noodles'],['새우튀김카레라이스','curry'],['로제떡볶이','snack'],['제육볶음','meat']];
+ const art=[];for(const [name,kind] of samples){assert.equal(mealArtwork(name),kind);const html=render(CollectionArtwork,{kind});assert.ok(html.includes('<svg'));const svg=html.match(/<svg[\s\S]*?<\/svg>/)?.[0];assert.ok(svg);art.push(svg);}
+ assert.equal(new Set(art).size,8);assert.equal(mealArtwork('오늘의 특별 메뉴'),'food');assert.equal(mealArtwork('돈가스&떡볶이'),'food');assert.equal(mealArtwork('BBQ 정식'),'food');
+});
+test('실제 카드·디자인 샘플·성공 공개는 같은 앨범 프레임과 에디션 클래스를 사용',async()=>{
+ const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!),{DesignPreviewCard}=await import(urls.get('DesignPreviewCard')!);
+ for(const edition of ['NORMAL','SPECIAL','RARE','GOLDEN']){
+  const shared='album-edition--'+edition.toLowerCase();
+  const actual=render(EditionCollectionCard,{name:'치즈돈가스',edition,acquiredOn:'2026-11-14',count:2});
+  const preview=render(DesignPreviewCard,{sample:{kind:'meal',title:'치즈돈가스',edition,meta:'가상',stamp:'',note:''}});
+  const reveal=render(DiscoveryReveal,{edition,itemName:'치즈돈가스',title:'새 카드',onDismiss:()=>{}});
+  for(const html of [actual,preview,reveal]){assert.ok(html.includes('album-card-frame'));assert.ok(html.includes(shared));}
+ }
+ const person=render(DesignPreviewCard,{sample:{kind:'people',title:'친구',meta:'가상',stamp:'발견',note:''}});assert.ok(person.includes('album-card-frame'));assert.ok(!person.includes('album-edition--'));
+});
+
+ test('개별 카드는 해당 경험의 별점과 빈 별을 표시하고 메뉴 요약은 평가 횟수로 구분한다',async()=>{
+  const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!);
+  for(const rating of [null,1,3,5]){const html=render(EditionCollectionCard,{name:'치즈돈가스',edition:'NORMAL',acquiredOn:'2026-11-14',rating});assert.ok(html.includes(rating===null?'☆☆☆☆☆':'★'.repeat(rating)+'☆'.repeat(5-rating)));assert.ok(html.includes(rating===null?'이 식사 미평가':'이 식사 별점 '+rating+'점'));}
+  const menu=render(EditionCollectionCard,{name:'치즈돈가스',count:3,evaluationCount:2,rating:5,acquiredOn:'2026-11-14'});assert.ok(menu.includes('평가 2회'));assert.ok(menu.includes('이 메뉴 평균 5.0점'));assert.ok(menu.includes('★★★★★'));assert.ok(!menu.includes('dex-average-caption'));
+  const fractional=render(EditionCollectionCard,{name:'치즈돈가스',count:2,evaluationCount:2,rating:3.5,acquiredOn:'2026-11-14'});assert.ok(fractional.includes('width:70%'));assert.ok(fractional.includes('이 메뉴 평균 3.5점'));
+ });
+
+test('실제 카드는 WebP와 공통 기본 이미지를 사용하고 SVG 비교 모드는 유지한다',async()=>{const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!);const base={name:'치즈돈가스',edition:'NORMAL',acquiredOn:'2026-11-14'};assert.ok(render(EditionCollectionCard,base).includes('<img'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'svg'}).includes('<svg'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'image'}).includes('/dex/food/cutlet.webp'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'soft'}).includes('is-soft'));assert.ok(render(EditionCollectionCard,{...base,name:'알 수 없는 메뉴',artworkMode:'image'}).includes('/dex/food/default.webp'));});
+
+test('공통 도장은 실제 달성·미달성·준비 상태를 색상 외 문구로 구분하고 엔진 진행률을 표시한다',async()=>{const {AchievementStamp}=await import(urls.get('AchievementStamp')!);const goal={id:'fixture',name:'첫 발견',icon:'✦',condition:'메뉴 1종 수집',progress:1,target:1,status:'achieved',achievedAt:null};const achieved=render(AchievementStamp,{achievement:goal});assert.ok(achieved.includes('✓ 달성'));assert.ok(achieved.includes('value="1"'));assert.ok(achieved.includes('<details>'));assert.ok(achieved.includes('/dex/achievements/default.webp'));const locked=render(AchievementStamp,{achievement:{...goal,status:'locked',progress:0}});assert.ok(locked.includes('미달성'));assert.ok(locked.includes('value="0"'));const preparing=render(AchievementStamp,{achievement:{...goal,status:'preparing',progress:null}});assert.ok(preparing.includes('판정 대기'));assert.ok(!preparing.includes('<progress'));});
+
+test('공통 업적 일러스트는 선택적으로 표시하며 업적 이름과 실제 상태는 유지한다',async()=>{const {AchievementStamp}=await import(urls.get('AchievementStamp')!);const goal={id:'meal:first',name:'첫 발견',icon:'✦',condition:'메뉴 1종 수집',progress:1,target:1,status:'achieved',achievedAt:null};const html=render(AchievementStamp,{achievement:goal,artwork:'/dex/achievements/first-discovery.webp'});assert.ok(html.includes('/dex/achievements/first-discovery.webp'));assert.ok(html.includes('✓ 달성'));assert.ok(html.includes('메뉴 1종 수집'));});

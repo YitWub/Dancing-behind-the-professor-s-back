@@ -43,3 +43,9 @@ next-env.d.ts
 
 # IDE
 .idea/
+
+# Runtime meal snapshots and immutable assets (use a persistent volume in production)
+/data/meal-sync/
+
+# Separate explicit historical meal observations (persistent volume for production)
+/data/meal-observations/

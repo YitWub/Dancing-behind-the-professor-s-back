@@ -22,7 +22,6 @@ import {
   MOCK_LECTURES,
   MOCK_MEAL_REVIEWS,
   mockBattle,
-  mockCrawl,
 } from '@/components/mock';
 
 export interface Sourced<T> {
@@ -75,14 +74,18 @@ export async function loadMeals(
       source: 'api',
       data: {
         ok: crawledOk,
-        fetchedAt: res.headers.get('x-meal-fetched-at') ?? new Date().toISOString(),
+        fetchedAt: res.headers.get('x-meal-fetched-at') ?? '',
         source: 'https://life.hanyang.ac.kr/theme/pages/home.php',
         items: body.data,
         fallback: fb === 'seed' || fb === 'cache' ? fb : undefined,
       },
     };
   } catch (e) {
-    return { source: 'mock', data: mockCrawl(date), note: reason(e) };
+    return {
+      source: 'mock',
+      note: reason(e),
+      data: { ok: false, fetchedAt: '', source: 'unavailable', items: [], error: reason(e) },
+    };
   }
 }
 

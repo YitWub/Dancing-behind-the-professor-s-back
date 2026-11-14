@@ -1,0 +1,118 @@
+/* Shared album surface: real cards, design preview and committed reveals opt in. */
+.album-card-frame{--album-paper:#fffdf2;--album-line:#b9c9a5;--album-ink:#385340;position:relative;isolation:isolate;box-sizing:border-box;border:2px solid var(--album-line)!important;border-radius:18px 13px 18px 13px!important;background:linear-gradient(150deg,#fffef7,#f1f4e6)!important;box-shadow:0 4px 0 #a9bb8d33,0 9px 22px #425c3510!important;color:var(--album-ink)}
+.album-card-frame::before,.album-card-frame::after{position:absolute;pointer-events:none;z-index:1}
+.album-card-frame::before{content:'';inset:5px;border:1px solid #d4dec533;border-radius:12px 8px 12px 8px}
+.album-card-frame::after{content:'✧';top:7px;right:10px;font-size:16px;color:#7b9661;line-height:1}
+.album-card-frame .dex-art{background:radial-gradient(ellipse at 50% 65%,#e4edcf 0,transparent 65%)!important;border-radius:12px}
+.album-card-frame .dex-card-copy,.album-card-frame .design-card-copy{position:relative;z-index:2}
+.album-card-frame.album-edition--normal{--album-line:#b7c8a0}
+.album-card-frame.album-edition--special{--album-line:#699c78;border-style:double!important;border-width:3px!important;border-radius:21px 11px 21px 11px!important}
+.album-card-frame.album-edition--special::before{border-color:#9fc6a0;border-style:dashed}
+.album-card-frame.album-edition--special::after{content:'✧ ✧';color:#4d8b62;font-size:14px}
+.album-card-frame.album-edition--rare{--album-line:#9a7ab8;background:radial-gradient(circle at 100% 0,#e4d8f4 0,transparent 40%),linear-gradient(145deg,#fffdf8,#f4effb)!important;box-shadow:0 4px 0 #ab8dc633,0 9px 22px #74578d14!important}
+.album-card-frame.album-edition--rare::before{border-color:#bca3d7;border-style:dashed}
+.album-card-frame.album-edition--rare::after{content:'✦';font-size:20px;color:#9370b1}
+.album-card-frame.album-edition--golden{--album-line:#c09a3f;border:3px double #bc9639!important;border-radius:20px 9px 20px 9px!important;background:repeating-linear-gradient(135deg,#f0dc9233 0 1px,transparent 1px 13px),linear-gradient(150deg,#fff7d7,#fffdf3 58%,#f4e5af)!important;box-shadow:0 4px 0 #c6a24f44,0 10px 25px #a27a2120!important}
+.album-card-frame.album-edition--golden::before{border-color:#d3b66b;inset:5px}
+.album-card-frame.album-edition--golden::after{content:'✦ ✧';font-size:18px;color:#b38b2d}
+.dex-edition-card .album-card-frame{padding:12px}
+.dex-edition-card .album-card-frame .dex-card-copy h3{font-size:15px;line-height:1.4;height:2.8em;min-height:2.8em}
+.dex-owned-grid .album-card-frame .dex-art{height:125px}
+.dex-owned-grid .album-card-frame .dex-card-meta{min-height:25px;align-items:center}
+.dex-owned-grid .album-card-frame time{font-size:10px;opacity:.8}
+.dex-collection-panel,.dex-meal-detail{--album-surface:#f7f7e9;padding:20px;border:1px solid #d6dfc8;border-radius:22px;background:var(--album-surface);min-width:0}
+.dex-collection-panel .dex-collection-switch{background:#e8eedb;border-color:#d2ddbf}
+.dex-collection-panel .dex-collection-switch button[aria-pressed=true]{background:#fffdf3;color:#3c6849;box-shadow:0 2px 7px #415f2e14}
+.dex-collection-panel .dex-collection-tools input,.dex-collection-panel .dex-collection-tools select{background:#fffef7;border-color:#d0dbbf;font-size:14px}
+.dex-collection-panel .dex-count{background:#e4edce;color:#3b5c42;white-space:nowrap}
+.dex-collection-panel .dex-owned-grid{gap:16px}
+.dex-meal-detail .dex-detail-rating .dex-experience-card{background:#fffef7;border-color:#d5dfc8;border-radius:18px}
+.dex-meal-detail .dex-detail-focus{gap:26px;padding:10px 0}
+.dex-meal-detail .dex-detail-feature{max-width:300px}
+.dex-meal-detail .dex-detail-feature .album-card-frame{padding:18px}
+.dex-meal-detail .dex-detail-feature .dex-art{height:220px}
+.dex-meal-detail .dex-quick-note textarea{border-color:#d7dfc8;background:#fffdf7;font-size:14px}
+.dex-meal-detail .dex-rating-stars label.is-selected{background:#e5edda;color:#51764e}
+.dex-meal-detail .dex-detail-card-strip{padding:7px 5px 14px}
+.dex-meal-detail .dex-detail-card-strip .dex-art{height:76px}
+.dex-meal-detail .dex-detail-secondary{border-top:1px dashed #ccd8bc;padding-top:14px}
+.dex-reveal-card.album-card-frame{animation:album-open .24s ease-out both}
+.dex-reveal-card.album-card-frame.album-edition--special{animation-duration:.34s}
+.dex-reveal-card.album-card-frame.album-edition--rare{animation:album-rare-open .42s ease-out both}
+.dex-reveal-card.album-card-frame.album-edition--golden{animation:album-rare-open .55s ease-out both}
+.dex-reveal-card.album-card-frame.album-edition--special::after,.dex-reveal-card.album-card-frame.album-edition--golden::after{animation:album-twinkle .6s ease-out 1 both}
+.dex-reveal-card.album-card-frame .dex-reveal-shine{animation:album-sheen .6s ease-out 1 both;background:linear-gradient(110deg,transparent 30%,#fff9d188 50%,transparent 65%);pointer-events:none}
+.dex-reveal-card.album-edition--normal .dex-reveal-shine{display:none}
+.dex-reveal-card.album-card-frame h3{font-size:19px;line-height:1.35;overflow-wrap:anywhere}
+.dex-reveal-card.album-card-frame .dex-new{background:#e4edcc;color:#456043}
+.dex-reveal-actions .dex-button{font-size:14px;white-space:nowrap}
+@keyframes album-open{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes album-rare-open{from{opacity:0;transform:translateY(12px) rotate(-2deg) scale(.94)}to{opacity:1;transform:none}}
+@keyframes album-twinkle{0%{opacity:.2;transform:scale(.8)}60%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:none}}
+@keyframes album-sheen{from{transform:translateX(-90%);opacity:0}50%{opacity:1}to{transform:translateX(90%);opacity:0}}
+.dex-reveal--skip .dex-reveal-card.album-card-frame,.dex-reveal--skip .dex-reveal-card.album-card-frame::after,.dex-reveal--skip .dex-reveal-card.album-card-frame .dex-reveal-shine{animation:none!important}
+@media(max-width:520px){.dex-collection-panel,.dex-meal-detail{padding:12px;border-radius:17px}.dex-collection-panel .dex-owned-grid{gap:10px}.dex-owned-grid .album-card-frame .dex-art{height:105px}.dex-edition-card .album-card-frame{padding:10px}.dex-edition-card .album-card-frame .dex-card-copy h3{font-size:14px}.dex-meal-detail .dex-detail-focus{gap:14px}.dex-meal-detail .dex-detail-feature{max-width:245px}.dex-meal-detail .dex-detail-feature .dex-art{height:170px}.dex-owned-grid .album-card-frame .dex-card-meta{align-items:flex-start}.dex-reveal-actions{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.dex-reveal-card.album-card-frame,.dex-reveal-card.album-card-frame::after,.dex-reveal-card.album-card-frame .dex-reveal-shine{animation:none!important;transition:none!important}.dex-reveal-card.album-card-frame .dex-reveal-shine{display:none}}
+
+/* A short memory beside the card; forms appear only while writing. */
+.dex-card-personal-stars,.dex-card-rating-summary{margin:5px 0 0;font-size:13px;line-height:1.3;color:#677949;letter-spacing:2px}
+.dex-card-rating-summary{letter-spacing:0;font-size:12px}
+.dex-meal-detail .dex-detail-rating .dex-memory{background:transparent;border:0;box-shadow:none;padding:12px 4px;min-width:0}
+.dex-memory-heading{font-size:13px;color:#758163;font-weight:500;margin:0 0 12px}
+.dex-memory-reading blockquote{font-size:18px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0 18px;padding-left:14px;border-left:3px solid #becf9e;color:#45553d}
+.dex-memory-stars{font-size:25px;letter-spacing:4px;color:#718548;margin:0 0 12px}
+.dex-memory .dex-quick-rating{padding:0;border:0;background:transparent}
+.dex-memory .dex-quick-note textarea{min-height:66px;resize:vertical}
+.dex-memory .dex-quick-actions{margin-top:12px}
+.dex-memory .dex-quick-actions button{white-space:nowrap;font-size:14px}
+.dex-selected-record-info{font-size:13px}.dex-selected-record-info input{max-width:180px}
+
+.dex-card-rating-summary{display:flex;align-items:center;gap:6px}.dex-average-stars{display:inline-block;position:relative;letter-spacing:2px;white-space:nowrap;line-height:1.3}.dex-average-stars-fill{position:absolute;left:0;top:0;overflow:hidden;white-space:nowrap}
+
+/* A small inset for the menu title and stars; leave the edition row in place. */
+.dex-edition-card .album-card-frame .dex-card-copy h3,.dex-edition-card .album-card-frame .dex-card-rating-summary,.dex-edition-card .album-card-frame .dex-card-personal-stars{padding-inline-start:4px;box-sizing:border-box}
+
+/* Shared food artwork; soft filtering is restricted to the optional preview. */
+.dex-food-image{display:flex;align-items:center;justify-content:center;overflow:hidden}
+.dex-food-image img{width:88%;height:88%;object-fit:contain;display:block;max-width:100%}
+.dex-food-image.is-soft img{width:76%;height:76%;filter:saturate(.72)}
+
+/* Domain-neutral achievement stamps, distinct from food cards and random editions. */
+.dex-campus-notebook{margin-top:26px;display:grid;gap:24px;min-width:0}
+.dex-stamp-book{padding:18px;background:#fbfaef;border:1px solid #d4ddc7;border-radius:18px;min-width:0}
+.dex-stamp-book>.dex-small{margin:8px 0 0}
+.dex-stamp-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}
+.dex-stamp{--stamp-ink:#547658;--stamp-paper:#e7efdc;padding:12px 8px;border:1px dashed #d5ddcb;border-radius:13px;min-width:0;background:#fffdf6;color:#516046}
+.dex-stamp.tone-honey{--stamp-ink:#987735;--stamp-paper:#f6edcf}.dex-stamp.tone-rose{--stamp-ink:#9a6b69;--stamp-paper:#f5e4df}.dex-stamp.tone-lavender{--stamp-ink:#7c6c95;--stamp-paper:#eee7f6}
+.dex-stamp details summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center}.dex-stamp details summary::-webkit-details-marker{display:none}.dex-stamp details summary:focus-visible{outline:2px solid #55754c;outline-offset:4px;border-radius:8px}
+.dex-stamp-seal{width:78px;height:78px;display:flex;flex-direction:column;justify-content:center;align-items:center;border:3px double var(--stamp-ink);border-radius:50%;background:var(--stamp-paper);color:var(--stamp-ink);box-shadow:inset 0 0 0 4px #fffaf088;transform:rotate(-5deg)}
+.dex-stamp:nth-child(even) .dex-stamp-seal{transform:rotate(5deg)}.dex-stamp-seal>span{font-size:30px;line-height:1.1}.dex-stamp-seal small{font-size:9px;letter-spacing:1px;margin-top:4px}
+.dex-stamp-name{font-size:13px;font-weight:750;overflow-wrap:anywhere}.dex-stamp-condition{font-size:11px;color:#7a826e;line-height:1.5;min-height:3em}.dex-stamp-state{font-size:11px;color:var(--stamp-ink);font-weight:650}
+.dex-stamp.is-locked,.dex-stamp.is-preparing{--stamp-ink:#93998c;--stamp-paper:#f2f2eb;background:#f8f8f0}.dex-stamp.is-locked .dex-stamp-seal,.dex-stamp.is-preparing .dex-stamp-seal{border-style:dashed;box-shadow:none;transform:none}
+.dex-stamp-progress{display:flex;gap:7px;align-items:center;font-size:10px;color:#6e7863;margin-top:12px}.dex-stamp-progress progress{width:100%;min-width:0;height:5px;accent-color:var(--stamp-ink)}.dex-stamp-progress>span{white-space:nowrap}.dex-stamp-progress-note{text-align:center;font-size:10px;color:#8a8e82;margin-top:12px}
+.dex-stamp-info{border-top:1px dashed #d4ddc7;margin-top:10px;padding-top:8px;font-size:11px;line-height:1.6;overflow-wrap:anywhere}.dex-stamp-info p+p{margin-top:5px}
+.dex-personal-records .dex-highlight-grid{margin:12px 0 0}.dex-personal-records .dex-highlight-card{padding:13px;background:#fffdf5;border:1px solid #d9dfce;box-shadow:none;transform:none}.dex-personal-records .dex-highlight-card:hover{transform:translateY(-2px)}
+.dex-record-heading{display:flex;align-items:center;gap:7px;min-width:0}.dex-record-symbol{display:grid;place-items:center;flex-shrink:0;width:28px;height:28px;border-radius:9px;background:#e8eedc;color:#658052;font-size:17px}.dex-record-heading .dex-highlight-label{padding:0;font-size:11px;line-height:1.5}.dex-record-memento{font-size:9px;color:#997a40;white-space:nowrap;margin-left:auto}
+.dex-personal-records .dex-highlight-copy{padding:10px 0;gap:6px}.dex-personal-records .dex-highlight-card h4{font-size:13px}.dex-personal-records .dex-highlight-meta{font-size:11px}.dex-personal-records .dex-highlight-open{padding-inline:0}.dex-personal-records .dex-highlight--first{background:#fcf7e6}
+@media(max-width:1000px){.dex-stamp-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.dex-personal-records .dex-highlight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.dex-stamp-book{padding:12px}.dex-stamp-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.dex-stamp{padding:10px 7px}.dex-stamp-seal{width:68px;height:68px}.dex-personal-records .dex-highlight-grid{gap:9px}.dex-record-heading{flex-wrap:wrap}.dex-record-memento{margin-left:0}.dex-personal-records .dex-highlight-card{padding:10px}}
+.dex-stamp-progress progress{appearance:none;border:0;border-radius:20px;overflow:hidden;background:#e4e8dd}.dex-stamp-progress progress::-webkit-progress-bar{background:#e4e8dd;border-radius:20px}.dex-stamp-progress progress::-webkit-progress-value{background:var(--stamp-ink);border-radius:20px}.dex-stamp-progress progress::-moz-progress-bar{background:var(--stamp-ink);border-radius:20px}
+
+/* Illustrated stamps are shared by the home exhibit and each dex's achievement list. */
+.dex-stamp .dex-stamp-seal{position:relative;width:104px;height:104px;border-color:#cbd6b9;background:#f6f6e9;box-shadow:none}
+.dex-stamp-illustration{width:92px;height:92px;object-fit:contain;display:block}.dex-stamp-symbol{font-size:30px}
+.dex-stamp.is-locked .dex-stamp-illustration,.dex-stamp.is-preparing .dex-stamp-illustration{filter:grayscale(1);opacity:.38}
+.dex-stamp-seal small{position:absolute;bottom:-4px;background:#fffdf1;padding:2px 6px;border-radius:6px;border:1px solid #d6dfc8;white-space:nowrap}
+.dex-home-achievements{padding:20px;border:1px solid #d3ddc5;border-radius:20px;background:linear-gradient(135deg,#f8f8e9,#eff3e2);min-width:0}
+.dex-home-achievements>.dex-small{margin-top:8px}.dex-home-stamp-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));align-items:start}.dex-home-stamp-grid .dex-stamp{background:#fffdf4;border-style:solid;box-shadow:0 3px 0 #c5d4b52b}
+.dex-home-stamp-empty{padding:24px 16px;margin:16px 0;border:1px dashed #c8d6b5;border-radius:14px;text-align:center;background:#fffdf466}
+#meal-achievements{scroll-margin-top:20px}
+@media(max-width:520px){.dex-home-achievements{padding:13px}.dex-home-stamp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dex-stamp .dex-stamp-seal{width:90px;height:90px}.dex-stamp-illustration{width:80px;height:80px}}
+
+/* The supplied badge already has its own wreath and ribbon. */
+.dex-stamp{padding:10px 8px}.dex-stamp details summary{gap:5px}
+.dex-stamp .dex-stamp-seal{width:102px;height:102px;border:0;background:transparent;transform:none;box-shadow:none}
+.dex-stamp:nth-child(even) .dex-stamp-seal{transform:none}.dex-stamp-illustration{width:102px;height:102px}
+.dex-stamp .dex-stamp-seal small{display:none}.dex-stamp-condition{font-size:10px;min-height:3em}.dex-stamp-progress{margin-top:9px}
+.dex-stamp.is-locked .dex-stamp-illustration,.dex-stamp.is-preparing .dex-stamp-illustration{filter:saturate(.12);opacity:.5}
+@media(max-width:520px){.dex-stamp .dex-stamp-seal,.dex-stamp-illustration{width:88px;height:88px}}
