@@ -4,7 +4,7 @@
  *   node scripts/crawl-meals.ts [--date=YYYY-MM-DD] [--offline] [--out=PATH]
  *
  * ★설계 원칙 — "크롤링이 실패해도 앱은 절대 깨지지 않는다"
- *   이 스크립트는 어떤 경우에도 0으로 종료하고 data/meals.json 을 남긴다.
+ *   크롤 실패도 exit 0이지만 마지막 정상 스냅샷은 교체하지 않는다.
  *   대신 CrawlResult.ok / fallback / error 에 무슨 일이 있었는지 정직하게 적는다.
  *
  *   성공        → ok: true,  fallback 없음
@@ -23,11 +23,9 @@
  * ────────────────────────────────────────────────────────────────────────
  */
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import type { CrawlResult, MealItem } from '../lib/types.ts';
 import {
   crawlHomeAndSubpages,
   parseDetailPhp,
@@ -51,18 +49,6 @@ export {
 };
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const DATA = join(ROOT, 'data');
-
-function loadSeed(): MealItem[] {
-  const p = join(DATA, 'meals.seed.json');
-  if (!existsSync(p)) return [];
-  try {
-    return (JSON.parse(readFileSync(p, 'utf8')) as { items?: MealItem[] }).items ?? [];
-  } catch {
-    return [];
-  }
-}
-
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   const dateArg = args.find((a) => a.startsWith('--date='))?.slice('--date='.length);
@@ -72,6 +58,7 @@ async function main(): Promise<void> {
   await runMealCrawler({
     baseDate: dateArg,
     offline,
+    extraDates:args.filter(a=>a.startsWith('--extra-date=')).map(a=>a.slice('--extra-date='.length)),
     outPath: outArg ? resolve(outArg) : undefined,
     rootDir: ROOT,
   });
@@ -91,21 +78,7 @@ if (isEntrypoint) {
   main()
     .catch((err) => {
       console.error('크롤러 자체가 예외로 죽었습니다:', err);
-      try {
-        const seed = loadSeed();
-        const fallbackResult: CrawlResult = {
-          ok: false,
-          fetchedAt: new Date().toISOString(),
-          source: 'seed:data/meals.seed.json',
-          items: seed,
-          error: `크롤러 예외: ${err instanceof Error ? err.message : String(err)}`,
-          fallback: seed.length > 0 ? 'seed' : undefined,
-        };
-        mkdirSync(DATA, { recursive: true });
-        writeFileSync(join(DATA, 'meals.json'), `${JSON.stringify(fallbackResult, null, 2)}\n`, 'utf8');
-      } catch (writeErr) {
-        console.error('폴백 파일 기록도 실패했습니다:', writeErr);
-      }
+      console.error('마지막 정상 식단은 교체하지 않았습니다. 수집 로그를 확인하세요.');
     })
     .finally(() => {
       process.exitCode = 0;

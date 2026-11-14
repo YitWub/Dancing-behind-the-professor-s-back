@@ -1,11 +1,11 @@
 /**
- * lib/meal/store.ts — data/*.json 파일 저장소 및 실시간 크롤링 연동
+ * lib/meal/store.ts — 저장된 식단 조회 및 명시적 후기·사진 DB 쓰기
  *
  * ⚠️ 서버 전용 모듈입니다. 'node:fs' 를 쓰므로 클라이언트 컴포넌트에서
  *    import 하면 빌드가 깨집니다. Route Handler / 서버 컴포넌트에서만 쓰세요.
  *
  * 읽기/수집 대상
- *   https://life.hanyang.ac.kr/theme/pages/home.php (및 하위 페이지 실시간 크롤링)
+ *   외부 수집은 scripts/crawl-meals.ts에서만 실행한다. 조회 함수는 수집하지 않는다.
  *   data/meals.json           크롤러 산출물 (CrawlResult)
  *   data/meals.seed.json      시드 식단 (크롤링 실패 시 폴백)
  *   data/meal-photo-db.json   식단 사진이 존재할 때 식단+사진을 함께 저장하는 DB 매핑 테이블
@@ -24,19 +24,14 @@ import type {
   MealReview,
   MealTime,
 } from '../types.ts';
-import { kstToday } from '../datetime.ts';
 import { computeBattle } from './battle.ts';
+import { jsonFile, mealStorageRoot, readMealSnapshot, storedCrawl } from './sync-store.ts';
+import type { StoredCrawl, SyncAttempt } from './sync-store.ts';
 
 const DATA_DIR = join(process.cwd(), 'data');
 
 export const SEED_SOURCE_LABEL = 'seed:data/meals.seed.json';
 
-/* ── 실시간 크롤링 중복 호출 방지(In-flight & 단기 Cooldown) 상태 ─────────── */
-let inFlightCrawl: Promise<CrawlResult> | null = null;
-let lastCrawledAtMs = 0;
-let lastCrawledDates = new Set<string>();
-/** 한 화면 마운트 시 동시에 발생하는 /api/meals, /api/meals/status, /api/meals/battle 요청 공유 창 */
-const LIVE_CRAWL_DEDUP_MS = 2_500;
 
 /* ────────────────────────────────────────────────────────────────────────────
  * 식단 + 사진 DB 연동 스키마 (사진이 존재하는 식단 전용 매핑 레코드)
@@ -120,7 +115,7 @@ function writeJson(file: string, value: unknown): void {
 }
 
 /* ────────────────────────────────────────────────────────────────────────────
- * 식단 읽기 및 실행 시 실시간 크롤링
+ * 저장된 식단 읽기. 수집은 명시적인 CLI만 담당한다
  * ──────────────────────────────────────────────────────────────────────────*/
 
 interface SeedMealFile {
@@ -139,86 +134,44 @@ export function readSeedMeals(): MealItem[] {
  * ★정직성 핵심: 이 함수는 절대 예외를 던지지 않고, 데이터가 어디서 왔는지를
  *   CrawlResult.ok / fallback 으로 정직하게 표시한다.
  */
-export function readMealCrawl(): CrawlResult {
+export function readMealCrawl(): StoredCrawl {
+  const current=storedCrawl(mealStorageRoot());if(current)return current;
   const crawled = readJson<CrawlResult>('meals.json');
-  if (crawled && Array.isArray(crawled.items)) return crawled;
+  const attempt=jsonFile<SyncAttempt>(join(mealStorageRoot(),'last-attempt.json'));
+  if (crawled && Array.isArray(crawled.items)) return {...crawled,...(attempt?{syncStatus:attempt}:{})};
 
   const seed = readSeedMeals();
   return {
     ok: false,
-    fetchedAt: new Date().toISOString(),
+    fetchedAt: '', // 시드에 현재 수집 시각을 부여하지 않는다.
     source: SEED_SOURCE_LABEL,
     items: seed,
-    error: 'data/meals.json 이 없습니다. 크롤러(scripts/crawl-meals.ts)를 먼저 실행하세요.',
+    error: '저장된 식단을 읽을 수 없습니다. 예시 데이터이며 실제 메뉴가 아닙니다.',
     fallback: seed.length > 0 ? 'seed' : undefined,
   };
 }
 
-/**
- * 실행/요청 시마다 https://life.hanyang.ac.kr/theme/pages/home.php 및 하위 페이지에서
- * 실시간 크롤링하여 최신 식단을 가져오고 data/meals.json 을 갱신한다.
- */
+/** @deprecated 호환용 읽기 전용 래퍼. force/date는 수집을 실행하지 않는다. */
 export async function ensureFreshMealCrawl(options?: {
   date?: string;
   force?: boolean;
 }): Promise<CrawlResult> {
-  const today = kstToday();
-  const requestedDate = options?.date;
-  const force = Boolean(options?.force);
-
-  const hasDateCovered = !requestedDate || lastCrawledDates.has(requestedDate);
-  const isWithinDedupWindow = Date.now() - lastCrawledAtMs < LIVE_CRAWL_DEDUP_MS;
-
-  if (!force && hasDateCovered) {
-    if (inFlightCrawl) return await inFlightCrawl;
-    if (isWithinDedupWindow) return readMealCrawl();
-  }
-
-  if (inFlightCrawl && !force) {
-    await inFlightCrawl;
-    if (!requestedDate || lastCrawledDates.has(requestedDate)) {
-      return readMealCrawl();
-    }
-  }
-
-  const extraDates = requestedDate && requestedDate !== today ? [requestedDate] : [];
-  const nextDates = new Set<string>([today, ...extraDates]);
-
-  inFlightCrawl = (async () => {
-    try {
-      const { runMealCrawler } = await import('./crawler.ts');
-      const result = await runMealCrawler({
-        baseDate: today,
-        extraDates,
-        silent: true,
-      });
-      lastCrawledAtMs = Date.now();
-      for (const d of nextDates) lastCrawledDates.add(d);
-      for (const item of result.items) lastCrawledDates.add(item.date);
-      return result;
-    } catch {
-      return readMealCrawl();
-    } finally {
-      inFlightCrawl = null;
-    }
-  })();
-
-  return await inFlightCrawl;
+  void options;
+  return readMealCrawl();
 }
-
 /** 특정 날짜의 식단 (동기 읽기). 날짜가 없으면 빈 배열 — 가짜로 메꾸지 않는다. */
 export function readMealsByDate(date: string): { crawl: CrawlResult; items: MealItem[] } {
   const crawl = readMealCrawl();
   return { crawl, items: crawl.items.filter((m) => m.date === date) };
 }
 
-/** 특정 날짜의 식단 (실시간 크롤링 포함). */
+/** @deprecated 읽기 전용 호환 래퍼. force도 쓰기를 하지 않는다. */
 export async function ensureFreshMealsByDate(
   date: string,
   options?: { force?: boolean },
 ): Promise<{ crawl: CrawlResult; items: MealItem[] }> {
-  const crawl = await ensureFreshMealCrawl({ date, force: options?.force });
-  return { crawl, items: crawl.items.filter((m) => m.date === date) };
+  void options;
+  return readMealsByDate(date);
 }
 
 export function findMealItem(mealItemId: string): MealItem | null {
@@ -262,7 +215,7 @@ export function toMealPhotoDbRecord(
 }
 
 export function readMealPhotoDb(): MealPhotoDbRecord[] {
-  return readJson<MealPhotoDbFile>('meal-photo-db.json')?.records ?? [];
+  return readMealSnapshot(mealStorageRoot())?.photos??readJson<MealPhotoDbFile>('meal-photo-db.json')?.records??[];
 }
 
 export function writeMealPhotoDb(records: MealPhotoDbRecord[]): void {
@@ -334,11 +287,6 @@ export async function ensureFreshBattle(
   mealTime: MealTime,
   options?: { force?: boolean },
 ): Promise<BattleResult> {
-  const crawl = await ensureFreshMealCrawl({ date, force: options?.force });
-  return computeBattle({
-    date,
-    mealTime,
-    items: crawl.items,
-    reviews: readMealReviews(),
-  });
+  void options;
+  return getBattle(date, mealTime);
 }

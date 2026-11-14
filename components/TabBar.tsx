@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 
 const TABS: { href: string; label: string; icon: ReactNode }[] = [
   {
-    href: '/',
+    href: '/legacy',
     label: '오늘',
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

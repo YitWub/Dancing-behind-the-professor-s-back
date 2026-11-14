@@ -10,6 +10,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import type { BattleResult, CrawlResult, MealTime } from '@/lib/types';
+import { mealDataNotice } from '@/lib/meal/status';
 import { loadBattle, loadMeals } from '@/components/data';
 import type { QuickInput } from '@/components/mock';
 import { MOCK_LECTURES, MOCK_NEXT_CLASS, skipVerdict, whatIfQuick } from '@/components/mock';
@@ -121,6 +122,7 @@ export function HomeScreen({ initialDate }: { initialDate: string }) {
           right={<Link href="/meal" className="text-[12px] font-medium text-[var(--e-accent)]">전체</Link>}
         />
 
+        {crawl ? <p className="mb-2 text-[11px] text-[var(--e-muted)]">{mealDataNotice(crawl)}</p> : null}
         {todayMeals.length === 0 ? (
           <p className="text-[13px] text-[var(--e-muted)]">식단을 아직 못 가져왔습니다.</p>
         ) : (

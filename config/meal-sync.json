@@ -1,0 +1,5 @@
+{
+  "timeZone": "Asia/Seoul",
+  "times": ["07:00", "11:00"],
+  "pollSeconds": 30
+}
