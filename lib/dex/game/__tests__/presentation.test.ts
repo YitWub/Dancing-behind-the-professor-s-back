@@ -23,6 +23,8 @@ const targets=new Map([
   ['GameNoticeList','components/dex/discovery/GameNoticeList.tsx'],
   ['CollectionFeedback','components/dex/discovery/CollectionFeedback.tsx'],
   ['CollectionArtwork','components/dex/common/CollectionArtwork.tsx'],
+  ['MealImageArtwork','components/dex/common/MealImageArtwork.tsx'],
+  ['artwork-assets','lib/dex/meal/artwork-assets.ts'],
   ['MealHighlightCard','components/dex/meal/MealHighlightCard.tsx'],
 ]);
 const urls=new Map([...targets.keys()].map(name=>[name,pathToFileURL(join(temporary,name+'.mjs')).href]));
@@ -138,3 +140,5 @@ test('실제 카드·디자인 샘플·성공 공개는 같은 앨범 프레임�
   const menu=render(EditionCollectionCard,{name:'치즈돈가스',count:3,evaluationCount:2,rating:5,acquiredOn:'2026-11-14'});assert.ok(menu.includes('평가 2회'));assert.ok(menu.includes('이 메뉴 평균 5.0점'));assert.ok(menu.includes('★★★★★'));assert.ok(!menu.includes('dex-average-caption'));
   const fractional=render(EditionCollectionCard,{name:'치즈돈가스',count:2,evaluationCount:2,rating:3.5,acquiredOn:'2026-11-14'});assert.ok(fractional.includes('width:70%'));assert.ok(fractional.includes('이 메뉴 평균 3.5점'));
  });
+
+test('이미지 후보는 명시적으로 선택할 때만 사용하고 모호한 음식은 SVG를 유지한다',async()=>{const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!);const base={name:'치즈돈가스',edition:'NORMAL',acquiredOn:'2026-11-14'};assert.ok(render(EditionCollectionCard,base).includes('<svg'));assert.ok(!render(EditionCollectionCard,base).includes('<img'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'image'}).includes('/dex/food/cutlet.webp'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'soft'}).includes('is-soft'));assert.ok(render(EditionCollectionCard,{...base,name:'알 수 없는 메뉴',artworkMode:'image'}).includes('<svg'));});

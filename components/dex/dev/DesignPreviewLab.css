@@ -60,3 +60,10 @@ button.design-card[aria-pressed=true]{outline:3px solid #46775a;outline-offset:2
 .design-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,var(--design-min)),1fr));gap:14px}
 @container(max-width:620px){.design-feature{grid-template-columns:minmax(0,1fr);gap:14px}.design-feature-card{max-width:245px}.design-record{padding:16px}.design-gallery{gap:10px}.design-card{padding:10px}.design-card h3{font-size:14px}.design-section-heading{align-items:start}.design-heading h2{font-size:21px}}
 @media(max-width:480px){.dex-design-preview{padding:14px}.design-toolbar button{font-size:13px;padding:8px 10px}.design-options>div{grid-template-columns:minmax(0,1fr)}.design-record-hint{font-size:12px}}
+
+.design-artwork-options{margin:12px 0}.design-artwork-options label{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px}.design-artwork-options select{max-width:100%;padding:8px;border:1px solid #ccd8bc;border-radius:10px;background:#fffdf5}.design-artwork-options p{margin-top:6px}
+.design-gallery .dex-edition-card .dex-art{height:125px}.design-gallery .dex-edition-card{min-width:0}.design-feature-card>.dex-edition-card{max-width:300px;margin:auto}.design-feature-card>.dex-edition-card .dex-art{height:220px}
+.dex-design-preview[data-size=small] .design-gallery .dex-edition-card .dex-art{height:100px}.dex-design-preview[data-size=large] .design-gallery .dex-edition-card .dex-art{height:155px}
+@media(max-width:520px){.design-gallery .dex-edition-card .dex-art{height:105px}.design-feature-card>.dex-edition-card .dex-art{height:180px}}
+
+.design-lab{grid-template-columns:minmax(0,1fr)}.design-artwork-options{min-width:0}.design-artwork-options label{min-width:0}.design-artwork-options select{min-width:0;width:min(100%,320px)}
