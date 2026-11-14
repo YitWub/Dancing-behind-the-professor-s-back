@@ -27,6 +27,7 @@ const targets=new Map([
   ['artwork-assets','lib/dex/meal/artwork-assets.ts'],
   ['MealHighlightCard','components/dex/meal/MealHighlightCard.tsx'],
   ['AchievementStamp','components/dex/common/AchievementStamp.tsx'],
+  ['AchievementArtwork','components/dex/common/AchievementArtwork.tsx'],
 ]);
 const urls=new Map([...targets.keys()].map(name=>[name,pathToFileURL(join(temporary,name+'.mjs')).href]));
 for(const [name,path] of targets){
@@ -145,3 +146,5 @@ test('실제 카드·디자인 샘플·성공 공개는 같은 앨범 프레임�
 test('실제 카드는 WebP와 공통 기본 이미지를 사용하고 SVG 비교 모드는 유지한다',async()=>{const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!);const base={name:'치즈돈가스',edition:'NORMAL',acquiredOn:'2026-11-14'};assert.ok(render(EditionCollectionCard,base).includes('<img'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'svg'}).includes('<svg'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'image'}).includes('/dex/food/cutlet.webp'));assert.ok(render(EditionCollectionCard,{...base,artworkMode:'soft'}).includes('is-soft'));assert.ok(render(EditionCollectionCard,{...base,name:'알 수 없는 메뉴',artworkMode:'image'}).includes('/dex/food/default.webp'));});
 
 test('공통 도장은 실제 달성·미달성·준비 상태를 색상 외 문구로 구분하고 엔진 진행률을 표시한다',async()=>{const {AchievementStamp}=await import(urls.get('AchievementStamp')!);const goal={id:'fixture',name:'첫 발견',icon:'✦',condition:'메뉴 1종 수집',progress:1,target:1,status:'achieved',achievedAt:null};const achieved=render(AchievementStamp,{achievement:goal});assert.ok(achieved.includes('✓ 달성'));assert.ok(achieved.includes('value="1"'));assert.ok(achieved.includes('<details>'));assert.ok(!achieved.includes('<img'));const locked=render(AchievementStamp,{achievement:{...goal,status:'locked',progress:0}});assert.ok(locked.includes('미달성'));assert.ok(locked.includes('value="0"'));const preparing=render(AchievementStamp,{achievement:{...goal,status:'preparing',progress:null}});assert.ok(preparing.includes('판정 대기'));assert.ok(!preparing.includes('<progress'));});
+
+test('공통 업적 일러스트는 선택적으로 표시하며 업적 이름과 실제 상태는 유지한다',async()=>{const {AchievementStamp}=await import(urls.get('AchievementStamp')!);const goal={id:'meal:first',name:'첫 발견',icon:'✦',condition:'메뉴 1종 수집',progress:1,target:1,status:'achieved',achievedAt:null};const html=render(AchievementStamp,{achievement:goal,artwork:'/dex/achievements/first.webp'});assert.ok(html.includes('/dex/achievements/first.webp'));assert.ok(html.includes('✓ 달성'));assert.ok(html.includes('메뉴 1종 수집'));});

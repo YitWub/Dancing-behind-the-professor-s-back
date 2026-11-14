@@ -97,3 +97,14 @@
 @media(max-width:1000px){.dex-stamp-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.dex-personal-records .dex-highlight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.dex-stamp-book{padding:12px}.dex-stamp-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.dex-stamp{padding:10px 7px}.dex-stamp-seal{width:68px;height:68px}.dex-personal-records .dex-highlight-grid{gap:9px}.dex-record-heading{flex-wrap:wrap}.dex-record-memento{margin-left:0}.dex-personal-records .dex-highlight-card{padding:10px}}
 .dex-stamp-progress progress{appearance:none;border:0;border-radius:20px;overflow:hidden;background:#e4e8dd}.dex-stamp-progress progress::-webkit-progress-bar{background:#e4e8dd;border-radius:20px}.dex-stamp-progress progress::-webkit-progress-value{background:var(--stamp-ink);border-radius:20px}.dex-stamp-progress progress::-moz-progress-bar{background:var(--stamp-ink);border-radius:20px}
+
+/* Illustrated stamps are shared by the home exhibit and each dex's achievement list. */
+.dex-stamp .dex-stamp-seal{position:relative;width:104px;height:104px;border-color:#cbd6b9;background:#f6f6e9;box-shadow:none}
+.dex-stamp-illustration{width:92px;height:92px;object-fit:contain;display:block}.dex-stamp-symbol{font-size:30px}
+.dex-stamp.is-locked .dex-stamp-illustration,.dex-stamp.is-preparing .dex-stamp-illustration{filter:grayscale(1);opacity:.38}
+.dex-stamp-seal small{position:absolute;bottom:-4px;background:#fffdf1;padding:2px 6px;border-radius:6px;border:1px solid #d6dfc8;white-space:nowrap}
+.dex-home-achievements{padding:20px;border:1px solid #d3ddc5;border-radius:20px;background:linear-gradient(135deg,#f8f8e9,#eff3e2);min-width:0}
+.dex-home-achievements>.dex-small{margin-top:8px}.dex-home-stamp-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));align-items:start}.dex-home-stamp-grid .dex-stamp{background:#fffdf4;border-style:solid;box-shadow:0 3px 0 #c5d4b52b}
+.dex-home-stamp-empty{padding:24px 16px;margin:16px 0;border:1px dashed #c8d6b5;border-radius:14px;text-align:center;background:#fffdf466}
+#meal-achievements{scroll-margin-top:20px}
+@media(max-width:520px){.dex-home-achievements{padding:13px}.dex-home-stamp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dex-stamp .dex-stamp-seal{width:90px;height:90px}.dex-stamp-illustration{width:80px;height:80px}}

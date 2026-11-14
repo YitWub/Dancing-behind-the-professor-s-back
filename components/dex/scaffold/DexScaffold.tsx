@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { Card } from '@/components/ui';
 import type { DexKind, EntrySubject } from '@/lib/dex/core/types';
 import { useDexDocument } from './useDexDocument';
+import { AchievementStamp } from '@/components/dex/common/AchievementStamp';
+import { mealAchievements } from '@/lib/dex/meal/game';
+import { MEAL_ACHIEVEMENT_ART } from '@/lib/dex/meal/achievement-art';
 import { BackupControls } from './BackupControls';
 import { CollectionArtwork, mealArtwork } from '@/components/dex/common/CollectionArtwork';
 import { CollectionCard } from '@/components/dex/common/CollectionCard';
@@ -19,6 +22,7 @@ function label(subject: EntrySubject) { return subject.kind==='meal'?subject.dis
 export function DexHomeScaffold() {
   const {data,loading,error,reload}=useDexDocument();
   const [now]=useState(()=>Date.now());
+  const earned=data?mealAchievements(data).filter(goal=>goal.status==='achieved'):[];
   const recent=[...(data?.entries??[])].sort((a,b)=>b.firstCollectedAt.localeCompare(a.firstCollectedAt)).slice(0,3);
   return <div className="space-y-8">
     <section className="dex-home-hero"><div><span className="dex-eyebrow">A LITTLE DISCOVERY, EVERY DAY</span><h2>평범한 대학생활이<br/>나만의 <em>컬렉션</em>으로.</h2><p>맛있었던 한 끼, 함께한 인연, 소중한 순간.<br/>대학생활의 모든 발견을 수집하다.</p><Link className="dex-button" href="/dex/meal">나의 도감 펼쳐보기 ↗</Link></div><div className="dex-hero-stickers"><div><CollectionArtwork kind="rice"/></div><div><CollectionArtwork kind="custom"/></div><span>small moments,<br/>my own collection.</span></div></section>
@@ -37,6 +41,11 @@ export function DexHomeScaffold() {
         </Card>;
       })}
     </div>
+    <section className="dex-home-achievements" aria-labelledby="campus-achievements-heading"><div className="dex-section-heading"><div><span className="dex-eyebrow">나의 업적 전시대</span><h2 id="campus-achievements-heading">캠퍼스 탐험 도장</h2></div>{data?<span className="dex-tag">달성한 도장 {earned.length}개</span>:null}</div>
+      <p className="dex-small dex-muted">대학생활에서 모은 발견을 전시해요. 현재는 학식 업적을 연결했어요.</p>
+      {data?earned.length?<div className="dex-stamp-grid dex-home-stamp-grid">{earned.map(goal=><AchievementStamp key={goal.id} achievement={goal} artwork={MEAL_ACHIEVEMENT_ART[goal.id]}/>)}</div>:<div className="dex-home-stamp-empty"><p>아직 전시한 도장이 없어요.</p><p className="dex-small dex-muted">첫 메뉴를 수집하면 첫 발견 도장이 이곳에 놓여요.</p></div>:<p role="status">{error?'업적을 읽지 못했어요. 위에서 다시 읽어 주세요.':'내 도장을 불러오는 중…'}</p>}
+      <Link className="dex-back" href="/dex/meal/collection#meal-achievements">학식 업적과 진행 상황 보기 ↗</Link>
+    </section>
     <section><div className="dex-section-heading"><div><span className="dex-eyebrow">LITTLE MOMENTS, COLLECTED</span><h2>최근 발견한 카드</h2></div><span className="dex-tag">나만의 기록</span></div>{recent.length?<div className="dex-card-grid">{recent.map(entry=><CollectionCard key={entry.id} title={label(entry.subject)} isNew={now-Date.parse(entry.firstCollectedAt)>=0&&now-Date.parse(entry.firstCollectedAt)<7*86400000} artwork={<CollectionArtwork kind={entry.subject.kind==='meal'?mealArtwork(label(entry.subject)):entry.subject.kind==='person'?'people':'custom'}/>} href={entry.subject.kind==='meal'?`/dex/meal/collection/${entry.id}`:undefined} meta={`첫 기록 ${entry.collectedOn}`}/>)}</div>:<div className="dex-empty dex-empty--small"><h3>아직 비어 있는 첫 페이지</h3><p>직접 경험한 발견을 모으면 이곳에 카드가 쌓여요.</p><Link href="/dex/meal?view=discover" className="dex-back">첫 번째 메뉴 만나러 가기 ↗</Link></div>}</section>
     <BackupControls ownerId={data?.profile.ownerId} onChanged={reload}/>
     {process.env.NODE_ENV==='development'?<p className="text-sm"><Link className="dex-dev-entry" href="/dex/dev">개발자 도구 ↗</Link></p>:null}
