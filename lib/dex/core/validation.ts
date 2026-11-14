@@ -39,13 +39,21 @@ export function subject(value: unknown): asserts value is EntrySubject {
     if (v.memo !== undefined) text(v.memo, 500, true);
   } else { ensure(v.kind === 'custom', '지원하지 않는 항목 종류입니다.'); object(v, ['kind', 'title', 'memo']); text(v.title, 120); if (v.memo !== undefined) text(v.memo, 500, true); }
 }
+import { CARD_EDITIONS, normalizeLegacyCards } from '../meal/card-editions.ts';
 const experienceFields = ['kind', 'experiencedOn', 'note'];
 function experienceData(v: ObjectValue, saved: boolean) {
   const fields = saved ? [...base, 'ownerId', 'dexId', 'entryId', 'requestId'] : [];
   date(v.experiencedOn);
   if (v.note !== undefined) text(v.note, 500, true);
   if (v.kind === 'meal') {
-    object(v, [...fields, ...experienceFields, 'rating', 'offeringId', 'context']);
+    object(v, [...fields, ...experienceFields, 'rating', 'offeringId', 'context', ...(saved?['card']:[])]);
+    if(saved&&v.card!==undefined){
+      object(v.card,['id','edition','acquiredAt','policyVersion','origin']);
+      ensure(v.card.id==='card-v1:'+v.id&&CARD_EDITIONS.includes(v.card.edition as typeof CARD_EDITIONS[number]),'카드 식별자·에디션을 확인해 주세요.');
+      instant(v.card.acquiredAt); text(v.card.policyVersion,80);
+      ensure(v.card.acquiredAt===v.createdAt&&['random','legacy'].includes(v.card.origin as string),'카드 획득 정보가 올바르지 않습니다.');
+      if(v.card.origin==='legacy')ensure(v.card.edition==='NORMAL'&&v.card.policyVersion==='legacy-normal-v1','이전 기록의 카드는 NORMAL입니다.');
+    }
     ensure(v.rating === null || (Number.isInteger(v.rating) && (v.rating as number) >= 1 && (v.rating as number) <= 5), '별점은 1~5 정수 또는 null입니다.');
     id(v.offeringId);
     object(v.context, ['date', 'cafeteria', 'mealTime', 'legacyMealItemId', 'snapshot', 'source']);
@@ -142,8 +150,10 @@ export function parseBackup(raw: string): BackupEnvelope {
     const v: unknown = JSON.parse(raw);
     object(v, ['format','schemaVersion','exportedAt','containsSensitiveData','data']);
     ensure(v.format === 'bokak-dex', 'BOKAK 내보내기 파일이 아닙니다.');
-    ensure(v.schemaVersion === 1, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
+    ensure(v.schemaVersion === 1 || v.schemaVersion === 2, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
     ensure(v.containsSensitiveData === true, '백업 정보가 누락되었습니다.'); instant(v.exportedAt); validateDocument(v.data);
+    if(v.schemaVersion===2)ensure(v.data.experiences.every(exp=>exp.kind!=='meal'||!!exp.card),'카드 정보가 누락된 v2 백업입니다.');
+    normalizeLegacyCards(v.data);
     return v as unknown as BackupEnvelope;
   } catch (error) {
     if (error instanceof DexError && error.code === 'UNSUPPORTED_SCHEMA') throw error;

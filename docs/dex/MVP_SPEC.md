@@ -5,10 +5,10 @@
 - 공식 진입점은 `/` → `/dex`. 기존 홈페이지는 `/legacy`, 학점 `/grade`, 꿀강 `/honey`, 기존 학식 `/meal`로 보존한다. 개발은 BOKAK-dex-integration에서 실행한다.
 - 구현됨: 도감 허브·공통 IndexedDB 엔진·내보내기/가져오기, 학식 조회·수집·재방문·Experience 평가/수정/삭제, 업적·특별 발견 칭호. 인연·자유도감은 현재 조회 골격이며 등록·편집 전체 기능이 완성된 상태는 아니다.
 - 메뉴 출현 희귀도는 보류하며 실제 메뉴는 UNKNOWN. DishFamily·출현 이력·통계 계산과 `/dex/dev/rarity` 미리보기는 보존한다. 개발 미리보기는 프로덕션에서 404이며 개인 기록·업적에 연결하지 않는다.
-- 다음 단계는 랜덤 카드 에디션과 카드 앨범. `Dish`=음식 종류, `CollectionEntry`=음식 발견 등록, `Experience`=실제 식사, `CardInstance`=경험에서 획득한 개별 카드, `CardEdition`=랜덤 에디션이다. 후자의 두 모델은 아직 미구현이다. 예시 NORMAL/RARE/GOLDEN은 확정된 타입·확률이 아니다.
+- 랜덤 카드 에디션은 구현됐으며 다음 단계는 전체 카드 앨범. `Dish`=음식 종류, `CollectionEntry`=음식 발견 등록, `Experience`=실제 식사, `CardInstance`=경험에서 획득한 개별 카드, `CardEdition`=랜덤 에디션이다. CardInstance는 Experience.card에 저장하며 NORMAL 60% / SPECIAL 27% / RARE 10% / GOLDEN 3%다. 전체 카드 앨범은 후속이다.
 - 같은 음식은 등록 1개에 경험을 누적하는 현재 동작을 유지한다. 후속 카드 앨범은 메뉴 도감과 분리한다. 랜덤 에디션은 음식의 제공 빈도·맛·가치 등급이 아니며 기존 `rarity.ts`를 전용하지 않는다.
 - 주요 위치: `app/dex/`, `components/dex/meal/`, `components/dex/discovery/`, `lib/dex/core/`, `lib/dex/storage/`, `lib/dex/meal/`, `lib/dex/game/`. 출현 분석은 `lib/meal/history*.ts`, `family-analysis.ts`, `config/meals/analysis-mappings.v1.json`이다.
-- 후속 CardInstance 저장은 공통 모델·수집 트랜잭션·requestId 영수증·저장소 마이그레이션·export/import를 함께 설계한다. 재전송 때 재추첨하지 않는 계약, 과거 경험의 카드 소급 발급 여부, 경험 삭제 시 카드 보존 정책은 구현 전에 결정한다. 이번 단계에서는 DB·dishId·업적 계산을 변경하지 않았다.
+- 카드 획득은 경험·영수증과 원자 저장한다. 같은 owner/requestId의 해시 추첨값을 사용해 저장 실패·재시도·재접속에 의한 재추첨을 막고, 성공한 영수증은 저장된 결과만 반환한다. 로컬 수집용이며 서버 보증 추첨이 아니다. 에디션·획득 시각은 수정 불가, 경험 삭제 시 카드도 삭제하며 영수증은 유지한다. 이전 경험은 최초 읽기에서 결정적 NORMAL로 해석하고 다음 쓰기/open에서 원자 보존한다. 백업 v2는 카드 필수, v1은 NORMAL 이전 가능하다. DB store 버전·dishId·업적 계산은 유지한다.
 - 데이터 보존 우선. 일반 조회·개발 시작·빌드에서 크롤링하지 않는다. 기존 식단·사진·개인 기록·다른 워크트리는 수정하지 않는다. 아래 PHASE 0 초안은 당시 배경이며 현재 구현과 충돌하면 실제 코드와 이 현재 기준을 우선한다. 루트 CONTRACT.md의 소유권은 별도 협의 대상이다.
 
 ## 보존된 PHASE 0 MVP 초안

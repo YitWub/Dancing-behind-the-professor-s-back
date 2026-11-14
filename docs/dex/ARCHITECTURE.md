@@ -340,3 +340,13 @@ interface TransferPort {
 
 모델/정규화 순수 테스트, 임시 IndexedDB 저장 계약 테스트, 실제 브라우저 새로고침·동시 탭·quota/실패·import/export, 연출 접근성 검증이 필요하다. 테스트 도구 의존성 추가는 A가 검토한다. 테스트용 fixture에 실제 인연 데이터를 쓰지 않는다.
 PHASE 0에서는 문서만 작성한다. 타입 블록 컴파일·IndexedDB 실행·npm test·build 통과를 주장하지 않는다.
+
+## 카드 에디션 저장 계약 (PHASE 4.4)
+
+학식 Experience.card = {id: 'card-v1:'+experience.id, edition, acquiredAt: experience.createdAt, policyVersion, origin}. 별도 store 없이 경험당 1개다. 입력 draft·경험 수정 patch로 카드 정보를 제출할 수 없다. 개인 식사 날짜를 바꿔도 획득 시각과 에디션은 불변이다. 경험·도감 등록 삭제는 연결 카드도 삭제하며 요청 영수증은 남아 재지급되지 않는다.
+
+확률은 lib/dex/meal/card-editions.ts 한곳에서 관리한다. 저장 어댑터는 owner/requestId의 고정 SHA256 추첨값을 사용하며 결과는 경험·등록·영수증과 한 transaction으로 확정한다. 실패 후 재시도도 같은 정책 버전에서는 같은 에디션이며 성공한 재전송은 기존 카드를 반환한다. 로컬 데이터는 조작 방지 서버가 없으므로 경쟁·유료 추첨용 보증이 아니다. 정책을 바꿀 때 version을 올리고 이미 저장된 카드는 재추첨하지 않는다.
+
+이전 데이터는 경험 ID·createdAt을 유지한 legacy-normal-v1 카드로 결정적 이전한다. 조회 해석은 랜덤 쓰기를 하지 않으며 open/다음 쓰기에서 한 transaction으로 보존한다. 실패하면 원본 DB는 롤백된다. 저장소 이름·store·DB version 1은 유지하고 JSON 백업은 v2로 내보낸다. v1 가져오기는 NORMAL 이전, v2의 누락/변조 카드·미지원 버전은 거부한다. 구 앱은 카드 필드를 지원하지 않으므로 새 백업을 구 앱으로 가져올 수 없고 기존 탭은 새로고침해야 한다.
+
+개발 전용 /dex/dev/editions는 순수 연출만 제공하며 production에서 404다. 기존 /dex/dev/rarity와 출현 통계 UNKNOWN은 독립적으로 보존한다. 메뉴 도감과 카드 앨범 전체 레이아웃은 PHASE 4.5 후속이다.

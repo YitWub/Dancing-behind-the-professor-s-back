@@ -1,9 +1,10 @@
+import { makeCard } from '../meal/card-editions.ts';
 import { ensure } from './errors.ts';
 import { canonical, kindFor, collectInput } from './validation.ts';
 import type { CollectCommand, CollectMealCommand, CollectResult, CollectionEntry, Dex, DexDocument, DexRepository, Experience, Namespace, Versioned } from './types.ts';
 import { resultOf } from './errors.ts';
 
-export interface Runtime { id: () => string; now: () => string }
+export interface Runtime { id: () => string; now: () => string; cardRoll?: () => number }
 export function version(runtime: Runtime): Versioned {
   const now = runtime.now();
   return { id: runtime.id(), revision: 1, createdAt: now, updatedAt: now };
@@ -67,6 +68,7 @@ export function applyCollection(doc: DexDocument, input: CollectCommand, hash: s
   }
   const experience = { ...version(runtime), ...structuredClone(input.experience), note: input.experience.note ?? '',
     ownerId: input.ownerId, dexId: dex.id, entryId: entry.id, requestId: input.requestId } as Experience;
+  if(experience.kind==='meal')experience.card=makeCard(experience.id,experience.createdAt,runtime.cardRoll?.()??crypto.getRandomValues(new Uint32Array(1))[0]/4294967296);
   doc.experiences.push(experience);
   const committedAt = runtime.now();
   doc.receipts.push({

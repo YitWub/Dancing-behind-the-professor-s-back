@@ -64,11 +64,24 @@ test('다섯 등급 미리보기는 실제 수집 완료나 업적 획득으로 
   for(const tier of ['COMMON','UNCOMMON','RARE','LEGENDARY','UNKNOWN']){const html=render(DiscoveryReveal,{preview:true,itemName:'연출 테스트 카드',title:'희귀도 연출 미리보기',rarity:tier,onDismiss:()=>{}});assert.ok(html.includes('PREVIEW · TEST CARD'));assert.ok(html.includes('저장되지 않아요'));assert.ok(!html.includes('나의 컬렉션에 등록 완료'));assert.ok(html.includes('dex-rarity-frame--'+tier.toLowerCase()));}
 });
 test('미리보기 페이지는 프로덕션에서 컴포넌트를 열기 전에 404로 차단한다',async()=>{
-  const source=readFileSync(new URL('../../../../app/dex/dev/rarity/page.tsx',import.meta.url),'utf8');
+  for(const [route,componentName] of [['rarity','RarityPreview'],['editions','EditionPreview']]){
+  const source=readFileSync(new URL('../../../../app/dex/dev/'+route+'/page.tsx',import.meta.url),'utf8').replaceAll(componentName,'RarityPreview').replaceAll('/dev/EditionPreview','/dev/RarityPreview');
   const component=pathToFileURL(join(temporary,'preview-stub.mjs'));writeFileSync(component,"export function RarityPreview(){return null;}");
   let output=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText as string;
   for(const specifier of ['next/navigation','react/jsx-runtime'])output=output.replaceAll(`from '${specifier}'`,`from '${pathToFileURL(require.resolve(specifier)).href}'`).replaceAll(`from "${specifier}"`,`from "${pathToFileURL(require.resolve(specifier)).href}"`);
   output=output.replace("import('@/components/dex/dev/RarityPreview')",`import('${component.href}')`);
-  const file=pathToFileURL(join(temporary,'preview-page.mjs'));writeFileSync(file,output);const {default:Page}=await import(file.href);
+  const file=pathToFileURL(join(temporary,'preview-page-'+route+'.mjs'));writeFileSync(file,output);const {default:Page}=await import(file.href);
   const env=process.env as Record<string,string|undefined>;const previous=env['NODE_ENV'];try{env['NODE_ENV']='production';await assert.rejects(()=>Page(),{digest:'NEXT_HTTP_ERROR_FALLBACK;404'});env['NODE_ENV']='development';assert.ok(isValidElement(await Page()));}finally{if(previous===undefined)delete env['NODE_ENV'];else env['NODE_ENV']=previous;}
+  }
+});
+
+test('랜덤 카드 4종은 실제 저장 결과로 최초·재방문 모두 공개하며 재전송은 숨긴다',()=>{
+  for(const edition of ['NORMAL','SPECIAL','RARE','GOLDEN'])for(const outcome of ['new-entry','revisit']){
+    const value={...success,outcome,discovery:outcome==='revisit'?null:success.discovery,experience:{id:'edition-exp',kind:'meal',card:{edition}}};
+    const props={itemName:'fixture',onDismiss:()=>{},result:{ok:true,value},visitCount:3,children:createElement('p',null,'빠른 평가 유지')};
+    const html=render(CollectionFeedback,props);assert.ok(html.includes('dex-edition--'+edition.toLowerCase()));assert.ok(html.includes('새 카드 1장 획득 완료'));assert.ok(html.includes('빠른 평가 유지'));assert.ok(html.includes('<strong>3</strong>'));
+    assert.equal(html.includes('NEW DISCOVERY!'),outcome==='new-entry');
+    assert.ok(!render(CollectionFeedback,{...props,result:{ok:true,value:{...value,replayed:true}}}).includes('dex-edition-badge'));
+    const preview=render(DiscoveryReveal,{preview:true,edition,itemName:'test',title:'test',onDismiss:()=>{}});assert.ok(preview.includes('저장되지 않아요'));assert.ok(preview.includes('연출 건너뛰기'));
+  }
 });

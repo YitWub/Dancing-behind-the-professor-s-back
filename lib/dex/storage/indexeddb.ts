@@ -1,3 +1,4 @@
+import { normalizeLegacyCards } from '../meal/card-editions.ts';
 import { DexError, ensure, resultOf } from '../core/errors.ts';
 import { applyCollection, initialDocument, owner, find, version, touch, checkRevision, collectMeal } from '../core/engine.ts';
 import { canonical, collectInput, fingerprint, validateDocument, parseBackup, object } from '../core/validation.ts';
@@ -108,6 +109,7 @@ export class IndexedDbDexRepository implements DexRepository {
       const doc = { profile: raw.meta[0], dexes: raw.dexes, entries, experiences: raw.experiences, receipts: raw.requestReceipts };
       validateDocument(doc);
       ensure(doc.profile.namespace === this.namespace, '저장소 용도가 다릅니다.');
+      normalizeLegacyCards(doc);
       return doc;
     } catch { throw new DexError('CORRUPT_STORAGE', '저장된 기록의 구조·참조를 확인할 수 없습니다. 자동 초기화하지 않았습니다. 복구용 내보내기 또는 검증된 백업 복원을 이용하세요.'); }
   }
@@ -127,8 +129,10 @@ export class IndexedDbDexRepository implements DexRepository {
     return this.transaction(write ? 'readwrite' : 'readonly', (raw, tx) => {
       const empty = STORES.every(name => raw[name].length === 0);
       const bootstrap = initialize && empty;
+      const legacyMigration=write&&raw.experiences.some(row=>{const exp=row as {kind?:string;card?:unknown};return exp.kind==='meal'&&!exp.card;});
       const doc = bootstrap ? initialDocument(this.runtime, this.namespace) : this.decode(raw);
       const response = operation(doc);
+      if(legacyMigration)response.changed=true;
       if (bootstrap || response.changed) {
         if (response.changed) doc.profile.revision++;
         this.persist(tx, doc);
@@ -163,7 +167,11 @@ export class IndexedDbDexRepository implements DexRepository {
     return resultOf(async () => {
       const input = collectInput(command); // 복사·검증·WebCrypto는 transaction을 열기 전에 끝낸다.
       const hash = await fingerprint(input);
-      return this.document(true, doc => applyCollection(doc,input,hash,this.runtime));
+      // Stable request entropy: failed transactions/reloads cannot reroll the same request.
+      // Local collection only; not a server-authoritative or paid lottery.
+      const entropy=await fingerprint(['bokak-card-v1',input.ownerId,input.requestId]);
+      const roll=parseInt(entropy.slice(-64,-56),16)/4294967296;
+      return this.document(true, doc => applyCollection(doc,input,hash,{...this.runtime,cardRoll:()=>roll}));
     });
   }
   commitMealCollection(command: CollectMealCommand) { return collectMeal(command, this); }
@@ -200,7 +208,7 @@ export class IndexedDbDexRepository implements DexRepository {
   exportRecords(ownerId: string) {
     return resultOf(async () => {
       const data=await this.document(false,doc=>{owner(doc,ownerId);return {value:doc};});
-      const envelope: BackupEnvelope = { format:'bokak-dex', schemaVersion:1, exportedAt:this.runtime.now(), containsSensitiveData:true, data };
+      const envelope: BackupEnvelope = { format:'bokak-dex', schemaVersion:2, exportedAt:this.runtime.now(), containsSensitiveData:true, data };
       return new Blob([JSON.stringify(envelope,null,2)],{type:'application/json'});
     });
   }

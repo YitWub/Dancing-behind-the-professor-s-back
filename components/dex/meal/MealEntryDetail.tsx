@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { experienceCard } from '@/lib/dex/meal/card-editions';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Card } from '@/components/ui';
@@ -33,7 +34,7 @@ function ExperienceEditor({experience,ownerId,onChanged}:{experience:MealExperie
     }finally{active.current=false;setBusy(false);}
   }
   async function remove() {
-    if(active.current||!window.confirm('이 경험만 삭제할까요? 나머지 경험과 수집 카드는 남습니다.'))return;
+    if(active.current||!window.confirm('이 경험과 연결된 획득 카드 1장을 삭제할까요? 메뉴 등록과 다른 경험·카드는 남습니다.'))return;
     active.current=true;setBusy(true);
     try {const result=await getBrowserRepository().deleteExperience(ownerId,experience.id,experience.revision);if(result.ok)await onChanged();else setMessage(result.error.message);}finally{active.current=false;setBusy(false);}
   }
@@ -69,7 +70,7 @@ export function MealEntryDetail({entryId}:{entryId:string}) {
   const personal=data?mealPersonalCards(data).find(c=>c.entryIds.includes(entryId)):null;
   async function changed(){await reload();setMessage('개인 경험 기록을 저장했습니다.');}
   async function removeCard(){
-    if(busy||!card||!data||!window.confirm('이 수집 카드와 연결된 모든 먹은 기록을 삭제할까요? 개별 경험만 지우려면 아래 경험 삭제를 사용하세요.'))return;
+    if(busy||!card||!data||!window.confirm('이 메뉴 등록과 모든 식사 경험·획득 카드를 삭제할까요? 개별 경험만 지우려면 아래 경험 삭제를 사용하세요.'))return;
     setBusy(true);
     try{const result=await getBrowserRepository().deleteEntry(data.profile.ownerId,card.entry.id,card.entry.revision);if(result.ok)router.push('/dex/meal/collection');else setMessage(result.error.message);}finally{setBusy(false);}
   }
@@ -87,6 +88,7 @@ export function MealEntryDetail({entryId}:{entryId:string}) {
       <button className="rounded-lg border px-3 py-2 disabled:opacity-50" disabled={busy} onClick={()=>void removeCard()}>수집 카드 삭제</button>
       {message?<p role="status">{message}</p>:null}
     </Card>
+    <section className="space-y-3" aria-label="보유 카드 목록"><h2 className="text-xl font-semibold">보유 카드 {card.experiences.length}장</h2><p className="dex-muted">획득 에디션: {[...new Set(card.experiences.map(exp=>experienceCard(exp)!.edition))].join(' · ')||'없음'}</p><ul className="space-y-2">{card.experiences.map(exp=>{const owned=experienceCard(exp)!;return <li key={owned.id} className={`dex-owned-card dex-edition--${owned.edition.toLowerCase()}`}><strong>{owned.edition}</strong><span>획득 {new Date(owned.acquiredAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})} KST</span><span>식사 {exp.experiencedOn}{owned.origin==='legacy'?' · 이전 기록 NORMAL 보존':''}</span><details><summary>카드 식별자</summary>{owned.id}</details></li>;})}</ul><p className="dex-small dex-muted">식사 날짜·평가 수정은 카드 에디션과 획득 시각을 바꾸지 않아요. 경험을 삭제하면 그 카드도 삭제돼요.</p></section>
     <h2 className="text-xl font-semibold">나의 식사 경험 이력</h2>
     {card.experiences.length===0?<Card className="p-5">경험은 모두 삭제되었지만 수집 카드는 남아 있습니다. 카드를 지우려면 위의 수집 카드 삭제를 사용하세요.</Card>:null}
     <div className="dex-experience-timeline">{card.experiences.map(experience=><ExperienceEditor key={`${experience.id}:${experience.revision}`} experience={experience} ownerId={data.profile.ownerId} onChanged={changed}/>)}</div>

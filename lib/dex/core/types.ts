@@ -1,5 +1,6 @@
 import type { Cafeteria, MealTime, MealSnapshot, MealOffering } from '../meal/types.ts';
 export type { Dish, DishAlias, MealOffering } from '../meal/types.ts';
+import type { CardInstance } from '../meal/card-editions.ts';
 export type Id = string;
 export type LocalDate = string;
 export type Instant = string;
@@ -38,7 +39,7 @@ export type ExperienceData =
     } }
   | { kind: 'person'; event: 'first-met' | 'memory' }
   | { kind: 'custom' };
-export type Experience = Versioned & ExperienceData & {
+export type Experience = Versioned & (ExperienceData & { card?: CardInstance }) & {
   ownerId: Id; dexId: Id; entryId: Id; requestId: Id;
   experiencedOn: LocalDate; note: string;
 };
@@ -104,7 +105,7 @@ export type DexErrorCode =
   | 'UNSUPPORTED_SCHEMA' | 'INVALID_BACKUP' | 'IMPORT_CONFLICT';
 export type Result<T> = { ok: true; value: T } | { ok: false; error: { code: DexErrorCode; message: string } };
 export interface BackupEnvelope {
-  format: 'bokak-dex'; schemaVersion: 1; exportedAt: Instant;
+  format: 'bokak-dex'; schemaVersion: 1 | 2; exportedAt: Instant;
   containsSensitiveData: true;
   data: DexDocument;
 }

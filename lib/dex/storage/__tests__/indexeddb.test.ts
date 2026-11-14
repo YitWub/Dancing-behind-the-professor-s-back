@@ -87,7 +87,7 @@ test('내보내기·미리보기는 기록을 바꾸지 않고 확인된 교체�
 test('잘못된 백업·미지원 버전·중복·고아·개발 namespace는 기존 기록을 훼손하지 않는다',async()=>{
   const {repo,command,profile}=await setup();value(await repo.collect(command));const before=value(await repo.snapshot());
   const source=JSON.parse(await value(await repo.exportRecords(profile.ownerId)).text());
-  const variants=[{...source,schemaVersion:2},{...source,data:{...source.data,entries:[...source.data.entries,...source.data.entries]}},{...source,data:{...source.data,experiences:source.data.experiences.map((e:Record<string,unknown>)=>({...e,entryId:'missing'}))}},{...source,data:{...source.data,profile:{...source.data.profile,namespace:'development'}}}];
+  const variants=[{...source,schemaVersion:99},{...source,data:{...source.data,entries:[...source.data.entries,...source.data.entries]}},{...source,data:{...source.data,experiences:source.data.experiences.map((e:Record<string,unknown>)=>({...e,entryId:'missing'}))}},{...source,data:{...source.data,profile:{...source.data.profile,namespace:'development'}}}];
   for(const candidate of variants)assert.equal((await repo.previewImport(new Blob([JSON.stringify(candidate)]))).ok,false);
   error(await repo.previewImport(new Blob(['{broken'])),'INVALID_BACKUP');
   assert.deepEqual(value(await repo.snapshot()),before);repo.close();

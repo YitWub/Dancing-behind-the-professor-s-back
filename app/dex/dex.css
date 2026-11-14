@@ -1125,3 +1125,12 @@ a.dex-highlight--first:hover{transform:rotate(0) translateY(-3px)}
     display:none
   }
 }
+
+/* Random card editions are independent of observed menu rarity. */
+.dex-edition--normal{--edition-ink:#51555d;--edition-bg:#f1f2f4;--edition-border:#bfc3ca}
+.dex-edition--special{--edition-ink:#21613a;--edition-bg:#e5f4e9;--edition-border:#72ad81}
+.dex-edition--rare{--edition-ink:#694093;--edition-bg:#f0e7fa;--edition-border:#ad87cf}
+.dex-edition--golden{--edition-ink:#785408;--edition-bg:#fff2c7;--edition-border:#cda943}
+.dex-edition-badge{display:inline-block;border:1px solid var(--edition-border);background:var(--edition-bg);color:var(--edition-ink);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700}
+.dex-reveal-card[class*="dex-edition--"]{border:3px solid var(--edition-border);background:var(--edition-bg);box-shadow:0 8px 24px color-mix(in srgb,var(--edition-border) 30%,transparent)}
+.dex-owned-card{display:flex;flex-wrap:wrap;gap:8px 16px;border:1px solid var(--edition-border);background:var(--edition-bg);color:var(--edition-ink);padding:12px;border-radius:12px;font-size:13px;overflow-wrap:anywhere}

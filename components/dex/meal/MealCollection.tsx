@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { CARD_EDITION_POLICY, CARD_EDITIONS, experienceCard } from '@/lib/dex/meal/card-editions';
 import { useEffect, useState } from 'react';
 import { useDexDocument } from '@/components/dex/scaffold/useDexDocument';
 import type { DexDocument } from '@/lib/dex/core/types';
@@ -39,7 +40,9 @@ export function MealCollectionPanel({data,onExplore}:{data:DexDocument;onExplore
   const unknown=known.filter(row=>!owned.has(row.selection!.dishId));
   return <div className="dex-collection-panel">
     <div className="dex-section-heading"><div><span className="dex-eyebrow">MY COLLECTION</span><h2>한 끼씩, 차곡차곡.</h2></div><span className="dex-count">고유 메뉴 <strong>{cards.length}</strong>개</span></div>
-    {cards.length===0?<CollectionEmptyState onExplore={onExplore}/>:<div className="dex-card-grid">{cards.map(card=><CollectionCard key={card.entry.id} title={card.name} rarity={unknownMealRarity(card.entry.subject.kind==='meal'?card.entry.subject.dishId:'').tier} isNew={now-Date.parse(card.entry.firstCollectedAt)>=0&&now-Date.parse(card.entry.firstCollectedAt)<7*86400000} artwork={<CollectionArtwork kind={mealArtwork(card.name)}/>} href={`/dex/meal/collection/${card.entry.id}`} meta={<><span>먹은 기록 {card.experiences.length}회</span><span>{card.rating===null?'아직 평가 전':`★ ${card.rating} / 5`}</span></>}><p className="dex-card-note">{card.note??`첫 기록 ${card.entry.collectedOn}`}</p>{personal.find(p=>p.entryIds.includes(card.entry.id))?.affection?<p className="dex-affection">{personal.find(p=>p.entryIds.includes(card.entry.id))?.affection==='soul'?'♡ 나의 소울푸드':'↻ 나의 단골 메뉴'}</p>:null}</CollectionCard>)}</div>}
+    <p className="dex-muted">발견 메뉴 {cards.length}종 · 보유 카드 {cards.reduce((sum,card)=>sum+card.experiences.length,0)}장</p>
+    <details className="dex-tray"><summary>랜덤 카드 에디션 확률 안내</summary><p>{CARD_EDITIONS.map(edition=>`${edition} ${CARD_EDITION_POLICY.weights[edition]}%`).join(' · ')} (합계 100%)</p><p>매 식사 기록에 카드 1장. 음식의 제공 빈도·맛과 관계없는 랜덤 에디션이에요. 이전 기록은 NORMAL로 보존해요. 경험을 삭제하면 연결 카드도 삭제돼요.</p></details>
+    {cards.length===0?<CollectionEmptyState onExplore={onExplore}/>:<div className="dex-card-grid">{cards.map(card=><CollectionCard key={card.entry.id} title={card.name} rarity={unknownMealRarity(card.entry.subject.kind==='meal'?card.entry.subject.dishId:'').tier} isNew={now-Date.parse(card.entry.firstCollectedAt)>=0&&now-Date.parse(card.entry.firstCollectedAt)<7*86400000} artwork={<CollectionArtwork kind={mealArtwork(card.name)}/>} href={`/dex/meal/collection/${card.entry.id}`} meta={<><span>먹은 기록 {card.experiences.length}회 · 보유 카드 {card.experiences.length}장</span><span>{[...new Set(card.experiences.map(exp=>experienceCard(exp)!.edition))].join(' · ')}</span><span>{card.rating===null?'아직 평가 전':`★ ${card.rating} / 5`}</span></>}><p className="dex-card-note">{card.note??`첫 기록 ${card.entry.collectedOn}`}</p>{personal.find(p=>p.entryIds.includes(card.entry.id))?.affection?<p className="dex-affection">{personal.find(p=>p.entryIds.includes(card.entry.id))?.affection==='soul'?'♡ 나의 소울푸드':'↻ 나의 단골 메뉴'}</p>:null}</CollectionCard>)}</div>}
     <MealGamePanel document={data}/>
     <section className="dex-known"><div className="dex-section-heading"><div><span className="dex-eyebrow">WAITING TO BE FOUND</span><h3>다음에 만날 메뉴</h3></div><span className="dex-tag">확인된 저장본</span></div>
       <p className="dex-muted">{knownDate?`${knownDate} 제공 식단에서 확인한 메뉴예요. 오늘 제공 여부와는 달라요.`:'확인 가능한 저장 식단을 기준으로 표시해요.'} 전체 메뉴 수나 완료율을 뜻하지 않아요.</p>
