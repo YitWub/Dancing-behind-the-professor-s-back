@@ -66,3 +66,5 @@
 .dex-memory .dex-quick-actions{margin-top:12px}
 .dex-memory .dex-quick-actions button{white-space:nowrap;font-size:14px}
 .dex-selected-record-info{font-size:13px}.dex-selected-record-info input{max-width:180px}
+
+.dex-card-rating-summary{display:flex;align-items:center;gap:6px}.dex-average-stars{display:inline-block;position:relative;letter-spacing:2px;white-space:nowrap;line-height:1.3}.dex-average-stars-fill{position:absolute;left:0;top:0;overflow:hidden;white-space:nowrap}.dex-average-caption{font-size:10px;letter-spacing:0;color:#7b856e}
