@@ -34,7 +34,8 @@ function ExperienceEditor({experience,onChanged,onDeleted,onGuardChange}:{experi
       if(day>kstToday()){setMessage('미래의 식사는 기록할 수 없습니다.');return;}
       const repository=getBrowserRepository();
       const result=day===current.experiencedOn?await saveMealRating(repository,current,{rating,note}):await repository.updateExperience(current.ownerId,current.id,current.revision,{experiencedOn:day,rating,note});
-      if(result.ok&&result.value.kind==='meal'){setCurrent(result.value);setMessage('이 식사 평가를 저장했어요.');onGuardChange({dirty:false,busy:false});await onChanged();}
+      // The committed repository event refreshes the document; do not await a duplicate full read.
+      if(result.ok&&result.value.kind==='meal'){setCurrent(result.value);setMessage('이 식사 평가를 저장했어요.');onGuardChange({dirty:false,busy:false});}
       else{setMessage(`${result.ok?'결과 확인이 필요해요.':result.error.message} 입력은 그대로 남아 있어요.`);if(!result.ok&&result.error.code==='REVISION_CONFLICT')await onChanged();}
     }finally{active.current=false;setBusy(false);}
   }
