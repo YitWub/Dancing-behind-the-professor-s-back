@@ -30,7 +30,7 @@ export function CollectionPreviewLab(){
   const weightsTotal=CARD_EDITIONS.reduce((n,e)=>n+settings.weights[e],0);
   function preset(name:string){const presets:Record<string,EditionWeights>={default:{...DEFAULT_WEIGHTS},balanced:{NORMAL:25,SPECIAL:25,RARE:25,GOLDEN:25},golden:{NORMAL:10,SPECIAL:10,RARE:20,GOLDEN:60}};configure({weights:presets[name]});}
   return <div className="dex-lab">
-    <Link href="/dex/dev/editions" className="dex-back">← 에디션 연출 미리보기</Link><h2>개발자 컬렉션 실험실</h2>
+    <Link href="/dex/dev/editions" className="dex-back">← 에디션 연출 미리보기</Link><Link href="/dex/dev/design" className="dex-back">공통 디자인 A/B 비교 ↗</Link><h2>개발자 컬렉션 실험실</h2>
     <p className="dex-lab-warning">가상 데이터 · 메모리 전용 · 실제 도감·업적·학식 통계에 저장되지 않습니다.</p>
     <fieldset className="dex-lab-controls"><legend>컬렉션 설정</legend>
       <label>카드 수<select aria-label="카드 수" value={settings.count} onChange={e=>{const count=Number(e.target.value);configure({count,uniqueMenus:Math.min(count,settings.uniqueMenus)});}}>{[1,5,30,50,100].map(n=><option key={n} value={n}>{n}장</option>)}</select></label>
