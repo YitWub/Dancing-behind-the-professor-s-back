@@ -45,9 +45,9 @@ function ExperienceEditor({experience,onChanged,onDeleted,onGuardChange}:{experi
   }
   const context=current.context;
   return <Card as="article" className="dex-experience-card">
-    <h3 className="text-lg font-semibold">선택한 식사의 기록</h3><p className="dex-experience-date">{current.experiencedOn} · {CAFETERIA_NAMES[context.cafeteria]} · {MEAL_TIME_NAMES[context.mealTime]}</p>
+    <h3 className="text-lg font-semibold">한 끼의 기억</h3><p className="dex-detail-visit-context">{current.experiencedOn} · {CAFETERIA_NAMES[context.cafeteria]} · {MEAL_TIME_NAMES[context.mealTime]}</p>
     <form onSubmit={event=>void save(event)} className="dex-quick-rating" aria-label="선택한 식사 평가">
-      <fieldset disabled={busy}><legend>이 식사, 어땠나요?</legend><div className="dex-rating-stars">{([1,2,3,4,5] as const).map(n=><label key={n} className={rating!==null&&n<=rating?'is-selected':''}><input type="radio" name={`detail-rating-${experience.id}`} aria-label={`${n}점`} checked={rating===n} onChange={()=>setRating(n)}/><span aria-hidden="true">★</span></label>)}<button type="button" className="dex-rating-clear" onClick={()=>setRating(null)}>평가 안 함</button></div>
+      <fieldset disabled={busy}><legend>별점</legend><div className="dex-rating-stars">{([1,2,3,4,5] as const).map(n=><label key={n} className={rating!==null&&n<=rating?'is-selected':''}><input type="radio" name={`detail-rating-${experience.id}`} aria-label={`${n}점`} checked={rating===n} onChange={()=>setRating(n)}/><span aria-hidden="true">{rating!==null&&n<=rating?'★':'☆'}</span></label>)}<button type="button" className="dex-rating-clear" onClick={()=>setRating(null)}>평가 안 함</button></div>
         <label className="dex-quick-note">한줄평<textarea aria-label="이 식사 한줄평" maxLength={500} rows={2} value={note} onChange={e=>setNote(e.target.value)} placeholder="기억하고 싶은 한 끼의 이야기를 남겨 주세요."/></label>
         <details className="dex-tray"><summary>날짜·기록 관리</summary><label>먹은 날짜<input aria-label="먹은 날짜" type="date" required max={kstToday()} value={day} onChange={e=>setDay(e.target.value)}/></label><button className="dex-edit-button" type="button" onClick={()=>void remove()}>이 경험과 카드 삭제</button></details>
       </fieldset>
@@ -66,6 +66,8 @@ export function MealEntryDetail({entryId,initialExperienceId}:{entryId:string;in
   const [busy,setBusy]=useState(false);
   const guard=useRef({dirty:false,busy:false});
   const reportGuard=useCallback((state:{dirty:boolean;busy:boolean})=>{guard.current=state;},[]);
+  const focusRef=useRef<HTMLElement>(null);
+  useEffect(()=>{if(selectedId){focusRef.current?.focus({preventScroll:true});focusRef.current?.scrollIntoView({block:'start'});}},[selectedId]);
   const router=useRouter();
   const menu=data?buildMealCollection(data).menus.find(m=>m.entryIds.includes(entryId)):null;
   const selected=menu?.cards.find(c=>c.experience.id===selectedId)??menu?.representative??null;
@@ -81,11 +83,21 @@ export function MealEntryDetail({entryId,initialExperienceId}:{entryId:string;in
   if(loading)return <p role="status">개인 기록을 불러오는 중…</p>;
   if(error)return <p role="alert">{error} <button onClick={()=>void reload()}>다시 읽기</button></p>;
   if(!menu||!data)return <Card className="p-5"><p>이 브라우저에 해당 메뉴가 없습니다.</p><Link href="/dex/meal/collection">수집 목록으로</Link></Card>;
-  return <div className="space-y-5">
+  const shownCards=menu.cards.slice(0,limit);
+  if(selected&&!shownCards.some(item=>item.card.id===selected.card.id))shownCards.unshift(selected);
+  return <div className="dex-meal-detail space-y-5">
     <Link href="/dex/meal/collection" className="dex-back" onClick={event=>{if(!canLeave())event.preventDefault();}}>← 메뉴 도감 · 카드 앨범</Link>
-    <section className="dex-card-detail-hero"><div className="dex-detail-feature"><EditionCollectionCard name={menu.name} edition={selected?.card.edition} count={menu.cards.length} acquiredOn={menu.firstCollectedOn}/></div><div><span className="dex-eyebrow">MY COLLECTED MOMENT</span><h2>{splitMenuLabel(menu.name).title}</h2><p>발견 메뉴 1종 · 보유 카드 {menu.cards.length}장</p>{selected?<p>{selected.experience.experiencedOn}의 식사 · {selected.card.edition}</p>:<p>경험이 없는 메뉴 등록이에요. 다시 먹으면 새 카드를 모을 수 있어요.</p>}{personal?.affection?<p className="dex-affection">{personal.affection==='soul'?'♡ 나의 소울푸드':'↻ 나의 단골 메뉴'}</p>:null}<p className="dex-small dex-muted">메뉴 첫 기록 {menu.firstCollectedOn} · 최고 에디션을 기본 대표로 표시해요.</p><details><summary>메뉴 원문·등록 관리</summary><p>{menu.name}</p><button className="dex-edit-button" disabled={busy} onClick={()=>void removeMenu()}>현재 메뉴 등록 삭제</button></details></div></section>
+    <h2 className="sr-only">{splitMenuLabel(menu.name).title} 카드 상세</h2>
+    <section ref={focusRef} tabIndex={-1} className="dex-card-detail-hero dex-detail-focus" aria-label="선택 카드와 식사 평가">
+      <div className="dex-detail-feature"><EditionCollectionCard name={menu.name} edition={selected?.card.edition} acquiredOn={selected?kstToday(new Date(selected.card.acquiredAt)):menu.firstCollectedOn}/></div>
+      <div className="dex-detail-rating">{selected?<ExperienceEditor key={selected.experience.id} experience={selected.experience} onChanged={reload} onDeleted={deleted} onGuardChange={reportGuard}/>:<Card className="p-5"><h3>다음 한 끼를 기다려요</h3><p>메뉴 등록은 남아 있지만 식사 기록이 없어 아직 평가할 수 없어요.</p></Card>}</div>
+    </section>
     {message?<p role="status">{message}</p>:null}
-    <section aria-label="보유 카드 목록"><h2 className="text-xl font-semibold">보유 카드 {menu.cards.length}장</h2><p className="dex-small dex-muted">카드를 선택하면 해당 식사의 평가와 기억을 확인할 수 있어요.</p><div className="dex-owned-grid dex-owned-grid--mini">{menu.cards.slice(0,limit).map(item=><EditionCollectionCard key={item.card.id} name={menu.name} edition={item.card.edition} acquiredOn={kstToday(new Date(item.card.acquiredAt))} selected={selected?.card.id===item.card.id} onSelect={()=>choose(item.experience.id)}/>)}</div>{menu.cards.length>limit?<button className="dex-edit-button" onClick={()=>setLimit(n=>n+24)}>보유 카드 더 보기</button>:null}</section>
-    <section aria-label="나의 식사 경험"><h2 className="text-xl font-semibold">나의 식사 경험</h2>{selected?<ExperienceEditor key={selected.experience.id} experience={selected.experience} onChanged={reload} onDeleted={deleted} onGuardChange={reportGuard}/>:<p>아직 남아 있는 식사 경험이 없어요. 메뉴 등록은 보존됩니다.</p>}<details className="dex-tray"><summary>모든 식사 기록 ({menu.cards.length}회)</summary><ul className="dex-experience-picker">{menu.cards.map(item=><li key={item.card.id}><button aria-pressed={selected?.card.id===item.card.id} onClick={()=>choose(item.experience.id)}><time>{item.experience.experiencedOn}</time> · {item.card.edition}{item.experience.rating!==null?` · ★ ${item.experience.rating}`:''}{item.experience.note?` · ${item.experience.note}`:''}</button></li>)}</ul></details><p className="dex-small dex-muted">별점·메모는 이 식사 경험에만 저장됩니다. 카드 에디션과 획득 정보는 바뀌지 않아요.</p></section>
+    {menu.cards.length>1?<section className="dex-detail-owned" aria-label="보유 카드 선택"><div className="dex-section-heading"><h2>보유 카드 {menu.cards.length}장</h2><span className="dex-small dex-muted">좌우로 넘겨 선택해 보세요</span></div><div className="dex-detail-card-strip" aria-label="카드 선택 목록">{shownCards.map(item=><EditionCollectionCard key={item.card.id} name={menu.name} edition={item.card.edition} acquiredOn={kstToday(new Date(item.card.acquiredAt))} selected={selected?.card.id===item.card.id} onSelect={()=>choose(item.experience.id)}/>)}</div>{menu.cards.length>limit?<button className="dex-edit-button" onClick={()=>setLimit(n=>n+24)}>보유 카드 더 보기</button>:null}</section>:null}
+    <div className="dex-detail-secondary">
+      <details className="dex-tray"><summary>메뉴 정보·등록 관리</summary><p>{menu.name}</p><p>보유 카드 {menu.cards.length}장 · 메뉴 첫 기록 {menu.firstCollectedOn}</p><p className="dex-small dex-muted">선택한 카드가 없다면 최고 에디션을 대표로 표시합니다.</p>{personal?.affection?<p className="dex-affection">{personal.affection==='soul'?'♡ 나의 소울푸드':'↻ 나의 단골 메뉴'}</p>:null}<button className="dex-edit-button" disabled={busy} onClick={()=>void removeMenu()}>현재 메뉴 등록 삭제</button></details>
+      <details className="dex-tray"><summary>모든 식사 기록 ({menu.cards.length}회)</summary><ul className="dex-experience-picker">{menu.cards.map(item=><li key={item.card.id}><button aria-pressed={selected?.card.id===item.card.id} onClick={()=>choose(item.experience.id)}><time>{item.experience.experiencedOn}</time> · {item.card.edition}{item.experience.rating!==null?` · ★ ${item.experience.rating}`:''}{item.experience.note?` · ${item.experience.note}`:''}</button></li>)}</ul></details>
+      <p className="dex-small dex-muted">평가는 선택한 식사에만 저장돼요. 카드 에디션과 획득 정보는 바뀌지 않아요.</p>
+    </div>
   </div>;
 }

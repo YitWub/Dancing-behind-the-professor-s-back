@@ -1204,3 +1204,32 @@ button.dex-edition-card-body,a.dex-edition-card-body{cursor:pointer;transition:t
 @media(min-width:640px){.dex-owned-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}.dex-owned-grid--mini{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}}
 @media(max-width:520px){.dex-collection-tools{grid-template-columns:1fr 1fr}.dex-collection-tools label:first-child{grid-column:1/-1}.dex-card-detail-hero{grid-template-columns:1fr;gap:16px}.dex-card-detail-hero h2{font-size:21px}.dex-owned-grid{gap:10px}.dex-owned-grid .dex-collect-card{padding:10px}.dex-owned-grid .dex-card-copy h3{font-size:14px}.dex-edition-card .dex-card-meta{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){.dex-edition-card-body{transition:none}}
+
+/* Detail focus: the selected card and its experience editor stay together. */
+.dex-detail-focus{grid-template-columns:minmax(220px,.85fr) minmax(0,1.15fr);gap:28px;align-items:start;scroll-margin:20px}
+.dex-detail-focus .dex-detail-feature{max-width:310px;margin:10px auto}
+.dex-detail-focus .dex-detail-feature .dex-art{height:210px}
+.dex-detail-focus .dex-detail-feature .dex-card-meta time{display:none}
+.dex-detail-focus .dex-detail-feature .dex-card-copy h3{height:auto;min-height:2.6em;font-size:18px}
+.dex-detail-rating{min-width:0}
+.dex-detail-focus .dex-experience-card{padding:20px;gap:6px}
+.dex-detail-focus .dex-experience-card:before{display:none}
+.dex-detail-focus .dex-quick-rating{padding:0;margin:8px 0 0;border:0}
+.dex-detail-focus .dex-quick-rating legend{font-size:12px;color:var(--e-muted)}
+.dex-detail-focus .dex-detail-visit-context{font-size:12px;color:var(--e-muted);margin:0;line-height:1.5}
+.dex-detail-focus .dex-quick-rating textarea{font-size:14px;min-height:82px}
+.dex-detail-focus .dex-quick-rating .dex-tray{font-size:12px;margin-top:12px}
+.dex-detail-focus .dex-experience-card>.dex-tray{font-size:12px;margin-top:8px}
+.dex-detail-owned .dex-section-heading{margin-bottom:8px;flex-wrap:wrap;gap:6px}
+.dex-detail-owned .dex-section-heading h2{font-size:16px}
+.dex-detail-card-strip{display:flex;gap:12px;overflow-x:auto;padding:5px 4px 12px;scroll-snap-type:x proximity;overscroll-behavior-x:contain}
+.dex-detail-card-strip>.dex-edition-card{flex:0 0 145px;scroll-snap-align:start}
+.dex-detail-card-strip .dex-collect-card{padding:10px}
+.dex-detail-card-strip .dex-art{height:72px;min-height:0}
+.dex-detail-card-strip .dex-art svg{height:100%;max-width:100%}
+.dex-detail-card-strip .dex-card-copy h3{font-size:13px}
+.dex-detail-card-strip .dex-card-meta{flex-direction:column;align-items:flex-start}
+.dex-detail-secondary{display:grid;gap:12px;font-size:13px}
+.dex-detail-secondary .dex-experience-picker{max-height:260px;overflow-y:auto;padding:3px}
+.dex-detail-secondary .dex-tray p{margin:10px 0;overflow-wrap:anywhere}
+@media(max-width:680px){.dex-detail-focus{grid-template-columns:minmax(0,1fr);gap:12px}.dex-detail-focus .dex-detail-feature{max-width:250px;margin:0 auto}.dex-detail-focus .dex-detail-feature .dex-art{height:155px}.dex-detail-focus .dex-experience-card{padding:16px}.dex-detail-card-strip>.dex-edition-card{flex-basis:130px}.dex-detail-focus .dex-quick-actions{flex-wrap:wrap}.dex-detail-focus .dex-quick-actions>button{min-width:120px}}
