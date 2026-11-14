@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
-import { DevCollectionLab } from '@/components/dex/scaffold/DevCollectionLab';
-export default function Page() {
+export default async function Page(){
   if(process.env.NODE_ENV!=='development')notFound();
-  return <DevCollectionLab/>;
+  const {DeveloperToolsHub}=await import('@/components/dex/dev/DeveloperToolsHub');
+  return <DeveloperToolsHub/>;
 }

@@ -39,7 +39,7 @@ export function DexHomeScaffold() {
     </div>
     <section><div className="dex-section-heading"><div><span className="dex-eyebrow">LITTLE MOMENTS, COLLECTED</span><h2>최근 발견한 카드</h2></div><span className="dex-tag">나만의 기록</span></div>{recent.length?<div className="dex-card-grid">{recent.map(entry=><CollectionCard key={entry.id} title={label(entry.subject)} isNew={now-Date.parse(entry.firstCollectedAt)>=0&&now-Date.parse(entry.firstCollectedAt)<7*86400000} artwork={<CollectionArtwork kind={entry.subject.kind==='meal'?mealArtwork(label(entry.subject)):entry.subject.kind==='person'?'people':'custom'}/>} href={entry.subject.kind==='meal'?`/dex/meal/collection/${entry.id}`:undefined} meta={`첫 기록 ${entry.collectedOn}`}/>)}</div>:<div className="dex-empty dex-empty--small"><h3>아직 비어 있는 첫 페이지</h3><p>직접 경험한 발견을 모으면 이곳에 카드가 쌓여요.</p><Link href="/dex/meal?view=discover" className="dex-back">첫 번째 메뉴 만나러 가기 ↗</Link></div>}</section>
     <BackupControls ownerId={data?.profile.ownerId} onChanged={reload}/>
-    {process.env.NODE_ENV==='development'?<p className="text-sm"><Link className="underline" href="/dex/dev">개발 전용 · 격리 저장소 검증</Link></p>:null}
+    {process.env.NODE_ENV==='development'?<p className="text-sm"><Link className="dex-dev-entry" href="/dex/dev">개발자 도구 ↗</Link></p>:null}
   </div>;
 }
 

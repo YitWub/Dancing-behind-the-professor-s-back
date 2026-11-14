@@ -1233,3 +1233,15 @@ button.dex-edition-card-body,a.dex-edition-card-body{cursor:pointer;transition:t
 .dex-detail-secondary .dex-experience-picker{max-height:260px;overflow-y:auto;padding:3px}
 .dex-detail-secondary .dex-tray p{margin:10px 0;overflow-wrap:anywhere}
 @media(max-width:680px){.dex-detail-focus{grid-template-columns:minmax(0,1fr);gap:12px}.dex-detail-focus .dex-detail-feature{max-width:250px;margin:0 auto}.dex-detail-focus .dex-detail-feature .dex-art{height:155px}.dex-detail-focus .dex-experience-card{padding:16px}.dex-detail-card-strip>.dex-edition-card{flex-basis:130px}.dex-detail-focus .dex-quick-actions{flex-wrap:wrap}.dex-detail-focus .dex-quick-actions>button{min-width:120px}}
+
+.dex-dev-entry{display:inline-flex;align-items:center;padding:6px 10px;border:1px solid var(--e-border);border-radius:8px;font-size:13px;color:var(--e-muted);white-space:nowrap}
+.dex-dev-hub{display:grid;gap:16px}
+.dex-dev-hub>h2{font-size:24px;font-weight:750}
+.dex-dev-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.dex-dev-tools>a{display:block;padding:18px;border:1px solid var(--e-border);border-radius:14px;background:var(--e-surface);min-width:0}
+.dex-dev-tools>a:focus-visible{outline:3px solid var(--e-accent);outline-offset:3px}
+.dex-dev-tools h3{font-size:17px;font-weight:700;line-height:1.4;margin-bottom:7px}
+.dex-dev-tools p{font-size:13px;line-height:1.7;color:var(--e-muted);overflow-wrap:anywhere}
+.dex-detail-focus .dex-quick-actions{justify-content:flex-start;flex-wrap:wrap;align-items:center}
+.dex-detail-focus .dex-quick-actions>button{flex:0 1 auto;width:auto;min-width:0;min-height:42px;padding:9px 14px;font-size:14px;white-space:nowrap}
+@media(max-width:520px){.dex-dev-tools{grid-template-columns:minmax(0,1fr)}}

@@ -18,6 +18,7 @@ const targets=new Map([
   ['CollectionCard','components/dex/common/CollectionCard.tsx'],
   ['EditionCollectionCard','components/dex/common/EditionCollectionCard.tsx'],
   ['DesignPreviewCard','components/dex/common/DesignPreviewCard.tsx'],
+  ['DeveloperToolsHub','components/dex/dev/DeveloperToolsHub.tsx'],
   ['presentation','lib/dex/meal/presentation.ts'],
   ['GameNoticeList','components/dex/discovery/GameNoticeList.tsx'],
   ['CollectionFeedback','components/dex/discovery/CollectionFeedback.tsx'],
@@ -67,11 +68,11 @@ test('다섯 등급 미리보기는 실제 수집 완료나 업적 획득으로 
   for(const tier of ['COMMON','UNCOMMON','RARE','LEGENDARY','UNKNOWN']){const html=render(DiscoveryReveal,{preview:true,itemName:'연출 테스트 카드',title:'희귀도 연출 미리보기',rarity:tier,onDismiss:()=>{}});assert.ok(html.includes('PREVIEW · TEST CARD'));assert.ok(html.includes('저장되지 않아요'));assert.ok(!html.includes('나의 컬렉션에 등록 완료'));assert.ok(html.includes('dex-rarity-frame--'+tier.toLowerCase()));}
 });
 test('미리보기 페이지는 프로덕션에서 컴포넌트를 열기 전에 404로 차단한다',async()=>{
-  for(const [route,componentName] of [['rarity','RarityPreview'],['editions','EditionPreview'],['collection','CollectionPreviewLab'],['design','DesignPreviewLab']]){
-  const source=readFileSync(new URL('../../../../app/dex/dev/'+route+'/page.tsx',import.meta.url),'utf8').replaceAll(componentName,'RarityPreview').replaceAll('/dev/EditionPreview','/dev/RarityPreview');
+  for(const [route,componentName] of [['rarity','RarityPreview'],['editions','EditionPreview'],['collection','CollectionPreviewLab'],['design','DesignPreviewLab'],['','DeveloperToolsHub'],['storage','DevCollectionLab']]){
+  const source=readFileSync(new URL('../../../../app/dex/dev/'+(route?route+'/':'')+'page.tsx',import.meta.url),'utf8').replaceAll(componentName,'RarityPreview').replaceAll('/dev/EditionPreview','/dev/RarityPreview').replaceAll('/scaffold/RarityPreview','/dev/RarityPreview');
   const component=pathToFileURL(join(temporary,'preview-stub.mjs'));writeFileSync(component,"export function RarityPreview(){return null;}");
   let output=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText as string;
-  for(const specifier of ['next/navigation','react/jsx-runtime'])output=output.replaceAll(`from '${specifier}'`,`from '${pathToFileURL(require.resolve(specifier)).href}'`).replaceAll(`from "${specifier}"`,`from "${pathToFileURL(require.resolve(specifier)).href}"`);
+  for(const specifier of ['next/navigation','next/link','react/jsx-runtime'])output=output.replaceAll(`from '${specifier}'`,`from '${pathToFileURL(require.resolve(specifier)).href}'`).replaceAll(`from "${specifier}"`,`from "${pathToFileURL(require.resolve(specifier)).href}"`);
   output=output.replace("import('@/components/dex/dev/RarityPreview')",`import('${component.href}')`);
   const file=pathToFileURL(join(temporary,'preview-page-'+route+'.mjs'));writeFileSync(file,output);const {default:Page}=await import(file.href);
   const env=process.env as Record<string,string|undefined>;const previous=env['NODE_ENV'];try{env['NODE_ENV']='production';await assert.rejects(()=>Page(),{digest:'NEXT_HTTP_ERROR_FALLBACK;404'});env['NODE_ENV']='development';assert.ok(isValidElement(await Page()));}finally{if(previous===undefined)delete env['NODE_ENV'];else env['NODE_ENV']=previous;}
@@ -105,4 +106,10 @@ test('공통 디자인 프레임은 학식만 에디션을 표시하고 인연·
     const html=render(DesignPreviewCard,{sample,showRecord:true,onSelect:()=>{}});assert.ok(html.includes('기억할 이야기'));assert.ok(html.includes('<button'));
     assert.equal(html.includes('dex-edition-badge'),kind==='meal');if(kind!=='meal')assert.ok(!html.includes('GOLDEN'));
   }
+});
+
+test('개발 허브는 네 미리보기와 보존한 별도 저장 검증 도구를 연결한다',async()=>{
+ const {DeveloperToolsHub}=await import(urls.get('DeveloperToolsHub')!);const html=render(DeveloperToolsHub,{});
+ for(const route of ['design','collection','editions','rarity','storage'])assert.ok(html.includes('href="/dex/dev/'+route+'"'));
+ assert.equal((html.match(/data-testid="devtool-card"/g)||[]).length,4);
 });
