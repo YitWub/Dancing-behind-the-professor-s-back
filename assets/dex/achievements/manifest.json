@@ -1,0 +1,47 @@
+{
+  "first-discovery": {
+    "name_ko": "첫 발견",
+    "png": "png/first-discovery.png",
+    "webp": "webp/first-discovery.webp"
+  },
+  "dex-beginner": {
+    "name_ko": "도감 입문자",
+    "png": "png/dex-beginner.png",
+    "webp": "webp/dex-beginner.webp"
+  },
+  "menu-collector": {
+    "name_ko": "메뉴 수집가",
+    "png": "png/menu-collector.png",
+    "webp": "webp/menu-collector.webp"
+  },
+  "regular-5-days": {
+    "name_ko": "단골손님",
+    "png": "png/regular-5-days.png",
+    "webp": "webp/regular-5-days.webp"
+  },
+  "soul-food-10-days": {
+    "name_ko": "소울푸드",
+    "png": "png/soul-food-10-days.png",
+    "webp": "webp/soul-food-10-days.webp"
+  },
+  "cafeteria-explorer": {
+    "name_ko": "캠퍼스 미식 탐험가",
+    "png": "png/cafeteria-explorer.png",
+    "webp": "webp/cafeteria-explorer.webp"
+  },
+  "rare-menu-collector": {
+    "name_ko": "희귀 메뉴 수집가",
+    "png": "png/rare-menu-collector.png",
+    "webp": "webp/rare-menu-collector.webp"
+  },
+  "legendary-gourmet": {
+    "name_ko": "전설의 미식가",
+    "png": "png/legendary-gourmet.png",
+    "webp": "webp/legendary-gourmet.webp"
+  },
+  "default": {
+    "name_ko": "기본 업적",
+    "png": "png/default.png",
+    "webp": "webp/default.webp"
+  }
+}

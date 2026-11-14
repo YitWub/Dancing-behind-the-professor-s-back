@@ -108,3 +108,11 @@
 .dex-home-stamp-empty{padding:24px 16px;margin:16px 0;border:1px dashed #c8d6b5;border-radius:14px;text-align:center;background:#fffdf466}
 #meal-achievements{scroll-margin-top:20px}
 @media(max-width:520px){.dex-home-achievements{padding:13px}.dex-home-stamp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dex-stamp .dex-stamp-seal{width:90px;height:90px}.dex-stamp-illustration{width:80px;height:80px}}
+
+/* The supplied badge already has its own wreath and ribbon. */
+.dex-stamp{padding:10px 8px}.dex-stamp details summary{gap:5px}
+.dex-stamp .dex-stamp-seal{width:102px;height:102px;border:0;background:transparent;transform:none;box-shadow:none}
+.dex-stamp:nth-child(even) .dex-stamp-seal{transform:none}.dex-stamp-illustration{width:102px;height:102px}
+.dex-stamp .dex-stamp-seal small{display:none}.dex-stamp-condition{font-size:10px;min-height:3em}.dex-stamp-progress{margin-top:9px}
+.dex-stamp.is-locked .dex-stamp-illustration,.dex-stamp.is-preparing .dex-stamp-illustration{filter:saturate(.12);opacity:.5}
+@media(max-width:520px){.dex-stamp .dex-stamp-seal,.dex-stamp-illustration{width:88px;height:88px}}

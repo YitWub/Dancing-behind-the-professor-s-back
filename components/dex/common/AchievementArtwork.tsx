@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 /** Decorative achievement art; failed assets keep the engine-supplied symbol. */
-export function AchievementArtwork({source,icon}:{source?:string;icon:string}){
+export function AchievementArtwork({source='/dex/achievements/default.webp',icon}:{source?:string;icon:string}){
   const [failed,setFailed]=useState(false);
   return source&&!failed?
     // eslint-disable-next-line @next/next/no-img-element
