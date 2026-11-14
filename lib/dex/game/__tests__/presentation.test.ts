@@ -16,6 +16,8 @@ after(()=>rmSync(temporary,{recursive:true,force:true}));
 const targets=new Map([
   ['RarityBadge','components/dex/common/RarityBadge.tsx'],
   ['CollectionCard','components/dex/common/CollectionCard.tsx'],
+  ['EditionCollectionCard','components/dex/common/EditionCollectionCard.tsx'],
+  ['presentation','lib/dex/meal/presentation.ts'],
   ['GameNoticeList','components/dex/discovery/GameNoticeList.tsx'],
   ['CollectionFeedback','components/dex/discovery/CollectionFeedback.tsx'],
   ['CollectionArtwork','components/dex/common/CollectionArtwork.tsx'],
@@ -84,4 +86,13 @@ test('랜덤 카드 4종은 실제 저장 결과로 최초·재방문 모두 공
     assert.ok(!render(CollectionFeedback,{...props,result:{ok:true,value:{...value,replayed:true}}}).includes('dex-edition-badge'));
     const preview=render(DiscoveryReveal,{preview:true,edition,itemName:'test',title:'test',onDismiss:()=>{}});assert.ok(preview.includes('저장되지 않아요'));assert.ok(preview.includes('연출 건너뛰기'));
   }
+});
+
+test('공용 에디션 카드는 전체 링크·버튼으로 선택하며 반복 문구·가상 표시를 앞면에서 제거',async()=>{
+  const {EditionCollectionCard}=await import(urls.get('EditionCollectionCard')!);
+  const props={name:'만두카츠&소스 Fried Dumplings Cutlet & Sauce',edition:'RARE',count:3,acquiredOn:'2026-11-14'};
+  const html=render(EditionCollectionCard,{...props,href:'/dex/meal/collection/actual?experience=visit'});
+  assert.ok(html.includes('href="/dex/meal/collection/actual?experience=visit"'));assert.ok(html.includes('만두카츠'));assert.ok(html.includes('보유 3장'));assert.ok(html.includes('RARE'));
+  for(const text of ['나의 컬렉션','수집 완료','보유 카드 보기','TEST','Fried Dumplings'])assert.ok(!html.includes(text));
+  const button=render(EditionCollectionCard,{...props,onSelect:()=>{},selected:true,preview:true});assert.ok(button.includes('<button'));assert.ok(button.includes('aria-pressed="true"'));assert.ok(!button.includes('TEST'));
 });

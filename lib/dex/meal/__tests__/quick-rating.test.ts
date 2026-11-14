@@ -35,5 +35,5 @@ test('평가 실패·revision 충돌은 수집 성공을 취소하거나 입력 
 });
 test('표시용 영문 분리는 원문을 보존하고 한국어 괄호·불확실한 병기는 유지한다',()=>{
   const original='들기름막국수 (Perilla Oil Noodles)';assert.deepEqual(splitMenuLabel(original),{title:'들기름막국수',translation:'Perilla Oil Noodles',original});
-  for(const text of ['제육볶음(매운맛)','소고기육개장 Spicy Beef Soup','Pasta (Special)'])assert.equal(splitMenuLabel(text).title,text);
+  for(const text of ['제육볶음(매운맛)','제육볶음 Spicy Special Menu','Pasta (Special)'])assert.equal(splitMenuLabel(text).title,text);
 });

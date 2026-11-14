@@ -1,24 +1,31 @@
 'use client';
 import Link from 'next/link';
-import { CARD_EDITION_POLICY, CARD_EDITIONS, experienceCard } from '@/lib/dex/meal/card-editions';
+import { CARD_EDITION_POLICY, CARD_EDITIONS } from '@/lib/dex/meal/card-editions';
 import { useEffect, useState } from 'react';
 import { useDexDocument } from '@/components/dex/scaffold/useDexDocument';
 import type { DexDocument } from '@/lib/dex/core/types';
-import { mealCards } from '@/lib/dex/meal/collection';
+import { buildMealCollection, queryMealCollection, mealDetailHref } from '@/lib/dex/meal/card-view';
+import type { CardSort } from '@/lib/dex/meal/card-view';
+import type { CardEdition } from '@/lib/dex/meal/card-editions';
+import { EditionCollectionCard } from '@/components/dex/common/EditionCollectionCard';
+import { splitMenuLabel } from '@/lib/dex/meal/presentation';
 import { readOfferings } from '@/lib/dex/meal/catalog';
 import type { CatalogOffering } from '@/lib/dex/meal/catalog';
 import { kstToday } from '@/lib/datetime';
 import { CollectionArtwork, mealArtwork } from '@/components/dex/common/CollectionArtwork';
 import { CollectionCard, CollectionEmptyState } from '@/components/dex/common/CollectionCard';
-import { mealPersonalCards } from '@/lib/dex/meal/game';
-import { unknownMealRarity } from '@/lib/dex/meal/rarity';
 import { MealGamePanel } from './MealGamePanel';
 
 /** Known cards come only from a real stored offering date; this is not a complete school catalogue. */
 export function MealCollectionPanel({data,onExplore}:{data:DexDocument;onExplore?:()=>void}) {
-  const cards=mealCards(data);
-  const personal=mealPersonalCards(data);
-  const [now]=useState(()=>Date.now());
+  const collection=buildMealCollection(data);
+  const [view,setView]=useState<'menus'|'album'>('menus');
+  const [sort,setSort]=useState<CardSort>('recent');
+  const [search,setSearch]=useState('');
+  const [edition,setEdition]=useState<CardEdition|'all'>('all');
+  const [limit,setLimit]=useState(24);
+  const result=queryMealCollection(collection,{sort,search,edition});
+  const total=view==='menus'?result.menus.length:result.cards.length;
   const [known,setKnown]=useState<CatalogOffering[]>([]);
   const [knownDate,setKnownDate]=useState('');
   const [notice,setNotice]=useState('저장본에서 알려진 메뉴를 확인하고 있어요.');
@@ -36,18 +43,23 @@ export function MealCollectionPanel({data,onExplore}:{data:DexDocument;onExplore
     })();
     return()=>{alive=false;controller.abort();};
   },[]);
-  const owned=new Set(cards.map(c=>c.entry.subject.kind==='meal'?c.entry.subject.dishId:''));
+  const owned=new Set(collection.menus.map(menu=>menu.dishId));
   const unknown=known.filter(row=>!owned.has(row.selection!.dishId));
   return <div className="dex-collection-panel">
-    <div className="dex-section-heading"><div><span className="dex-eyebrow">MY COLLECTION</span><h2>한 끼씩, 차곡차곡.</h2></div><span className="dex-count">고유 메뉴 <strong>{cards.length}</strong>개</span></div>
-    <p className="dex-muted">발견 메뉴 {cards.length}종 · 보유 카드 {cards.reduce((sum,card)=>sum+card.experiences.length,0)}장</p>
+    <div className="dex-section-heading"><div><span className="dex-eyebrow">MY COLLECTION</span><h2>한 끼씩, 차곡차곡.</h2></div><span className="dex-count">고유 메뉴 <strong>{collection.menus.length}</strong>개</span></div>
+    <p className="dex-muted">발견 메뉴 {collection.menus.length}종 · 보유 카드 {collection.cards.length}장</p>
     <details className="dex-tray"><summary>랜덤 카드 에디션 확률 안내</summary><p>{CARD_EDITIONS.map(edition=>`${edition} ${CARD_EDITION_POLICY.weights[edition]}%`).join(' · ')} (합계 100%)</p><p>매 식사 기록에 카드 1장. 음식의 제공 빈도·맛과 관계없는 랜덤 에디션이에요. 이전 기록은 NORMAL로 보존해요. 경험을 삭제하면 연결 카드도 삭제돼요.</p></details>
-    {cards.length===0?<CollectionEmptyState onExplore={onExplore}/>:<div className="dex-card-grid">{cards.map(card=><CollectionCard key={card.entry.id} title={card.name} rarity={unknownMealRarity(card.entry.subject.kind==='meal'?card.entry.subject.dishId:'').tier} isNew={now-Date.parse(card.entry.firstCollectedAt)>=0&&now-Date.parse(card.entry.firstCollectedAt)<7*86400000} artwork={<CollectionArtwork kind={mealArtwork(card.name)}/>} href={`/dex/meal/collection/${card.entry.id}`} meta={<><span>먹은 기록 {card.experiences.length}회 · 보유 카드 {card.experiences.length}장</span><span>{[...new Set(card.experiences.map(exp=>experienceCard(exp)!.edition))].join(' · ')}</span><span>{card.rating===null?'아직 평가 전':`★ ${card.rating} / 5`}</span></>}><p className="dex-card-note">{card.note??`첫 기록 ${card.entry.collectedOn}`}</p>{personal.find(p=>p.entryIds.includes(card.entry.id))?.affection?<p className="dex-affection">{personal.find(p=>p.entryIds.includes(card.entry.id))?.affection==='soul'?'♡ 나의 소울푸드':'↻ 나의 단골 메뉴'}</p>:null}</CollectionCard>)}</div>}
+    <div className="dex-collection-switch" role="group" aria-label="컬렉션 보기"><button aria-pressed={view==='menus'} onClick={()=>{setView('menus');setLimit(24);}}>메뉴 도감</button><button aria-pressed={view==='album'} onClick={()=>{setView('album');setLimit(24);}}>카드 앨범</button></div>
+    <div className="dex-collection-tools"><label>메뉴 검색<input aria-label="메뉴 검색" value={search} onChange={e=>{setSearch(e.target.value);setLimit(24);}} placeholder="메뉴 이름"/></label><label>정렬<select aria-label="컬렉션 정렬" value={sort} onChange={e=>{setSort(e.target.value as CardSort);setLimit(24);}}><option value="recent">최근 획득순</option><option value="edition">에디션 높은 순</option><option value="name">메뉴 이름순</option><option value="visits">많이 먹은 메뉴순</option></select></label><label>에디션<select aria-label="에디션 필터" value={edition} onChange={e=>{setEdition(e.target.value as CardEdition|'all');setLimit(24);}}><option value="all">모든 에디션</option>{CARD_EDITIONS.map(e=><option key={e} value={e}>{e}</option>)}</select></label></div>
+    {view==='menus'&&edition!=='all'?<p className="dex-small dex-muted">선택 에디션을 보유한 메뉴를 표시해요. 대표 카드는 그 메뉴의 최고 에디션이에요.</p>:null}
+    <p className="dex-small" role="status">{view==='menus'?'메뉴':'카드'} {Math.min(limit,total)} / {total}{view==='menus'?'종':'장'} 표시</p>
+    {collection.menus.length===0?<CollectionEmptyState onExplore={onExplore}/>:total===0?<div className="dex-empty dex-empty--small"><h3>{view==='album'&&collection.cards.length===0?'보유 카드가 없어요':'검색 결과가 없어요'}</h3><p>검색어와 에디션 필터를 확인해 주세요. 경험을 모두 삭제한 메뉴 등록은 남아 있어요.</p></div>:<div className="dex-owned-grid" data-testid="owned-grid">{view==='menus'?result.menus.slice(0,limit).map(menu=><EditionCollectionCard key={menu.dishId} name={menu.name} edition={menu.representative?.card.edition} count={menu.cards.length} acquiredOn={menu.firstCollectedOn} href={`/dex/meal/collection/${encodeURIComponent(menu.entryId)}`}/>):result.cards.slice(0,limit).map(item=><EditionCollectionCard key={item.card.id} name={item.name} edition={item.card.edition} acquiredOn={kstToday(new Date(item.card.acquiredAt))} href={mealDetailHref(item)}/>)}</div>}
+    {total>limit?<button className="dex-button dex-button--quiet" onClick={()=>setLimit(n=>n+24)}>더 보기 ({total-limit}개 남음)</button>:null}
     <MealGamePanel document={data}/>
     <section className="dex-known"><div className="dex-section-heading"><div><span className="dex-eyebrow">WAITING TO BE FOUND</span><h3>다음에 만날 메뉴</h3></div><span className="dex-tag">확인된 저장본</span></div>
       <p className="dex-muted">{knownDate?`${knownDate} 제공 식단에서 확인한 메뉴예요. 오늘 제공 여부와는 달라요.`:'확인 가능한 저장 식단을 기준으로 표시해요.'} 전체 메뉴 수나 완료율을 뜻하지 않아요.</p>
       <p className="dex-small dex-muted">{notice}</p>
-      {unknown.length?<div className="dex-card-grid">{unknown.map(row=><CollectionCard key={row.selection!.dishId} title={row.selection!.dishName} rarity="UNKNOWN" locked artwork={<CollectionArtwork kind={mealArtwork(row.selection!.dishName)} locked/>} meta="직접 먹은 날, 나의 도감으로"/>)}</div>:<p className="dex-muted">현재 저장본에서 추가로 표시할 미수집 메뉴가 없어요.</p>}
+      {unknown.length?<div className="dex-card-grid">{unknown.map(row=><CollectionCard key={row.selection!.dishId} title={splitMenuLabel(row.selection!.dishName).title} rarity="UNKNOWN" locked artwork={<CollectionArtwork kind={mealArtwork(row.selection!.dishName)} locked/>} meta="직접 먹은 날, 나의 도감으로"/>)}</div>:<p className="dex-muted">현재 저장본에서 추가로 표시할 미수집 메뉴가 없어요.</p>}
     </section>
   </div>;
 }
