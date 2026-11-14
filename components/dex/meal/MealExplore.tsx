@@ -51,7 +51,7 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
     });
     return ()=>{alive=false;controller.abort();};
   },[date,nonce]);
-  function changeDate(next:string){if(next!==date&&(!feedback||canDismissFeedback())){setReading(true);setDate(next);dismissFeedback();}}
+  function changeDate(next:string){if(next&&next!==date&&(!feedback||canDismissFeedback())){setReading(true);setDate(next);dismissFeedback();}}
   function reread(){setReading(true);setNonce(n=>n+1);}
   async function record(row:CatalogOffering) {
     if(submitting.current||!data||!mealDex||!row.selection)return;
@@ -84,7 +84,7 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
     </section>
     <div className="dex-segments" aria-label="학식도감 보기">
       <button aria-pressed={tab==='collection'} onClick={()=>setTab('collection')}>나의 도감 <span>{data?entries.length:'–'}</span></button>
-      <button aria-pressed={tab==='discover'} onClick={()=>setTab('discover')}>오늘의 발견 ↗</button>
+      <button aria-pressed={tab==='discover'} onClick={()=>setTab('discover')}>식단 탐색 ↗</button>
     </div>
     <div className="dex-small dex-muted">
       <p className={tab==='collection'?'sr-only':undefined} data-testid="meal-unique-count">{data?`고유 메뉴 ${entries.length}개`:loading?'내 기록을 불러오는 중…':'내 기록을 읽지 못했습니다.'}</p>
@@ -96,17 +96,17 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
     <Card className="dex-explore-toolbar">
       <div className="dex-explore-heading"><div><span className="dex-eyebrow">FIND YOUR NEXT CARD</span><h3>제공 식단 탐색</h3></div><span className="dex-tag">직접 먹은 메뉴만 수집해요</span></div>
       <div className="dex-explore-filters">
-        <label className="text-sm">제공 날짜 (한국 시간)<input aria-label="제공 날짜" type="date" value={date} onChange={e=>changeDate(e.target.value)} className="mt-1 block rounded-lg border bg-[var(--e-surface)] p-2"/></label>
+        <label className="text-sm">제공 날짜 (한국 시간)<input aria-label="제공 날짜" type="date" max={kstToday()} value={date} onChange={e=>changeDate(e.target.value)} className="mt-1 block rounded-lg border bg-[var(--e-surface)] p-2"/></label>
         <label className="text-sm">식당<select aria-label="식당" value={cafeteria} onChange={e=>setCafeteria(e.target.value as Cafeteria|'')} className="mt-1 block rounded-lg border bg-[var(--e-surface)] p-2"><option value="">전체 식당</option>{Object.entries(CAFETERIA_NAMES).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>
         <label className="text-sm">끼니<select aria-label="끼니" value={mealTime} onChange={e=>setMealTime(e.target.value as MealTime|'')} className="mt-1 block rounded-lg border bg-[var(--e-surface)] p-2"><option value="">전체 끼니</option>{Object.entries(MEAL_TIME_NAMES).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>
-        <button className="rounded-lg border px-3 py-2 text-sm disabled:opacity-40" disabled={reading} onClick={reread}>저장본 다시 읽기</button>
+        <button className="rounded-lg border px-3 py-2 text-sm disabled:opacity-40" disabled={reading} onClick={reread}>선택 날짜 조회</button>
       </div>
       {catalog?<>
         <details className="dex-source-info"><summary>저장본 정보{catalog.dataState==='stale'?' · 오래된 데이터':catalog.dataState==='seed'?' · 예시 데이터':''}</summary><p data-testid="meal-source-notice">{catalog.notice}</p><p className="break-all">저장 출처: {catalog.source}</p><p>조회만으로 수집되지 않아요. 선택한 제공일에 실제로 먹은 메뉴만 등록해 주세요.</p></details>
-        {catalog.availableDates.length?<div className="flex flex-wrap gap-2 text-sm"><span>저장된 제공일:</span>{catalog.availableDates.map(day=><button key={day} className="underline" onClick={()=>changeDate(day)}>{day}</button>)}</div>:null}
+
       </>:null}
     </Card>
-    {reading?<p role="status">저장된 식단을 읽는 중…</p>:catalogError?<p role="alert">{catalogError}</p>:offerings.length===0?<Card className="space-y-2 p-5"><p>선택한 날짜·식당·끼니에 저장된 식단이 없습니다.</p><p className="text-sm">오늘 메뉴를 임의로 만들거나 자동 수집하지 않습니다. 위의 저장된 제공일을 선택할 수 있어요.</p></Card>:<div className="dex-offering-grid">
+    {reading?<p role="status">선택한 날짜의 식단을 읽는 중…</p>:catalogError?<p role="alert">{catalogError}</p>:offerings.length===0?<Card className="space-y-2 p-5"><p>선택한 날짜·식당·끼니에 확인된 식단이 없습니다.</p><p className="text-sm">날짜·식당·끼니를 바꿔 확인해 주세요. 아직 수집하지 못했거나 원문이 비어 있을 수 있으며, 미운영을 뜻하지는 않아요.</p></Card>:<div className="dex-offering-grid">
       {offerings.map(row=>{
         const item=row.offering;
         const collected=row.selection?entries.some(e=>e.subject.kind==='meal'&&e.subject.dishId===row.selection!.dishId):false;

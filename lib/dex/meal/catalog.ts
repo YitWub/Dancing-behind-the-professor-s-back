@@ -55,7 +55,7 @@ function validItem(value:unknown):value is MealItem {
 export async function readOfferings(query:MealCatalogQuery,options:{signal?:AbortSignal;fetcher?:typeof fetch}={}) {
   try {
     if(!isIsoDate(query.date))throw Error('올바른 날짜를 선택해 주세요.');
-    const response=await (options.fetcher??fetch)('/api/meals/status',{cache:'no-store',signal:options.signal});
+    const response=await (options.fetcher??fetch)('/api/meals/status?date='+encodeURIComponent(query.date),{cache:'no-store',signal:options.signal});
     if(!response.ok)throw Error('저장된 식단 조회에 실패했습니다.');
     const body:unknown=await response.json();
     if(!body||typeof body!=='object'||!('ok'in body)||body.ok!==true||!('data'in body))throw Error('식단 응답을 확인할 수 없습니다.');

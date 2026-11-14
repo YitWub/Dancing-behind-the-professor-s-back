@@ -60,7 +60,7 @@ test('한국 시간 자정 전후의 제공일만 실제 식사로 허용한다'
 test('기존 GET status 한 번만 사용하고 오류를 mock 메뉴로 메우지 않는다',async()=>{
   const calls:string[]=[];
   const fetcher=(async(url,init)=>{calls.push(String(url));assert.equal(init?.cache,'no-store');assert.ok(!init?.method||init.method==='GET');return Response.json({ok:true,data:crawl});}) as typeof fetch;
-  const result=await readOfferings({date:meal.date},{fetcher});assert.equal(result.ok,true);assert.deepEqual(calls,['/api/meals/status']);
+  const result=await readOfferings({date:meal.date},{fetcher});assert.equal(result.ok,true);assert.deepEqual(calls,['/api/meals/status?date='+meal.date]);
   const failed=await readOfferings({date:meal.date},{fetcher:async()=>{throw Error('offline');}});assert.equal(failed.ok,false);
   const malformed=await readOfferings({date:meal.date},{fetcher:async()=>Response.json({ok:true,data:{...crawl,items:[{}]}})});assert.equal(malformed.ok,false);
 });
