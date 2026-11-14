@@ -69,7 +69,5 @@
 
 .dex-card-rating-summary{display:flex;align-items:center;gap:6px}.dex-average-stars{display:inline-block;position:relative;letter-spacing:2px;white-space:nowrap;line-height:1.3}.dex-average-stars-fill{position:absolute;left:0;top:0;overflow:hidden;white-space:nowrap}
 
-/* Keep the card title, edition row and rating on one left edge. */
-.dex-edition-card .album-card-frame .dex-card-copy{padding-inline:0;text-align:left}
-.dex-edition-card .album-card-frame .dex-card-meta,.dex-edition-card .album-card-frame .dex-card-rating-summary,.dex-edition-card .album-card-frame .dex-card-personal-stars{margin-inline:0;padding-inline:0;width:100%;box-sizing:border-box}
-
+/* A small inset for the menu title and stars; leave the edition row in place. */
+.dex-edition-card .album-card-frame .dex-card-copy h3,.dex-edition-card .album-card-frame .dex-card-rating-summary,.dex-edition-card .album-card-frame .dex-card-personal-stars{padding-inline-start:4px;box-sizing:border-box}
