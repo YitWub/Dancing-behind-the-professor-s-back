@@ -23,6 +23,8 @@
  * ────────────────────────────────────────────────────────────────────────
  */
 
+import { loadMealEnvironment } from '../lib/meal/runtime.ts';
+import { runMealDataPipeline } from '../lib/meal/pipeline.ts';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -50,11 +52,17 @@ export {
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 async function main(): Promise<void> {
+  loadMealEnvironment(ROOT);
   const args = process.argv.slice(2);
   const dateArg = args.find((a) => a.startsWith('--date='))?.slice('--date='.length);
   const offline = args.includes('--offline');
   const outArg = args.find((a) => a.startsWith('--out='))?.slice('--out='.length);
 
+  if(!offline&&!outArg){
+    const arg=(name:string,fallback:string)=>args.find(value=>value.startsWith('--'+name+'='))?.slice(name.length+3)??fallback;
+    const result=await runMealDataPipeline({rootDir:ROOT,baseDate:dateArg,extraDates:args.filter(a=>a.startsWith('--extra-date=')).map(a=>a.slice('--extra-date='.length)),maxRequests:Number(arg('max-requests','24')),intervalMs:Number(arg('interval-ms','1800')),lookbackDays:Number(arg('lookback-days','2')),force:args.includes('--force')});
+    console.log(JSON.stringify({ok:result.ok,items:result.items.length,error:result.error??null}));return;
+  }
   await runMealCrawler({
     baseDate: dateArg,
     offline,

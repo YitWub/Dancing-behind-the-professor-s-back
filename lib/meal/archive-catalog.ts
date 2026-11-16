@@ -19,7 +19,7 @@ export function mergeArchivedMeals(base:CrawlResult,date:string,records:HistoryD
       if(meal.state!=='complete'||occupied.has(key))continue;
       const valid=meal.items.filter(item=>item.date===date&&item.cafeteria===day.cafeteria&&item.mealTime===meal.mealTime&&item.dishId&&item.rawName.trim()&&official(item.source));
       if(!valid.length)continue;
-      items.push(...valid.map((item):MealItem=>({id:item.legacyId+'-archive-'+item.sourceRecordId,date,cafeteria:item.cafeteria,mealTime:item.mealTime,name:item.rawName,menu:[...item.menu],price:item.price,kcal:null,imageUrl:null,imageSourceUrl:null})));
+      items.push(...valid.map((item):MealItem=>({id:item.legacyId+'-archive-'+item.sourceRecordId,date,cafeteria:item.cafeteria,mealTime:item.mealTime,name:item.rawName,menu:[...item.menu],price:item.price,kcal:item.kcal??null,imageUrl:item.imageSourceUrl??null,imageSourceUrl:item.imageSourceUrl??null})));
       occupied.add(key);observed.push(day.observedAt);archiveSource=day.source;
     }
   }

@@ -16,8 +16,14 @@ export function saveHistoryDay(root:string,day:HistoricalDay,html?:string){
   const id=createHash('sha256').update(JSON.stringify(day)).digest('hex');const attempt=join(dir,'attempts',id+'.json');if(!existsSync(attempt))atomicJson(attempt,day);
   const old=readHistoryDay(root,day.cafeteria,day.date);
   const known=day.status==='complete'||day.status==='closed';const priorKnown=old?.effective?.status==='complete'||old?.effective?.status==='closed';
-  const effective=known?day:priorKnown?old!.effective:day.status==='partial'?day:old?.effective??null;
+  let effective=known?day:priorKnown?old!.effective:day.status==='partial'?day:old?.effective??null;
+  if(day.status==='partial'&&old?.effective){
+    const previous=old.effective;
+    effective={...previous,observedAt:day.observedAt,meals:previous.meals.map(unit=>{const next=day.meals.find(meal=>meal.mealTime===unit.mealTime);return next&&(next.state==='complete'||next.state==='closed')?next:{...unit,provenance:unit.provenance??{source:previous.source,observedAt:previous.observedAt,htmlHash:previous.htmlHash??''}};}),reason:'확인된 끼니별 최신 관측을 병합; 누락 단위는 이전 정상 관측 유지'};
+  }
   atomicJson(join(dir,'current.json'),{schemaVersion:1,latest:day,effective} satisfies HistoryDayFile);
+  const index=jsonFile<{schemaVersion:1;rows:Record<string,{date:string;cafeteria:Cafeteria;menus:number;status:string;observedAt:string}>}>(join(root,'catalog-index.json'))??{schemaVersion:1 as const,rows:{}};
+  index.rows[day.cafeteria+'|'+day.date]={date:day.date,cafeteria:day.cafeteria,menus:effective?.meals.filter(meal=>meal.state==='complete').reduce((sum,meal)=>sum+meal.items.length,0)??0,status:day.status,observedAt:day.observedAt};atomicJson(join(root,'catalog-index.json'),index);
 }
 export function listHistoryDays(root:string,cafeteria:Cafeteria,from:string,through:string):HistoryDayFile[]{
   const base=join(root,'days',cafeteria);if(!existsSync(base))return [];

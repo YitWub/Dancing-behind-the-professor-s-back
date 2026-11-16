@@ -458,14 +458,14 @@ export function parseDetailPhp(
 
   // 2) #view-pane-weekly 영역에서 주간 식단 카드 보조 추출 (일~토 7일치)
   const weeklyItems: MealItem[] = [];
-  const weekDates = [...pane.matchAll(/selectDay\(['"](\d{4}-\d{2}-\d{2})['"]\)/g)].map(
+  const weekDates = [...new Set([...pane.matchAll(/selectDay\(['"](\d{4}-\d{2}-\d{2})['"]\)/g)].map(
     (m) => m[1],
-  );
+  ))];
   const weeklyPaneMatch = html.match(
     /id="view-pane-weekly"[^>]*>([\s\S]*?)id="view-pane-daily"/i,
   );
   if (weeklyPaneMatch && weekDates.length > 0) {
-    const dayCards = weeklyPaneMatch[1].split('<div class="weekly-day-card').slice(1);
+    const dayCards = weeklyPaneMatch[1].split(/<div class="weekly-day-card(?:\s[^"]*)?">/).slice(1);
     dayCards.forEach((dayCard, idx) => {
       const cardDate = weekDates[idx];
       if (!cardDate) return;

@@ -1,3 +1,4 @@
+import type { MealDateCoverage } from '../../meal/coverage-types.ts';
 import type { CrawlResult, MealItem } from '../../types.ts';
 import { isIsoDate, kstToday } from '../../datetime.ts';
 import { mealDataNotice, mealReadStatus } from '../../meal/status.ts';
@@ -8,7 +9,7 @@ import { resolveDish, stableHash } from './identity.ts';
 
 export interface MealCatalogQuery {date:string;cafeteria?:Cafeteria;mealTime?:MealTime}
 export interface CatalogOffering {offering:MealOffering;selection:ResolvedMealSelection|null;reason:string|null}
-export interface MealCatalog {offerings:CatalogOffering[];availableDates:string[];source:string;notice:string;dataState:MealDataState}
+export interface MealCatalog {offerings:CatalogOffering[];availableDates:string[];source:string;notice:string;dataState:MealDataState;coverage?:MealDateCoverage}
 export const CAFETERIA_NAMES:Record<Cafeteria,string>={haksik:'학생식당',changbo:'창업보육센터식당',dorm:'창의인재원식당',faculty:'교직원식당'};
 export const MEAL_TIME_NAMES:Record<MealTime,string>={breakfast:'아침',lunch:'점심',dinner:'저녁'};
 
@@ -16,7 +17,7 @@ function officialSource(source:string) {
   try {return new URL(source).origin==='https://life.hanyang.ac.kr';}catch{return false;}
 }
 /** API 데이터를 읽기만 하는 순수 어댑터. legacy ID는 보존하되 dish/offering 식별에 순번을 쓰지 않는다. */
-export async function adaptMealCatalog(crawl:CrawlResult,query:MealCatalogQuery,now=Date.now()):Promise<MealCatalog> {
+export async function adaptMealCatalog(crawl:CrawlResult & {availableDates?:string[];dateCoverage?:MealDateCoverage},query:MealCatalogQuery,now=Date.now()):Promise<MealCatalog> {
   const status=mealReadStatus(crawl,now);
   const seeded=crawl.fallback==='seed'||crawl.source.startsWith('seed:');
   const mocked=crawl.source.startsWith('mock:');
@@ -40,7 +41,7 @@ export async function adaptMealCatalog(crawl:CrawlResult,query:MealCatalogQuery,
       ?{dishId:resolved.dish.id,dishName:resolved.dish.canonicalName,offering:{...offering,resolution:offering.resolution}}:null};
   }));
   return {offerings:[...new Map(offerings.map(row=>[row.offering.id,row])).values()],
-    availableDates:[...new Set(crawl.items.map(i=>i.date).filter(isIsoDate))].sort().reverse(),
+    coverage:crawl.dateCoverage,availableDates:[...new Set([...(crawl.availableDates??[]),...crawl.items.map(i=>i.date)].filter(isIsoDate))].sort().reverse(),
     source:crawl.source,notice:mealDataNotice(crawl),dataState:status.dataState};
 }
 function validItem(value:unknown):value is MealItem {
@@ -63,4 +64,14 @@ export async function readOfferings(query:MealCatalogQuery,options:{signal?:Abor
     if(!crawl||typeof crawl.ok!=='boolean'||typeof crawl.source!=='string'||typeof crawl.fetchedAt!=='string'||!Array.isArray(crawl.items)||!crawl.items.every(validItem))throw Error('저장된 식단 형식 확인이 필요합니다.');
     return {ok:true as const,value:await adaptMealCatalog(crawl,query)};
   }catch(error){return {ok:false as const,error:{message:error instanceof Error?error.message:'식단 조회에 실패했습니다. 자동으로 재수집하지 않습니다.'}};}
+}
+
+/** Honest empty-state wording over the selected restaurant/meal units. */
+export function mealCoverageMessage(coverage:MealDateCoverage|undefined,cafeteria:string,mealTime:string){
+  const units=coverage?.units.filter(unit=>(!cafeteria||unit.cafeteria===cafeteria)&&(!mealTime||unit.mealTime===mealTime))??[];
+  if(units.length&&units.every(unit=>unit.state==='closed'))return '공식 원문에서 선택한 날짜·끼니의 미운영이 확인됐어요.';
+  if(units.some(unit=>unit.lastAttemptStatus==='network-error'||unit.lastAttemptStatus==='parse-error'))return '최근 조회 또는 파싱에 실패했어요. 이전 정상 기록은 보존하며, 메뉴가 없었다는 뜻은 아니에요.';
+  if(units.some(unit=>unit.state==='partial'))return '일부 식단만 확인되어 해당 메뉴의 수집을 보류했어요. 미운영으로 집계하지 않아요.';
+  if(units.length&&units.every(unit=>unit.state==='not-observed'))return '아직 이 날짜의 식단을 수집하지 않았어요. 날짜 조회만으로 자동 크롤링하지 않아요.';
+  return '공식 응답에 해당 식단이 없거나 일부 끼니가 확인되지 않았어요. 미운영일로 단정하지 않아요.';
 }
