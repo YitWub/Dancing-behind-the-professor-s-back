@@ -7,6 +7,7 @@
  * 저장된 결과와 출처·시각·상태만 반환한다. 수집하지 않는다.
  */
 
+import { availableMealDates, readMealCoverage } from '../../../../lib/meal/coverage.ts';
 import { readArchivedMealCatalog } from '../../../../lib/meal/archive-catalog.ts';
 import { isIsoDate } from '../../../../lib/datetime.ts';
 import { readMealCrawl } from '../../../../lib/meal/store.ts';
@@ -19,7 +20,7 @@ export async function GET(request?:Request): Promise<Response> {
     if(date!==null&&!isIsoDate(date))return fail('올바른 제공 날짜가 필요합니다.',400);
     const stored=readMealCrawl();
     const crawl=date?readArchivedMealCatalog(stored,date):stored;
-    return ok({ ...crawl, ...mealReadStatus(crawl) }, { headers: mealReadHeaders(crawl) });
+    return ok({ ...crawl, ...mealReadStatus(crawl), availableDates:availableMealDates(crawl), ...(date?{dateCoverage:readMealCoverage(crawl,date)}:{}) }, { headers: mealReadHeaders(crawl) });
   } catch (err) {
     return internal(err, '크롤링 상태 조회');
   }

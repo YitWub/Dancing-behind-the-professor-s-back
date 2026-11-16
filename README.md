@@ -2,16 +2,17 @@
 
 **대학생활의 모든 발견을 수집하다.**
 
-직접 경험한 대학생활을 개인 도감에 모으는 서비스입니다. 공식 진입점은 `/` → `/dex`입니다. 이 README는 첫 팀 공유 브랜치 `bokak2/integration` 기준이며, main Merge는 별도 리뷰 후 진행합니다.
+직접 경험한 대학생활을 개인 도감에 모으는 서비스입니다. 공식 진입점은 `/` → `/dex`입니다. BOKAK 2.0은 main에 통합되었습니다. 기능 개발은 별도 브랜치에서 진행합니다.
 
 ## 빠른 시작
 
 검증 환경은 **Node.js 24.22.2 / npm 11.19.1**입니다. Next.js 16.4.6, React 19, TypeScript, Tailwind CSS 4를 사용합니다. Node 24 환경을 권장하며 `npm ci`로 lockfile의 버전을 설치하세요.
 
 ```powershell
-git clone --branch bokak2/integration https://github.com/YitWub/Dancing-behind-the-professor-s-back.git BOKAK
+git clone --branch main https://github.com/YitWub/Dancing-behind-the-professor-s-back.git BOKAK
 cd BOKAK
 npm ci
+npm run meals:storage -- setup
 npm run dev
 ```
 
@@ -64,7 +65,7 @@ Windows에서 npm.ps1 실행이 차단되면 같은 명령을 `npm.cmd ci`, `npm
 npm run meals:sync
 ```
 
-기본은 한국 시간 오늘·내일입니다. 특정 기준일은 `npm run meals:sync -- --date=2026-11-14`처럼 지정하며 필요하면 `--extra-date=YYYY-MM-DD`를 추가합니다. 학교 공식 사이트에 실제 남아 있는 메뉴만 수집합니다. **CLI 종료 코드 0만으로 성공을 판단하지 마세요.** 기존 계약상 수집 실패도 0으로 끝날 수 있으므로 출력의 `ok`, `/api/meals/status`의 수집 상태와 실제 제공 날짜를 확인합니다. 실패 시 마지막 정상 스냅샷은 보존합니다.
+기본은 한국 시간 오늘·내일, 최근 누락 2일과 공식 페이지에 공개된 주간 날짜입니다. 기본 최대 24회 요청, 최소 1.8초 간격입니다. 특정 기준일은 `npm run meals:sync -- --date=2026-11-14`처럼 지정하며 필요하면 `--extra-date=YYYY-MM-DD`를 추가합니다. 학교 공식 사이트에 실제 남아 있는 메뉴만 수집합니다. **CLI 종료 코드 0만으로 성공을 판단하지 마세요.** 기존 계약상 수집 실패도 0으로 끝날 수 있으므로 출력의 `ok`, `/api/meals/status`의 수집 상태와 실제 제공 날짜를 확인합니다. 실패 시 마지막 정상 스냅샷은 보존합니다.
 
 과거 관측이 꼭 필요할 때만 짧은 구간부터 실행합니다. 아래 명령은 실제 네트워크 요청과 로컬 관측 파일 생성을 수행합니다.
 
@@ -72,7 +73,7 @@ npm run meals:sync
 node --experimental-strip-types scripts/observe-meal-history.ts --from=2026-09-01 --through=2026-09-03 --max-requests=4 --interval-ms=1800
 ```
 
-실행 시 robots 정책을 확인하며 요청 횟수·간격을 제한합니다. 빈 날짜를 반복해서 대량 요청하지 마세요. 이 명령은 학생식당 대상이며, 최신 식단 JSON과 개인 기록을 변경하지 않습니다.
+실행 시 robots 정책을 확인하며 요청 횟수·간격을 제한합니다. 빈 날짜를 반복해서 대량 요청하지 마세요. 기본 학생식당 대상이며 `--cafeterias=haksik,faculty,changbo,dorm`으로 확장할 수 있습니다. 검증 결과는 공용 저장본과 관측 이력에 반영하며 추적 JSON·사진과 개인 기록은 변경하지 않습니다.
 
 ### 운영 자동화
 
@@ -82,7 +83,7 @@ node --experimental-strip-types scripts/observe-meal-history.ts --from=2026-09-0
 
 ## 환경 변수: 전부 선택 사항
 
-`.env.example`에는 비밀 값 없이 사용 가능한 옵션을 적었습니다. 필요한 경우에만 `.env.local`로 복사하고 각자 설정하세요. **스크립트용 환경 변수는 실행 셸 또는 작업자 서비스에도 전달해야 합니다.** Node로 직접 실행하는 수집 스크립트가 `.env.local`을 자동으로 읽는다고 가정하지 마세요.
+`.env.example`에는 비밀 값 없이 사용 가능한 옵션을 적었습니다. 필요한 경우에만 `.env.local`로 복사하고 각자 설정하세요. Next와 학식 CLI는 `.env.local`의 같은 저장 경로를 읽습니다. 셸 설정이 우선합니다. `npm run meals:storage -- status`로 확인하세요.
 
 | 변수 | 용도 |
 | --- | --- |
@@ -135,3 +136,7 @@ git switch -c feat/people-dex
 현재 구현 기준은 코드와 [GAME_SYSTEM](docs/dex/GAME_SYSTEM.md), [MEAL_ID_POLICY](docs/dex/MEAL_ID_POLICY.md), [MEAL_AUTO_SYNC](docs/dex/MEAL_AUTO_SYNC.md)를 참고하세요. `ARCHITECTURE.md`·`MVP_SPEC.md`·`CONTRACT_DRAFT.md`에는 초기 설계 초안도 포함되므로 모든 예시가 현재 구현이라고 가정하지 마세요.
 
 개별 변경을 검증해 커밋하고 PR로 공유합니다. 개인 IndexedDB 백업·`.env.local`·ZIP·스크린샷·관측 원문·다른 팀원의 미커밋 파일은 업로드하지 않습니다.
+
+### Clone과 분리한 아카이브 보존
+
+`npm run meals:storage -- setup`은 외부 `~/BOKAK-data`에 기존 저장본을 검증 복사하고 로컬 환경 파일에 연결합니다. 원본은 남기며 충돌 시 중단합니다. 새 Clone에서도 같은 명령으로 외부 저장소를 재사용하고 Next를 재시작하세요. 팀원에게 자동 공유되는 서버 저장소는 아닙니다. 백업·복원, Windows 예약 작업 수동 등록·해제는 [학식 운영 안내](docs/dex/MEAL_AUTO_SYNC.md)를 참고하세요.

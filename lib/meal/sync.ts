@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { constants, copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, basename, resolve, sep } from 'node:path';
-import type { CafeteriaInfo, CrawlResult, MealItem } from '../types.ts';
+import type { CafeteriaInfo, CrawlResult, MealItem, Cafeteria, MealTime } from '../types.ts';
 import { isIsoDate } from '../datetime.ts';
 import { toMealPhotoDbRecord } from './store.ts';
 import type { MealPhotoDbRecord } from './store.ts';
@@ -9,8 +9,9 @@ import { acquireMealLock, atomicJson, jsonFile, mealAssetPath, mealStorageRoot, 
 import type { MealSnapshot } from './sync-store.ts';
 
 const SOURCE='https://life.hanyang.ac.kr/theme/pages/home.php';
-export interface SyncOptions {rootDir:string;dates:string[];outPath?:string;storageDir?:string;scheduledSlot?:string;offline?:boolean;silent?:boolean}
-export interface Harvest {items:MealItem[];cafeterias:CafeteriaInfo[];source:string}
+export interface SyncOptions {rootDir:string;dates:string[];outPath?:string;storageDir?:string;scheduledSlot?:string;offline?:boolean;silent?:boolean;downloadPhotos?:boolean}
+export interface ConfirmedMealUnit {date:string;cafeteria:Cafeteria;mealTime:MealTime;closed:boolean}
+export interface Harvest {confirmedUnits?:ConfirmedMealUnit[];issues?:string[];observedDates?:string[];items:MealItem[];cafeterias:CafeteriaInfo[];source:string}
 function offeringKey(item:MealItem){return JSON.stringify([item.date,item.cafeteria,item.mealTime,item.name]);}
 export function mergeMealHistory(previous:MealItem[],incoming:MealItem[]){
   const merged=new Map(previous.map(item=>[offeringKey(item),structuredClone(item)]));
@@ -86,16 +87,20 @@ export async function synchronizeMeals(options:SyncOptions,harvest:()=>Promise<H
     let candidate:CrawlResult;
     try{
       if(options.offline)throw Error('--offline: 네트워크 요청 생략');
-      const fresh=await harvest();validateHarvest(fresh,options.dates);
+      const fresh=await harvest();
+      const checkedDates=fresh.observedDates??options.dates;
+      if(fresh.confirmedUnits?.some(unit=>!isIsoDate(unit.date)||!['haksik','faculty','changbo','dorm'].includes(unit.cafeteria)||!['breakfast','lunch','dinner'].includes(unit.mealTime)))throw Error('관측 단위가 잘못되었습니다.');
+      validateHarvest(fresh,[...new Set([...options.dates,...checkedDates])]);
+      if(fresh.confirmedUnits&&fresh.confirmedUnits.length===0&&previous)return previous;
       // A partly missing historical response is not a replacement for the full successful date.
-      for(const date of options.dates){const before=previous?.items.filter(i=>i.date===date).length??0;if(before>fresh.items.filter(i=>i.date===date).length)throw Error(`${date} 식단 수가 감소하여 게시 보류`);}
+      for(const date of fresh.confirmedUnits?[]:options.dates){const before=previous?.items.filter(i=>i.date===date).length??0;if(before>fresh.items.filter(i=>i.date===date).length)throw Error(`${date} 식단 수가 감소하여 게시 보류`);}
       if(!preview){
         staging=join(root,'staging',randomUUID());mkdirSync(staging,{recursive:true});
         const oldByKey=new Map(previous?.items.map(i=>[offeringKey(i),i]));
         // Bound image requests; no unbounded downloads across menus.
-        for(let start=0;start<fresh.items.length;start+=4)await Promise.all(fresh.items.slice(start,start+4).map(item=>preparePhoto(item,oldByKey.get(offeringKey(item)),options,root,staging!,fetcher)));
+        for(let start=0;options.downloadPhotos!==false&&start<fresh.items.length;start+=4)await Promise.all(fresh.items.slice(start,start+4).map(item=>preparePhoto(item,oldByKey.get(offeringKey(item)),options,root,staging!,fetcher)));
       }
-      candidate={ok:true,fetchedAt:new Date().toISOString(),source:SOURCE,items:mergeMealHistory(previous?.items??[],fresh.items),cafeterias:fresh.cafeterias};
+      candidate={ok:true,fetchedAt:new Date().toISOString(),source:SOURCE,items:fresh.confirmedUnits?mergeConfirmedMealUnits(previous?.items??[],fresh.items,fresh.confirmedUnits):mergeMealHistory(previous?.items??[],fresh.items),cafeterias:fresh.cafeterias};
       if(preview){atomicJson(options.outPath!,candidate);return candidate;}
       const photoMap=new Map(photos.map(record=>[record.mealItemId,record]));
       const incomingKeys=new Set(fresh.items.map(offeringKey));
@@ -109,7 +114,7 @@ export async function synchronizeMeals(options:SyncOptions,harvest:()=>Promise<H
         const record=toMealPhotoDbRecord(item,{syncedAt:candidate.fetchedAt,...(extension?{mimeType:extension==='jpg'?'image/jpeg':`image/${extension}`} :{}),...(local?{sizeBytes:readFileSync(local).length}:{})});
         if(record)photoMap.set(item.id,record);
       }
-      const snapshot:MealSnapshot={schemaVersion:1,crawl:candidate,photos:[...photoMap.values()],checkedDates:options.dates,scheduledSlots:[...(active?.scheduledSlots??[]),...(options.scheduledSlot?[options.scheduledSlot]:[])].slice(-128)};
+      const snapshot:MealSnapshot={schemaVersion:1,crawl:candidate,photos:[...photoMap.values()],checkedDates,scheduledSlots:[...(active?.scheduledSlots??[]),...(options.scheduledSlot?[options.scheduledSlot]:[])].slice(-128)};
       mkdirSync(join(root,'assets'),{recursive:true});
       const {readdirSync}=await import('node:fs');
       for(const name of readdirSync(staging!)){
@@ -118,7 +123,7 @@ export async function synchronizeMeals(options:SyncOptions,harvest:()=>Promise<H
         else copyFileSync(from,to,constants.COPYFILE_EXCL);
       }
       // Snapshot validation + one atomic pointer swap publishes menus and photo mappings together.
-      atomicJson(join(root,'last-attempt.json'),{at:candidate.fetchedAt,ok:true,...(options.scheduledSlot?{scheduledSlot:options.scheduledSlot}:{})});
+      atomicJson(join(root,'last-attempt.json'),{at:candidate.fetchedAt,ok:true,...(fresh.issues?.length?{partial:true,error:fresh.issues.join('; ')}:{}),...(options.scheduledSlot?{scheduledSlot:options.scheduledSlot}:{})});
       publishMealSnapshot(root,snapshot);
       if(!options.silent)console.log(`식단 게시 완료: 총 ${candidate.items.length}개, 이번 조회 ${options.dates.join(', ')}`);
       return candidate;
@@ -134,4 +139,14 @@ export async function synchronizeMeals(options:SyncOptions,harvest:()=>Promise<H
     // A UUID directory created by this invocation only; snapshots and backups are never deleted.
     try{if(staging)rmSync(staging,{recursive:true,force:true});}finally{release();}
   }
+}
+
+/** Replace only fully verified units; the old versions remain in immutable snapshots and observation attempts. */
+export function mergeConfirmedMealUnits(previous:MealItem[],incoming:MealItem[],units:ConfirmedMealUnit[]){
+  const key=(row:{date:string;cafeteria:Cafeteria;mealTime:MealTime})=>JSON.stringify([row.date,row.cafeteria,row.mealTime]);
+  for(const unit of units){const count=incoming.filter(row=>key(row)===key(unit)).length;if(unit.closed?count!==0:count===0)throw Error('식단 확인 상태와 메뉴 수 불일치');}
+  const confirmed=new Set(units.map(key));if(incoming.some(row=>!confirmed.has(key(row))))throw Error('확인되지 않은 식단 단위');
+  const merged=mergeMealHistory(previous,incoming);
+  const incomingKeys=new Set(incoming.map(offeringKey));
+  return merged.filter(row=>!confirmed.has(key(row))||incomingKeys.has(offeringKey(row)));
 }

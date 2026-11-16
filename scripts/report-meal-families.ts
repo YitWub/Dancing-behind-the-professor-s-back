@@ -1,3 +1,5 @@
+import { loadMealEnvironment } from '../lib/meal/runtime.ts';
+loadMealEnvironment(process.cwd());
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';

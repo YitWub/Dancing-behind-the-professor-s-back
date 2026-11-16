@@ -4,7 +4,7 @@ import { Card } from '@/components/ui';
 import { useDexDocument } from '@/components/dex/scaffold/useDexDocument';
 import { getBrowserRepository } from '@/lib/dex/storage/browser';
 import type { CollectResult, Result } from '@/lib/dex/core/types';
-import { readOfferings, CAFETERIA_NAMES, MEAL_TIME_NAMES } from '@/lib/dex/meal/catalog';
+import { readOfferings, mealCoverageMessage, CAFETERIA_NAMES, MEAL_TIME_NAMES } from '@/lib/dex/meal/catalog';
 import type { CatalogOffering, MealCatalog } from '@/lib/dex/meal/catalog';
 import type { Cafeteria, MealTime } from '@/lib/dex/meal/types';
 import { MealCollectionRequests } from '@/lib/dex/meal/requests';
@@ -96,9 +96,10 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
     <Card className="dex-explore-toolbar">
       <div className="dex-explore-heading"><div><span className="dex-eyebrow">FIND YOUR NEXT CARD</span><h3>제공 식단 탐색</h3></div><span className="dex-tag">직접 먹은 메뉴만 수집해요</span></div>
       <div className="dex-explore-filters">
-        <label className="text-sm">제공 날짜 (한국 시간)<input aria-label="제공 날짜" type="date" max={kstToday()} value={date} onChange={e=>changeDate(e.target.value)} className="mt-1 block rounded-lg border bg-[var(--e-surface)] p-2"/></label>
+        <label className="text-sm">제공 날짜 (한국 시간)<input aria-label="제공 날짜" type="date" value={date} onChange={e=>changeDate(e.target.value)} className="mt-1 block rounded-lg border bg-[var(--e-surface)] p-2"/></label>
         <label className="text-sm">식당<select aria-label="식당" value={cafeteria} onChange={e=>setCafeteria(e.target.value as Cafeteria|'')} className="mt-1 block rounded-lg border bg-[var(--e-surface)] p-2"><option value="">전체 식당</option>{Object.entries(CAFETERIA_NAMES).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>
         <label className="text-sm">끼니<select aria-label="끼니" value={mealTime} onChange={e=>setMealTime(e.target.value as MealTime|'')} className="mt-1 block rounded-lg border bg-[var(--e-surface)] p-2"><option value="">전체 끼니</option>{Object.entries(MEAL_TIME_NAMES).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>
+        <label className="text-sm">확인된 날짜<select aria-label="확인된 제공 날짜" value={catalog?.availableDates.includes(date)?date:''} onChange={e=>changeDate(e.target.value)}><option value="" disabled>달력에서 날짜 선택</option>{catalog?.availableDates.map(day=><option key={day} value={day}>{day}</option>)}</select></label>
         <button className="rounded-lg border px-3 py-2 text-sm disabled:opacity-40" disabled={reading} onClick={reread}>선택 날짜 조회</button>
       </div>
       {catalog?<>
@@ -106,7 +107,7 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
 
       </>:null}
     </Card>
-    {reading?<p role="status">선택한 날짜의 식단을 읽는 중…</p>:catalogError?<p role="alert">{catalogError}</p>:offerings.length===0?<Card className="space-y-2 p-5"><p>선택한 날짜·식당·끼니에 확인된 식단이 없습니다.</p><p className="text-sm">날짜·식당·끼니를 바꿔 확인해 주세요. 아직 수집하지 못했거나 원문이 비어 있을 수 있으며, 미운영을 뜻하지는 않아요.</p></Card>:<div className="dex-offering-grid">
+    {reading?<p role="status">선택한 날짜의 식단을 읽는 중…</p>:catalogError?<p role="alert">{catalogError}</p>:offerings.length===0?<Card className="space-y-2 p-5"><p>선택한 날짜·식당·끼니에 확인된 식단이 없습니다.</p><p className="text-sm">{mealCoverageMessage(catalog?.coverage,cafeteria,mealTime)}</p></Card>:<div className="dex-offering-grid">
       {offerings.map(row=>{
         const item=row.offering;
         const collected=row.selection?entries.some(e=>e.subject.kind==='meal'&&e.subject.dishId===row.selection!.dishId):false;

@@ -1,5 +1,5 @@
 import type { Cafeteria, MealTime } from '../types.ts';
-import { isIsoDate } from '../datetime.ts';
+import { isIsoDate, kstToday } from '../datetime.ts';
 import type { HistoricalDay, HistoricalMenu } from './history.ts';
 import type { HistoryDayFile } from './history-store.ts';
 export interface DayStatisticsScope {from:string;through:string;cafeteria:Cafeteria;mealTimes:MealTime[]}
@@ -22,7 +22,7 @@ export function buildHistoryStatistics(files:readonly HistoryDayFile[],scope:Day
   const valid:HistoricalDay[]=[],closedDates:string[]=[],missingDates:string[]=[];
   const rawRecords=new Map<string,HistoricalMenu>();const latestStatusCounts:Record<string,number>={};
   for(const date of dates){
-    const file=byDate.get(date),day=file?.effective;const status=file?.latest.status??'not-attempted';latestStatusCounts[status]=(latestStatusCounts[status]??0)+1;
+    const file=byDate.get(date),day=date<=kstToday(new Date(generatedAt))?file?.effective:null;const status=file?.latest.status??'not-attempted';latestStatusCounts[status]=(latestStatusCounts[status]??0)+1;
     if(day)for(const meal of day.meals)for(const item of meal.items)rawRecords.set(item.sourceRecordId,item);
     const units=scope.mealTimes.map(time=>day?.meals.find(meal=>meal.mealTime===time));
     if(units.every(unit=>unit?.state==='closed'))closedDates.push(date);

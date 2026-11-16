@@ -5,7 +5,8 @@ import { dirname, join, resolve } from 'node:path';
 import type { CrawlResult } from '../types.ts';
 import type { MealPhotoDbRecord } from './store.ts';
 
-export interface SyncAttempt {at:string;ok:boolean;error?:string;scheduledSlot?:string}
+import { encodeSnapshotParts, decodeSnapshotParts } from './snapshot-parts.ts';
+export interface SyncAttempt {at:string;ok:boolean;error?:string;scheduledSlot?:string;partial?:boolean}
 export interface MealSnapshot {schemaVersion:1;crawl:CrawlResult;photos:MealPhotoDbRecord[];checkedDates:string[];scheduledSlots:string[]}
 export type StoredCrawl=CrawlResult&{syncStatus?:SyncAttempt;checkedDates?:string[]};
 export function mealStorageRoot(projectRoot=process.cwd()){
@@ -27,15 +28,15 @@ export function readMealSnapshot(root:string):MealSnapshot|null{
   if(!/^[0-9a-f-]{36}$/.test(pointer.generation))throw Error('식단 스냅샷 포인터가 잘못되었습니다.');
   const bytes=readFileSync(join(root,'snapshots',pointer.generation+'.json'));
   if(createHash('sha256').update(bytes).digest('hex')!==pointer.sha256)throw Error('식단 스냅샷 무결성 검사 실패');
-  const data=JSON.parse(bytes.toString('utf8')) as MealSnapshot;
+  const data=decodeSnapshotParts(root,JSON.parse(bytes.toString('utf8')));
   if(data.schemaVersion!==1||!data.crawl?.ok||!Array.isArray(data.crawl.items)||!Array.isArray(data.photos))throw Error('유효한 식단 스냅샷이 아닙니다.');
   return data;
 }
 export function publishMealSnapshot(root:string,snapshot:MealSnapshot){
   if(!snapshot.crawl.ok)throw Error('실패 결과를 게시할 수 없습니다.');
   const generation=randomUUID(),directory=join(root,'snapshots');mkdirSync(directory,{recursive:true});
-  const file=join(directory,generation+'.json');atomicJson(file,snapshot);
-  const bytes=readFileSync(file);const checked=JSON.parse(bytes.toString('utf8')) as MealSnapshot;
+  const file=join(directory,generation+'.json');atomicJson(file,encodeSnapshotParts(root,snapshot));
+  const bytes=readFileSync(file);const checked=decodeSnapshotParts(root,JSON.parse(bytes.toString('utf8')));
   if(!checked.crawl.ok||checked.crawl.items.length!==snapshot.crawl.items.length)throw Error('임시 스냅샷 검증 실패');
   // Readers see either the entire previous generation or the entire next generation.
   atomicJson(join(root,'current.json'),{generation,sha256:createHash('sha256').update(bytes).digest('hex')});

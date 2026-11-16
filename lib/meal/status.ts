@@ -29,7 +29,7 @@ export function mealReadStatus(crawl: CrawlResult, now = Date.now()): MealReadSt
     lastSuccessfulFetchAt: success ? crawl.fetchedAt : null,
     // cache의 fetchedAt은 실패 시도 시각이므로 성공 시각으로 사용하지 않는다.
     lastAttemptAt: attemptValid?attempt!.at:valid ? crawl.fetchedAt : null,
-    ...(attemptValid&&!attempt!.ok?{lastSyncError:attempt!.error??'최근 자동 수집에 실패했습니다.'}:{}),
+    ...(attemptValid&&(!attempt!.ok||attempt!.partial)?{lastSyncError:attempt!.error??'최근 자동 수집에 실패했습니다.'}:{}),
   };
 }
 
