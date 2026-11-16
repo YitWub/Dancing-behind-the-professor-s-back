@@ -141,3 +141,12 @@ Chrome 실패 주입에서 이미 abort된 transaction을 다시 abort할 때의
 - 사진 보드 전체 백업은 .bokak v5 단일 바이너리 패키지다. BOKAKPK5\n + little-endian uint32 메타데이터 길이 + UTF-8 manifest + manifest 순서대로 원본이 아닌 최적화 Blob들을 이어 붙인다. ZIP/Base64/외부 라이브러리를 사용하지 않는다. manifest는 5MiB, 총 파일은 55MiB+13바이트 이하이며 데이터·사진 ID/소유자/용량/SHA256/실제 이미지 형식·크기/참조·누락·중복·추가 바이트를 검증한다.
 - previewImport에서 모든 사진을 검증한 뒤 사용자 확인을 받고, 메타데이터·Blob·이미지 정보 전체를 하나의 readwrite 트랜잭션에서 교체한다. 미리보기 후 수정은 IMPORT_CONFLICT로 거부한다. 실패 시 이전 자료 전부를 보존한다. v1~v4 JSON 가져오기(5MiB 제한)는 유지하며, 이전 백업 전체 교체는 새 사진도 제거하므로 먼저 v5로 보존한다. 사진 없는 기록은 기존 JSON 버전을 유지한다. 사진을 모두 삭제한 보드도 version=3이면 빈 사진 목록의 v5로 보존한다.
 - exportRecovery는 손상된 메타데이터와 사진 Blob을 빠뜨리지 않고 복구용 패키지로 내보낸다. 자동 가져오기용 정상 백업과 구별하며 별도 점검이 필요하다. 백업은 암호화되지 않으며 실제 사진/얼굴/개인 메모를 포함한다. 개인 파일을 Git·public·외부 API로 전송하지 않는다.
+
+### 다중 인연 보드 (PHASE 6A)
+- 인연 원본 CollectionEntry/Experience는 그대로 유지한다. 하나의 인연 Dex에 peopleBoards:{version:1,activeBoardId,boards:[{id,name,layout,view:{zoom}}]}를 저장한다. layout은 기존 배치·실·메모·사진 모델을 재사용한다. DB 버전 2와 Blob 스토어는 변경하지 않는다.
+- 인연 화면 첫 진입의 managePeopleBoards(initialize)에서 기존 peopleBoard를 기본 보드로 이전하고 구형 필드를 제거한다. 실제로 여러 구형 보드가 있었으면 각각 보존하며 인연을 자동 분류·통합하지 않는다. 모든 변경은 같은 readwrite 트랜잭션에서 검증·저장하고 실패 시 원래 레코드와 사진 참조를 유지한다. 이미 peopleBoards가 있으면 재이전하지 않는다.
+- layout.positions는 {placementId,entryId,x,y}. placementId는 board ID와 원본 Entry ID 쌍에서 결정적으로 생성해 동일 인연의 보드별 배치를 구분한다. 같은 보드 중복 배치는 무시하며 다른 보드의 좌표는 변경하지 않는다. 메모·사진·연결은 부모 board ID에 소속되고, 향후 객체 참조는 board ID + 객체 ID 조합을 사용한다. 6C의 자유 연결·다중 실·관계 라벨은 구현하지 않았다. 현재 실의 a/b는 같은 보드에 배치된 인연 Entry ID만 참조한다.
+- managePeopleBoards는 생성·이름 수정·선택·삭제·배치·제거·확대를 담당하며 root Dex revision으로 충돌을 검출한다. 마지막 보드 삭제는 거부한다. 보드 삭제·배치 제거는 인연 원본/추억을 삭제하지 않는다. 원본 인연 삭제는 모든 보드 배치·관련 실을 함께 정리한다.
+- 새 인연 등록은 원본/Experience/선택 보드 배치를 원자적으로 저장한다. 기존 인연을 다른 보드에 배치하는 작업은 collect를 호출하지 않는다. 보드 전환은 저장 중이거나 편집이 열려 있으면 차단한다. 새로고침 시 activeBoardId와 보드별 50/75/100% 확대를 복원한다. 스크롤 위치는 저장하지 않는다.
+- 다중 보드 전체 백업은 .bokak v6(BOKAKPK6\n)이며 사진이 없어도 패키지로 내보낸다. v1~v4 JSON 및 v5 사진 패키지 가져오기는 유지하고, 구형 보드는 인연 화면에 진입할 때 안전하게 이전한다. 전체 보드의 사진 참조를 합쳐 이미지 해시/소유/용량을 검증하고 같은 트랜잭션으로 복원한다. 공유 Blob은 마지막 참조가 사라진 경우에만 제거한다. 기존 5MiB 메타데이터·50MiB 이미지 한도는 유지한다.
+- 구버전 앱은 새 peopleBoards/v6를 읽지 못한다. 이전 버전으로 전환해 초기화하지 말고 업데이트된 앱과 전체 백업을 사용한다.

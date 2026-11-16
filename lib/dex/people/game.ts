@@ -1,3 +1,4 @@
+import { allBoardLayouts } from './multi-board.ts';
 import type { CollectResult, DexDocument, Result } from '../core/types.ts';
 import type { Achievement } from '../game/types.ts';
 import { isPerson } from './view.ts';
@@ -16,7 +17,7 @@ export function peopleAchievements(document:DexDocument):Achievement[]{
  const records=peopleRecords(document);
  const memories=records.experiences.filter(e=>e.kind==='person'&&e.event==='memory').length;
  let connections=0;
- for(const dex of records.dexes)connections+=new Set((dex.peopleBoard?.edges??[]).filter(e=>e.a!==e.b&&records.byId.get(e.a)?.dexId===dex.id&&records.byId.get(e.b)?.dexId===dex.id).map(e=>JSON.stringify([e.a,e.b].sort()))).size;
+ for(const dex of records.dexes)for(const board of allBoardLayouts(dex))connections+=new Set(board.edges.filter(e=>e.a!==e.b&&records.byId.has(e.a)&&records.byId.has(e.b)).map(e=>JSON.stringify([e.a,e.b].sort()))).size;
  function goal(id:string,name:string,icon:string,condition:string,count:number,target:number):Achievement{return {id,name,icon,condition,progress:Math.min(count,target),target,status:count>=target?'achieved':'locked',achievedAt:null};}
  return [
   goal('people:first','첫 페이지','▤','첫 번째 인연 등록',records.entries.length,1),

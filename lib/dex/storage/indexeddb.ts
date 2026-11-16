@@ -1,3 +1,5 @@
+import { migratePeopleBoards,manageBoards,selectedBoard,tagPlacements,placePerson,allBoardLayouts } from '../people/multi-board.ts';
+import type { BoardManagementCommand } from '../people/multi-board.ts';
 import { packBackup,packContainer,unpackBackup,isPhotoPackage,photoReferences,MAX_PACKAGE } from './photo-package.ts';
 import { verifyPrepared,imageHash,MAX_PHOTO_TOTAL,MAX_PHOTO_ASSETS } from '../people/photo.ts';
 import type { PhotoAsset,PreparedImage,BoardPhoto,ImageInfo } from '../people/photo.ts';
@@ -112,6 +114,9 @@ export class IndexedDbDexRepository implements DexRepository {
     });
   }
   private abort(tx:IDBTransaction,error:unknown){this.failures.set(tx,error);try{tx.abort();}catch{/* Already aborted. */}}
+  private removePlacements(doc:DexDocument,ids:Set<string>){
+    for(const dex of doc.dexes){let changed=false;for(const board of allBoardLayouts(dex)){const positions=board.positions.filter(p=>!ids.has(p.entryId)),edges=board.edges.filter(e=>!ids.has(e.a)&&!ids.has(e.b));if(positions.length!==board.positions.length||edges.length!==board.edges.length){board.positions=positions;board.edges=edges;changed=true;}}if(changed)touch(dex,this.runtime);}
+  }
   private cleanAssets(tx:IDBTransaction,doc:DexDocument){
     const refs=photoReferences(doc),assets=tx.objectStore('photoAssets'),infos=tx.objectStore('photoAssetInfo');
     for(const id of refs){const info=infos.get(id);info.onsuccess=()=>{if(!info.result||info.result.ownerId!==doc.profile.ownerId)this.abort(tx,new DexError('CORRUPT_STORAGE','사진 참조를 확인할 수 없습니다. 자동 초기화하지 않았습니다.'));};const blob=assets.getKey(id);blob.onsuccess=()=>{if(blob.result===undefined)this.abort(tx,new DexError('CORRUPT_STORAGE','사진 파일이 누락되었습니다.'));};}
@@ -176,15 +181,23 @@ export class IndexedDbDexRepository implements DexRepository {
       Object.assign(dex,patch); touch(dex,this.runtime); return {value:dex,changed:true};
     }));
   }
-  addBoardPhoto(ownerId:string,dexId:string,revision:number,photo:Pick<BoardPhoto,'id'|'assetId'|'caption'|'size'>,image:PreparedImage){
+  managePeopleBoards(ownerId:string,dexId:string,revision:number,command:BoardManagementCommand){return resultOf(()=>this.document(true,doc=>{
+    owner(doc,ownerId);const selected=find(doc.dexes,dexId);ensure(selected.kind==='people','인연 보드만 지원합니다.');
+    if(command.type==='initialize'){const migration=migratePeopleBoards(doc);if(migration.changed)touch(migration.dex,this.runtime);return {value:migration.dex,changed:migration.changed};}
+    checkRevision(selected,revision);const before=canonical(selected.peopleBoards);manageBoards(doc,selected,command);const changed=canonical(selected.peopleBoards)!==before;if(changed)touch(selected,this.runtime);return {value:selected,changed};
+  }));}
+  addBoardPhoto(ownerId:string,dexId:string,revision:number,photo:Pick<BoardPhoto,'id'|'assetId'|'caption'|'size'>,image:PreparedImage,boardId?:string){
     return resultOf(async()=>{
       await verifyPrepared(image);ensure(photo.assetId==='img-'+image.sha256,'사진 식별자와 해시가 다릅니다.');
       return this.transaction('readwrite',(raw,tx)=>{
         const doc=this.decode(raw);owner(doc,ownerId);const dex=find(doc.dexes,dexId);checkRevision(dex,revision);
-        const next=addBoardPhoto(dex,doc.entries,photo);const info:ImageInfo={id:photo.assetId,ownerId,mime:image.mime,bytes:image.bytes,width:image.width,height:image.height,sha256:image.sha256};
+        const record=dex.peopleBoards?selectedBoard(dex,boardId):null;
+        const view=record?{...dex,peopleBoard:record.layout}:dex;
+        const entries=record?doc.entries.filter(e=>record.layout.positions.some(p=>p.entryId===e.id)):doc.entries;
+        const next=addBoardPhoto(view,entries,photo);const info:ImageInfo={id:photo.assetId,ownerId,mime:image.mime,bytes:image.bytes,width:image.width,height:image.height,sha256:image.sha256};
         const infos=tx.objectStore('photoAssetInfo'),all=infos.getAll();
         all.onsuccess=()=>{const rows=all.result as ImageInfo[];const old=rows.find(i=>i.id===info.id);if((old&&old.ownerId!==ownerId)||rows.reduce((n,i)=>n+(i.id===info.id?0:i.bytes),image.bytes)>MAX_PHOTO_TOTAL||rows.length+(old?0:1)>MAX_PHOTO_ASSETS)this.abort(tx,new DOMException('사진 저장 한도를 초과했습니다.','QuotaExceededError'));};
-        tx.objectStore('photoAssets').put({id:info.id,blob:image.blob});infos.put(info);dex.peopleBoard=next;touch(dex,this.runtime);doc.profile.revision++;this.persist(tx,doc);
+        tx.objectStore('photoAssets').put({id:info.id,blob:image.blob});infos.put(info);if(record){record.layout=next;tagPlacements(record);}else dex.peopleBoard=next;touch(dex,this.runtime);doc.profile.revision++;this.persist(tx,doc);
         return {value:dex,changed:true};
       });
     });
@@ -197,11 +210,15 @@ export class IndexedDbDexRepository implements DexRepository {
     });
     ensure(captured.blob&&captured.info,'사진 파일이 누락되었습니다.','CORRUPT_STORAGE');await verifyPrepared({...captured.info,blob:captured.blob});return captured.blob;
   });}
-  updatePeopleBoard(ownerId:string,dexId:string,revision:number,command:BoardCommand){return resultOf(()=>this.document(true,doc=>{
+  updatePeopleBoard(ownerId:string,dexId:string,revision:number,command:BoardCommand,boardId?:string){return resultOf(()=>this.document(true,doc=>{
     owner(doc,ownerId);const dex=find(doc.dexes,dexId);checkRevision(dex,revision);
-    const next=applyBoardCommand(dex,doc.entries,command);
-    if(canonical(next)===canonical(dex.peopleBoard??null))return {value:dex,changed:false};
-    dex.peopleBoard=next;touch(dex,this.runtime);return {value:dex,changed:true};
+    const record=dex.peopleBoards?selectedBoard(dex,boardId):null;
+    const current=record?.layout??dex.peopleBoard;
+    const view=record?{...dex,peopleBoard:record.layout}:dex;
+    const entries=record?doc.entries.filter(e=>record.layout.positions.some(p=>p.entryId===e.id)):doc.entries;
+    const next=applyBoardCommand(view,entries,command);if(record){const tagged={...record,layout:next};tagPlacements(tagged);}
+    if(canonical(next)===canonical(current??null))return {value:dex,changed:false};
+    if(record)record.layout=next;else dex.peopleBoard=next;touch(dex,this.runtime);return {value:dex,changed:true};
   }));}
   deleteDex(ownerId: string, id: string, revision: number) {
     return resultOf(() => this.document(true, doc => {
@@ -218,7 +235,12 @@ export class IndexedDbDexRepository implements DexRepository {
       // Local collection only; not a server-authoritative or paid lottery.
       const entropy=await fingerprint(['bokak-card-v1',input.ownerId,input.requestId]);
       const roll=parseInt(entropy.slice(-64,-56),16)/4294967296;
-      return this.document(true, doc => applyCollection(doc,input,hash,{...this.runtime,cardRoll:()=>roll}));
+      return this.document(true,doc=>{
+        const applied=applyCollection(doc,input,hash,{...this.runtime,cardRoll:()=>roll});
+        const root=doc.dexes.find(d=>d.peopleBoards);
+        if(applied.changed&&applied.value.outcome==='new-entry'&&applied.value.entry.subject.kind==='person'&&root){placePerson(doc,root,selectedBoard(root),applied.value.entry.id);touch(root,this.runtime);}
+        return applied;
+      });
     });
   }
   commitMealCollection(command: CollectMealCommand) { return collectMeal(command, this); }
@@ -238,7 +260,7 @@ export class IndexedDbDexRepository implements DexRepository {
     return resultOf(() => this.document(true, doc => {
       owner(doc,ownerId); checkRevision(find(doc.entries,id),revision);
       doc.entries=doc.entries.filter(e=>e.id!==id); doc.experiences=doc.experiences.filter(e=>e.entryId!==id);
-      for(const dex of doc.dexes)if(dex.peopleBoard){const board=dex.peopleBoard;const positions=board.positions.filter(p=>p.entryId!==id),edges=board.edges.filter(e=>e.a!==id&&e.b!==id);if(positions.length!==board.positions.length||edges.length!==board.edges.length){dex.peopleBoard={...board,positions,edges};touch(dex,this.runtime);}}
+      this.removePlacements(doc,new Set([id]));
       return {value:undefined,changed:true};
     }));
   }
@@ -262,7 +284,7 @@ export class IndexedDbDexRepository implements DexRepository {
       return {value:{data,assets}};
     });
     const {data,assets}=captured;
-    if(data.dexes.some(d=>d.peopleBoard?.version===3)){for(const asset of assets)await verifyPrepared({...asset.info,blob:asset.blob});return packBackup(data,assets,this.runtime.now());}
+    if(data.dexes.some(d=>d.peopleBoards||d.peopleBoard?.version===3)){for(const asset of assets)await verifyPrepared({...asset.info,blob:asset.blob});return packBackup(data,assets,this.runtime.now());}
     const envelope:BackupEnvelope={format:'bokak-dex',schemaVersion:data.dexes.some(d=>d.peopleBoard?.version===2)?4:data.dexes.some(d=>d.peopleBoard)?3:2,exportedAt:this.runtime.now(),containsSensitiveData:true,data};
     return new Blob([JSON.stringify(envelope,null,2)],{type:'application/json'});
   });}
@@ -280,13 +302,13 @@ export class IndexedDbDexRepository implements DexRepository {
     let document:DexDocument,assets:PhotoAsset[]=[];
     try{
       if(await isPhotoPackage(file)){const parsed=await unpackBackup(file);document=parsed.document;assets=parsed.assets;}
-      else{ensure(file.size<=5*1024*1024,'JSON 백업은 5MB 이하여야 합니다.');const envelope=parseBackup(await file.text());ensure(envelope.schemaVersion!==5,'v5는 사진 포함 .bokak 패키지를 선택하세요.');document=envelope.data;}
+      else{ensure(file.size<=5*1024*1024,'JSON 백업은 5MB 이하여야 합니다.');const envelope=parseBackup(await file.text());ensure(envelope.schemaVersion<5,'v5는 사진 포함 .bokak 패키지를 선택하세요.');document=envelope.data;}
     }catch(error){if(error instanceof DexError&&error.code==='UNSUPPORTED_SCHEMA')throw error;throw new DexError('INVALID_BACKUP','백업 구조·사진 해시·용량·참조를 확인해 주세요. 기존 기록은 변경하지 않았습니다.');}
     ensure(document.profile.namespace===this.namespace,'개발 검증 기록과 개인 기록은 서로 가져올 수 없습니다.','INVALID_BACKUP');
     const raw=await this.transaction('readonly',value=>({value})),token=this.runtime.id();
     if(this.pending.size>=2)this.pending.delete(this.pending.keys().next().value!);
     this.pending.set(token,{document:structuredClone(document),expectedRaw:canonical(raw),assets});
-    return {token,counts:{dexes:document.dexes.length,entries:document.entries.length,experiences:document.experiences.length,photos:document.dexes.reduce((n,d)=>n+(d.peopleBoard?.photos?.length??0),0),photoBytes:assets.reduce((n,a)=>n+a.blob.size,0)},warnings:['사진·인연·개인 메모가 포함될 수 있는 암호화되지 않은 백업입니다.','확인하면 사진을 포함한 현재 기록 전체를 교체합니다. 먼저 내보내 주세요.']} satisfies ImportPreview;
+    return {token,counts:{dexes:document.dexes.length,entries:document.entries.length,experiences:document.experiences.length,photos:document.dexes.reduce((n,d)=>n+allBoardLayouts(d).reduce((m,b)=>m+(b.photos?.length??0),0),0),photoBytes:assets.reduce((n,a)=>n+a.blob.size,0),boards:document.dexes.reduce((n,d)=>n+(d.peopleBoards?.boards.length??(d.peopleBoard?1:0)),0)},warnings:['사진·인연·개인 메모가 포함될 수 있는 암호화되지 않은 백업입니다.','확인하면 사진을 포함한 현재 기록 전체를 교체합니다. 먼저 내보내 주세요.']} satisfies ImportPreview;
   });}
   commitImport(input: { token: string; strategy: 'replace'; confirmed: true }) {
     return resultOf(async () => {

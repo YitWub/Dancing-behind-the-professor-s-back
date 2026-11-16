@@ -1,3 +1,4 @@
+import { validateBoardCollection } from '../people/multi-board.ts';
 import { validatePeopleBoard } from '../people/board.ts';
 import { isIsoDate } from '../../datetime.ts';
 import { ensure, DexError } from './errors.ts';
@@ -110,13 +111,16 @@ export function validateDocument(value: unknown): asserts value is DexDocument {
   const unique = (rows: {id: string}[]) => ensure(new Set(rows.map(r => r.id)).size === rows.length, '중복 식별자가 있습니다.');
   const owner = (v: {ownerId: string}) => ensure(v.ownerId === p.ownerId, '로컬 소유 범위가 다릅니다.');
   for (const dex of d.dexes) {
-    object(dex, [...base,'ownerId','kind','name','icon','visibility','progress','peopleBoard']); versioned(dex); owner(dex);
+    object(dex, [...base,'ownerId','kind','name','icon','visibility','progress','peopleBoard','peopleBoards']); versioned(dex); owner(dex);
     ensure(['meal','people','custom'].includes(dex.kind) && dex.visibility === 'private', '도감 종류·공개 범위를 확인해 주세요.'); text(dex.name, 80); ensure(ICONS.includes(dex.icon as typeof ICONS[number]), '허용된 아이콘을 사용해 주세요.');
     object(dex.progress, dex.progress?.mode === 'bounded' ? ['mode','targetSetId','targetSetVersion'] : ['mode']);
     if (dex.progress.mode === 'bounded') { id(dex.progress.targetSetId); natural(dex.progress.targetSetVersion, true); }
     else ensure(dex.progress.mode === 'count-only', '진행 표시 정책을 확인해 주세요.');
   }
   for(const dex of d.dexes)if(dex.peopleBoard!==undefined)validatePeopleBoard(dex.peopleBoard,dex,d.entries);
+  ensure(d.dexes.filter(dex=>dex.peopleBoards).length<=1,'인연 보드 목록은 하나의 원본 도감에서 관리합니다.');
+  if(d.dexes.some(dex=>dex.peopleBoards))ensure(d.dexes.every(dex=>!dex.peopleBoard),'구형·다중 보드 데이터를 혼합할 수 없습니다.');
+  for(const dex of d.dexes)if(dex.peopleBoards!==undefined)validateBoardCollection(dex.peopleBoards,dex,d.entries);
   unique(d.dexes); unique(d.entries); unique(d.experiences); unique(d.receipts);
   const dexes = new Map(d.dexes.map(v => [v.id,v]));
   const entries = new Map(d.entries.map(v => [v.id,v]));
@@ -152,12 +156,13 @@ export function parseBackup(raw: string): BackupEnvelope {
     const v: unknown = JSON.parse(raw);
     object(v, ['format','schemaVersion','exportedAt','containsSensitiveData','data']);
     ensure(v.format === 'bokak-dex', 'BOKAK 내보내기 파일이 아닙니다.');
-    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
+    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
     ensure(v.containsSensitiveData === true, '백업 정보가 누락되었습니다.'); instant(v.exportedAt); validateDocument(v.data);
     if(v.schemaVersion===1||v.schemaVersion===2)ensure(v.data.dexes.every(dex=>dex.peopleBoard===undefined),'보드는 v3 백업을 사용해야 합니다.');
     if(v.schemaVersion===3)ensure(v.data.dexes.every(dex=>!dex.peopleBoard||dex.peopleBoard.version===1),'확장 보드는 v4 백업을 사용해야 합니다.');
     if(v.schemaVersion!==1)ensure(v.data.experiences.every(exp=>exp.kind!=='meal'||!!exp.card),'카드 정보가 누락된 v2 백업입니다.');
-    if(v.schemaVersion!==5)ensure(v.data.dexes.every(dex=>!dex.peopleBoard||dex.peopleBoard.version!==3),'사진 보드는 v5 사진 백업이 필요합니다.');
+    if(v.schemaVersion<5)ensure(v.data.dexes.every(dex=>!dex.peopleBoard||dex.peopleBoard.version!==3),'사진 보드는 v5 사진 백업이 필요합니다.');
+    if(v.schemaVersion!==6)ensure(v.data.dexes.every(dex=>!dex.peopleBoards),'다중 보드는 v6 백업을 사용해야 합니다.');
     normalizeLegacyCards(v.data);
     return v as unknown as BackupEnvelope;
   } catch (error) {

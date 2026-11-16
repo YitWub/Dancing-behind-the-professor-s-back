@@ -8,7 +8,7 @@ export const THREAD_STYLES=['red','olive','twine'] as const;
 export type ThreadStyle=typeof THREAD_STYLES[number];
 export const NOTE_COLORS=['yellow','green','pink','blue'] as const;
 export type NoteColor=typeof NOTE_COLORS[number];
-export interface BoardPosition {entryId:string;x:number;y:number}
+export interface BoardPosition {entryId:string;x:number;y:number;placementId?:string}
 export interface BoardEdge {id:string;a:string;b:string;style?:ThreadStyle}
 export interface BoardNote {id:string;text:string;color:NoteColor;x:number;y:number}
 export interface PeopleBoard {version:1|2|3;positions:BoardPosition[];edges:BoardEdge[];notes?:BoardNote[];photos?:BoardPhoto[]}
@@ -29,9 +29,9 @@ export function validatePeopleBoard(value:unknown,dex:Dex,entries:CollectionEntr
  fields(value,['version','positions','edges',...(!!value&&typeof value==='object'&&((value as {version?:number}).version??0)>=2?['notes',...((value as {version?:number}).version===3?['photos']:[])]:[])]);
  ensure(dex.kind==='people'&&(value.version===1||value.version===2||value.version===3),'인연도감 보드 버전을 확인해 주세요.');
  ensure(Array.isArray(value.positions)&&value.positions.length<=10000&&Array.isArray(value.edges)&&value.edges.length<=10000,'보드 크기를 확인해 주세요.');
- const people=new Set(entries.filter(e=>e.dexId===dex.id&&e.subject.kind==='person').map(e=>e.id));
+ const people=new Set(entries.filter(e=>(dex.peopleBoards||e.dexId===dex.id)&&e.ownerId===dex.ownerId&&e.subject.kind==='person').map(e=>e.id));
  const placed=new Set<string>(),edges=new Set<string>(),noteIds=new Set<string>();
- for(const raw of value.positions as unknown[]){fields(raw,['entryId','x','y']);ensure(typeof raw.entryId==='string'&&people.has(raw.entryId)&&!placed.has(raw.entryId),'보드 카드 참조 또는 중복을 확인해 주세요.');coordinate(raw.x,raw.y,CARD_WIDTH,CARD_HEIGHT);placed.add(raw.entryId);}
+ for(const raw of value.positions as unknown[]){fields(raw,['entryId','x','y',...(dex.peopleBoards?['placementId']:[])]);ensure(typeof raw.entryId==='string'&&people.has(raw.entryId)&&!placed.has(raw.entryId),'보드 카드 참조 또는 중복을 확인해 주세요.');coordinate(raw.x,raw.y,CARD_WIDTH,CARD_HEIGHT);placed.add(raw.entryId);}
  for(const raw of value.edges as unknown[]){fields(raw,['id','a','b',...((value.version as number)>=2?['style']:[])]);ensure(typeof raw.a==='string'&&typeof raw.b==='string'&&raw.a!==raw.b&&people.has(raw.a)&&people.has(raw.b)&&placed.has(raw.a)&&placed.has(raw.b),'실의 인연 참조를 확인해 주세요.');const key=edgeKey(raw.a as string,raw.b as string);ensure(raw.id===key&&!edges.has(key),'같은 실을 중복 연결할 수 없습니다.');if(raw.style!==undefined)ensure(THREAD_STYLES.includes(raw.style as ThreadStyle),'실 스타일을 확인해 주세요.');edges.add(key);}
  if(value.notes!==undefined){ensure((value.version as number)>=2&&Array.isArray(value.notes)&&value.notes.length<=500,'메모는 보드당 500개까지 저장할 수 있어요.');for(const raw of value.notes as unknown[]){fields(raw,['id','text','color','x','y']);noteInput(raw.id,raw.text,raw.color);ensure(!noteIds.has(raw.id as string)&&!people.has(raw.id as string),'중복된 메모 식별자입니다.');coordinate(raw.x,raw.y,NOTE_WIDTH,NOTE_HEIGHT);noteIds.add(raw.id as string);}}
  if(value.photos!==undefined){ensure(value.version===3&&Array.isArray(value.photos)&&value.photos.length<=100,'보드 사진은 100개까지 지원합니다.');const ids=new Set<string>();for(const raw of value.photos as unknown[]){fields(raw,['id','assetId','caption','size','x','y']);validatePhoto(raw);ensure(!ids.has(raw.id as string)&&!people.has(raw.id as string)&&!noteIds.has(raw.id as string),'사진 식별자가 중복됩니다.');const size=PHOTO_SIZES[raw.size as PhotoSize];coordinate(raw.x,raw.y,size.width,size.height);ids.add(raw.id as string);}}
