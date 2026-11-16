@@ -1,7 +1,7 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 import { IDBFactory, IDBDatabase } from 'fake-indexeddb';
-import { IndexedDbDexRepository } from '../indexeddb.ts';
+import { IndexedDbDexRepository,DATABASE_VERSION } from '../indexeddb.ts';
 import type { CollectCommand, CollectMealCommand, Result } from '../../core/types.ts';
 
 function value<T>(result:Result<T>):T { if(!result.ok)throw Error(`${result.error.code}: ${result.error.message}`);return result.value; }
@@ -16,7 +16,7 @@ async function setup(options:ConstructorParameters<typeof IndexedDbDexRepository
   return {repo,factory,profile,doc,command};
 }
 async function mutateRaw(factory:IDBFactory,store:string,operation:(store:IDBObjectStore)=>void){
-  const request=factory.open('bokak.dex',1);
+  const request=factory.open('bokak.dex',DATABASE_VERSION);
   const db=await new Promise<IDBDatabase>((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);});
   try {await new Promise<void>((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.oncomplete=()=>resolve();tx.onabort=()=>reject(tx.error);operation(tx.objectStore(store));});}
   finally{db.close();}
@@ -112,7 +112,7 @@ test('손상된 프로필 없이 고아 데이터만 남아도 초기화하지 �
   error(await repo.open(),'CORRUPT_STORAGE');const raw=JSON.parse(await value(await repo.exportRecovery()).text());assert.equal(raw.raw.dexes.length,2);repo.close();
 });
 test('미래 DB 스키마는 지우거나 다운그레이드하지 않는다',async()=>{
-  const factory=new IDBFactory();const request=factory.open('bokak.dex',2);
+  const factory=new IDBFactory();const request=factory.open('bokak.dex',DATABASE_VERSION+1);
   const db=await new Promise<IDBDatabase>((resolve,reject)=>{request.onupgradeneeded=()=>request.result.createObjectStore('future');request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);});db.close();
   const repo=new IndexedDbDexRepository({factory});error(await repo.open(),'UNSUPPORTED_SCHEMA');repo.close();
 });

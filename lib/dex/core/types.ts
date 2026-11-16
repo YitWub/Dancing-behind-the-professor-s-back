@@ -1,3 +1,4 @@
+import type { PreparedImage,BoardPhoto } from '../people/photo.ts';
 import type { PeopleBoard, BoardCommand } from '../people/board.ts';
 import type { Cafeteria, MealTime, MealSnapshot, MealOffering } from '../meal/types.ts';
 export type { Dish, DishAlias, MealOffering } from '../meal/types.ts';
@@ -107,13 +108,13 @@ export type DexErrorCode =
   | 'UNSUPPORTED_SCHEMA' | 'INVALID_BACKUP' | 'IMPORT_CONFLICT';
 export type Result<T> = { ok: true; value: T } | { ok: false; error: { code: DexErrorCode; message: string } };
 export interface BackupEnvelope {
-  format: 'bokak-dex'; schemaVersion: 1 | 2 | 3 | 4; exportedAt: Instant;
+  format: 'bokak-dex'; schemaVersion: 1 | 2 | 3 | 4 | 5; exportedAt: Instant;
   containsSensitiveData: true;
   data: DexDocument;
 }
 export interface ImportPreview {
   token: Id;
-  counts: { dexes: number; entries: number; experiences: number };
+  counts: { dexes: number; entries: number; experiences: number; photos?:number; photoBytes?:number };
   warnings: string[];
 }
 export interface DexRepository {
@@ -122,6 +123,8 @@ export interface DexRepository {
   listDexes(ownerId: Id): Promise<Result<Dex[]>>;
   createDex(ownerId: Id, draft: { kind: DexKind; name: string; icon: string }): Promise<Result<Dex>>;
   updateDex(ownerId: Id, id: Id, revision: number, patch: { name?: string; icon?: string }): Promise<Result<Dex>>;
+  addBoardPhoto(ownerId:Id,dexId:Id,revision:number,photo:Pick<BoardPhoto,'id'|'assetId'|'caption'|'size'>,image:PreparedImage):Promise<Result<Dex>>;
+  getPhotoAsset(ownerId:Id,assetId:string):Promise<Result<Blob>>;
   updatePeopleBoard(ownerId:Id, dexId:Id, revision:number, command:BoardCommand):Promise<Result<Dex>>;
   deleteDex(ownerId: Id, id: Id, revision: number): Promise<Result<void>>;
   collect(command: CollectCommand): Promise<Result<CollectResult>>;

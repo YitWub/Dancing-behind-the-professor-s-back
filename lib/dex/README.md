@@ -131,4 +131,13 @@ Chrome 실패 주입에서 이미 abort된 transaction을 다시 abort할 때의
 - edge.style은 red / olive / twine이며 관계 의미를 자동 부여하지 않는다. notes는 {id,text,color,x,y} 목록이며 인연·Experience가 아니다. 메모 크기는 200×180, 내용은 1~500자, 보드당 최대 500개이며 실제 빈 공간이 없으면 추가를 거부한다.
 - add-note / edit-note / move-note / delete-note / style-edge는 기존 revision 검사·단일 트랜잭션을 사용한다. 생성 요청은 같은 메모 ID로 재시도하며, 실패 시 이전 레코드를 보존한다. 인연 삭제는 메모를 삭제하지 않는다.
 - v4 전체 백업에 메모·스타일·기존 인연·추억·배치가 함께 포함된다. 이전 백업 전체 교체 시 새 꾸미기 데이터도 교체되므로 먼저 v4로 내보낸다. 구버전 앱은 새 보드 버전/v4를 읽지 못하므로 업데이트한 클라이언트만 사용한다. 기존 가져오기 제한은 JSON 5MB다.
-- 사진은 아직 저장하지 않는다. 후속 이미지 Blob 스토어 추가 시 명시적인 DB 업그레이드, 이미지 압축/용량 한도, 삭제 정리와 이미지까지 포함한 백업 포맷을 별도로 설계해야 한다.
+- 사진 저장·마이그레이션·백업은 아래 PHASE 5D-2B 계약을 따른다.
+
+### 추억 사진 (PHASE 5D-2B)
+- IndexedDB DB_VERSION=2: v1 메타데이터 스토어는 유지하고 photoAssets({id,blob}) / photoAssetInfo({id,ownerId,mime,bytes,width,height,sha256})만 추가한다. blocked 업그레이드는 다른 탭 종료/새로고침을 안내한다. 다운그레이드·초기화하지 않는다.
+- 사진 보드는 peopleBoard.version=3, photos:[{id,assetId,caption,size,x,y}]를 사용한다. 별도 Entry/Experience를 만들지 않으며 기존 메모·스타일 작업이 보드 버전을 낮추지 않는다. assetId는 최적화 이미지 SHA256 기반이며 같은 이미지의 복수 참조를 지원한다.
+- 입력은 정적 JPEG/PNG/WebP, 원본 10MiB·4천만 화소 이하. 실제 시그니처/크기/애니메이션 여부를 검사하고 createImageBitmap → Canvas로 재인코딩해 EXIF 등 원본 메타데이터를 보존하지 않는다. 긴 변 1800px 이하·파일당 1.5MiB 이하, 고유 이미지 최대 100개/총 50MiB. 사진 설명은 140자, 보드당 사진 최대 100개다. 브라우저 실제 저장 한도는 더 작을 수 있으며 실패 시 이전 자료를 유지한다.
+- 위치·크기·설명 변경은 Blob을 읽거나 다시 인코딩하지 않는다. Blob 조회는 표시/백업 때만 수행하고 Object URL은 컴포넌트 해제 시 revoke한다. 사진/도감 삭제 시 전체 남은 참조를 확인해 마지막 참조가 사라진 Blob·정보만 같은 트랜잭션에서 정리한다.
+- 사진 보드 전체 백업은 .bokak v5 단일 바이너리 패키지다. BOKAKPK5\n + little-endian uint32 메타데이터 길이 + UTF-8 manifest + manifest 순서대로 원본이 아닌 최적화 Blob들을 이어 붙인다. ZIP/Base64/외부 라이브러리를 사용하지 않는다. manifest는 5MiB, 총 파일은 55MiB+13바이트 이하이며 데이터·사진 ID/소유자/용량/SHA256/실제 이미지 형식·크기/참조·누락·중복·추가 바이트를 검증한다.
+- previewImport에서 모든 사진을 검증한 뒤 사용자 확인을 받고, 메타데이터·Blob·이미지 정보 전체를 하나의 readwrite 트랜잭션에서 교체한다. 미리보기 후 수정은 IMPORT_CONFLICT로 거부한다. 실패 시 이전 자료 전부를 보존한다. v1~v4 JSON 가져오기(5MiB 제한)는 유지하며, 이전 백업 전체 교체는 새 사진도 제거하므로 먼저 v5로 보존한다. 사진 없는 기록은 기존 JSON 버전을 유지한다. 사진을 모두 삭제한 보드도 version=3이면 빈 사진 목록의 v5로 보존한다.
+- exportRecovery는 손상된 메타데이터와 사진 Blob을 빠뜨리지 않고 복구용 패키지로 내보낸다. 자동 가져오기용 정상 백업과 구별하며 별도 점검이 필요하다. 백업은 암호화되지 않으며 실제 사진/얼굴/개인 메모를 포함한다. 개인 파일을 Git·public·외부 API로 전송하지 않는다.

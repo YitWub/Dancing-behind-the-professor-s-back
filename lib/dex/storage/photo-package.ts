@@ -1,0 +1,37 @@
+import { ensure } from '../core/errors.ts';
+import { parseBackup } from '../core/validation.ts';
+import type { DexDocument } from '../core/types.ts';
+import { verifyPrepared,MAX_PHOTO_TOTAL,MAX_PHOTO_ASSETS } from '../people/photo.ts';
+import type { PhotoAsset } from '../people/photo.ts';
+export const PACKAGE_MIME='application/vnd.bokak.backup',MAGIC='BOKAKPK5\n',MAX_MANIFEST=5*1024*1024,MAX_PACKAGE=MAX_PHOTO_TOTAL+MAX_MANIFEST+13;
+const encoder=new TextEncoder();
+export function photoReferences(doc:DexDocument){return new Set(doc.dexes.flatMap(d=>d.peopleBoard?.photos?.map(p=>p.assetId)??[]));}
+export function packBackup(data:DexDocument,assets:PhotoAsset[],exportedAt:string){
+ const manifest={format:'bokak-dex',schemaVersion:5,exportedAt,containsSensitiveData:true,data,assets:assets.map(a=>a.info)};
+ return packContainer(manifest,assets.map(a=>a.blob));
+}
+export function packContainer(manifest:unknown,blobs:Blob[]){
+ ensure(blobs.reduce((n,b)=>n+b.size,0)<=MAX_PHOTO_TOTAL,'사진 백업 한도를 초과합니다.');
+ const metadata=encoder.encode(JSON.stringify(manifest));ensure(metadata.length<=MAX_MANIFEST,'기록 메타데이터가 5MB를 초과합니다.');
+ const head=new Uint8Array(13);head.set(encoder.encode(MAGIC));new DataView(head.buffer).setUint32(9,metadata.length,true);
+ return new Blob([head,metadata,...blobs],{type:PACKAGE_MIME});
+}
+export async function isPhotoPackage(blob:Blob){return new TextDecoder().decode(await blob.slice(0,9).arrayBuffer())===MAGIC;}
+export async function unpackBackup(file:Blob){
+ ensure(file.size<=MAX_PACKAGE&&file.size>=13,'사진 백업 크기를 확인해 주세요.');
+ const head=new Uint8Array(await file.slice(0,13).arrayBuffer());ensure(new TextDecoder().decode(head.subarray(0,9))===MAGIC,'BOKAK 사진 백업이 아닙니다.');
+ const length=new DataView(head.buffer).getUint32(9,true);ensure(length>0&&length<=MAX_MANIFEST&&13+length<=file.size,'백업 헤더를 확인해 주세요.');
+ const raw=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(await file.slice(13,13+length).arrayBuffer()));
+ ensure(raw&&Object.keys(raw).every(k=>['format','schemaVersion','exportedAt','containsSensitiveData','data','assets'].includes(k))&&raw.schemaVersion===5,'사진 백업 버전을 확인해 주세요.');
+ const {assets:infos,...envelope}=raw;
+ const document=parseBackup(JSON.stringify(envelope)).data;ensure(Array.isArray(infos)&&infos.length<=MAX_PHOTO_ASSETS,'사진 목록을 확인해 주세요.');
+ const refs=photoReferences(document),seen=new Set<string>(),assets:PhotoAsset[]=[];let offset=13+length,total=0;
+ for(const info of infos){
+  ensure(info&&Object.keys(info).every(k=>['id','ownerId','mime','bytes','width','height','sha256'].includes(k))&&info.id==='img-'+info.sha256&&info.ownerId===document.profile.ownerId&&refs.has(info.id)&&!seen.has(info.id)&&Number.isSafeInteger(info.bytes)&&info.bytes>0,'사진 참조·식별자·용량이 올바르지 않습니다.');
+  total+=info.bytes;ensure(total<=MAX_PHOTO_TOTAL&&offset+info.bytes<=file.size,'사진이 누락되었거나 백업 용량을 초과합니다.');
+  const blob=file.slice(offset,offset+info.bytes,info.mime);await verifyPrepared({...info,blob});
+  assets.push({info,blob});seen.add(info.id);offset+=info.bytes;
+ }
+ ensure(offset===file.size&&seen.size===refs.size,'누락되거나 불필요한 사진 파일이 있습니다.');
+ return {document,assets};
+}
