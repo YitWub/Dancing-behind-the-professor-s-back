@@ -1,3 +1,5 @@
+import { applyBoardCommand } from '../people/board.ts';
+import type { BoardCommand } from '../people/board.ts';
 import { normalizeLegacyCards } from '../meal/card-editions.ts';
 import { DexError, ensure, resultOf } from '../core/errors.ts';
 import { applyCollection, initialDocument, owner, find, version, touch, checkRevision, collectMeal } from '../core/engine.ts';
@@ -156,6 +158,12 @@ export class IndexedDbDexRepository implements DexRepository {
       Object.assign(dex,patch); touch(dex,this.runtime); return {value:dex,changed:true};
     }));
   }
+  updatePeopleBoard(ownerId:string,dexId:string,revision:number,command:BoardCommand){return resultOf(()=>this.document(true,doc=>{
+    owner(doc,ownerId);const dex=find(doc.dexes,dexId);checkRevision(dex,revision);
+    const next=applyBoardCommand(dex,doc.entries,command);
+    if(canonical(next)===canonical(dex.peopleBoard??null))return {value:dex,changed:false};
+    dex.peopleBoard=next;touch(dex,this.runtime);return {value:dex,changed:true};
+  }));}
   deleteDex(ownerId: string, id: string, revision: number) {
     return resultOf(() => this.document(true, doc => {
       owner(doc,ownerId); checkRevision(find(doc.dexes,id),revision);
@@ -191,6 +199,7 @@ export class IndexedDbDexRepository implements DexRepository {
     return resultOf(() => this.document(true, doc => {
       owner(doc,ownerId); checkRevision(find(doc.entries,id),revision);
       doc.entries=doc.entries.filter(e=>e.id!==id); doc.experiences=doc.experiences.filter(e=>e.entryId!==id);
+      for(const dex of doc.dexes)if(dex.peopleBoard){const board=dex.peopleBoard;const positions=board.positions.filter(p=>p.entryId!==id),edges=board.edges.filter(e=>e.a!==id&&e.b!==id);if(positions.length!==board.positions.length||edges.length!==board.edges.length){dex.peopleBoard={...board,positions,edges};touch(dex,this.runtime);}}
       return {value:undefined,changed:true};
     }));
   }
@@ -208,7 +217,7 @@ export class IndexedDbDexRepository implements DexRepository {
   exportRecords(ownerId: string) {
     return resultOf(async () => {
       const data=await this.document(false,doc=>{owner(doc,ownerId);return {value:doc};});
-      const envelope: BackupEnvelope = { format:'bokak-dex', schemaVersion:2, exportedAt:this.runtime.now(), containsSensitiveData:true, data };
+      const envelope: BackupEnvelope = { format:'bokak-dex', schemaVersion:data.dexes.some(d=>d.peopleBoard)?3:2, exportedAt:this.runtime.now(), containsSensitiveData:true, data };
       return new Blob([JSON.stringify(envelope,null,2)],{type:'application/json'});
     });
   }

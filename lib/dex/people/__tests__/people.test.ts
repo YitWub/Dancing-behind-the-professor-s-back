@@ -13,7 +13,7 @@ test('동명이인·상세·프로필 수정·명시적 entryId 추억·멱등 �
  const memory={...command,entryId:updated.id,subject:updated.subject,requestId:'memory-1',experience:{kind:'person' as const,event:'memory' as const,experiencedOn:'2026-10-01',note:'축제에서 만남'}};
  const added=value(await repo.collect(memory)),replay=value(await repo.collect(memory));assert.equal(replay.replayed,true);assert.equal(replay.experience.id,added.experience.id);
  const doc=value(await repo.snapshot());assert.equal(doc.entries.length,2);assert.equal(doc.experiences.length,3);assert.equal(doc.experiences.some(e=>e.card),false);assert.equal(personMemories(doc,updated.id).length,2);
- assert.equal(doc.entries[0].subject.kind==='person'&&doc.entries[0].subject.displayName,'새 별명');
+ assert.equal(doc.entries.find(e=>e.id===updated.id)!.subject.kind==='person'&&(doc.entries.find(e=>e.id===updated.id)!.subject as {displayName:string}).displayName,'새 별명');
 }finally{repo.close();}});
 test('추억 수정·삭제·인연 삭제는 관련 데이터만 정리하고 삭제 요청 재시도는 거부',async()=>{const {repo,command}=await setup();try{
  const first=value(await repo.collect(command)),other=value(await repo.collect({...command,requestId:'other'}));

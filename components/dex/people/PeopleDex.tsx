@@ -1,4 +1,5 @@
 'use client';
+import { PeopleBoard } from './PeopleBoard';
 import { useRef, useState } from 'react';
 import { useDexDocument } from '@/components/dex/scaffold/useDexDocument';
 import { getBrowserRepository } from '@/lib/dex/storage/browser';
@@ -9,6 +10,7 @@ import { PersonCard } from './PersonCard';
 import { emptyPerson, ProfileFields, usePeopleAction, usePeopleLeaveGuard } from './PeopleForms';
 export function PeopleDex(){
  const {data,loading,error,reload}=useDexDocument();const [adding,setAdding]=useState(false),[person,setPerson]=useState(emptyPerson),[day,setDay]=useState(''),[note,setNote]=useState(''),[search,setSearch]=useState(''),[relationship,setRelationship]=useState(''),[sort,setSort]=useState('recent');
+ const [view,setView]=useState<'cards'|'board'>('cards');
  const action=usePeopleAction(),pending=useRef<{key:string;command:CollectCommand}|null>(null);
  const dirty=adding&&(JSON.stringify(person)!==JSON.stringify(emptyPerson)||!!day||!!note);
  usePeopleLeaveGuard(dirty,action.busy);
@@ -20,5 +22,5 @@ export function PeopleDex(){
  <p className="people-privacy">이 브라우저에만 저장돼요. 같은 브라우저 프로필을 쓰는 사람은 볼 수 있어요. 홈에서 기록을 내보내 보관할 수 있어요.</p>
  {loading?<p role="status">인연을 불러오는 중…</p>:null}{error?<p role="alert">{error} <button onClick={()=>void reload()}>다시 읽기</button></p>:null}<p role="status">{action.message}</p>
  {adding?<form className="people-paper" onSubmit={save}><h3>새로운 인연을 기록해 볼까요?</h3><fieldset disabled={action.busy}><ProfileFields value={person} onChange={setPerson}/><label>첫 만남 날짜 <small>선택 · 비우면 오늘을 기록일로 저장해요</small><input type="date" value={day} max={kstToday()} onChange={e=>setDay(e.target.value)}/></label><label>처음 만난 계기 또는 짧은 기억 <small>선택</small><textarea rows={2} maxLength={500} value={note} onChange={e=>setNote(e.target.value)} placeholder="동아리 OT에서 옆자리에 앉았어요."/></label><button className="dex-button" type="submit">{action.busy?'저장 중…':'인연 등록'}</button></fieldset></form>:null}
- {data?<><div className="people-tools"><label>인연 검색<input type="search" placeholder="이름 또는 별명" value={search} onChange={e=>setSearch(e.target.value)}/></label><label>만남의 맥락<select value={relationship} onChange={e=>setRelationship(e.target.value)}><option value="">모든 인연</option>{contexts.map(s=><option key={s}>{s}</option>)}</select></label><label>정렬<select value={sort} onChange={e=>setSort(e.target.value)}><option value="recent">최근 기록순</option><option value="name">이름순</option><option value="first">첫 만남 기록순</option></select></label></div><p className="people-count">인연 {rows.length}명</p><section className="people-board" aria-label="인연 카드 목록">{rows.length?rows.map(entry=><PersonCard key={entry.id} entry={entry} note={entry.subject.memo||personMemories(data,entry.id).find(e=>e.note.trim())?.note}/>):<p className="people-empty">{search||relationship?'조건에 맞는 인연이 없어요.':'아직 비어 있는 추억 보드예요. 첫 인연을 기록해 보세요.'}</p>}</section></>:null}</div>;
+ {data?<><div className="people-actions" aria-label="인연 보기 방식"><button aria-pressed={view==='cards'} onClick={()=>setView('cards')}>카드 보기</button><button aria-pressed={view==='board'} onClick={()=>setView('board')}>보드 보기</button></div>{view==='board'?<PeopleBoard data={data} onChanged={reload}/>:<><div className="people-tools"><label>인연 검색<input type="search" placeholder="이름 또는 별명" value={search} onChange={e=>setSearch(e.target.value)}/></label><label>만남의 맥락<select value={relationship} onChange={e=>setRelationship(e.target.value)}><option value="">모든 인연</option>{contexts.map(s=><option key={s}>{s}</option>)}</select></label><label>정렬<select value={sort} onChange={e=>setSort(e.target.value)}><option value="recent">최근 기록순</option><option value="name">이름순</option><option value="first">첫 만남 기록순</option></select></label></div><p className="people-count">인연 {rows.length}명</p><section className="people-board" aria-label="인연 카드 목록">{rows.length?rows.map(entry=><PersonCard key={entry.id} entry={entry} note={entry.subject.memo||personMemories(data,entry.id).find(e=>e.note.trim())?.note}/>):<p className="people-empty">{search||relationship?'조건에 맞는 인연이 없어요.':'아직 비어 있는 추억 보드예요. 첫 인연을 기록해 보세요.'}</p>}</section></>}</>:null}</div>;
 }

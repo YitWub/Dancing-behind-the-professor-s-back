@@ -118,3 +118,10 @@ Chrome 실패 주입에서 이미 abort된 transaction을 다시 abort할 때의
 - [메뉴 ID·별칭 정책](../../docs/dex/MEAL_ID_POLICY.md)
 - [B·D 인수 가이드](../../docs/dex/MEAL_HANDOFF.md)
 - [PHASE 3 구현·검증 보고서](../../docs/dex/PHASE3_REPORT.md)
+
+## 인연 보드 저장 계약 (PHASE 5B)
+- 인연 Dex의 선택적 `peopleBoard: {version:1, positions:[{entryId,x,y}], edges:[{id,a,b}]}`를 기존 dexes 스토어에 저장한다. DB 버전/스토어는 변경하지 않으며 기존 레코드는 필드 없이 그대로 읽는다. 보드 열기 시 누락 카드의 초기 위치만 추가한다.
+- 2400×1800 논리 좌표를 사용하며 카드 크기는 160×180이다. 위치는 경계 안으로 제한한다. 연결은 사용자가 고른 같은 Dex의 person Entry만 허용하며 정렬한 두 ID의 JSON 키로 무방향 중복을 방지한다.
+- 공개 포트 `updatePeopleBoard(ownerId,dexId,revision,command)`는 initialize / move / connect / disconnect를 단일 트랜잭션으로 처리한다. revision 충돌은 자동 덮어쓰기 없이 재조회·재시도한다. 인연 삭제는 위치·연결·경험을 같은 트랜잭션에서 정리한다.
+- 보드가 있는 내보내기는 **백업 v3**이며 보드가 없으면 v2를 유지한다. v1/v2/v3 가져오기를 지원한다. 오래된 백업 전체 교체 시 새 배치·실도 제거되고, 다음 보드 진입 시 위치만 다시 초기화한다.
+- 구버전 앱은 새 Dex 필드와 v3를 읽지 못하므로 보드 사용 후 예전 클라이언트로 돌아가지 않는다. 초기화나 다운그레이드하지 말고 업데이트한 앱으로 열어야 한다. 개인 인연과 보드 모두 로컬 기록이며 공용 식단 아카이브와 분리한다.
