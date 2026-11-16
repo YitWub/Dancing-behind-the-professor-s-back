@@ -87,3 +87,21 @@
 .board-photo-preview img{max-width:100%;max-height:46dvh;object-fit:contain}
 .board-photo-dialog fieldset{display:grid;gap:.8rem;min-width:0}
 @media(max-width:600px){.board-photo-dialog{padding:1rem}.board-photo-dialog .people-actions{gap:.8rem;flex-wrap:wrap}}
+
+/* Small scrapbook polish; logical photo bounds and pointer handlers stay unchanged. */
+.board-photo{padding:0 11px 8px;gap:5px;background:linear-gradient(125deg,#fffef7,#f5efdf);border:1px solid #e6dcc7;border-bottom:3px solid #dfd4bd;border-radius:2px;box-shadow:0 1px 0 #fff9 inset,1px 5px 8px #4f3c2c40,3px 13px 13px -9px #49372966}
+.board-photo::before{content:'';position:absolute;left:calc(50% - 27px);top:-9px;width:54px;height:19px;background:repeating-linear-gradient(95deg,#fff3 0 1px,transparent 1px 4px),#d8d6b2d9;border:1px solid #c9c6a080;box-shadow:0 1px 2px #57493126;transform:rotate(-5deg);pointer-events:none;z-index:3}
+.people-page .board-photo-handle{margin:0 -11px;min-height:30px;border:0;background:transparent;font-size:.68rem;color:#91866e}
+.board-photo-open{border:1px solid #d0c9b8;box-shadow:0 1px 3px #463c2926 inset;background:#e8e3d7}
+.board-photo .board-photo-caption{flex:none;min-height:1.35em;font-size:.82rem;line-height:1.35;padding:1px 3px 0;margin:0;color:#665945;letter-spacing:.01em;text-align:center}
+.people-page .board-photo-detail{font-size:.65rem;min-height:22px;color:#8a7e66}
+.connection-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:.45rem;padding:.5rem .6rem;border:1px solid #d7cbb3;border-radius:11px;background:linear-gradient(#fcf8ed,#f1ead9);box-shadow:0 1px 0 #fff9 inset,0 2px 3px #6852360d}
+.board-tool-group{display:flex;align-items:center;gap:.3rem;flex-wrap:wrap}
+.board-tool-group+.board-tool-group{padding-left:.5rem;border-left:1px solid #d9cfb8}
+.people-page .connection-toolbar button{min-height:38px;padding:.45rem .7rem;border:1px solid transparent;border-radius:7px;background:#fffcf366;box-shadow:0 1px 1px #79623d12;font-size:.8rem;line-height:1.2;text-decoration:none}
+.people-page .connection-toolbar button:hover:not(:disabled){background:#fffdf4;border-color:#d8cbb0}
+.people-page .connection-toolbar button[aria-pressed=true]{background:#dfe7ce;border-color:#afbf98;color:#3f5637;font-weight:750;box-shadow:0 1px 2px #60734822 inset}
+.connection-toolbar label,.connection-toolbar label:last-child{display:flex;align-items:center;gap:.4rem;margin:0;font-size:.74rem;white-space:nowrap}
+.connection-toolbar select{min-height:38px;width:92px;padding:.4rem .5rem;background:#fffdf6;border-color:#d7cbb3;font-size:.78rem}
+.board-tool-zoom{margin-left:auto}
+@media(max-width:600px){.connection-toolbar{gap:.45rem;padding:.5rem}.board-tool-group+.board-tool-group{border-left:0;padding-left:0}.board-tool-group:first-child{flex:1 1 100%}.board-tool-group:first-child>button{flex:1}.people-page .connection-toolbar button{min-height:40px;padding:.45rem .65rem;font-size:.76rem}.connection-toolbar select{min-height:40px;width:86px;font-size:.76rem}.board-tool-zoom{margin-left:auto}.connection-toolbar label{font-size:.7rem}.board-tool-add{flex-wrap:nowrap}}
