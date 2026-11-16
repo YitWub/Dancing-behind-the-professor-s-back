@@ -217,7 +217,7 @@ export class IndexedDbDexRepository implements DexRepository {
   exportRecords(ownerId: string) {
     return resultOf(async () => {
       const data=await this.document(false,doc=>{owner(doc,ownerId);return {value:doc};});
-      const envelope: BackupEnvelope = { format:'bokak-dex', schemaVersion:data.dexes.some(d=>d.peopleBoard)?3:2, exportedAt:this.runtime.now(), containsSensitiveData:true, data };
+      const envelope: BackupEnvelope = { format:'bokak-dex', schemaVersion:data.dexes.some(d=>d.peopleBoard?.version===2)?4:data.dexes.some(d=>d.peopleBoard)?3:2, exportedAt:this.runtime.now(), containsSensitiveData:true, data };
       return new Blob([JSON.stringify(envelope,null,2)],{type:'application/json'});
     });
   }

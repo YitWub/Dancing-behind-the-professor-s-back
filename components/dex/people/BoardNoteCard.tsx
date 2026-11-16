@@ -1,0 +1,20 @@
+'use client';
+import { useRef, useState } from 'react';
+import type { BoardNote, BoardCommand, NoteColor } from '@/lib/dex/people/board';
+import { NOTE_WIDTH,NOTE_HEIGHT,clampPosition,NOTE_COLORS } from '@/lib/dex/people/board';
+import { usePeopleLeaveGuard } from './PeopleForms';
+export const NOTE_COLOR_LABELS={yellow:'노란색',green:'연두색',pink:'분홍색',blue:'하늘색'} as const;
+export function NoteEditor({initial,onSave,onCancel,busy}:{initial?:BoardNote;onSave:(text:string,color:NoteColor)=>Promise<boolean>;onCancel:()=>void;busy:boolean}){
+ const [text,setText]=useState(initial?.text??''),[color,setColor]=useState<NoteColor>(initial?.color??'yellow');
+ const dirty=text!==(initial?.text??'')||color!==(initial?.color??'yellow');usePeopleLeaveGuard(dirty,busy);
+ return <form className="board-note-editor people-paper" onSubmit={async e=>{e.preventDefault();await onSave(text,color);}}><h3>{initial?'메모 수정':'보드에 메모 붙이기'}</h3><fieldset disabled={busy}><label>메모 내용<textarea autoFocus rows={3} maxLength={500} required value={text} onChange={e=>setText(e.target.value)}/></label><label>메모 색상<select aria-label="메모 색상" value={color} onChange={e=>setColor(e.target.value as NoteColor)}>{NOTE_COLORS.map(c=><option key={c} value={c}>{NOTE_COLOR_LABELS[c]}</option>)}</select></label><div className="people-actions"><button className="dex-button" type="submit" disabled={!text.trim()}>{busy?'저장 중…':'메모 저장'}</button><button type="button" onClick={()=>{if(!dirty||window.confirm('저장하지 않은 메모 입력을 취소할까요?'))onCancel();}}>취소</button></div></fieldset></form>;
+}
+export function BoardNoteCard({note,zoom,busy,unsavedMove=false,onCommand,onEdit}:{note:BoardNote;zoom:number;busy:boolean;unsavedMove?:boolean;onCommand:(command:BoardCommand)=>Promise<boolean>;onEdit:(note:BoardNote)=>void}){
+ const [preview,setPreview]=useState<{x:number;y:number}|null>(null),[dragging,setDragging]=useState(false);
+ const drag=useRef<{pointer:number;x:number;y:number;startX:number;startY:number;moved:boolean}|null>(null),active=useRef(false);
+ const position=preview&&(dragging||busy||unsavedMove)?preview:note;
+ async function moveTo(x:number,y:number){if(active.current)return;active.current=true;const next=clampPosition(x,y,NOTE_WIDTH,NOTE_HEIGHT);setPreview(next);try{if(await onCommand({type:'move-note',id:note.id,...next}))setPreview(null);}finally{active.current=false;}}
+ return <article className={'board-sticky note-'+note.color} data-note-id={note.id} style={{left:position.x,top:position.y,width:NOTE_WIDTH,height:NOTE_HEIGHT}}>
+ <button className="board-note-handle" disabled={busy} aria-label="메모 이동" title="끌거나 방향키로 이동" onPointerDown={e=>{if(busy||e.button!==0)return;setDragging(true);drag.current={pointer:e.pointerId,x:position.x,y:position.y,startX:e.clientX,startY:e.clientY,moved:false};e.currentTarget.setPointerCapture(e.pointerId);}} onPointerMove={e=>{const d=drag.current;if(!d||d.pointer!==e.pointerId)return;const dx=(e.clientX-d.startX)/zoom,dy=(e.clientY-d.startY)/zoom;if(Math.hypot(dx,dy)>5)d.moved=true;if(d.moved){e.preventDefault();setPreview(clampPosition(d.x+dx,d.y+dy,NOTE_WIDTH,NOTE_HEIGHT));}}} onPointerUp={e=>{const d=drag.current;if(!d||d.pointer!==e.pointerId)return;drag.current=null;setDragging(false);if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);if(d.moved)void moveTo(d.x+(e.clientX-d.startX)/zoom,d.y+(e.clientY-d.startY)/zoom);}} onPointerCancel={()=>{drag.current=null;setDragging(false);setPreview(null);}} onKeyDown={e=>{const moves:Record<string,[number,number]>={ArrowLeft:[-20,0],ArrowRight:[20,0],ArrowUp:[0,-20],ArrowDown:[0,20]};if(moves[e.key]){e.preventDefault();void moveTo(position.x+moves[e.key][0],position.y+moves[e.key][1]);}}}><span aria-hidden="true">⠿</span> 메모 이동</button>
+ <p>{note.text}</p><div className="board-note-actions"><button disabled={busy} onClick={()=>onEdit(note)}>메모 수정</button><button disabled={busy} onClick={()=>{if(window.confirm('이 메모만 삭제할까요? 인연과 추억은 남아 있어요.'))void onCommand({type:'delete-note',id:note.id});}}>메모 삭제</button></div></article>;
+}

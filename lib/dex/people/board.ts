@@ -1,20 +1,41 @@
-﻿import { ensure } from '../core/errors.ts';
+import { ensure } from '../core/errors.ts';
 import type { CollectionEntry, Dex } from '../core/types.ts';
 export const BOARD_WIDTH=2400, BOARD_HEIGHT=1800, CARD_WIDTH=160, CARD_HEIGHT=180;
+export const NOTE_WIDTH=200, NOTE_HEIGHT=180;
+export const THREAD_STYLES=['red','olive','twine'] as const;
+export type ThreadStyle=typeof THREAD_STYLES[number];
+export const NOTE_COLORS=['yellow','green','pink','blue'] as const;
+export type NoteColor=typeof NOTE_COLORS[number];
 export interface BoardPosition {entryId:string;x:number;y:number}
-export interface BoardEdge {id:string;a:string;b:string}
-export interface PeopleBoard {version:1;positions:BoardPosition[];edges:BoardEdge[]}
-export type BoardCommand={type:'initialize'}|{type:'move';entryId:string;x:number;y:number}|{type:'connect';a:string;b:string}|{type:'disconnect';id:string};
+export interface BoardEdge {id:string;a:string;b:string;style?:ThreadStyle}
+export interface BoardNote {id:string;text:string;color:NoteColor;x:number;y:number}
+export interface PeopleBoard {version:1|2;positions:BoardPosition[];edges:BoardEdge[];notes?:BoardNote[]}
+export type BoardCommand=
+ |{type:'initialize'}|{type:'move';entryId:string;x:number;y:number}
+ |{type:'connect';a:string;b:string;style?:ThreadStyle}|{type:'disconnect';id:string}
+ |{type:'style-edge';id:string;style:ThreadStyle}
+ |{type:'add-note';id:string;text:string;color:NoteColor}
+ |{type:'edit-note';id:string;text:string;color:NoteColor}
+ |{type:'move-note';id:string;x:number;y:number}|{type:'delete-note';id:string};
 export function edgeKey(a:string,b:string){return JSON.stringify([a,b].sort());}
-export function clampPosition(x:number,y:number){return {x:Math.round(Math.min(BOARD_WIDTH-CARD_WIDTH,Math.max(0,x))),y:Math.round(Math.min(BOARD_HEIGHT-CARD_HEIGHT,Math.max(0,y)))};}
+export function clampPosition(x:number,y:number,width=CARD_WIDTH,height=CARD_HEIGHT){return {x:Math.round(Math.min(BOARD_WIDTH-width,Math.max(0,x))),y:Math.round(Math.min(BOARD_HEIGHT-height,Math.max(0,y)))};}
 function fields(value:unknown,keys:string[]):asserts value is Record<string,unknown>{ensure(!!value&&typeof value==='object'&&!Array.isArray(value),'보드 형식이 올바르지 않습니다.');ensure(Object.keys(value).every(key=>keys.includes(key)),'지원하지 않는 보드 필드입니다.');}
+function coordinate(x:unknown,y:unknown,width:number,height:number){ensure(typeof x==='number'&&Number.isFinite(x)&&x>=0&&x<=BOARD_WIDTH-width&&typeof y==='number'&&Number.isFinite(y)&&y>=0&&y<=BOARD_HEIGHT-height,'보드 좌표 범위를 확인해 주세요.');}
+function noteInput(id:unknown,text:unknown,color:unknown){ensure(typeof id==='string'&&/^[a-zA-Z0-9][a-zA-Z0-9._:-]{0,127}$/.test(id),'메모 식별자를 확인해 주세요.');ensure(typeof text==='string'&&text.trim().length>0&&text.length<=500,'메모는 1~500자로 작성해 주세요.');ensure(NOTE_COLORS.includes(color as NoteColor),'메모 색상을 확인해 주세요.');}
 export function validatePeopleBoard(value:unknown,dex:Dex,entries:CollectionEntry[]):asserts value is PeopleBoard{
- fields(value,['version','positions','edges']);ensure(dex.kind==='people'&&value.version===1,'인연도감의 보드만 지원합니다.');
+ fields(value,['version','positions','edges',...(!!value&&typeof value==='object'&&(value as {version?:number}).version===2?['notes']:[])]);
+ ensure(dex.kind==='people'&&(value.version===1||value.version===2),'인연도감 보드 버전을 확인해 주세요.');
  ensure(Array.isArray(value.positions)&&value.positions.length<=10000&&Array.isArray(value.edges)&&value.edges.length<=10000,'보드 크기를 확인해 주세요.');
  const people=new Set(entries.filter(e=>e.dexId===dex.id&&e.subject.kind==='person').map(e=>e.id));
- const placed=new Set<string>(),edges=new Set<string>();
- for(const raw of value.positions as unknown[]){fields(raw,['entryId','x','y']);ensure(typeof raw.entryId==='string'&&people.has(raw.entryId)&&!placed.has(raw.entryId),'보드 카드 참조 또는 중복을 확인해 주세요.');ensure(typeof raw.x==='number'&&Number.isFinite(raw.x)&&raw.x>=0&&raw.x<=BOARD_WIDTH-CARD_WIDTH&&typeof raw.y==='number'&&Number.isFinite(raw.y)&&raw.y>=0&&raw.y<=BOARD_HEIGHT-CARD_HEIGHT,'보드 좌표 범위를 확인해 주세요.');placed.add(raw.entryId);}
- for(const raw of value.edges as unknown[]){fields(raw,['id','a','b']);ensure(typeof raw.a==='string'&&typeof raw.b==='string'&&raw.a!==raw.b&&people.has(raw.a)&&people.has(raw.b)&&placed.has(raw.a)&&placed.has(raw.b),'실의 인연 참조를 확인해 주세요.');const key=edgeKey(raw.a as string,raw.b as string);ensure(raw.id===key&&!edges.has(key),'같은 실을 중복 연결할 수 없습니다.');edges.add(key);}
+ const placed=new Set<string>(),edges=new Set<string>(),noteIds=new Set<string>();
+ for(const raw of value.positions as unknown[]){fields(raw,['entryId','x','y']);ensure(typeof raw.entryId==='string'&&people.has(raw.entryId)&&!placed.has(raw.entryId),'보드 카드 참조 또는 중복을 확인해 주세요.');coordinate(raw.x,raw.y,CARD_WIDTH,CARD_HEIGHT);placed.add(raw.entryId);}
+ for(const raw of value.edges as unknown[]){fields(raw,['id','a','b',...(value.version===2?['style']:[])]);ensure(typeof raw.a==='string'&&typeof raw.b==='string'&&raw.a!==raw.b&&people.has(raw.a)&&people.has(raw.b)&&placed.has(raw.a)&&placed.has(raw.b),'실의 인연 참조를 확인해 주세요.');const key=edgeKey(raw.a as string,raw.b as string);ensure(raw.id===key&&!edges.has(key),'같은 실을 중복 연결할 수 없습니다.');if(raw.style!==undefined)ensure(THREAD_STYLES.includes(raw.style as ThreadStyle),'실 스타일을 확인해 주세요.');edges.add(key);}
+ if(value.notes!==undefined){ensure(value.version===2&&Array.isArray(value.notes)&&value.notes.length<=500,'메모는 보드당 500개까지 저장할 수 있어요.');for(const raw of value.notes as unknown[]){fields(raw,['id','text','color','x','y']);noteInput(raw.id,raw.text,raw.color);ensure(!noteIds.has(raw.id as string)&&!people.has(raw.id as string),'중복된 메모 식별자입니다.');coordinate(raw.x,raw.y,NOTE_WIDTH,NOTE_HEIGHT);noteIds.add(raw.id as string);}}
+}
+export function boardOccupants(board:PeopleBoard){return [...board.positions.map(p=>({...p,width:CARD_WIDTH,height:CARD_HEIGHT})),...(board.notes??[]).map(n=>({...n,width:NOTE_WIDTH,height:NOTE_HEIGHT}))];}
+export function vacantPosition(occupied:readonly {x:number;y:number;width:number;height:number}[],width:number,height:number){
+ for(let y=24;y<=BOARD_HEIGHT-height;y+=40)for(let x=24;x<=BOARD_WIDTH-width;x+=40)if(occupied.every(p=>x+width+12<=p.x||p.x+p.width+12<=x||y+height+12<=p.y||p.y+p.height+12<=y))return {x,y};
+ return null;
 }
 export function initializeBoard(board:PeopleBoard,entries:CollectionEntry[],dexId:string):PeopleBoard{
  const next=structuredClone(board);
@@ -22,7 +43,7 @@ export function initializeBoard(board:PeopleBoard,entries:CollectionEntry[],dexI
   if(next.positions.some(p=>p.entryId===entry.id))continue;
   let placed=false;
   for(let y=24;y<=BOARD_HEIGHT-CARD_HEIGHT&&!placed;y+=220)for(let x=24;x<=BOARD_WIDTH-CARD_WIDTH;x+=200){
-   if(next.positions.every(p=>x+CARD_WIDTH+12<=p.x||p.x+CARD_WIDTH+12<=x||y+CARD_HEIGHT+12<=p.y||p.y+CARD_HEIGHT+12<=y)){next.positions.push({entryId:entry.id,x,y});placed=true;break;}
+   if(boardOccupants(next).every(p=>x+CARD_WIDTH+12<=p.x||p.x+p.width+12<=x||y+CARD_HEIGHT+12<=p.y||p.y+p.height+12<=y)){next.positions.push({entryId:entry.id,x,y});placed=true;break;}
   }
   ensure(placed,'보드의 빈 공간이 부족합니다. 기존 카드를 옮겨 공간을 만들어 주세요.');
  }
@@ -30,18 +51,29 @@ export function initializeBoard(board:PeopleBoard,entries:CollectionEntry[],dexI
 }
 export function applyBoardCommand(dex:Dex,entries:CollectionEntry[],command:BoardCommand):PeopleBoard{
  ensure(dex.kind==='people','인연도감에서만 보드를 사용할 수 있습니다.');
- fields(command,command.type==='move'?['type','entryId','x','y']:command.type==='connect'?['type','a','b']:command.type==='disconnect'?['type','id']:['type']);
+ const allowed:Record<BoardCommand['type'],string[]>={initialize:['type'],move:['type','entryId','x','y'],connect:['type','a','b','style'],disconnect:['type','id'],'style-edge':['type','id','style'],'add-note':['type','id','text','color'],'edit-note':['type','id','text','color'],'move-note':['type','id','x','y'],'delete-note':['type','id']};
+ ensure(command&&allowed[command.type],'지원하지 않는 보드 작업입니다.');fields(command,allowed[command.type]);
  const next=initializeBoard(dex.peopleBoard??{version:1,positions:[],edges:[]},entries,dex.id);
+ const extend=()=>{next.version=2;next.notes??=[];};
  if(command.type==='move'){
   ensure(Number.isFinite(command.x)&&Number.isFinite(command.y),'좌표가 올바르지 않습니다.');
-  const position=next.positions.find(p=>p.entryId===command.entryId);ensure(position,'인연 카드를 찾을 수 없습니다.');
-  Object.assign(position,clampPosition(command.x,command.y));
+  const position=next.positions.find(p=>p.entryId===command.entryId);ensure(position,'인연 카드를 찾을 수 없습니다.');Object.assign(position,clampPosition(command.x,command.y));
  }else if(command.type==='connect'){
   ensure(command.a!==command.b,'같은 인연끼리는 연결할 수 없습니다.');
   ensure(next.positions.some(p=>p.entryId===command.a)&&next.positions.some(p=>p.entryId===command.b),'같은 보드의 인연만 연결할 수 있습니다.');
-  const id=edgeKey(command.a,command.b);if(!next.edges.some(e=>e.id===id)){const [a,b]=[command.a,command.b].sort();next.edges.push({id,a,b});}
+  if(command.style!==undefined)ensure(THREAD_STYLES.includes(command.style),'실 스타일을 확인해 주세요.');
+  const id=edgeKey(command.a,command.b);if(!next.edges.some(e=>e.id===id)){const [a,b]=[command.a,command.b].sort();if(command.style!==undefined)extend();next.edges.push({id,a,b,...(command.style?{style:command.style}:{})});}
  }else if(command.type==='disconnect'){next.edges=next.edges.filter(e=>e.id!==command.id);}
- else ensure(command.type==='initialize','지원하지 않는 보드 작업입니다.');
+ else if(command.type==='style-edge'){ensure(THREAD_STYLES.includes(command.style),'실 스타일을 확인해 주세요.');const edge=next.edges.find(e=>e.id===command.id);ensure(edge,'연결을 찾을 수 없습니다.');extend();edge.style=command.style;}
+ else if(command.type==='add-note'){
+  noteInput(command.id,command.text,command.color);ensure(!next.positions.some(p=>p.entryId===command.id),'인연과 메모 식별자가 겹칩니다.');
+  const existing=next.notes?.find(n=>n.id===command.id);
+  if(existing)ensure(existing.text===command.text&&existing.color===command.color,'같은 메모 요청의 내용이 다릅니다.','REQUEST_ID_CONFLICT');
+  else{ensure((next.notes?.length??0)<500,'메모는 보드당 500개까지 저장할 수 있어요.');const position=vacantPosition(boardOccupants(next),NOTE_WIDTH,NOTE_HEIGHT);ensure(position,'빈 공간이 부족합니다. 기존 카드를 옮겨 주세요.');extend();next.notes!.push({id:command.id,text:command.text,color:command.color,...position});}
+ }else if(command.type==='edit-note'||command.type==='move-note'){
+  const note=next.notes?.find(n=>n.id===command.id);ensure(note,'메모를 찾을 수 없습니다.');
+  if(command.type==='edit-note'){noteInput(command.id,command.text,command.color);Object.assign(note,{text:command.text,color:command.color});}
+  else{ensure(Number.isFinite(command.x)&&Number.isFinite(command.y),'좌표가 올바르지 않습니다.');Object.assign(note,clampPosition(command.x,command.y,NOTE_WIDTH,NOTE_HEIGHT));}
+ }else if(command.type==='delete-note'){if(next.notes)next.notes=next.notes.filter(n=>n.id!==command.id);}
  validatePeopleBoard(next,dex,entries);return next;
 }
-
