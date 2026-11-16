@@ -150,3 +150,10 @@ Chrome 실패 주입에서 이미 abort된 transaction을 다시 abort할 때의
 - 새 인연 등록은 원본/Experience/선택 보드 배치를 원자적으로 저장한다. 기존 인연을 다른 보드에 배치하는 작업은 collect를 호출하지 않는다. 보드 전환은 저장 중이거나 편집이 열려 있으면 차단한다. 새로고침 시 activeBoardId와 보드별 50/75/100% 확대를 복원한다. 스크롤 위치는 저장하지 않는다.
 - 다중 보드 전체 백업은 .bokak v6(BOKAKPK6\n)이며 사진이 없어도 패키지로 내보낸다. v1~v4 JSON 및 v5 사진 패키지 가져오기는 유지하고, 구형 보드는 인연 화면에 진입할 때 안전하게 이전한다. 전체 보드의 사진 참조를 합쳐 이미지 해시/소유/용량을 검증하고 같은 트랜잭션으로 복원한다. 공유 Blob은 마지막 참조가 사라진 경우에만 제거한다. 기존 5MiB 메타데이터·50MiB 이미지 한도는 유지한다.
 - 구버전 앱은 새 peopleBoards/v6를 읽지 못한다. 이전 버전으로 전환해 초기화하지 말고 업데이트된 앱과 전체 백업을 사용한다.
+
+### 캐릭터 인연 (PHASE 6B)
+- person subject에 선택 nickname(40자), trait(100자), tags(최대3개·각16자), avatar(classic/sprout/night/sun), profileAssetId를 추가한다. 이름·Entry ID·Experience·보드 배치 모델은 유지하며 입력을 자동 추론하지 않는다.
+- collect(command, preparedImage?)와 updateEntry(..., patch, preparedImage?)는 검증·최적화된 사진을 인연 메타데이터와 같은 IndexedDB 트랜잭션에 저장한다. 기존 optimizePhoto/verifyPrepared 제한·메타데이터 제거를 그대로 사용한다. 저장 실패는 인연·Blob·참조 전체를 롤백하고 UI 입력을 유지한다.
+- 프로필 사진은 전역 인연 원본에 속하며 모든 보드가 공유한다. photoReferences가 보드 사진+인연 프로필을 함께 추적하여 마지막 참조만 정리한다. 이동 시 이미지를 다시 저장하지 않는다.
+- 캐릭터 필드가 있는 기록은 v7 .bokak(BOKAKPK7\n)로 내보낸다. 이미지 없는 캐릭터도 v7이며 기존 v1~v4 JSON, v5/v6 패키지는 계속 가져온다. DB_VERSION=2는 유지한다. 구버전 앱에서는 새 필드/v7을 읽을 수 없으므로 새 앱에서 사용한다.
+- 발견 피드백은 기존 신규 저장 성공·requestId replay 제외 계약을 재사용한다. 수정·보드 배치·복원·화면 재진입은 새 발견을 만들지 않는다. 프로필 사진과 개인 메모는 브라우저 로컬 자료이며 백업도 민감정보를 포함한다.

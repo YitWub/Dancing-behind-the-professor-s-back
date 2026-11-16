@@ -1,6 +1,6 @@
 import { migratePeopleBoards,manageBoards,selectedBoard,tagPlacements,placePerson,allBoardLayouts } from '../people/multi-board.ts';
 import type { BoardManagementCommand } from '../people/multi-board.ts';
-import { packBackup,packContainer,unpackBackup,isPhotoPackage,photoReferences,MAX_PACKAGE } from './photo-package.ts';
+import { packBackup,packContainer,unpackBackup,isPhotoPackage,photoReferences,hasCharacterData,MAX_PACKAGE } from './photo-package.ts';
 import { verifyPrepared,imageHash,MAX_PHOTO_TOTAL,MAX_PHOTO_ASSETS } from '../people/photo.ts';
 import type { PhotoAsset,PreparedImage,BoardPhoto,ImageInfo } from '../people/photo.ts';
 import { applyBoardCommand,addBoardPhoto } from '../people/board.ts';
@@ -117,6 +117,12 @@ export class IndexedDbDexRepository implements DexRepository {
   private removePlacements(doc:DexDocument,ids:Set<string>){
     for(const dex of doc.dexes){let changed=false;for(const board of allBoardLayouts(dex)){const positions=board.positions.filter(p=>!ids.has(p.entryId)),edges=board.edges.filter(e=>!ids.has(e.a)&&!ids.has(e.b));if(positions.length!==board.positions.length||edges.length!==board.edges.length){board.positions=positions;board.edges=edges;changed=true;}}if(changed)touch(dex,this.runtime);}
   }
+  private putProfileImage(tx:IDBTransaction,ownerId:string,image:PreparedImage){
+    const info:ImageInfo={id:'img-'+image.sha256,ownerId,mime:image.mime,bytes:image.bytes,width:image.width,height:image.height,sha256:image.sha256};
+    const infos=tx.objectStore('photoAssetInfo'),request=infos.getAll();
+    request.onsuccess=()=>{const rows=request.result as ImageInfo[],old=rows.find(i=>i.id===info.id);if((old&&old.ownerId!==ownerId)||rows.reduce((n,i)=>n+(i.id===info.id?0:i.bytes),image.bytes)>MAX_PHOTO_TOTAL||rows.length+(old?0:1)>MAX_PHOTO_ASSETS)this.abort(tx,new DOMException('사진 저장 한도를 초과했습니다.','QuotaExceededError'));};
+    tx.objectStore('photoAssets').put({id:info.id,blob:image.blob});infos.put(info);
+  }
   private cleanAssets(tx:IDBTransaction,doc:DexDocument){
     const refs=photoReferences(doc),assets=tx.objectStore('photoAssets'),infos=tx.objectStore('photoAssetInfo');
     for(const id of refs){const info=infos.get(id);info.onsuccess=()=>{if(!info.result||info.result.ownerId!==doc.profile.ownerId)this.abort(tx,new DexError('CORRUPT_STORAGE','사진 참조를 확인할 수 없습니다. 자동 초기화하지 않았습니다.'));};const blob=assets.getKey(id);blob.onsuccess=()=>{if(blob.result===undefined)this.abort(tx,new DexError('CORRUPT_STORAGE','사진 파일이 누락되었습니다.'));};}
@@ -149,14 +155,14 @@ export class IndexedDbDexRepository implements DexRepository {
     this.cleanAssets(tx,doc);
     this.options.beforeCommit?.();
   }
-  private document<T>(write: boolean, operation: (doc: DexDocument) => { value: T; changed?: boolean }, initialize = false): Promise<T> {
+  private document<T>(write: boolean, operation: (doc: DexDocument, tx: IDBTransaction) => { value: T; changed?: boolean }, initialize = false): Promise<T> {
     return this.transaction(write ? 'readwrite' : 'readonly', (raw, tx) => {
       const empty = STORES.every(name => raw[name].length === 0);
       const bootstrap = initialize && empty;
       const legacyMigration=write&&raw.experiences.some(row=>{const exp=row as {kind?:string;card?:unknown};return exp.kind==='meal'&&!exp.card;});
       if(bootstrap){for(const store of ['photoAssets','photoAssetInfo']){const existing=tx.objectStore(store).count();existing.onsuccess=()=>{if(existing.result)this.abort(tx,new DexError('CORRUPT_STORAGE','프로필 없는 사진이 남아 있어 자동 초기화하지 않았습니다.'));};}}
       const doc = bootstrap ? initialDocument(this.runtime, this.namespace) : this.decode(raw);
-      const response = operation(doc);
+      const response = operation(doc,tx);
       if(legacyMigration)response.changed=true;
       if (bootstrap || response.changed) {
         if (response.changed) doc.profile.revision++;
@@ -227,16 +233,18 @@ export class IndexedDbDexRepository implements DexRepository {
       return {value:undefined,changed:true};
     }));
   }
-  collect(command: CollectCommand) {
+  collect(command: CollectCommand, image?:PreparedImage) {
     return resultOf(async () => {
+      if(image){await verifyPrepared(image);ensure(command.subject.kind==='person'&&command.subject.profileAssetId==='img-'+image.sha256,'프로필 사진 참조가 다릅니다.');}
       const input = collectInput(command); // 복사·검증·WebCrypto는 transaction을 열기 전에 끝낸다.
       const hash = await fingerprint(input);
       // Stable request entropy: failed transactions/reloads cannot reroll the same request.
       // Local collection only; not a server-authoritative or paid lottery.
       const entropy=await fingerprint(['bokak-card-v1',input.ownerId,input.requestId]);
       const roll=parseInt(entropy.slice(-64,-56),16)/4294967296;
-      return this.document(true,doc=>{
+      return this.document(true,(doc,tx)=>{
         const applied=applyCollection(doc,input,hash,{...this.runtime,cardRoll:()=>roll});
+        if(applied.changed&&image){ensure(applied.value.outcome==='new-entry','새 인연 사진은 최초 등록에서만 저장합니다.');this.putProfileImage(tx,input.ownerId,image);}
         const root=doc.dexes.find(d=>d.peopleBoards);
         if(applied.changed&&applied.value.outcome==='new-entry'&&applied.value.entry.subject.kind==='person'&&root){placePerson(doc,root,selectedBoard(root),applied.value.entry.id);touch(root,this.runtime);}
         return applied;
@@ -246,15 +254,17 @@ export class IndexedDbDexRepository implements DexRepository {
   commitMealCollection(command: CollectMealCommand) { return collectMeal(command, this); }
   listEntries(ownerId: string, dexId: string) { return resultOf(() => this.document(false, doc => { owner(doc,ownerId); find(doc.dexes,dexId); return {value:doc.entries.filter(e=>e.dexId===dexId)}; })); }
   getEntry(ownerId: string, entryId: string) { return resultOf(() => this.document(false, doc => { owner(doc,ownerId); return {value:find(doc.entries,entryId)}; })); }
-  updateEntry(ownerId: string, id: string, revision: number, patch: { subject?: EntrySubject; collectedOn?: LocalDate }) {
-    return resultOf(() => this.document(true, doc => {
+  updateEntry(ownerId: string, id: string, revision: number, patch: { subject?: EntrySubject; collectedOn?: LocalDate }, image?:PreparedImage) {
+    return resultOf(async () => {if(image){await verifyPrepared(image);ensure(patch.subject?.kind==='person'&&patch.subject.profileAssetId==='img-'+image.sha256,'프로필 사진 참조가 다릅니다.');}
+    return this.document(true, (doc,tx) => {
       owner(doc,ownerId); object(patch,['subject','collectedOn']); const entry=find(doc.entries,id); checkRevision(entry,revision);
       if (patch.subject) {
         ensure(entry.subject.kind === patch.subject.kind, '항목 종류를 변경할 수 없습니다.');
         if (entry.subject.kind==='meal' && patch.subject.kind==='meal') ensure(entry.subject.dishId===patch.subject.dishId,'메뉴 병합은 별도 이전 작업입니다.');
       }
+      if(image)this.putProfileImage(tx,ownerId,image);
       Object.assign(entry,structuredClone(patch)); touch(entry,this.runtime); return {value:entry,changed:true};
-    }));
+    });});
   }
   deleteEntry(ownerId: string, id: string, revision: number) {
     return resultOf(() => this.document(true, doc => {
@@ -284,7 +294,7 @@ export class IndexedDbDexRepository implements DexRepository {
       return {value:{data,assets}};
     });
     const {data,assets}=captured;
-    if(data.dexes.some(d=>d.peopleBoards||d.peopleBoard?.version===3)){for(const asset of assets)await verifyPrepared({...asset.info,blob:asset.blob});return packBackup(data,assets,this.runtime.now());}
+    if(hasCharacterData(data)||data.dexes.some(d=>d.peopleBoards||d.peopleBoard?.version===3)){for(const asset of assets)await verifyPrepared({...asset.info,blob:asset.blob});return packBackup(data,assets,this.runtime.now());}
     const envelope:BackupEnvelope={format:'bokak-dex',schemaVersion:data.dexes.some(d=>d.peopleBoard?.version===2)?4:data.dexes.some(d=>d.peopleBoard)?3:2,exportedAt:this.runtime.now(),containsSensitiveData:true,data};
     return new Blob([JSON.stringify(envelope,null,2)],{type:'application/json'});
   });}

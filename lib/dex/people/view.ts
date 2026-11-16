@@ -6,7 +6,7 @@ export function peopleView(data:DexDocument,search='',relationship='',sort='rece
  const dexes=new Set(data.dexes.filter(d=>d.kind==='people').map(d=>d.id));
  const rows=data.entries.filter(isPerson).filter(e=>dexes.has(e.dexId));
  const recent=(e:PersonEntry)=>data.experiences.filter(x=>x.entryId===e.id).reduce((last,x)=>x.updatedAt>last?x.updatedAt:last,e.updatedAt);
- return rows.filter(e=>e.subject.displayName.toLocaleLowerCase('ko').includes(search.trim().toLocaleLowerCase('ko'))&&(!relationship||e.subject.relationship===relationship))
+ return rows.filter(e=>[e.subject.displayName,e.subject.nickname??''].join(' ').toLocaleLowerCase('ko').includes(search.trim().toLocaleLowerCase('ko'))&&(!relationship||e.subject.relationship===relationship))
  .sort((a,b)=>sort==='name'?a.subject.displayName.localeCompare(b.subject.displayName,'ko'):sort==='first'?firstMeetingDate(data,a).localeCompare(firstMeetingDate(data,b))||a.createdAt.localeCompare(b.createdAt):recent(b).localeCompare(recent(a))||b.id.localeCompare(a.id));
 }
 

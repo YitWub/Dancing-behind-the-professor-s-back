@@ -107,3 +107,29 @@
 @media(max-width:600px){.connection-toolbar{gap:.45rem;padding:.5rem}.board-tool-group+.board-tool-group{border-left:0;padding-left:0}.board-tool-group:first-child{flex:1 1 100%}.board-tool-group:first-child>button{flex:1}.people-page .connection-toolbar button{min-height:40px;padding:.45rem .65rem;font-size:.76rem}.connection-toolbar select{min-height:40px;width:86px;font-size:.76rem}.board-tool-zoom{margin-left:auto}.connection-toolbar label{font-size:.7rem}.board-tool-add{flex-wrap:nowrap}}
 
 .people-board-index,.people-board-place{display:flex;gap:.8rem;align-items:end;flex-wrap:wrap;margin-bottom:.8rem}.people-board-index>label,.people-board-place>label{flex:1;min-width:180px}.people-board-index .people-actions{gap:.75rem}.people-page .board-remove-placement{font-size:.62rem;min-height:18px;line-height:1.1;padding:0;color:#86795f}.connection-node:has(.board-remove-placement) .people-avatar{height:88px}.people-board-place>button{min-height:40px}@media(max-width:600px){.people-board-index>label,.people-board-place>label{flex-basis:100%}}
+
+/* Character presentation; board coordinates and pin anchors remain unchanged. */
+.people-character-portrait{position:relative;width:100%;aspect-ratio:1.12;overflow:hidden;background:#e9eddf;border:1px solid #d1d8bd;border-radius:3px}
+.people-character-portrait>.people-avatar{width:100%;height:100%;aspect-ratio:auto}
+.people-character-portrait>img{width:100%;height:100%;object-fit:cover;display:block}
+.people-avatar-token{position:absolute;top:6px;left:8px;font-size:1.3rem;color:#6c7256}
+.avatar-night .people-avatar{background:linear-gradient(140deg,#d9dce9,#e8e6ef)}
+.avatar-sun .people-avatar{background:linear-gradient(140deg,#f5e7b6,#f4e2cc)}
+.avatar-sprout .people-avatar{background:linear-gradient(140deg,#d8e5c6,#e6edd7)}
+.people-real-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.people-character-trait{font-size:.8rem;line-height:1.45;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.people-character-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+.people-character-tags span{font-size:.69rem;padding:.15rem .4rem;border:1px dashed #aab78d;border-radius:4px;background:#eef0dc;color:#5e694b}
+.people-polaroid:has(.people-character-trait){border-bottom:3px solid #bdc79f}
+.people-profile-photo-field{display:grid;gap:.65rem;justify-items:start}
+.people-profile-photo-field label{width:100%}
+.people-profile-photo-preview{width:120px;aspect-ratio:1;overflow:hidden;border:5px solid #fffdf0;box-shadow:0 2px 5px #483a3324}
+.people-profile-photo-preview>img{display:block;width:100%;height:100%;object-fit:cover}
+.connection-card .people-character-portrait{height:74px;flex:none;aspect-ratio:auto}
+.connection-card .people-character-portrait .people-avatar{height:100%!important}
+.connection-card .people-real-name{font-size:.59rem;line-height:1.1}
+.connection-card .people-character-trait{font-size:.61rem;line-height:1.15;margin:0;-webkit-line-clamp:1;width:100%}
+.connection-card:has(.people-character-trait){gap:3px}
+.connection-card:has(.people-character-trait)>.people-context{display:none}
+.connection-card>span:last-child{max-width:100%}
+.connection-card .people-character-tags{gap:0;max-width:100%;overflow:hidden;max-height:15px}.connection-card .people-character-tags span{padding:0 3px;font-size:.55rem;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.connection-card:has(.people-character-tags) .people-character-portrait{height:62px}

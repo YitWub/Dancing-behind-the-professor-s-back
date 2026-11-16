@@ -6,13 +6,13 @@ import { PHOTO_SIZES } from '@/lib/dex/people/photo';
 import type { BoardPhoto,PhotoSize } from '@/lib/dex/people/photo';
 import { clampPosition } from '@/lib/dex/people/board';
 import type { BoardCommand } from '@/lib/dex/people/board';
-function usePhotoUrl(ownerId:string,assetId:string){
- const [state,setState]=useState({url:'',error:''});
- useEffect(()=>{let alive=true,url='';void getBrowserRepository().getPhotoAsset(ownerId,assetId).then(result=>{
-  if(!alive)return;if(result.ok){url=URL.createObjectURL(result.value);setState({url,error:''});}else setState({url:'',error:result.error.message});
- }).catch(()=>{if(alive)setState({url:'',error:'사진을 불러오지 못했어요.'});});
+export function usePhotoUrl(ownerId:string,assetId:string){
+ const [state,setState]=useState({assetId:'',url:'',error:''});
+ useEffect(()=>{if(!ownerId||!assetId)return;let alive=true,url='';void getBrowserRepository().getPhotoAsset(ownerId,assetId).then(result=>{
+  if(!alive)return;if(result.ok){url=URL.createObjectURL(result.value);setState({assetId,url,error:''});}else setState({assetId,url:'',error:result.error.message});
+ }).catch(()=>{if(alive)setState({assetId,url:'',error:'사진을 불러오지 못했어요.'});});
  return()=>{alive=false;if(url)URL.revokeObjectURL(url);};},[ownerId,assetId]);
- return state;
+ return state.assetId===assetId?state:{url:'',error:''};
 }
 export function PhotoImage({photo,ownerId}:{photo:BoardPhoto;ownerId:string}){
  const {url,error}=usePhotoUrl(ownerId,photo.assetId);
