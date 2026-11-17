@@ -148,3 +148,7 @@
 @media(max-width:600px){.board-connection-editor fieldset{grid-template-columns:1fr}.board-thread-label{max-width:150px}}
 
 .board-note-actions[hidden],.board-photo-detail[hidden]{display:none!important}
+
+.connection-hit{pointer-events:stroke;cursor:pointer}
+.connection-hit:focus-visible{outline:none;stroke:#7c956744}
+.board-thread-add{width:30px;height:30px;min-height:30px;padding:0!important;border-radius:50%;font-size:20px!important;line-height:1}
