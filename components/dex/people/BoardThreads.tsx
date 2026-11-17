@@ -1,10 +1,12 @@
-import { THREAD_PRESETS } from './board-style';
-import { threadPath } from '@/lib/dex/people/board-presentation';
-import type { BoardEdge, BoardPosition } from '@/lib/dex/people/board';
-export function BoardThreads({edges,positions,width,height}:{edges:readonly BoardEdge[];positions:ReadonlyMap<string,BoardPosition>;width:number;height:number}){
- return <svg className="connection-lines" width={width} height={height} aria-hidden="true">{edges.map(edge=>{
-  const a=positions.get(edge.a),b=positions.get(edge.b);if(!a||!b)return null;
-  const d=threadPath(a,b),style=THREAD_PRESETS[edge.style??'red'];
-  return <g key={edge.id} data-edge-id={edge.id} data-thread-style={edge.style??'red'}><path d={d} fill="none" stroke={style.outline} strokeWidth={style.width+1.3} strokeLinecap="round"/><path className="connection-thread" d={d} fill="none" stroke={style.color} strokeWidth={style.width} strokeLinecap="round"/><path d={d} fill="none" stroke={style.highlight} strokeOpacity=".55" strokeWidth=".7" strokeDasharray={style.braid} strokeLinecap="round"/></g>;
- })}</svg>;
+import {THREAD_PRESETS} from './board-style';
+import {connectionGeometry} from '@/lib/dex/people/connection-presentation';
+import type {PeopleBoard,BoardPosition} from '@/lib/dex/people/board';
+import {refKey} from '@/lib/dex/people/connections';
+import type {BoardConnection} from '@/lib/dex/people/connections';
+export function BoardThreads({board,positions,previews,width,height,onSelect}:{board:PeopleBoard;positions:ReadonlyMap<string,BoardPosition>;previews:ReadonlyMap<string,{x:number;y:number}>;width:number;height:number;onSelect:(c:BoardConnection)=>void}){
+ const groups=new Map<string,BoardConnection[]>(),lanes=new Map<string,{index:number;count:number}>();
+ for(const c of board.connections??[]){const key=[refKey(c.from),refKey(c.to)].sort().join('|'),list=groups.get(key)??[];list.push(c);groups.set(key,list);}
+ for(const group of groups.values())group.forEach((c,index)=>lanes.set(c.id,{index,count:group.length}));
+ const curves=(board.connections??[]).map(c=>({c,g:connectionGeometry(c,board,positions,previews,lanes.get(c.id))})).filter(row=>row.g);
+ return <><svg className="connection-lines" width={width} height={height} aria-hidden="true">{curves.map(({c,g})=>{const s=THREAD_PRESETS[c.style];return <g key={c.id} data-edge-id={c.id} data-thread-style={c.style}><path d={g!.path} fill="none" stroke={s.outline} strokeWidth={s.width+1.3}/><path className="connection-thread" d={g!.path} fill="none" stroke={s.color} strokeWidth={s.width}/><path d={g!.path} fill="none" stroke={s.highlight} strokeWidth=".7" strokeOpacity=".55" strokeDasharray={s.braid}/></g>;})}</svg>{curves.map(({c,g},i)=><button key={c.id} type="button" className="board-thread-label" style={{left:g!.x,top:g!.y}} onClick={()=>onSelect(c)} aria-label={'실'+' '+(i+1)+' 편집: '+(c.label||'설명 없음')}>{c.label.trim()?c.label:'실 '+(i+1)}</button>)}</>;
 }

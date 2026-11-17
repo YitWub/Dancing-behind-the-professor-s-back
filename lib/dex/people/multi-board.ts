@@ -1,3 +1,4 @@
+import {validateConnections,removeObjectConnections} from './connections.ts';
 import { ensure } from '../core/errors.ts';
 import type { Dex,DexDocument,CollectionEntry } from '../core/types.ts';
 import { initializeBoard,validatePeopleBoard,boardOccupants,vacantPosition,CARD_WIDTH,CARD_HEIGHT } from './board.ts';
@@ -5,7 +6,7 @@ import type { PeopleBoard } from './board.ts';
 export interface PeopleBoardRecord {id:string;name:string;layout:PeopleBoard;view:{zoom:0.5|0.75|1}}
 export interface PeopleBoardCollection {version:1;activeBoardId:string;boards:PeopleBoardRecord[]}
 export type BoardManagementCommand=
- |{type:'initialize'}|{type:'create';id:string;name:string}|{type:'rename';boardId:string;name:string}
+ |{type:'migrate-connections'}|{type:'initialize'}|{type:'create';id:string;name:string}|{type:'rename';boardId:string;name:string}
  |{type:'delete';boardId:string}|{type:'select';boardId:string}
  |{type:'place';boardId:string;entryId:string}|{type:'remove';boardId:string;entryId:string}
  |{type:'view';boardId:string;zoom:0.5|0.75|1};
@@ -20,7 +21,7 @@ export function validateBoardCollection(value:unknown,dex:Dex,entries:Collection
  const ids=new Set<string>();for(const b of c.boards){
   ensure(b&&Object.keys(b).every(k=>['id','name','layout','view'].includes(k)),'보드 필드를 확인해 주세요.');boardId(b.id);name(b.name);ensure(!ids.has(b.id),'중복된 보드입니다.');ids.add(b.id);
   ensure(b.view&&Object.keys(b.view).length===1&&[.5,.75,1].includes(b.view.zoom),'보드 확대 값을 확인해 주세요.');
-  validatePeopleBoard(b.layout,dex,entries);
+  validatePeopleBoard(b.layout,dex,entries);if(b.layout.version===4)validateConnections(b.layout,b.id);
   for(const p of b.layout.positions)ensure(p.placementId===placementId(b.id,p.entryId),'인연 배치 ID가 올바르지 않습니다.');
  }
  ensure(ids.has(c.activeBoardId),'선택한 보드가 없습니다.');
@@ -48,9 +49,9 @@ export function placePerson(doc:DexDocument,dex:Dex,board:PeopleBoardRecord,entr
 }
 export function manageBoards(doc:DexDocument,dex:Dex,command:BoardManagementCommand){
  ensure(dex.peopleBoards,'보드 목록을 먼저 초기화해 주세요.');const collection=dex.peopleBoards;
- const fields:Record<BoardManagementCommand['type'],string[]>={initialize:['type'],create:['type','id','name'],rename:['type','boardId','name'],delete:['type','boardId'],select:['type','boardId'],place:['type','boardId','entryId'],remove:['type','boardId','entryId'],view:['type','boardId','zoom']};
+ const fields:Record<BoardManagementCommand['type'],string[]>={initialize:['type'],'migrate-connections':['type'],create:['type','id','name'],rename:['type','boardId','name'],delete:['type','boardId'],select:['type','boardId'],place:['type','boardId','entryId'],remove:['type','boardId','entryId'],view:['type','boardId','zoom']};
  ensure(command&&Object.hasOwn(fields,command.type)&&Object.keys(command).every(k=>fields[command.type].includes(k)),'지원하지 않는 보드 작업입니다.');
- if(command.type==='initialize')return;
+ if(command.type==='initialize'||command.type==='migrate-connections')return;
  if(command.type==='create'){boardId(command.id);name(command.name);ensure(collection.boards.length<1000,'보드가 너무 많습니다.');const existing=collection.boards.find(b=>b.id===command.id);if(existing){ensure(existing.name===command.name.trim(),'같은 보드 생성 요청의 내용이 다릅니다.');return;}
   collection.boards.push({id:command.id,name:command.name.trim(),layout:{version:1,positions:[],edges:[]},view:{zoom:.75}});collection.activeBoardId=command.id;return;}
  const board=selectedBoard(dex,command.boardId);
@@ -58,6 +59,6 @@ export function manageBoards(doc:DexDocument,dex:Dex,command:BoardManagementComm
  else if(command.type==='rename'){name(command.name);board.name=command.name.trim();}
  else if(command.type==='delete'){ensure(collection.boards.length>1,'마지막 보드는 삭제할 수 없습니다.');collection.boards=collection.boards.filter(b=>b.id!==board.id);if(collection.activeBoardId===board.id)collection.activeBoardId=collection.boards[0].id;}
  else if(command.type==='place'){placePerson(doc,dex,board,command.entryId);}
- else if(command.type==='remove'){board.layout.positions=board.layout.positions.filter(p=>p.entryId!==command.entryId);board.layout.edges=board.layout.edges.filter(e=>e.a!==command.entryId&&e.b!==command.entryId);}
+ else if(command.type==='remove'){const p=board.layout.positions.find(p=>p.entryId===command.entryId);if(p?.placementId)removeObjectConnections(board.layout,{type:'person',objectId:p.placementId});board.layout.positions=board.layout.positions.filter(p=>p.entryId!==command.entryId);board.layout.edges=board.layout.edges.filter(e=>e.a!==command.entryId&&e.b!==command.entryId);}
  else if(command.type==='view'){ensure([.5,.75,1].includes(command.zoom),'확대 값을 확인해 주세요.');board.view.zoom=command.zoom;}
 }

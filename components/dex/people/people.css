@@ -133,3 +133,18 @@
 .connection-card:has(.people-character-trait)>.people-context{display:none}
 .connection-card>span:last-child{max-width:100%}
 .connection-card .people-character-tags{gap:0;max-width:100%;overflow:hidden;max-height:15px}.connection-card .people-character-tags span{padding:0 3px;font-size:.55rem;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.connection-card:has(.people-character-tags) .people-character-portrait{height:62px}
+
+/* Free threads stay behind objects; their large labels remain independently keyboard accessible. */
+.connection-lines{z-index:0}
+.connection-node{z-index:2}
+.board-thread-label{position:absolute;z-index:3;transform:translate(-50%,-50%);max-width:180px;min-height:26px;padding:3px 9px!important;border:1px solid #c7bca2;border-radius:3px;background:#fff5dceF;box-shadow:0 2px 3px #54412b33;font-size:13px!important;text-decoration:none!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.board-thread-label:focus-visible{z-index:5}
+[data-connection-selected=true]{outline:3px solid #6c8053;outline-offset:3px}
+.connection-object-picker{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;margin:.6rem 0}
+.connection-object-picker>label{flex:1;min-width:180px}
+.board-connection-editor{margin:.8rem 0}
+.board-connection-editor fieldset{grid-template-columns:minmax(0,1fr) minmax(130px,auto)}
+.board-connection-editor .people-actions{grid-column:1/-1}
+@media(max-width:600px){.board-connection-editor fieldset{grid-template-columns:1fr}.board-thread-label{max-width:150px}}
+
+.board-note-actions[hidden],.board-photo-detail[hidden]{display:none!important}

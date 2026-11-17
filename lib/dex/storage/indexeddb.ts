@@ -1,3 +1,4 @@
+import {migrateConnections,removeObjectConnections} from '../people/connections.ts';
 import { migratePeopleBoards,manageBoards,selectedBoard,tagPlacements,placePerson,allBoardLayouts } from '../people/multi-board.ts';
 import type { BoardManagementCommand } from '../people/multi-board.ts';
 import { packBackup,packContainer,unpackBackup,isPhotoPackage,photoReferences,hasCharacterData,MAX_PACKAGE } from './photo-package.ts';
@@ -115,7 +116,7 @@ export class IndexedDbDexRepository implements DexRepository {
   }
   private abort(tx:IDBTransaction,error:unknown){this.failures.set(tx,error);try{tx.abort();}catch{/* Already aborted. */}}
   private removePlacements(doc:DexDocument,ids:Set<string>){
-    for(const dex of doc.dexes){let changed=false;for(const board of allBoardLayouts(dex)){const positions=board.positions.filter(p=>!ids.has(p.entryId)),edges=board.edges.filter(e=>!ids.has(e.a)&&!ids.has(e.b));if(positions.length!==board.positions.length||edges.length!==board.edges.length){board.positions=positions;board.edges=edges;changed=true;}}if(changed)touch(dex,this.runtime);}
+    for(const dex of doc.dexes){let changed=false;for(const board of allBoardLayouts(dex)){for(const p of board.positions)if(ids.has(p.entryId)&&p.placementId)removeObjectConnections(board,{type:'person',objectId:p.placementId});const positions=board.positions.filter(p=>!ids.has(p.entryId)),edges=board.edges.filter(e=>!ids.has(e.a)&&!ids.has(e.b));if(positions.length!==board.positions.length||edges.length!==board.edges.length){board.positions=positions;board.edges=edges;changed=true;}}if(changed)touch(dex,this.runtime);}
   }
   private putProfileImage(tx:IDBTransaction,ownerId:string,image:PreparedImage){
     const info:ImageInfo={id:'img-'+image.sha256,ownerId,mime:image.mime,bytes:image.bytes,width:image.width,height:image.height,sha256:image.sha256};
@@ -190,7 +191,8 @@ export class IndexedDbDexRepository implements DexRepository {
   managePeopleBoards(ownerId:string,dexId:string,revision:number,command:BoardManagementCommand){return resultOf(()=>this.document(true,doc=>{
     owner(doc,ownerId);const selected=find(doc.dexes,dexId);ensure(selected.kind==='people','인연 보드만 지원합니다.');
     if(command.type==='initialize'){const migration=migratePeopleBoards(doc);if(migration.changed)touch(migration.dex,this.runtime);return {value:migration.dex,changed:migration.changed};}
-    checkRevision(selected,revision);const before=canonical(selected.peopleBoards);manageBoards(doc,selected,command);const changed=canonical(selected.peopleBoards)!==before;if(changed)touch(selected,this.runtime);return {value:selected,changed};
+    checkRevision(selected,revision);if(command.type==='migrate-connections'){ensure(selected.peopleBoards,'보드 목록이 필요합니다.');let changed=false;for(const b of selected.peopleBoards.boards)changed=migrateConnections(b,selected.createdAt)||changed;if(changed)touch(selected,this.runtime);return {value:selected,changed};}
+    const before=canonical(selected.peopleBoards);manageBoards(doc,selected,command);const changed=canonical(selected.peopleBoards)!==before;if(changed)touch(selected,this.runtime);return {value:selected,changed};
   }));}
   addBoardPhoto(ownerId:string,dexId:string,revision:number,photo:Pick<BoardPhoto,'id'|'assetId'|'caption'|'size'>,image:PreparedImage,boardId?:string){
     return resultOf(async()=>{
@@ -222,7 +224,7 @@ export class IndexedDbDexRepository implements DexRepository {
     const current=record?.layout??dex.peopleBoard;
     const view=record?{...dex,peopleBoard:record.layout}:dex;
     const entries=record?doc.entries.filter(e=>record.layout.positions.some(p=>p.entryId===e.id)):doc.entries;
-    const next=applyBoardCommand(view,entries,command);if(record){const tagged={...record,layout:next};tagPlacements(tagged);}
+    const next=applyBoardCommand(view,entries,command,record?.id);if(record){const tagged={...record,layout:next};tagPlacements(tagged);}
     if(canonical(next)===canonical(current??null))return {value:dex,changed:false};
     if(record)record.layout=next;else dex.peopleBoard=next;touch(dex,this.runtime);return {value:dex,changed:true};
   }));}
