@@ -1,3 +1,4 @@
+import {AVATAR_IDS,isCharacterAvatar} from '../people/avatars.ts';
 import { validateBoardCollection } from '../people/multi-board.ts';
 import { validatePeopleBoard } from '../people/board.ts';
 import { isIsoDate } from '../../datetime.ts';
@@ -35,14 +36,15 @@ export function subject(value: unknown): asserts value is EntrySubject {
   const v = value as ObjectValue;
   if (v.kind === 'meal') { object(v, ['kind', 'dishId', 'displayNameSnapshot']); id(v.dishId); text(v.displayNameSnapshot, 200); }
   else if (v.kind === 'person') {
-    object(v, ['kind', 'displayName', 'admissionYear', 'department', 'relationship', 'memo', 'nickname', 'trait', 'tags', 'avatar', 'profileAssetId']); text(v.displayName, 80);
+    object(v, ['kind', 'displayName', 'admissionYear', 'department', 'relationship', 'memo', 'nickname', 'trait', 'tags', 'avatar', 'profileAssetId', 'characterIntro']); text(v.displayName, 80);
     if (v.admissionYear !== undefined) ensure(Number.isInteger(v.admissionYear) && (v.admissionYear as number) >= 1900 && (v.admissionYear as number) <= 2200, '입학 연도를 확인해 주세요.');
     for (const key of ['department', 'relationship']) if (v[key] !== undefined) text(v[key], 80, true);
     if (v.memo !== undefined) text(v.memo, 500, true);
     if(v.nickname!==undefined)text(v.nickname,40,true);
-    if(v.trait!==undefined)text(v.trait,100,true);
+    if(v.trait!==undefined)text(v.trait,500,true);
     if(v.tags!==undefined){ensure(Array.isArray(v.tags)&&v.tags.length<=3,'특징 태그는 3개까지입니다.');for(const tag of v.tags)text(tag,16);ensure(new Set(v.tags).size===v.tags.length,'중복 태그를 확인해 주세요.');}
-    if(v.avatar!==undefined)ensure(['classic','sprout','night','sun'].includes(v.avatar as string),'아바타를 확인해 주세요.');
+    if(v.avatar!==undefined)ensure(AVATAR_IDS.includes(v.avatar as string),'아바타를 확인해 주세요.');
+    if(v.characterIntro!==undefined)text(v.characterIntro,300,true);
     if(v.profileAssetId!==undefined)ensure(typeof v.profileAssetId==='string'&&/^img-[a-f0-9]{64}$/.test(v.profileAssetId),'프로필 이미지 참조를 확인해 주세요.');
   } else { ensure(v.kind === 'custom', '지원하지 않는 항목 종류입니다.'); object(v, ['kind', 'title', 'memo']); text(v.title, 120); if (v.memo !== undefined) text(v.memo, 500, true); }
 }
@@ -161,7 +163,7 @@ export function parseBackup(raw: string): BackupEnvelope {
     const v: unknown = JSON.parse(raw);
     object(v, ['format','schemaVersion','exportedAt','containsSensitiveData','data']);
     ensure(v.format === 'bokak-dex', 'BOKAK 내보내기 파일이 아닙니다.');
-    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
+    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8 || v.schemaVersion === 9, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
     ensure(v.containsSensitiveData === true, '백업 정보가 누락되었습니다.'); instant(v.exportedAt); validateDocument(v.data);
     if(v.schemaVersion===1||v.schemaVersion===2)ensure(v.data.dexes.every(dex=>dex.peopleBoard===undefined),'보드는 v3 백업을 사용해야 합니다.');
     if(v.schemaVersion===3)ensure(v.data.dexes.every(dex=>!dex.peopleBoard||dex.peopleBoard.version===1),'확장 보드는 v4 백업을 사용해야 합니다.');
@@ -170,6 +172,7 @@ export function parseBackup(raw: string): BackupEnvelope {
     if(v.schemaVersion<6)ensure(v.data.dexes.every(dex=>!dex.peopleBoards),'다중 보드는 v6 백업을 사용해야 합니다.');
     if(v.schemaVersion<7)ensure(v.data.entries.every(e=>e.subject.kind!=='person'||!['nickname','trait','tags','avatar','profileAssetId'].some(k=>k in e.subject)),'캐릭터 인연은 v7 백업을 사용해야 합니다.');
     if(v.schemaVersion<8)ensure(v.data.dexes.every(dex=>!dex.peopleBoards?.boards.some(b=>b.layout.version===4)),'자유 연결은 v8 백업이 필요합니다.');
+    if(v.schemaVersion<9)ensure(v.data.entries.every(e=>e.subject.kind!=='person'||(e.subject.characterIntro===undefined&&!isCharacterAvatar(e.subject.avatar)&&(e.subject.trait?.length??0)<=100)),'새 소개와 아바타는 v9 백업이 필요합니다.');
     normalizeLegacyCards(v.data);
     return v as unknown as BackupEnvelope;
   } catch (error) {

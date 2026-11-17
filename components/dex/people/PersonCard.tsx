@@ -1,5 +1,7 @@
 'use client';
 /* eslint-disable @next/next/no-img-element -- Private Blob images stay in the browser. */
+import {CharacterAvatar} from './CharacterAvatar';
+import {isCharacterAvatar} from '@/lib/dex/people/avatars';
 import { useState } from 'react';
 import { usePhotoUrl } from './BoardPhotoCard';
 import type { PersonSubject } from './PeopleForms';
@@ -9,8 +11,8 @@ function BaseAvatar({name}:{name:string}){return <div className="people-avatar" 
 export function PersonAvatar({name,subject,ownerId}:{name:string;subject?:PersonSubject;ownerId?:string}){
  const assetId=subject?.profileAssetId??'',{url,error}=usePhotoUrl(ownerId??'',assetId);
  const [failed,setFailed]=useState('');
- return <div className={'people-character-portrait avatar-'+(subject?.avatar??'classic')}>{assetId&&url&&!error&&failed!==url?<img key={url} draggable={false} src={url} alt={name+' 프로필'} onError={()=>setFailed(url)}/>:<><BaseAvatar name={name}/>{subject?.avatar&&subject.avatar!=='classic'?<span className="people-avatar-token" aria-hidden="true">{{sprout:'🌱',night:'☾',sun:'☀',classic:''}[subject.avatar]}</span>:null}</>}</div>;
+ return <div className={'people-character-portrait avatar-'+(subject?.avatar??'classic')}>{assetId&&url&&!error&&failed!==url?<img key={url} draggable={false} src={url} alt={name+' 프로필'} onError={()=>setFailed(url)}/>:<>{isCharacterAvatar(subject?.avatar)?<CharacterAvatar id={subject.avatar}/>:<BaseAvatar name={name}/>}{subject?.avatar&&!isCharacterAvatar(subject.avatar)&&subject.avatar!=='classic'?<span className="people-avatar-token" aria-hidden="true">{{sprout:'🌱',night:'☾',sun:'☀',classic:''}[subject.avatar]}</span>:null}</>}</div>;
 }
-export function PersonFeatures({subject,compact=false}:{subject:PersonSubject;compact?:boolean}){return <>{subject.nickname?<small className="people-real-name">{subject.displayName}</small>:null}{subject.trait?<p className="people-character-trait">{subject.trait}</p>:null}{subject.tags?.length?<div className="people-character-tags">{(compact?subject.tags.slice(0,1):subject.tags).map(tag=><span key={tag}>#{tag}</span>)}</div>:null}</>;}
+export function PersonFeatures({subject,compact=false}:{subject:PersonSubject;compact?:boolean}){return <>{subject.nickname?<small className="people-real-name">{subject.displayName}</small>:null}{subject.characterIntro||subject.trait?<p className="people-character-trait">{subject.characterIntro||subject.trait}</p>:null}{subject.tags?.length?<div className="people-character-tags">{(compact?subject.tags.slice(0,1):subject.tags).map(tag=><span key={tag}>#{tag}</span>)}</div>:null}</>;}
 /** Presentation only: a future manually positioned board can reuse the same card. */
 export function PersonCard({entry,note}:{entry:PersonEntry;note?:string}){const p=entry.subject;return <Link className="people-polaroid" href={`/dex/people/${entry.id}`}><span className="people-pin" aria-hidden="true"/><PersonAvatar name={p.displayName} subject={p} ownerId={entry.ownerId}/><h3>{p.nickname||p.displayName}</h3><PersonFeatures subject={p}/>{p.admissionYear||p.department?<p>{[p.admissionYear&&p.admissionYear+'학번',p.department].filter(Boolean).join(' · ')}</p>:null}{p.relationship?<span className="people-context">{p.relationship}</span>:null}{note?<p className="people-card-note">{note}</p>:null}</Link>;}
