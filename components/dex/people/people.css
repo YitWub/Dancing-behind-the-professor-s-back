@@ -166,20 +166,12 @@
 .people-avatar-options svg{width:76px;max-width:100%;height:66px}
 .people-avatar-options span{font-size:.69rem;line-height:1.3;text-align:center}
 .people-character-portrait>.character-avatar{display:block;width:100%;height:100%}
-.people-introduction{display:grid;gap:.7rem}
-.people-intro-candidates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem}
-.people-page .people-intro-candidates button{text-align:left;display:grid;align-content:start;gap:.45rem;padding:.8rem;background:#fffaf0;border:1px dashed #c7c9aa;border-radius:7px;white-space:normal;text-decoration:none}
-.people-intro-candidates button[aria-pressed=true]{border-style:solid;border-color:#7f9369;background:#eff1df}
-.people-intro-candidates strong{font-size:.9rem;overflow-wrap:anywhere}
-.people-intro-candidates span{font-size:.78rem;line-height:1.6;color:#746d58;overflow-wrap:anywhere}
-.people-intro-edit{display:grid;gap:.7rem;padding-top:.4rem}
 .people-additional{border-top:1px dashed #ccc6ad;padding-top:.7rem}
 .people-additional summary{font-size:.9rem;cursor:pointer}
 .people-additional>.people-fields{padding-top:.9rem}
 .people-original-traits p{white-space:pre-wrap;overflow-wrap:anywhere}
-@media(max-width:600px){.people-avatar-options{grid-template-columns:repeat(3,minmax(0,1fr))}.people-intro-candidates{grid-template-columns:1fr}.people-avatar-options svg{height:62px}}
+@media(max-width:600px){.people-avatar-options{grid-template-columns:repeat(3,minmax(0,1fr))}.people-avatar-options svg{height:62px}}
 
-.people-discovery-intro{font-size:1rem;line-height:1.75;color:#4d6044;max-width:40ch;margin:.9rem auto;overflow-wrap:anywhere}
 
 /* People collection: paper cards held in a light notebook page, separate from the cork board. */
 .people-album-heading{display:flex;align-items:end;justify-content:space-between;gap:1rem;padding:1rem .25rem .7rem;border-bottom:1px solid #d9ddca}
@@ -330,3 +322,32 @@
 /* Tags sit behind paper objects unless the user is actively selecting/editing that tag. */
 .board-thread-label[data-thread-selected=true]{z-index:1}
 .connection-canvas:has(.connection-hit:focus) .board-thread-label[data-thread-selected=true],.board-thread-label:focus{z-index:5}
+
+/* A light scrapbook page edge; the cork world itself is unchanged. */
+.connection-wood-frame{position:relative;padding:6px;border:1px solid #d2cbbb;border-radius:5px;background:#ede9dd;background-image:none;box-shadow:0 4px 14px #51493618,inset 0 1px 0 #fff9}
+.connection-viewport{border:1px solid #b8a68a;border-radius:2px;box-shadow:inset 0 1px 5px #725b3826}
+.people-board-bar{grid-template-columns:minmax(160px,260px) 1fr auto}
+.people-page .board-place-overlay{position:absolute;top:16px;right:16px;z-index:8;display:flex;align-items:center;gap:.4rem;min-height:38px;padding:.5rem .75rem;border:1px solid #c5cbb3;border-radius:5px;background:#fffdf0f2;color:#536845;box-shadow:0 2px 5px #51432c1c;font-size:.8rem;text-decoration:none}
+.board-place-overlay span{font-size:1.05rem;line-height:1}
+.person-placement-dialog{position:fixed;inset:0;margin:auto;width:min(700px,calc(100vw - 28px));max-height:86dvh;overflow:auto;padding:1.15rem;border:1px solid #d4dcc5;border-radius:10px;background:#fffdf5;color:#45533d;box-shadow:0 20px 70px #363e2a38}
+.person-placement-dialog::backdrop{background:#30392b66}
+.person-placement-dialog>header{display:flex;justify-content:space-between;align-items:start;gap:.75rem;margin-bottom:1rem}
+.person-placement-dialog header p,.person-placement-dialog>.people-privacy{font-size:.76rem;color:#859176;line-height:1.7}
+.people-page .person-placement-dialog>header button{min-height:36px;font-size:.78rem;text-decoration:none}
+.person-placement-dialog>label{margin-bottom:.75rem}
+.person-placement-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;max-height:52dvh;overflow:auto;padding:.3rem .2rem .8rem;margin-bottom:.6rem}
+.people-page .person-placement-item{min-width:0;display:grid;justify-items:center;align-content:start;gap:.4rem;padding:.6rem;border:1px solid #dce1cd;border-radius:6px;background:#f8f9ec;text-decoration:none;white-space:normal}
+.person-placement-item .people-character-portrait{width:100%;height:105px;aspect-ratio:auto;border:0;background:#edf1df}
+.person-placement-item strong{font-size:.85rem;overflow-wrap:anywhere;text-align:center}
+.person-placement-item>span{font-size:.7rem;color:#8a957c}
+.person-placement-empty{padding:1.2rem 0;display:grid;justify-items:start;gap:.8rem}
+.person-form-group{display:grid;gap:.85rem;padding:.3rem 0 1.1rem;border-bottom:1px solid #dce0cd}
+.person-form-group>h3{font-size:1rem;color:#4c6340}
+.person-form-group .people-fields{align-items:start}
+.person-detail-facts{display:grid;grid-template-columns:max-content 1fr;gap:.35rem .9rem;margin:0}
+.person-detail-facts dt{font-size:.8rem;color:#8b947b}
+.person-detail-facts dd{margin:0;font-size:.88rem;color:#566449;overflow-wrap:anywhere}
+.person-detail-facts:empty{display:none}
+.people-card-basic{font-size:.72rem;color:#7b886c;overflow-wrap:anywhere}
+.connection-empty-caption{left:32px;top:72px}
+@media(max-width:600px){.connection-wood-frame{padding:5px;border-radius:4px}.people-board-bar{grid-template-columns:minmax(0,1fr) auto}.people-page .board-place-overlay{top:13px;right:13px;min-height:36px;padding:.45rem .6rem;font-size:.74rem}.person-placement-dialog{padding:1rem}.person-placement-list{grid-template-columns:repeat(2,minmax(0,1fr))}.person-placement-item .people-character-portrait{height:100px}.connection-empty-caption{left:24px;top:75px}.people-card-basic{font-size:.66rem}}

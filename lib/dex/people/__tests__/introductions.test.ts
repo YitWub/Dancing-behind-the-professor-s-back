@@ -1,9 +1,0 @@
-import {strict as assert} from 'node:assert';import {test} from 'node:test';
-import {suggestIntroductions} from '../introductions.ts';
-test('단서 조합별 후보 3개·서로 다른 소개·결정적 결과',()=>{
- const inputs=['맨날 커피 마시고 밤에 게임하다가 아침 수업에 졸음','과제를 맨날 마감 직전에 하는데 결과물은 잘 나옴','항상 강의실에 제일 먼저 와서 맨 앞자리에 앉음'];
- const outputs=inputs.map(suggestIntroductions);assert.equal(new Set(outputs.map(r=>r.candidates[0].nickname)).size,3);
- for(let i=0;i<inputs.length;i++){const r=outputs[i];assert.equal(r.fallback,false);assert.equal(r.candidates.length,3);assert.equal(new Set(r.candidates.map(c=>c.nickname)).size,3);assert.deepEqual(suggestIntroductions(inputs[i]),r);for(const c of r.candidates){assert.ok(c.nickname.length<=40&&c.intro.length<=300);assert.ok(!c.intro.includes(inputs[i]));}}
-});
-test('짧은 부정·장형 부정·못·대신 표현에서 긍정 취향을 만들지 않음',()=>{for(const input of ['커피를 안 마신다','커피 안 마셔요','커피 못 마셔요','커피를 마시지 않는다','안 마시는 커피','커피 말고 차','커피 대신 차를 마셔요','커피를 마시지 못한다'])assert.ok(!suggestIntroductions(input).cues.includes('coffee'),input);for(const input of ['게임 안 한다','게임은 안 해요','게임을 하지 않아','게임 못 해요'])assert.ok(!suggestIntroductions(input).cues.includes('game'),input);const r=suggestIntroductions('커피는 안 마시지만 게임은 좋아해요');assert.ok(!r.cues.includes('coffee'));assert.ok(r.cues.includes('game'));assert.ok(!r.candidates.some(c=>/커피|카페인/.test(c.nickname+c.intro)));});
-test('일상 단서별 결과 차이, 단서가 없는 민감·미지원 입력은 안전한 기본 소개',()=>{const inputs=['커피 좋아함','운동을 즐긴다','도서관에서 공부함','맛집 찾아 밥 먹음','동아리 모임을 즐김','게임을 좋아함','지각해서 늦게 옴'];assert.equal(new Set(inputs.map(s=>suggestIntroductions(s).candidates[0].nickname)).size,inputs.length);for(const input of ['','차분한 미소를 가진 사람','특정 종교를 믿는다','정치 성향과 건강 상태를 기록함']){const r=suggestIntroductions(input);assert.equal(r.fallback,true);assert.equal(r.candidates.length,3);assert.ok(r.candidates.every(c=>!c.intro.includes(input)||input===''));}});

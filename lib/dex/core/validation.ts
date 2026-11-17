@@ -1,3 +1,4 @@
+import {MBTI_TYPES,GENDER_LABELS,ENERGY_LABELS,hasPersonDetails} from '../people/person-fields.ts';
 import {AVATAR_IDS,isCharacterAvatar} from '../people/avatars.ts';
 import { validateBoardCollection } from '../people/multi-board.ts';
 import { validatePeopleBoard } from '../people/board.ts';
@@ -36,7 +37,11 @@ export function subject(value: unknown): asserts value is EntrySubject {
   const v = value as ObjectValue;
   if (v.kind === 'meal') { object(v, ['kind', 'dishId', 'displayNameSnapshot']); id(v.dishId); text(v.displayNameSnapshot, 200); }
   else if (v.kind === 'person') {
-    object(v, ['kind', 'displayName', 'admissionYear', 'department', 'relationship', 'memo', 'nickname', 'trait', 'tags', 'avatar', 'profileAssetId', 'characterIntro']); text(v.displayName, 80);
+    object(v, ['kind', 'displayName', 'admissionYear', 'department', 'relationship', 'memo', 'nickname', 'trait', 'tags', 'avatar', 'profileAssetId', 'characterIntro', 'age', 'gender', 'mbti', 'energyType']); text(v.displayName, 80);
+    if(v.age!==undefined)ensure(Number.isInteger(v.age)&&(v.age as number)>=0&&(v.age as number)<=150,'나이는 0~150의 정수로 직접 입력해 주세요.');
+    if(v.gender!==undefined)ensure(typeof v.gender==='string'&&Object.hasOwn(GENDER_LABELS,v.gender),'성별을 확인해 주세요.');
+    if(v.mbti!==undefined)ensure(MBTI_TYPES.includes(v.mbti as typeof MBTI_TYPES[number]),'MBTI를 확인해 주세요.');
+    if(v.energyType!==undefined)ensure(typeof v.energyType==='string'&&Object.hasOwn(ENERGY_LABELS,v.energyType),'에겐·테토 선택을 확인해 주세요.');
     if (v.admissionYear !== undefined) ensure(Number.isInteger(v.admissionYear) && (v.admissionYear as number) >= 1900 && (v.admissionYear as number) <= 2200, '입학 연도를 확인해 주세요.');
     for (const key of ['department', 'relationship']) if (v[key] !== undefined) text(v[key], 80, true);
     if (v.memo !== undefined) text(v.memo, 500, true);
@@ -163,7 +168,7 @@ export function parseBackup(raw: string): BackupEnvelope {
     const v: unknown = JSON.parse(raw);
     object(v, ['format','schemaVersion','exportedAt','containsSensitiveData','data']);
     ensure(v.format === 'bokak-dex', 'BOKAK 내보내기 파일이 아닙니다.');
-    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8 || v.schemaVersion === 9, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
+    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8 || v.schemaVersion === 9 || v.schemaVersion === 10, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
     ensure(v.containsSensitiveData === true, '백업 정보가 누락되었습니다.'); instant(v.exportedAt); validateDocument(v.data);
     if(v.schemaVersion===1||v.schemaVersion===2)ensure(v.data.dexes.every(dex=>dex.peopleBoard===undefined),'보드는 v3 백업을 사용해야 합니다.');
     if(v.schemaVersion===3)ensure(v.data.dexes.every(dex=>!dex.peopleBoard||dex.peopleBoard.version===1),'확장 보드는 v4 백업을 사용해야 합니다.');
@@ -173,6 +178,7 @@ export function parseBackup(raw: string): BackupEnvelope {
     if(v.schemaVersion<7)ensure(v.data.entries.every(e=>e.subject.kind!=='person'||!['nickname','trait','tags','avatar','profileAssetId'].some(k=>k in e.subject)),'캐릭터 인연은 v7 백업을 사용해야 합니다.');
     if(v.schemaVersion<8)ensure(v.data.dexes.every(dex=>!dex.peopleBoards?.boards.some(b=>b.layout.version===4)),'자유 연결은 v8 백업이 필요합니다.');
     if(v.schemaVersion<9)ensure(v.data.entries.every(e=>e.subject.kind!=='person'||(e.subject.characterIntro===undefined&&!isCharacterAvatar(e.subject.avatar)&&(e.subject.trait?.length??0)<=100)),'새 소개와 아바타는 v9 백업이 필요합니다.');
+    if(v.schemaVersion<10)ensure(v.data.entries.every(e=>!hasPersonDetails(e.subject)),'추가 인연 정보는 v10 백업이 필요합니다.');
     normalizeLegacyCards(v.data);
     return v as unknown as BackupEnvelope;
   } catch (error) {

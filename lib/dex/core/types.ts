@@ -1,3 +1,4 @@
+import type {PersonGender,PersonMbti,PersonEnergy} from '../people/person-fields.ts';
 import type { PersonAvatarId } from '../people/avatars.ts';
 import type { PeopleBoardCollection,BoardManagementCommand } from '../people/multi-board.ts';
 import type { PreparedImage,BoardPhoto } from '../people/photo.ts';
@@ -29,7 +30,7 @@ export interface Dex extends Versioned {
 }
 export type EntrySubject =
   | { kind: 'meal'; dishId: Id; displayNameSnapshot: string }
-  | { kind: 'person'; displayName: string; admissionYear?: number; department?: string; relationship?: string; memo?: string; nickname?: string; trait?: string; tags?: string[]; avatar?: PersonAvatarId; characterIntro?: string; profileAssetId?: string }
+  | { kind: 'person'; displayName: string; age?: number; gender?: PersonGender; mbti?: PersonMbti; energyType?: PersonEnergy; admissionYear?: number; department?: string; relationship?: string; memo?: string; nickname?: string; trait?: string; tags?: string[]; avatar?: PersonAvatarId; characterIntro?: string; profileAssetId?: string }
   | { kind: 'custom'; title: string; memo?: string };
 export interface CollectionEntry extends Versioned {
   ownerId: Id;
@@ -111,7 +112,7 @@ export type DexErrorCode =
   | 'UNSUPPORTED_SCHEMA' | 'INVALID_BACKUP' | 'IMPORT_CONFLICT';
 export type Result<T> = { ok: true; value: T } | { ok: false; error: { code: DexErrorCode; message: string } };
 export interface BackupEnvelope {
-  format: 'bokak-dex'; schemaVersion: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9; exportedAt: Instant;
+  format: 'bokak-dex'; schemaVersion: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10; exportedAt: Instant;
   containsSensitiveData: true;
   data: DexDocument;
 }

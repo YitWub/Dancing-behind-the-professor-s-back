@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable @next/next/no-img-element -- Local-only preview must not use an external image optimizer. */
 import {AvatarPicker} from './AvatarPicker';
-import {IntroductionFields} from './IntroductionFields';
+import {MBTI_TYPES,GENDER_LABELS,ENERGY_LABELS} from '@/lib/dex/people/person-fields';
 import type {ReactNode} from 'react';
 import { PersonAvatar } from './PersonCard';
 import { optimizePhoto } from '@/lib/dex/people/photo';
@@ -11,11 +11,20 @@ import type { EntrySubject, Result } from '@/lib/dex/core/types';
 export type PersonSubject=Extract<EntrySubject,{kind:'person'}>;
 export const emptyPerson:PersonSubject={kind:'person',displayName:''};
 export function ProfileFields({value,onChange,portrait,children}:{value:PersonSubject;onChange:(value:PersonSubject)=>void;portrait?:ReactNode;children?:ReactNode}){
- return <div className="people-registration-fields"><label>이름<input required maxLength={80} autoComplete="off" value={value.displayName} onChange={e=>onChange({...value,displayName:e.target.value})}/></label>
- <label>이 사람에 대해 기억나는 점 <small>선택 · 500자 이내</small><textarea rows={3} maxLength={500} placeholder="커피를 자주 마시고, 밤에 같이 게임해요." value={value.trait??''} onChange={e=>onChange({...value,trait:e.target.value})}/></label>
- <AvatarPicker value={value} onChange={onChange}/>{portrait}<IntroductionFields value={value} onChange={onChange}/>
- <details className="people-additional"><summary>추가 정보</summary><div className="people-fields"><label>입학연도 <small>선택</small><input type="number" min={1900} max={2200} placeholder="예: 2026" value={value.admissionYear??''} onChange={e=>onChange({...value,admissionYear:e.target.value?Number(e.target.value):undefined})}/></label><label>학과 <small>선택</small><input maxLength={80} value={value.department??''} onChange={e=>onChange({...value,department:e.target.value})}/></label><label>관계 또는 만남의 맥락 <small>선택</small><input maxLength={80} value={value.relationship??''} onChange={e=>onChange({...value,relationship:e.target.value})}/></label>
- {value.tags!==undefined?<label>기존 특징 태그 <small>쉼표로 구분 · 3개, 각 16자</small><input maxLength={50} value={value.tags.join(',')} onChange={e=>onChange({...value,tags:e.target.value.split(',')})} onBlur={()=>onChange({...value,tags:[...new Set((value.tags??[]).map(t=>t.trim()).filter(Boolean))]})}/></label>:null}{children}</div></details></div>;
+ return <div className="people-registration-fields">
+ <section className="person-form-group"><h3>기본 정보</h3><div className="people-fields"><label>이름 또는 표시 이름 <small>필수</small><input required maxLength={80} autoComplete="off" value={value.displayName} onChange={e=>onChange({...value,displayName:e.target.value})}/></label>
+ <label>나이 <small>선택 · 직접 입력</small><input type="number" min={0} max={150} step={1} inputMode="numeric" value={value.age??''} onChange={e=>onChange({...value,age:e.target.value===''?undefined:Number(e.target.value)})}/></label>
+ <label>성별 <small>선택</small><select aria-label="성별" value={value.gender??''} onChange={e=>onChange({...value,gender:(e.target.value||undefined) as PersonSubject['gender']})}><option value="">미설정</option>{Object.entries(GENDER_LABELS).map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>
+ <label>학번(입학연도) <small>선택</small><input type="number" min={1900} max={2200} placeholder="예: 2026" value={value.admissionYear??''} onChange={e=>onChange({...value,admissionYear:e.target.value?Number(e.target.value):undefined})}/></label>
+ <label>학과 <small>선택</small><input maxLength={80} value={value.department??''} onChange={e=>onChange({...value,department:e.target.value})}/></label>
+ <label>관계 <small>선택</small><input maxLength={80} placeholder="예: 같은 수업, 동아리 친구" value={value.relationship??''} onChange={e=>onChange({...value,relationship:e.target.value})}/></label></div></section>
+ <section className="person-form-group"><h3>대표 이미지</h3><AvatarPicker value={value} onChange={onChange}/>{portrait}</section>
+ <section className="person-form-group"><h3>이 사람에 대해 기록하기</h3><p className="people-privacy">선택 사항이에요. 직접 알고 있는 내용만 남겨 주세요.</p><div className="people-fields"><label>MBTI <small>선택</small><select aria-label="MBTI" value={value.mbti??''} onChange={e=>onChange({...value,mbti:(e.target.value||undefined) as PersonSubject['mbti']})}><option value="">미설정</option>{MBTI_TYPES.map(id=><option key={id}>{id}</option>)}</select></label><label>에겐·테토 <small>선택</small><select aria-label="에겐·테토" value={value.energyType??''} onChange={e=>onChange({...value,energyType:(e.target.value||undefined) as PersonSubject['energyType']})}><option value="">미설정</option>{Object.entries(ENERGY_LABELS).map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label></div><label>기억나는 특징 <small>선택 · 500자 이내</small><textarea rows={3} maxLength={500} placeholder="함께한 순간이나 기억나는 모습을 적어 주세요." value={value.trait??''} onChange={e=>onChange({...value,trait:e.target.value})}/></label></section>
+ <details className="people-additional"><summary>부가 기록</summary><div className="people-fields">{children}
+ {value.nickname!==undefined?<label>기존 별명 <small>선택</small><input maxLength={40} value={value.nickname} onChange={e=>onChange({...value,nickname:e.target.value})}/></label>:null}
+ {value.characterIntro!==undefined?<label>기존 소개 <small>선택</small><textarea rows={3} maxLength={300} value={value.characterIntro} onChange={e=>onChange({...value,characterIntro:e.target.value})}/></label>:null}
+ {value.tags!==undefined?<label>기존 특징 태그 <small>쉼표로 구분 · 3개, 각 16자</small><input maxLength={50} value={value.tags.join(',')} onChange={e=>onChange({...value,tags:e.target.value.split(',')})} onBlur={()=>onChange({...value,tags:[...new Set((value.tags??[]).map(t=>t.trim()).filter(Boolean))]})}/></label>:null}
+ </div></details></div>;
 }
 export function usePeopleAction(){
  const [busy,setBusy]=useState(false),[message,setMessage]=useState('');const active=useRef(false);
