@@ -1,7 +1,11 @@
+'use client';
+/* eslint-disable @next/next/no-img-element -- Small supplied local WebP assets; preserve original pixels and SVG fallback. */
+import {useState} from 'react';
+import {AVATAR_ARTWORK} from '@/lib/dex/people/avatar-artwork';
 import type {CharacterAvatarId} from '@/lib/dex/people/avatars';
 const clothes={reader:'#899b78',gamer:'#8797a8',explorer:'#b09a71',sleepy:'#b1a4ba',hoodie:'#8d9f88',coffee:'#b4947d',athlete:'#739e91',backpacker:'#a48f6e',playful:'#d4ac72',formal:'#6e7c7b'};
 /** Finished vector presets, not a character editor. Replace here to use future illustration assets. */
-export function CharacterAvatar({id}:{id:CharacterAvatarId}){
+function VectorAvatar({id}:{id:CharacterAvatarId}){
  const round=id==='playful',sleepy=id==='sleepy',hair=id==='reader'?'M37 52V30Q36 7 60 9Q84 7 83 31V57L75 64H43Z':id==='formal'?'M40 34Q37 7 61 10Q84 9 81 36L66 22L43 35Z':id==='gamer'?'M38 35L41 14L52 17L58 8L66 16L78 12L83 37Z':id==='backpacker'?'M38 35Q36 17 46 14L50 7L57 13L65 7L69 14Q85 17 82 36Z':id==='coffee'?'M38 37Q29 28 39 22Q34 10 47 12Q52 3 61 12Q76 5 79 18Q90 22 81 40Z':id==='sleepy'?'M38 35Q37 16 55 15L63 6L63 16Q83 15 82 36Z':'M38 36Q36 12 61 13Q83 12 82 38L70 24L58 31L44 27Z';
  return <svg className="character-avatar" viewBox="0 0 120 104" fill="none" aria-hidden="true" data-avatar-id={id}>
  <ellipse cx="60" cy="99" rx="46" ry="5" fill="#7d8765" opacity=".13"/>
@@ -26,4 +30,10 @@ export function CharacterAvatar({id}:{id:CharacterAvatarId}){
  {id==='playful'?<><circle cx="43" cy="54" r="4" fill="#e4b19a"/><circle cx="78" cy="54" r="4" fill="#e4b19a"/><path d="M33 83l54 10M36 97l46-19" stroke="#f1dfb3" strokeWidth="5"/></>:null}
  {sleepy?<><path d="M37 73q24 14 49-3l-4 14-39 3Z" fill="#e0d3be"/><path d="M81 79l8 24H75l-3-19" fill="#d4c4ae"/></>:null}
  </svg>;
+}
+
+/** Used by picker, album, board, detail, and discovery; failure keeps the existing vector preset. */
+export function CharacterAvatar({id}:{id:CharacterAvatarId}){
+ const [failed,setFailed]=useState<string|null>(null),asset=AVATAR_ARTWORK[id];
+ return failed===asset.src?<VectorAvatar id={id}/>:<img className="people-avatar-art" data-avatar-id={id} src={asset.src} alt={asset.label} draggable={false} width={360} height={360} decoding="async" onError={()=>setFailed(asset.src)}/>;
 }
