@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { CourseCollection } from './CourseCollection';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useDexDocument } from '../scaffold/useDexDocument';
 import { getBrowserRepository } from '@/lib/dex/storage/browser';
@@ -20,6 +21,10 @@ export function CourseDex() {
   const editTarget = useRef<CourseEntry | undefined>(undefined);
   const entries = data ? courseEntries(data) : [];
   const selected = entries.find(entry => entry.id === selectedId);
+  const detail = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (selectedId && mode === null) detail.current?.focus();
+  }, [selectedId, mode]);
 
   function navigate(id?: string, nextMode: typeof mode = null) {
     editTarget.current = nextMode === 'edit' ? entries.find(entry => entry.id === id) : undefined;
@@ -84,7 +89,7 @@ export function CourseDex() {
       <button className="dex-button" disabled={busy} onClick={() => navigate(undefined, 'create')}>강의 등록</button>
       {mode === 'create' || (mode === 'edit' && selected) ?
         <CourseForm key={selected?.id ?? 'new'} record={mode === 'edit' ? selected?.subject : undefined} busy={busy} onSubmit={save} onCancel={() => navigate(selectedId)} />
-        : selected && <article className="space-y-2 rounded-lg border p-4">
+        : selected && <article ref={detail} tabIndex={-1} aria-label="강의 상세" className="space-y-2 rounded-lg border p-4">
           <h2 className="text-xl font-semibold">{selected.subject.title}</h2>
           <p>{selected.subject.year}년 {TERMS[selected.subject.term]} · {STATUSES[selected.subject.status]}</p>
           <dl className="space-y-1">
@@ -99,14 +104,7 @@ export function CourseDex() {
             <button className="dex-button" disabled={busy} onClick={() => void remove(selected)}>삭제</button>
           </div>
         </article>}
-      <h2 className="font-semibold">등록한 강의</h2>
-      {entries.length ? <ul className="space-y-2">{entries.map(entry => <li key={entry.id}>
-        <button className="dex-back" disabled={busy} onClick={() => navigate(entry.id)}>
-          {entry.subject.title} · {entry.subject.year}년 {TERMS[entry.subject.term]} · {STATUSES[entry.subject.status]}
-          {entry.subject.professor && ' · ' + entry.subject.professor}
-          {entry.subject.code && ' · ' + entry.subject.code}
-        </button>
-      </li>)}</ul> : <p>아직 등록한 강의가 없어요.</p>}
+      <CourseCollection entries={entries} busy={busy} onSelect={id => navigate(id)} />
     </>}
   </section>;
 }
