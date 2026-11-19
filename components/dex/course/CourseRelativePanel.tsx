@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { analyzeRelativeOutlook } from '@/lib/dex/course/grade/outlook';
 import type { AssessmentStatistics, CourseRelativeData } from '@/lib/dex/course/grade/relative';
 import type { CourseAssessment, CourseGradeRecord } from '@/lib/dex/course/grade-record';
@@ -75,8 +74,7 @@ export function StatisticsFields({ id, statistics }: Pick<CourseAssessment, 'id'
   </details>;
 }
 
-export function CourseRelativePanel({ record }: { record: CourseGradeRecord }) {
-  const [sameCohort, setSameCohort] = useState(false);
+export function CourseRelativePanel({ record, sameCohort, onSameCohort }: { record: CourseGradeRecord; sameCohort: boolean; onSameCohort: (value: boolean) => void }) {
   const { rank, a, ab, assessments: positions } = analyzeRelativeOutlook(record, sameCohort);
   const policy = record.relative?.policy;
   const assessments = positions.filter(position => position.mean !== null || position.publishedRank ||
@@ -89,7 +87,7 @@ export function CourseRelativePanel({ record }: { record: CourseGradeRecord }) {
       <p>공개 종합 등수 {rank.rank}등{rank.cohortSize !== undefined && ' / ' + rank.cohortSize + '명'} · {rank.scope}</p>
       {rank.cohortSize !== undefined && policy && policy.source !== 'unconfirmed' &&
         (policy.aCap !== undefined || policy.abCap !== undefined) && <label className="block">
-          <input type="checkbox" checked={sameCohort} onChange={event => setSameCohort(event.target.checked)} /> 종합 등수의 비교 집단이 입력한 수강인원과 같아요
+          <input type="checkbox" checked={sameCohort} onChange={event => onSameCohort(event.target.checked)} /> 종합 등수의 비교 집단이 입력한 수강인원과 같아요
         </label>}
       {(a || ab) ? <p>입력한 수강인원과 상한 기준 · {[
         a && 'A계열 상한 ' + (a.comparison === 'within' ? '이내' : '초과') + (a.near ? ' · 경계에서 1등 이내' : ''),
