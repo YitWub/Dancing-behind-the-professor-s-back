@@ -268,3 +268,63 @@ test('grade edits preserve review and memo, reject stale revisions, and round-tr
     repo.close();
   }
 });
+
+test('relative statistics restore atomically in v14 with original assessments, other dexes and photo bytes', async () => {
+  let fail = false;
+  const repo = new IndexedDbDexRepository({ factory: new IDBFactory() });
+  const target = new IndexedDbDexRepository({ factory: new IDBFactory(), beforeCommit: () => { if (fail) throw Error('Test abort'); } });
+  try {
+    const { ownerId } = value(await repo.open());
+    const { assetId, image } = await seedOtherDexes(repo, ownerId);
+    const snapshot = async () => value(await repo.snapshot());
+    const original = await snapshot();
+    const entry = value(await saveCourse(repo, original, { ...past, gradeRecord, review: { difficulty: 2 }, memo: '메모' }, 'relative-a', date));
+    const retake = value(await saveCourse(repo, original, { ...current, gradeRecord }, 'relative-b', date));
+    const oldBackup = value(await repo.exportRecords(ownerId));
+    const subject = entry.subject as CourseSubject;
+    const withStats: CourseGradeRecord = {
+      ...gradeRecord, relative: { enrollment: 40, overallRank: { rank: 12, scope: '중간 이후' }, policy: { source: 'assumed', aCap: 30 } },
+      assessments: gradeRecord.assessments.map((item, index) => index === 0
+        ? { ...item, statistics: { mean: 24, standardDeviation: 6, publishedRank: { rank: 20, cohortSize: 40 } } } : item),
+    };
+    const saved = value(await repo.updateEntry(ownerId, entry.id, entry.revision, { subject: { ...subject, gradeRecord: withStats } }));
+    const edited: CourseGradeRecord = {
+      ...withStats, assessments: withStats.assessments.slice(0, 1).map(item => ({
+        ...item, name: '변경한 시험명', result: { status: 'graded', score: 25 },
+      })),
+    };
+    const modified = value(await repo.updateEntry(ownerId, saved.id, saved.revision, { subject: { ...subject, gradeRecord: edited } }));
+    const preserved = value(await saveCourse(repo, original, { ...subject, title: '새 이름' }, 'rename', date, modified as ReturnType<typeof courseEntries>[number]));
+    assert.deepEqual((preserved.subject as CourseSubject).gradeRecord, edited);
+    const doc = await snapshot();
+    assert.deepEqual(doc.entries.find(item => item.id === retake.id), retake);
+    assert.equal(doc.experiences.length, original.experiences.length + 2);
+    const backup = value(await repo.exportRecords(ownerId));
+    assert.equal(await backup.slice(0, 9).text(), 'BOKAKP14\n');
+    value(await target.open());
+    const old = value(await target.previewImport(oldBackup));
+    value(await target.commitImport({ token: old.token, strategy: 'replace', confirmed: true }));
+    const before = value(await target.snapshot());
+    const malformed = structuredClone(doc);
+    const invalid = courseEntries(malformed).find(item => item.id === entry.id)!;
+    invalid.subject.gradeRecord!.assessments[0].statistics!.mean = 1000;
+    const bad = packContainer({ format: 'bokak-dex', schemaVersion: 14, exportedAt: '2026-11-19T00:00:00.000Z', containsSensitiveData: true, data: malformed, assets: [] }, [], 14);
+    assert.equal((await target.previewImport(bad)).ok, false);
+    const downgraded = packContainer({ format: 'bokak-dex', schemaVersion: 13, exportedAt: '2026-11-19T00:00:00.000Z', containsSensitiveData: true, data: doc, assets: [] }, [], 13);
+    assert.equal((await target.previewImport(downgraded)).ok, false);
+    const preview = value(await target.previewImport(backup));
+    fail = true;
+    assert.equal((await target.commitImport({ token: preview.token, strategy: 'replace', confirmed: true })).ok, false);
+    assert.deepEqual(value(await target.snapshot()), before);
+    fail = false;
+    const retry = value(await target.previewImport(backup));
+    value(await target.commitImport({ token: retry.token, strategy: 'replace', confirmed: true }));
+    const restored = value(await target.snapshot());
+    assert.deepEqual(restored.entries, doc.entries);
+    assert.deepEqual(restored.experiences, doc.experiences);
+    assert.equal(await imageHash(value(await target.getPhotoAsset(ownerId, assetId))), image.sha256);
+  } finally {
+    target.close();
+    repo.close();
+  }
+});
