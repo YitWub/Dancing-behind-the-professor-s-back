@@ -72,6 +72,6 @@ export function mealCoverageMessage(coverage:MealDateCoverage|undefined,cafeteri
   if(units.length&&units.every(unit=>unit.state==='closed'))return '공식 원문에서 선택한 날짜·끼니의 미운영이 확인됐어요.';
   if(units.some(unit=>unit.lastAttemptStatus==='network-error'||unit.lastAttemptStatus==='parse-error'))return '최근 조회 또는 파싱에 실패했어요. 이전 정상 기록은 보존하며, 메뉴가 없었다는 뜻은 아니에요.';
   if(units.some(unit=>unit.state==='partial'))return '일부 식단만 확인되어 해당 메뉴의 수집을 보류했어요. 미운영으로 집계하지 않아요.';
-  if(units.length&&units.every(unit=>unit.state==='not-observed'))return '아직 이 날짜의 식단을 수집하지 않았어요. 날짜 조회만으로 자동 크롤링하지 않아요.';
+  if(units.length&&units.every(unit=>unit.state==='not-observed'))return '아직 이 날짜의 식단을 수집하지 않았어요. 오늘 식단만 자동으로 수집해요.';
   return '공식 응답에 해당 식단이 없거나 일부 끼니가 확인되지 않았어요. 미운영일로 단정하지 않아요.';
 }
