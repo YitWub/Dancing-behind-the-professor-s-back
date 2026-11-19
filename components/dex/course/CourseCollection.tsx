@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { CourseCompletion } from './CourseReviewPanel';
+import { DIFFICULTIES } from '@/lib/dex/course/review';
 import { Card } from '@/components/ui';
 import { CATEGORIES, STATUSES, TERMS } from '@/lib/dex/course/course';
 import type { CourseEntry } from '@/lib/dex/course/course';
@@ -72,6 +74,9 @@ export function CourseCollection({ entries, busy, onSelect }: {
             disabled={busy} onClick={() => onSelect(id)}>
             <span className="max-w-full font-semibold">{subject.title}</span>
             <span>{subject.year}년 {TERMS[subject.term]} · {STATUSES[subject.status]}</span>
+            <CourseCompletion status={subject.status} />
+            {subject.review?.shortReview && <span className="line-clamp-2 max-w-full">{subject.review.shortReview}</span>}
+            {subject.review?.difficulty && <span>체감 난이도 · {DIFFICULTIES[subject.review.difficulty - 1]}</span>}
             {subject.professor && <span className="max-w-full">{subject.professor}</span>}
             {(subject.category || subject.credits !== undefined) && <span>
               {[subject.category && CATEGORIES[subject.category], subject.credits !== undefined && subject.credits + '학점'].filter(Boolean).join(' · ')}

@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { CourseReviewPanel, CourseCompletion } from './CourseReviewPanel';
+import type { CourseReview } from '@/lib/dex/course/review';
 import { CourseCollection } from './CourseCollection';
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
@@ -48,6 +50,7 @@ export function CourseDex() {
     };
     const editing = mode === 'edit' ? editTarget.current : undefined;
     if (mode === 'edit' && !editing) return;
+    if (editing?.subject.review) subject.review = editing.subject.review;
     if (entries.some(e => e.id !== editing?.id && similarEnrollment(e.subject, subject)) &&
         !window.confirm('같은 학기에 이름·교수·코드가 같은 기록이 있어요. 별개의 수강 기록으로 저장할까요?')) return;
     const payload = JSON.stringify(subject);
@@ -68,6 +71,21 @@ export function CourseDex() {
     try { await operation(); }
     catch { setFailure('저장 결과를 확인할 수 없어요. 다시 시도해 주세요.'); }
     finally { pending.current = false; setBusy(false); }
+  }
+
+  async function saveReview(entry: CourseEntry, review?: CourseReview) {
+    if (!data || pending.current) return false;
+    let saved = false;
+    await run(async () => {
+      const subject = { ...entry.subject };
+      if (review) subject.review = review;
+      else delete subject.review;
+      const result = await getBrowserRepository().updateEntry(data.profile.ownerId, entry.id, entry.revision, { subject });
+      if (!result.ok) { setFailure(result.error.message); return; }
+      await reload();
+      saved = true;
+    });
+    return saved;
   }
 
   async function remove(entry: CourseEntry) {
@@ -92,6 +110,7 @@ export function CourseDex() {
         : selected && <article ref={detail} tabIndex={-1} aria-label="강의 상세" className="space-y-2 rounded-lg border p-4">
           <h2 className="text-xl font-semibold">{selected.subject.title}</h2>
           <p>{selected.subject.year}년 {TERMS[selected.subject.term]} · {STATUSES[selected.subject.status]}</p>
+          <CourseCompletion status={selected.subject.status} />
           <dl className="space-y-1">
             {selected.subject.professor && <div><dt>교수명</dt><dd>{selected.subject.professor}</dd></div>}
             {selected.subject.credits !== undefined && <div><dt>학점</dt><dd>{selected.subject.credits}</dd></div>}
@@ -103,6 +122,7 @@ export function CourseDex() {
             <button className="dex-button" disabled={busy} onClick={() => navigate(selected.id, 'edit')}>수정</button>
             <button className="dex-button" disabled={busy} onClick={() => void remove(selected)}>삭제</button>
           </div>
+          <CourseReviewPanel key={selected.id} entry={selected} busy={busy} onSave={saveReview} />
         </article>}
       <CourseCollection entries={entries} busy={busy} onSelect={id => navigate(id)} />
     </>}

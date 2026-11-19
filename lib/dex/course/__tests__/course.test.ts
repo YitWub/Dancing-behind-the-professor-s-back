@@ -91,3 +91,58 @@ test('CRUD survives reopening, retries are idempotent, and v11 restores without 
     repo.close();
   }
 });
+
+test('reviews are optional, isolated by entry, validated, and survive v12 export and reopening', async () => {
+  const factory = new IDBFactory();
+  let fail = false;
+  const repo = new IndexedDbDexRepository({ factory, beforeCommit: () => { if (fail) throw Error('Test abort'); } });
+  const reopened = new IndexedDbDexRepository({ factory });
+  const target = new IndexedDbDexRepository({ factory: new IDBFactory() });
+  try {
+    const { ownerId } = value(await repo.open());
+    const before = value(await repo.snapshot());
+    const a = value(await saveCourse(repo, before, past, 'review-a', date));
+    const b = value(await saveCourse(repo, before, current, 'review-b', date));
+    assert.deepEqual(a.subject, past);
+    const review = { shortReview: '실습이 재밌었음', difficulty: 4, workload: 'heavy', teamProject: false, tags: ['실습 중심', '과제 많음'] } as const;
+    const reviewed = { ...past, review: { ...review, tags: [...review.tags] } };
+    for (const invalid of [{ difficulty: 0 }, { teamProject: 'no' }, { tags: ['실습 중심', '실습 중심'] }, { shortReview: 'x'.repeat(301) }]) {
+      assert.throws(() => validateSubject({ ...past, review: invalid }));
+    }
+    fail = true;
+    assert.equal((await repo.updateEntry(ownerId, a.id, a.revision, { subject: reviewed })).ok, false);
+    assert.equal((value(await repo.snapshot()).entries.find(e => e.id === a.id)?.subject as CourseSubject).review, undefined);
+    fail = false;
+    const saved = value(await repo.updateEntry(ownerId, a.id, a.revision, { subject: reviewed }));
+    const updated = value(await repo.updateEntry(ownerId, a.id, saved.revision, {
+      subject: { ...reviewed, professor: 'Kim', term: 'summer', review: { ...reviewed.review, difficulty: 3 } },
+    }));
+    const snapshot = value(await repo.snapshot());
+    assert.equal(snapshot.entries.length, 2);
+    assert.equal(snapshot.experiences.length, 2);
+    assert.equal(snapshot.receipts.length, 2);
+    assert.deepEqual(snapshot.entries.find(e => e.id === b.id)?.subject, current);
+
+    const backup = value(await repo.exportRecords(ownerId));
+    assert.equal(await backup.slice(0, 9).text(), 'BOKAKP12\n');
+    const envelope = { format: 'bokak-dex', schemaVersion: 11, exportedAt: '2026-11-19T00:00:00.000Z', containsSensitiveData: true, data: snapshot, assets: [] };
+    value(await target.open());
+    assert.equal((await target.previewImport(packContainer(envelope, [], 11))).ok, false);
+    const preview = value(await target.previewImport(backup));
+    value(await target.commitImport({ token: preview.token, strategy: 'replace', confirmed: true }));
+    assert.deepEqual(value(await target.snapshot()).entries, snapshot.entries);
+
+    repo.close();
+    value(await reopened.open());
+    assert.deepEqual(value(await reopened.snapshot()).entries, snapshot.entries);
+    const cleared = { ...(updated.subject as CourseSubject) };
+    delete cleared.review;
+    value(await reopened.updateEntry(ownerId, updated.id, updated.revision, { subject: cleared }));
+    assert.equal(courseEntries(value(await reopened.snapshot())).find(e => e.id === a.id)?.subject.review, undefined);
+    assert.equal(await value(await reopened.exportRecords(ownerId)).slice(0, 9).text(), 'BOKAKP11\n');
+  } finally {
+    target.close();
+    reopened.close();
+    repo.close();
+  }
+});

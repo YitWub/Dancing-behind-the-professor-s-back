@@ -8,6 +8,8 @@ import type { BackupEnvelope, CollectCommand, DexDocument, EntrySubject, Experie
 
 import { TERMS, STATUSES, CATEGORIES } from '../course/course.ts';
 
+import { WORKLOADS, REVIEW_TAGS } from '../course/review.ts';
+
 type ObjectValue = Record<string, unknown>;
 export function object(value: unknown, allowed: string[]): asserts value is ObjectValue {
   ensure(!!value && typeof value === 'object' && !Array.isArray(value) && Object.getPrototypeOf(value) === Object.prototype, '객체 형식이 올바르지 않습니다.');
@@ -34,6 +36,17 @@ function versioned(v: ObjectValue) {
 }
 const base = ['id', 'revision', 'createdAt', 'updatedAt'];
 export const ICONS = ['meal', 'people', 'book', 'place', 'coffee', 'star', 'club', 'memory'] as const;
+function validateCourseReview(review: unknown) {
+  object(review, ['shortReview', 'difficulty', 'workload', 'teamProject', 'tags']);
+  if (review.shortReview !== undefined) text(review.shortReview, 300);
+  if (review.difficulty !== undefined) ensure([1, 2, 3, 4, 5].includes(review.difficulty as number), '체감 난이도는 1~5단계입니다.');
+  if (review.workload !== undefined) ensure(typeof review.workload === 'string' && Object.hasOwn(WORKLOADS, review.workload), '과제량을 확인해 주세요.');
+  if (review.teamProject !== undefined) ensure(typeof review.teamProject === 'boolean', '팀 프로젝트 여부를 확인해 주세요.');
+  if (review.tags !== undefined) {
+    ensure(Array.isArray(review.tags) && review.tags.length <= REVIEW_TAGS.length, '강의 특징 태그를 확인해 주세요.');
+    ensure(review.tags.every(tag => REVIEW_TAGS.includes(tag)) && new Set(review.tags).size === review.tags.length, '지원하는 태그를 중복 없이 선택해 주세요.');
+  }
+}
 export function subject(value: unknown): asserts value is EntrySubject {
   ensure(!!value && typeof value === 'object', '수집 항목이 필요합니다.');
   const v = value as ObjectValue;
@@ -54,7 +67,8 @@ export function subject(value: unknown): asserts value is EntrySubject {
     if(v.characterIntro!==undefined)text(v.characterIntro,300,true);
     if(v.profileAssetId!==undefined)ensure(typeof v.profileAssetId==='string'&&/^img-[a-f0-9]{64}$/.test(v.profileAssetId),'프로필 이미지 참조를 확인해 주세요.');
   } else if (v.kind === 'course') {
-    object(v, ['kind', 'title', 'year', 'term', 'status', 'professor', 'credits', 'category', 'code', 'memo']);
+    object(v, ['kind', 'title', 'year', 'term', 'status', 'professor', 'credits', 'category', 'code', 'memo', 'review']);
+    if (v.review !== undefined) validateCourseReview(v.review);
     text(v.title, 120);
     ensure(typeof v.year === 'number' && Number.isInteger(v.year) && v.year >= 1900 && v.year <= 2200, '수강 연도를 확인해 주세요.');
     ensure(typeof v.term === 'string' && Object.hasOwn(TERMS, v.term), '학기를 확인해 주세요.');
@@ -180,7 +194,7 @@ export function parseBackup(raw: string): BackupEnvelope {
     const v: unknown = JSON.parse(raw);
     object(v, ['format','schemaVersion','exportedAt','containsSensitiveData','data']);
     ensure(v.format === 'bokak-dex', 'BOKAK 내보내기 파일이 아닙니다.');
-    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8 || v.schemaVersion === 9 || v.schemaVersion === 10 || v.schemaVersion === 11, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
+    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8 || v.schemaVersion === 9 || v.schemaVersion === 10 || v.schemaVersion === 11 || v.schemaVersion === 12, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
     ensure(v.containsSensitiveData === true, '백업 정보가 누락되었습니다.'); instant(v.exportedAt); validateDocument(v.data);
     if(v.schemaVersion===1||v.schemaVersion===2)ensure(v.data.dexes.every(dex=>dex.peopleBoard===undefined),'보드는 v3 백업을 사용해야 합니다.');
     if(v.schemaVersion===3)ensure(v.data.dexes.every(dex=>!dex.peopleBoard||dex.peopleBoard.version===1),'확장 보드는 v4 백업을 사용해야 합니다.');
@@ -190,6 +204,7 @@ export function parseBackup(raw: string): BackupEnvelope {
     if(v.schemaVersion<7)ensure(v.data.entries.every(e=>e.subject.kind!=='person'||!['nickname','trait','tags','avatar','profileAssetId'].some(k=>k in e.subject)),'캐릭터 인연은 v7 백업을 사용해야 합니다.');
     if(v.schemaVersion<8)ensure(v.data.dexes.every(dex=>!dex.peopleBoards?.boards.some(b=>b.layout.version===4)),'자유 연결은 v8 백업이 필요합니다.');
     if(v.schemaVersion<9)ensure(v.data.entries.every(e=>e.subject.kind!=='person'||(e.subject.characterIntro===undefined&&!isCharacterAvatar(e.subject.avatar)&&(e.subject.trait?.length??0)<=100)),'새 소개와 아바타는 v9 백업이 필요합니다.');
+    if(v.schemaVersion<12)ensure(v.data.entries.every(e=>e.subject.kind!=='course'||e.subject.review===undefined),'강의 평가는 v12 백업이 필요합니다.');
     if(v.schemaVersion<11)ensure(v.data.dexes.every(dex=>dex.kind!=='course'),'강의도감은 v11 백업이 필요합니다.');
     if(v.schemaVersion<10)ensure(v.data.entries.every(e=>!hasPersonDetails(e.subject)),'추가 인연 정보는 v10 백업이 필요합니다.');
     normalizeLegacyCards(v.data);

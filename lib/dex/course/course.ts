@@ -1,5 +1,7 @@
 import type { CollectionEntry, DexDocument, DexRepository, Result } from '../core/types.ts';
 
+import type { CourseReview } from './review.ts';
+
 export const TERMS = { spring: '1학기', fall: '2학기', summer: '여름 계절학기', winter: '겨울 계절학기' } as const;
 export const STATUSES = { planned: '수강 예정', active: '수강 중', completed: '수강 완료' } as const;
 export const CATEGORIES = { major: '전공', general: '교양', other: '기타' } as const;
@@ -15,6 +17,7 @@ export interface CourseSubject {
   category?: keyof typeof CATEGORIES;
   code?: string;
   memo?: string;
+  review?: CourseReview;
 }
 export type CourseEntry = CollectionEntry & { subject: CourseSubject };
 
