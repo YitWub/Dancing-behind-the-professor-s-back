@@ -1,5 +1,7 @@
 'use client';
 
+import { analyzeRelativeScenario } from '@/lib/dex/course/grade/outlook';
+import type { GradeScenario } from '@/lib/dex/course/grade/simulation';
 import { useState } from 'react';
 import { calculateTargetRequirement, simulateCourseGrade } from '@/lib/dex/course/grade/simulation';
 import type { CourseGradeRecord } from '@/lib/dex/course/grade-record';
@@ -12,9 +14,19 @@ export function CourseGradeSimulation({ record }: { record: CourseGradeRecord })
   const [target, setTarget] = useState('');
   const [condition, setCondition] = useState('');
   const [scores, setScores] = useState<Record<string, string>>({});
-  const simulation = simulateCourseGrade(record, Object.fromEntries(
+  const [assumptions, setAssumptions] = useState<Record<string, string>>({});
+  const scenario: GradeScenario = Object.fromEntries(
     Object.entries(scores).filter(([, value]) => value.trim() !== '').map(([id, value]) => [id, Number(value)]),
-  ));
+  );
+  const simulation = simulateCourseGrade(record, scenario);
+  const relative = record.method === 'relative' && simulation.status === 'ready'
+    ? analyzeRelativeScenario(record, scenario, Object.fromEntries(record.assessments.map(item => {
+      const optional = (suffix: string) => {
+        const value = assumptions[item.id + suffix];
+        return value?.trim() ? Number(value) : undefined;
+      };
+      return [item.id, { mean: optional(':mean'), standardDeviation: optional(':sd') }];
+    }))) : [];
   const requirement = target.trim() === '' ? null : calculateTargetRequirement(simulation, Number(target));
 
   return <section className="course-sheet space-y-3 break-words p-3" aria-label="목표 및 시뮬레이션">
@@ -56,7 +68,30 @@ export function CourseGradeSimulation({ record }: { record: CourseGradeRecord })
             }} />
         </label>)}
       </div>
-      <button className="dex-button" type="button" onClick={() => setScores({})}>가상 점수 초기화</button>
+      {!!relative.length && <details className="space-y-2">
+        <summary className="cursor-pointer">상대평가 가정과 결과</summary>
+        <p>가상 점수가 있는 평가만 분석해요. 반 평균과 표준편차는 이 시나리오에서 직접 입력한 값을 사용해요.</p>
+        {relative.map(row => <fieldset className="space-y-2 rounded border p-2" key={row.id}>
+          <legend>{row.name} · 가상 {format.format(row.score)}점</legend>
+          {row.status === 'invalid' ? <p role="alert">가정한 평균·표준편차가 가능한 점수 범위를 벗어났어요.</p> : <>
+            {row.difference !== null && <p>가정 평균 대비 {row.difference > 0 ? '+' : ''}{format.format(row.difference)}점{row.z !== null && ' · z ' + format.format(row.z)}</p>}
+            {row.status === 'check-statistics' && <p>평균과 표준편차의 조합을 확인해 주세요. z 계산을 보류했어요.</p>}
+            {row.status === 'incomplete' && <p>{row.mean === undefined ? '가정 평균을 입력하면 점수 차이를 볼 수 있어요.' : '양의 표준편차가 있어야 표준화 차이를 볼 수 있어요.'}</p>}
+          </>}
+          <div className="grid gap-2 sm:grid-cols-2">
+            {([[':mean', '가정 반 평균'], [':sd', '가정 표준편차']] as const).map(([suffix, label]) => {
+              const key = row.id + suffix;
+              return <label key={key}>{label}<input className={control} type="number" min={0} step="any"
+                value={assumptions[key] ?? ''} onChange={event => {
+                  const { value } = event.target;
+                  setAssumptions(previous => ({ ...previous, [key]: value }));
+                }} /></label>;
+            })}
+          </div>
+        </fieldset>)}
+        <p className="course-muted text-sm">평가별 가정 결과입니다. 최종 석차·등급은 보류해요.</p>
+      </details>}
+      <button className="dex-button" type="button" onClick={() => { setScores({}); setAssumptions({}); }}>가상 점수 초기화</button>
     </>}
   </section>;
 }

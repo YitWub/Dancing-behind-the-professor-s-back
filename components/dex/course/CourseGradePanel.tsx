@@ -3,6 +3,7 @@
 import { CourseRelativePanel, RelativeFields, StatisticsFields, readRelative, readStatistics } from './CourseRelativePanel';
 import { CourseGradeSimulation } from './CourseGradeSimulation';
 import { CourseGradeBalance } from './CourseGradeBalance';
+import { analyzeRelativeOutlook } from '@/lib/dex/course/grade/outlook';
 import { useState } from 'react';
 import { validateCourseGrade } from '@/lib/dex/core/validation';
 import { ASSESSMENT_NAMES, GRADING_METHODS, SCORE_STATES, assessmentWeight, confirmedScore } from '@/lib/dex/course/grade-record';
@@ -26,6 +27,8 @@ export function CourseGradePanel({ entry, busy, onSave }: {
     assessments: record.assessments.map(({ id, name, weightPercent, maxScore, result }) =>
       ({ id, name, weightPercent, maxScore, result })),
   };
+  const outlook = record?.method === 'relative' ? analyzeRelativeOutlook(record) : null;
+  const comparison = outlook?.assessments.find(item => item.difference !== null);
   const [draft, setDraft] = useState<Draft>();
   const [error, setError] = useState('');
   function start() {
@@ -71,7 +74,12 @@ export function CourseGradePanel({ entry, busy, onSave }: {
   return <section className="space-y-2 border-t pt-3">
     <h3 className="font-semibold">성적 관리</h3>
     {!draft && <CourseGradeBalance record={record} />}
-    <div hidden={!!draft}>{simulationRecord && <CourseGradeSimulation key={JSON.stringify(simulationRecord)} record={simulationRecord} />}</div>
+    {!draft && outlook && <div className="course-sheet space-y-1 p-3">
+      <p className="font-semibold">상대평가 전망 · 최종 등급 판단 보류</p>
+      {outlook.rank ? <p>공개 종합 등수 {outlook.rank.rank}등 · {outlook.rank.scope}</p>
+        : comparison ? <p>{comparison.name} 평균 대비 {new Intl.NumberFormat('ko', { maximumFractionDigits: 2, signDisplay: 'exceptZero' }).format(comparison.difference ?? 0)}점</p>
+        : <p>확정 점수의 반 평균이나 공개 종합 등수를 입력하면 현재 위치를 확인할 수 있어요.</p>}
+    </div>}
     {(draft || record) && <p>반영비율 합계 {Number.isFinite(total) ? total + '%' : '확인 필요'} · {total === 100 ? '설정 완료' : total > 100 ? '100% 초과 · 저장할 수 없어요' : '설정 미완성'}</p>}
     {draft ? <form onSubmit={event => { event.preventDefault(); if (!busy) void save(draft, new FormData(event.currentTarget)); }}>
       <fieldset disabled={busy} className="space-y-3">
@@ -105,14 +113,14 @@ export function CourseGradePanel({ entry, busy, onSave }: {
         </div>
       </fieldset>
     </form> : <>
-      {record?.method === 'relative' && <CourseRelativePanel record={record} />}
-      {record && <>
+      {record && <details>
+        <summary className="cursor-pointer">현재 성적 · 평가항목과 실제 점수</summary>
         <p>평가 방식 · {GRADING_METHODS[record.method]}</p>
         <ul className="space-y-1 break-words">{record.assessments.map(item => {
           const score = confirmedScore(item.result);
           return <li key={item.id}>{item.name} · {item.weightPercent}% · {SCORE_STATES[item.result.status]}{score === undefined ? ' · 만점 ' + item.maxScore + '점' : ' · ' + score + '/' + item.maxScore + '점'}</li>;
         })}</ul>
-      </>}
+      </details>}
       <div className="flex flex-wrap gap-2">
         <button type="button" className="dex-button" disabled={busy} onClick={start}>{record ? '성적 수정' : '성적 관리 시작'}</button>
         {record?.method === 'relative' && (record.relative || record.assessments.some(item => item.statistics)) &&
@@ -130,5 +138,9 @@ export function CourseGradePanel({ entry, busy, onSave }: {
         }}>성적 초기화</button>}
       </div>
     </>}
+    <div hidden={!!draft} className="space-y-2">
+      {record && simulationRecord && <details><summary className="cursor-pointer">목표와 시뮬레이션</summary><CourseGradeSimulation key={JSON.stringify(simulationRecord)} record={record} /></details>}
+      {record?.method === 'relative' && <details><summary className="cursor-pointer">상대평가 전망 상세</summary><CourseRelativePanel key={JSON.stringify(record.relative)} record={record} /></details>}
+    </div>
   </section>;
 }

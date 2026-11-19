@@ -1,4 +1,5 @@
-import { analyzeAssessmentPosition, analyzePublishedRank } from '@/lib/dex/course/grade/relative';
+import { useState } from 'react';
+import { analyzeRelativeOutlook } from '@/lib/dex/course/grade/outlook';
 import type { AssessmentStatistics, CourseRelativeData } from '@/lib/dex/course/grade/relative';
 import type { CourseAssessment, CourseGradeRecord } from '@/lib/dex/course/grade-record';
 
@@ -75,26 +76,31 @@ export function StatisticsFields({ id, statistics }: Pick<CourseAssessment, 'id'
 }
 
 export function CourseRelativePanel({ record }: { record: CourseGradeRecord }) {
-  const rank = analyzePublishedRank(record.relative);
+  const [sameCohort, setSameCohort] = useState(false);
+  const { rank, a, ab, assessments: positions } = analyzeRelativeOutlook(record, sameCohort);
   const policy = record.relative?.policy;
-  const assessments = record.assessments.filter(item => item.statistics);
+  const assessments = positions.filter(position => position.mean !== null || position.publishedRank ||
+    position.standardDeviation !== undefined);
   return <section aria-label="상대평가 분석" className="course-sheet space-y-2 break-words p-3">
     <h4 className="font-semibold">상대평가 분석</h4>
     {record.relative?.enrollment !== undefined && <p>수강인원 {record.relative.enrollment}명</p>}
     {policy && <p>정책 출처 · {sources[policy.source]}{policy.aCap !== undefined && ' · A계열 상한 ' + policy.aCap + '%'}{policy.abCap !== undefined && ' · A+B계열 상한 ' + policy.abCap + '%'}{policy.description && ' · ' + policy.description}</p>}
     {rank && <>
       <p>공개 종합 등수 {rank.rank}등{rank.cohortSize !== undefined && ' / ' + rank.cohortSize + '명'} · {rank.scope}</p>
-      {(rank.a !== null || rank.ab !== null) ? <p>입력한 수강인원과 상한 기준 · {[
-        rank.a && 'A계열 상한 ' + (rank.a === 'within' ? '이내' : '초과'),
-        rank.ab && 'A+B계열 상한 ' + (rank.ab === 'within' ? '이내' : '초과'),
-      ].filter(Boolean).join(' · ')}. 순위의 비교 집단과 수강인원이 같을 때의 참고 결과예요. 동점·배정 인원 반올림 규칙은 반영하지 않아요.</p> : <p>수강인원과 출처가 구분된 상한이 있어야 종합 등수를 상한과 비교할 수 있어요.</p>}
+      {rank.cohortSize !== undefined && policy && policy.source !== 'unconfirmed' &&
+        (policy.aCap !== undefined || policy.abCap !== undefined) && <label className="block">
+          <input type="checkbox" checked={sameCohort} onChange={event => setSameCohort(event.target.checked)} /> 종합 등수의 비교 집단이 입력한 수강인원과 같아요
+        </label>}
+      {(a || ab) ? <p>입력한 수강인원과 상한 기준 · {[
+        a && 'A계열 상한 ' + (a.comparison === 'within' ? '이내' : '초과') + (a.near ? ' · 경계에서 1등 이내' : ''),
+        ab && 'A+B계열 상한 ' + (ab.comparison === 'within' ? '이내' : '초과') + (ab.near ? ' · 경계에서 1등 이내' : ''),
+      ].filter(Boolean).join(' · ')}. 순위의 비교 집단과 수강인원이 같을 때의 참고 결과예요. 동점·배정 인원 반올림 규칙은 반영하지 않아요.</p> : <p>수강인원·정책 상한·등수의 비교 집단을 확인하면 상한과 비교할 수 있어요.</p>}
     </>}
     {!rank && !assessments.length && <p>시험 통계나 공개 등수가 없어 상대적 위치 분석을 보류해요. 성적 수정에서 입력할 수 있어요.</p>}
-    <ul className="space-y-2">{assessments.map(item => {
-      const result = analyzeAssessmentPosition(item);
-      return <li key={item.id} className="border-t pt-2">
-        <strong>{item.name}</strong>
-        <p>내 점수 {result.score ?? '미확정'} · 평균 {result.mean ?? '미입력'} · 표준편차 {item.statistics?.standardDeviation ?? '미입력'}</p>
+    <ul className="space-y-2">{assessments.map(result => {
+      return <li key={result.id} className="border-t pt-2">
+        <strong>{result.name} · 반영비율 {result.weight}%</strong>
+        <p>내 점수 {result.score ?? '미확정'} · 평균 {result.mean ?? '미입력'} · 표준편차 {result.standardDeviation ?? '미입력'}</p>
         {result.difference !== null ? <p>평균 대비 {result.difference > 0 ? '+' : ''}{numberFormat.format(result.difference)}점
           {' · '}{result.position === 'above' ? '평균보다 높음' : result.position === 'below' ? '평균보다 낮음' : '평균과 같음'}
           {result.z !== null && ' · 표준화 차이 z ' + numberFormat.format(result.z)}
@@ -103,6 +109,6 @@ export function CourseRelativePanel({ record }: { record: CourseGradeRecord }) {
         {result.publishedRank && <p>공개 시험 등수 {result.publishedRank.rank}등{result.publishedRank.cohortSize !== undefined && ' / ' + result.publishedRank.cohortSize + '명'}</p>}
       </li>;
     })}</ul>
-    <p className="course-muted text-sm">직접 입력한 수치로 계산합니다. 시험별 수치와 현재 종합 순위는 최종 학점 전망과 별개예요.</p>
+    <p className="course-muted text-sm">z는 평균과의 차이를 표준편차 단위로 나타낸 값이에요. 시험을 합친 점수 분포와 최종 배정 규칙을 확인할 수 없어 등급 판단을 보류해요. 미확정 평가에 따라 현재 순위는 달라질 수 있어요.</p>
   </section>;
 }

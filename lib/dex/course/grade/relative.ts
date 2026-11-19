@@ -44,7 +44,7 @@ export function analyzePublishedRank(data?: CourseRelativeData) {
   const cohortSize = data.enrollment;
   const policy = data.policy;
   const ordinalShare = cohortSize === undefined ? null : rank.rank / cohortSize * 100;
-  function compare(cap?: number) {
+  function compare(cap?: number): 'within' | 'outside' | null {
     if (ordinalShare === null || policy?.source === 'unconfirmed' || cap === undefined) return null;
     return ordinalShare <= cap + Number.EPSILON * 100 ? 'within' : 'outside';
   }
