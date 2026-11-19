@@ -1,5 +1,6 @@
 'use client';
 
+import { estimateRelativeGrade, type RelativeEstimate } from '@/lib/dex/course/grade/relative-estimate';
 import { analyzeRelativeOutlook, analyzeRelativeScenario } from '@/lib/dex/course/grade/outlook';
 import type { GradeScenario } from '@/lib/dex/course/grade/simulation';
 import { useState } from 'react';
@@ -11,6 +12,32 @@ const format = new Intl.NumberFormat('ko', { maximumFractionDigits: 2 });
 const control = 'block w-full min-w-0 rounded border p-2';
 const gradeLabels = ['A+', 'A0', 'B+', 'B0', 'C+', 'C0', 'D+', 'D0'];
 
+function estimateTitle(result: Extract<RelativeEstimate, { status: 'modeled' }>) {
+  switch (result.band) {
+    case 'a-cap': return '모형 가정상 A계열 상한 범위';
+    case 'ab-cap': return '모형 가정상 A 상한 밖 · A+B 상한 이내';
+    case 'outside-ab': return '모형 가정상 A+B 상한 밖';
+    case 'sensitive': return '가정에 따라 학점권이 달라져요';
+    default: return '모형으로 비교한 상대 위치';
+  }
+}
+
+function EstimateDetails({ result, enrollment }: { result: Extract<RelativeEstimate, { status: 'modeled' }>; enrollment?: number }) {
+  return <details className="space-y-2">
+    <summary className="cursor-pointer">모형 가정 자세히 보기</summary>
+    <p>평균만 있는 항목은 제한된 점수 범위의 최대엔트로피 분포와 양끝 점수 모형을 비교해요. 표준편차가 있으면 같은 평균·분산을 갖는 두 점 분포를 비교해요.</p>
+    <p>여러 항목은 점수 순서가 함께 움직이는 경우와 섞이는 경우를 비교해요. 평균을 모르는 비교 항목은 다른 학생이 내 점수와 같거나 만점인 경우를 사용해요.</p>
+    <ul className="space-y-1">{result.scenarios.map(row => <li key={[row.shape, row.dependence, row.missing].join(':')}>
+      {row.shape === 'first' ? '기본 분포' : '대안 분포'} · {row.dependence === 'aligned' ? '같은 순서' : '순서 섞기'}
+      {result.unknownPeerWeight > 0 && (row.missing === 'same' ? ' · 미확인 항목은 내 점수와 같음' : ' · 미확인 항목은 만점')}
+      {' · 나보다 높은 비중부터 동점 포함까지 약 '}{Math.floor(row.above / 5) * 5}~{Math.ceil(row.atOrAbove / 5) * 5}%
+    </li>)}</ul>
+    <p>반영비율 {result.weight}%를 비교했어요. 비교 통계가 없는 배점 {result.unknownPeerWeight}% · 실제 확정 상실 {format.format(result.lost)}점.</p>
+    {enrollment !== undefined && <p>입력 인원 {enrollment}명에서는 한 명이 약 {format.format(100 / enrollment)}%에 해당해요. 실제 배정은 인원과 동점 처리에 따라 달라져요.</p>}
+    <p>이 범위는 비교한 가정의 결과예요. 실제 석차, 학점 확률, 검증된 신뢰구간은 제공하지 않아요.</p>
+  </details>;
+}
+
 export function CourseGradeSimulation({ record, onEdit, busy, sameCohort }: { record: CourseGradeRecord; onEdit: () => void; busy: boolean; sameCohort: boolean }) {
   const [target, setTarget] = useState('');
   const [cutoff, setCutoff] = useState('');
@@ -21,15 +48,18 @@ export function CourseGradeSimulation({ record, onEdit, busy, sameCohort }: { re
     Object.entries(scores).filter(([, value]) => value.trim() !== '').map(([id, value]) => [id, Number(value)]),
   );
   const simulation = simulateCourseGrade(record, scenario);
+  const modelAssumptions = Object.fromEntries(record.assessments.map(item => {
+    const optional = (suffix: string) => {
+      const value = assumptions[item.id + suffix];
+      return value?.trim() ? Number(value) : undefined;
+    };
+    return [item.id, { mean: optional(':mean'), standardDeviation: optional(':sd') }];
+  }));
   const relative = record.method === 'relative' && simulation.status === 'ready'
-    ? analyzeRelativeScenario(record, scenario, Object.fromEntries(record.assessments.map(item => {
-      const optional = (suffix: string) => {
-        const value = assumptions[item.id + suffix];
-        return value?.trim() ? Number(value) : undefined;
-      };
-      return [item.id, { mean: optional(':mean'), standardDeviation: optional(':sd') }];
-    }))) : [];
-
+    ? analyzeRelativeScenario(record, scenario, modelAssumptions) : [];
+  const estimate = estimateRelativeGrade(record);
+  const scenarioEstimate = record.method === 'relative' && simulation.status === 'ready' && Object.keys(scenario).length
+    ? estimateRelativeGrade(record, scenario, modelAssumptions) : null;
   const baseline = simulateCourseGrade(record);
   const eligible = record.assessments.filter(item =>
     item.weightPercent > 0 && (item.result.status === 'planned' || item.result.status === 'pending'));
@@ -41,13 +71,14 @@ export function CourseGradeSimulation({ record, onEdit, busy, sameCohort }: { re
   const officialTarget = goalValue ? calculateTargetRequirement(baseline, Number(goalValue)) : null;
   const outlook = record.method === 'relative' ? analyzeRelativeOutlook(record, sameCohort) : null;
   const observation = outlook?.assessments.find(item => item.difference !== null);
+  const observationMax = record.assessments.find(item => item.id === observation?.id)?.maxScore;
   const cap = outlook?.a ?? outlook?.ab;
   const family = outlook?.a ? 'A계열' : 'A+B계열';
   const hasGradeResult = officialTarget?.status === 'met';
   const noRemaining = baseline.status === 'ready' && baseline.remaining === 0;
   const next = record.method === 'relative'
     ? outlook?.rank ? '등수의 기준 범위와 배정 정책을 확인해 주세요.'
-      : observation ? '공개 종합 등수가 있으면 현재 순위를 확인할 수 있어요.' : '시험 평균을 입력하면 현재 위치를 확인할 수 있어요.'
+      : observation ? '평균과 표준편차가 같은 평가 집단의 값인지 확인해 주세요.' : '시험 평균을 입력하면 현재 위치를 확인할 수 있어요.'
     : canSetCutoff ? '강의에서 확인한 기준을 목표 학점에 입력해 보세요.' : '성적 수정에서 평가 방식을 확인해 주세요.';
 
   return <section className="space-y-3 break-words" aria-label="목표 및 시뮬레이션">
@@ -56,15 +87,18 @@ export function CourseGradeSimulation({ record, onEdit, busy, sameCohort }: { re
         <h4 className="font-semibold">나의 예상 학점</h4>
         <p className="text-xl font-semibold">{hasGradeResult ? '조건부 ' + condition + (condition === 'Pass' ? ' 기준 충족' : ' 이상 기준 충족')
           : cap ? '현재 ' + family + ' 상한 ' + (cap.comparison === 'within' ? '이내' : '초과')
-          : '아직 학점을 예측할 수 없어요.'}</p>
+          : estimate.status === 'modeled' ? estimateTitle(estimate) : '아직 학점을 예측할 수 없어요.'}</p>
         {hasGradeResult ? <p>입력한 기준을 현재 확보점수로 충족했어요. 출석 등 추가 조건은 포함되지 않아요.</p>
           : cap ? <p>공개 종합 등수와 {outlook?.rank?.policySource === 'assumed' ? '사용자 가정' : '입력한 정책'}을 비교했어요. 최종 학점은 아직 알 수 없어요.</p>
+          : estimate.status === 'modeled' ? <p>{estimate.scope === 'included-only' ? '비교 가능한 입력 점수의 부분 전망이에요. ' : ''}
+            {observation?.difference != null && observation.name + ' 평균 대비 ' + (observation.difference > 0 ? '+' : '') + format.format(observation.difference) + '점' + (observationMax ? ' (만점 대비 ' + format.format(Math.abs(observation.difference) / observationMax * 100) + '% 차이)' : '') + '. '}
+            분포를 가정한 결과이며 실제 석차나 확정 학점과 달라요.</p>
           : observation && observation.difference !== null ? <p>{observation.name} 평균 대비 {observation.difference > 0 ? '+' : ''}{format.format(observation.difference)}점이에요. 최종 등급을 판단할 정보는 부족해요.</p>
           : <p>등급을 판단할 정보가 부족해요.</p>}
-        {!hasGradeResult && !cap && <p className="course-muted text-sm">{next}</p>}
-        {!hasGradeResult && !cap && !canSetCutoff && !outlook?.rank &&
+        {!hasGradeResult && !cap && estimate.status !== 'modeled' && <p className="course-muted text-sm">{next}</p>}
+        {!hasGradeResult && !cap && estimate.status !== 'modeled' && !canSetCutoff && !outlook?.rank &&
           <button type="button" className="dex-button" disabled={busy} onClick={onEdit}>
-            {record.method === 'relative' ? observation ? '공개 종합 등수 입력하기' : '시험 평균 입력하기' : '평가 방식 확인하기'}
+            {record.method === 'relative' ? observation ? '시험 통계 확인하기' : '시험 평균 입력하기' : '평가 방식 확인하기'}
           </button>}
         {(baseline.status === 'empty' || baseline.status === 'partial') && <p className="course-muted text-sm">평가 비율을 100%까지 입력하면 전체 점수를 계산할 수 있어요.</p>}
         {baseline.status === 'ready' && <p className="text-sm">{noRemaining
@@ -72,6 +106,7 @@ export function CourseGradeSimulation({ record, onEdit, busy, sameCohort }: { re
           : '성적 HP · 최대 ' + format.format(baseline.maximum) + '점'}</p>}
       </div>
     </div>
+    {estimate.status === 'modeled' && <EstimateDetails result={estimate} enrollment={record.relative?.enrollment} />}
     <div className="course-sheet space-y-2 p-3">
       <label className="block font-semibold">목표 학점
         <select className={control} value={condition} onChange={event => { setCondition(event.target.value); setCutoff(''); setTarget(''); }}>
@@ -123,6 +158,11 @@ export function CourseGradeSimulation({ record, onEdit, busy, sameCohort }: { re
             }} />
         </label>)}
       </div>
+      {scenarioEstimate?.status === 'modeled' && <div className="space-y-1">
+        <p>가상 점수 반영 · {estimateTitle(scenarioEstimate)}{scenarioEstimate.scope === 'included-only' && ' · 일부 평가 기준'}</p>
+        {condition && !canSetCutoff && <p>{condition}의 필요 점수는 보류해요. 가상 점수를 바꿔 계열 상한과의 관계를 비교할 수 있어요.</p>}
+        <EstimateDetails result={scenarioEstimate} enrollment={record.relative?.enrollment} />
+      </div>}
       {!!relative.length && <details className="space-y-2">
         <summary className="cursor-pointer">상대평가 가정과 결과</summary>
         <p>가상 점수가 있는 평가만 분석해요. 반 평균과 표준편차는 이 시나리오에서 직접 입력한 값을 사용해요.</p>
