@@ -1,5 +1,6 @@
 import type { CollectionEntry, DexDocument, DexRepository, Result } from '../core/types.ts';
 
+import type { CourseGradeRecord } from './grade-record.ts';
 import type { CourseReview } from './review.ts';
 
 export const TERMS = { spring: '1학기', fall: '2학기', summer: '여름 계절학기', winter: '겨울 계절학기' } as const;
@@ -18,6 +19,7 @@ export interface CourseSubject {
   code?: string;
   memo?: string;
   review?: CourseReview;
+  gradeRecord?: CourseGradeRecord;
 }
 export type CourseEntry = CollectionEntry & { subject: CourseSubject };
 
@@ -33,7 +35,7 @@ export function similarEnrollment(a: CourseSubject, b: CourseSubject) {
 
 export async function saveCourse(repository: DexRepository, document: DexDocument, subject: CourseSubject, requestId: string, recordedOn: string, entry?: CourseEntry): Promise<Result<CollectionEntry>> {
   const { ownerId } = document.profile;
-  if (entry) return repository.updateEntry(ownerId, entry.id, entry.revision, { subject });
+  if (entry) return repository.updateEntry(ownerId, entry.id, entry.revision, { subject: { ...subject, review: entry.subject.review, gradeRecord: entry.subject.gradeRecord } });
   let dex = document.dexes.find(d => d.kind === 'course');
   if (!dex) {
     const created = await repository.createDex(ownerId, { kind: 'course', name: '강의도감', icon: 'book' });

@@ -115,7 +115,7 @@ export type DexErrorCode =
   | 'UNSUPPORTED_SCHEMA' | 'INVALID_BACKUP' | 'IMPORT_CONFLICT';
 export type Result<T> = { ok: true; value: T } | { ok: false; error: { code: DexErrorCode; message: string } };
 export interface BackupEnvelope {
-  format: 'bokak-dex'; schemaVersion: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12; exportedAt: Instant;
+  format: 'bokak-dex'; schemaVersion: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15; exportedAt: Instant;
   containsSensitiveData: true;
   data: DexDocument;
 }

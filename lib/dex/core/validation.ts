@@ -10,6 +10,11 @@ import { TERMS, STATUSES, CATEGORIES } from '../course/course.ts';
 
 import { WORKLOADS, REVIEW_TAGS } from '../course/review.ts';
 
+import { hasRelativeData, GRADING_METHODS, assessmentWeight, weightBasisPoints } from '../course/grade-record.ts';
+import type { CourseGradeRecord } from '../course/grade-record.ts';
+
+import { isRelativePreset } from '../course/grade/presets.ts';
+
 type ObjectValue = Record<string, unknown>;
 export function object(value: unknown, allowed: string[]): asserts value is ObjectValue {
   ensure(!!value && typeof value === 'object' && !Array.isArray(value) && Object.getPrototypeOf(value) === Object.prototype, '객체 형식이 올바르지 않습니다.');
@@ -36,6 +41,84 @@ function versioned(v: ObjectValue) {
 }
 const base = ['id', 'revision', 'createdAt', 'updatedAt'];
 export const ICONS = ['meal', 'people', 'book', 'place', 'coffee', 'star', 'club', 'memory'] as const;
+function positiveInteger(value: unknown): asserts value is number {
+  ensure(typeof value === 'number' && Number.isSafeInteger(value) && value >= 1, '인원과 등수는 1 이상의 정수여야 해요.');
+}
+
+function optionalRange(value: unknown, max: number, message: string) {
+  if (value !== undefined) ensure(typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= max, message);
+}
+
+function validateRelative(value: unknown) {
+  object(value, ['enrollment', 'policy', 'overallRank', 'preset']);
+  if (value.preset !== undefined) ensure(isRelativePreset(value.preset), '상대평가 유형을 확인해 주세요.');
+  if (value.enrollment !== undefined) positiveInteger(value.enrollment);
+  if (value.overallRank !== undefined) {
+    object(value.overallRank, ['rank', 'scope']);
+    positiveInteger(value.overallRank.rank);
+    text(value.overallRank.scope, 120);
+    ensure(value.enrollment === undefined || value.overallRank.rank <= value.enrollment, '종합 등수는 수강인원 이하여야 해요.');
+  }
+  if (value.policy !== undefined) {
+    const policy = value.policy;
+    object(policy, ['source', 'description', 'aCap', 'abCap']);
+    ensure(policy.source === 'unconfirmed' || policy.source === 'official-guidance' || policy.source === 'assumed', '정책 출처를 확인해 주세요.');
+    if (policy.description !== undefined) text(policy.description, 120);
+    optionalRange(policy.aCap, 100, 'A계열 상한은 0~100%여야 해요.');
+    optionalRange(policy.abCap, 100, 'A+B계열 상한은 0~100%여야 해요.');
+    if (typeof policy.aCap === 'number' && typeof policy.abCap === 'number') {
+      ensure(policy.aCap <= policy.abCap, 'A계열 상한은 A+B계열 상한 이하여야 해요.');
+    }
+  }
+}
+
+function validateAssessmentStatistics(value: unknown, max: number) {
+  object(value, ['mean', 'standardDeviation', 'publishedRank']);
+  optionalRange(value.mean, max, '평균은 0점 이상 만점 이하여야 해요.');
+  // The largest possible sample deviation occurs with two scores at opposite endpoints.
+  optionalRange(value.standardDeviation, max / Math.SQRT2 * (1 + Number.EPSILON), '표준편차가 가능한 점수 범위를 초과했어요.');
+  if (value.publishedRank !== undefined) {
+    object(value.publishedRank, ['rank', 'cohortSize']);
+    positiveInteger(value.publishedRank.rank);
+    if (value.publishedRank.cohortSize !== undefined) {
+      positiveInteger(value.publishedRank.cohortSize);
+      ensure(value.publishedRank.rank <= value.publishedRank.cohortSize, '시험 등수는 비교 인원 이하여야 해요.');
+    }
+  }
+}
+
+export function validateCourseGrade(value: unknown): asserts value is CourseGradeRecord {
+  object(value, ['method', 'assessments', 'relative']);
+  if (value.relative !== undefined) validateRelative(value.relative);
+  ensure(typeof value.method === 'string' && Object.hasOwn(GRADING_METHODS, value.method), '평가 방식을 확인해 주세요.');
+  ensure(Array.isArray(value.assessments) && value.assessments.length <= 100, '평가항목은 최대 100개입니다.');
+  const ids = new Set<string>();
+  const weights: { weightPercent: number }[] = [];
+  for (const item of value.assessments) {
+    object(item, ['id', 'name', 'weightPercent', 'maxScore', 'result', 'statistics']);
+    id(item.id);
+    ensure(!ids.has(item.id), '평가항목 ID가 중복되었습니다.');
+    ids.add(item.id);
+    text(item.name, 100);
+    const weight = item.weightPercent;
+    ensure(typeof weight === 'number' && Number.isFinite(weight) && weight >= 0 && weight <= 100 &&
+      weightBasisPoints(weight) / 100 === weight, '반영비율은 0~100%이며 소수점 두 자리까지 입력할 수 있어요.');
+    weights.push({ weightPercent: weight });
+    const max = item.maxScore;
+    ensure(typeof max === 'number' && Number.isFinite(max) && max > 0, '만점은 0보다 큰 유한한 수여야 해요.');
+    if (item.statistics !== undefined) validateAssessmentStatistics(item.statistics, max);
+    object(item.result, ['status', 'score']);
+    const { status, score } = item.result;
+    if (status === 'graded') {
+      ensure(typeof score === 'number' && Number.isFinite(score) && score >= 0 && score <= max, '확정 점수는 0점 이상 만점 이하여야 해요.');
+    } else {
+      ensure(status === 'planned' || status === 'pending' || status === 'missed', '점수 상태를 확인해 주세요.');
+      ensure(!Object.hasOwn(item.result, 'score'), '직접 확정한 점수만 입력할 수 있어요.');
+    }
+  }
+  ensure(assessmentWeight(weights) <= 100, '반영비율 합계가 100%를 초과했어요.');
+}
+
 function validateCourseReview(review: unknown) {
   object(review, ['shortReview', 'difficulty', 'workload', 'teamProject', 'tags']);
   if (review.shortReview !== undefined) text(review.shortReview, 300);
@@ -67,7 +150,8 @@ export function subject(value: unknown): asserts value is EntrySubject {
     if(v.characterIntro!==undefined)text(v.characterIntro,300,true);
     if(v.profileAssetId!==undefined)ensure(typeof v.profileAssetId==='string'&&/^img-[a-f0-9]{64}$/.test(v.profileAssetId),'프로필 이미지 참조를 확인해 주세요.');
   } else if (v.kind === 'course') {
-    object(v, ['kind', 'title', 'year', 'term', 'status', 'professor', 'credits', 'category', 'code', 'memo', 'review']);
+    object(v, ['kind', 'title', 'year', 'term', 'status', 'professor', 'credits', 'category', 'code', 'memo', 'review', 'gradeRecord']);
+    if (v.gradeRecord !== undefined) validateCourseGrade(v.gradeRecord);
     if (v.review !== undefined) validateCourseReview(v.review);
     text(v.title, 120);
     ensure(typeof v.year === 'number' && Number.isInteger(v.year) && v.year >= 1900 && v.year <= 2200, '수강 연도를 확인해 주세요.');
@@ -194,7 +278,7 @@ export function parseBackup(raw: string): BackupEnvelope {
     const v: unknown = JSON.parse(raw);
     object(v, ['format','schemaVersion','exportedAt','containsSensitiveData','data']);
     ensure(v.format === 'bokak-dex', 'BOKAK 내보내기 파일이 아닙니다.');
-    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8 || v.schemaVersion === 9 || v.schemaVersion === 10 || v.schemaVersion === 11 || v.schemaVersion === 12, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
+    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8 || v.schemaVersion === 9 || v.schemaVersion === 10 || v.schemaVersion === 11 || v.schemaVersion === 12 || v.schemaVersion === 13 || v.schemaVersion === 14 || v.schemaVersion === 15, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
     ensure(v.containsSensitiveData === true, '백업 정보가 누락되었습니다.'); instant(v.exportedAt); validateDocument(v.data);
     if(v.schemaVersion===1||v.schemaVersion===2)ensure(v.data.dexes.every(dex=>dex.peopleBoard===undefined),'보드는 v3 백업을 사용해야 합니다.');
     if(v.schemaVersion===3)ensure(v.data.dexes.every(dex=>!dex.peopleBoard||dex.peopleBoard.version===1),'확장 보드는 v4 백업을 사용해야 합니다.');
@@ -204,6 +288,9 @@ export function parseBackup(raw: string): BackupEnvelope {
     if(v.schemaVersion<7)ensure(v.data.entries.every(e=>e.subject.kind!=='person'||!['nickname','trait','tags','avatar','profileAssetId'].some(k=>k in e.subject)),'캐릭터 인연은 v7 백업을 사용해야 합니다.');
     if(v.schemaVersion<8)ensure(v.data.dexes.every(dex=>!dex.peopleBoards?.boards.some(b=>b.layout.version===4)),'자유 연결은 v8 백업이 필요합니다.');
     if(v.schemaVersion<9)ensure(v.data.entries.every(e=>e.subject.kind!=='person'||(e.subject.characterIntro===undefined&&!isCharacterAvatar(e.subject.avatar)&&(e.subject.trait?.length??0)<=100)),'새 소개와 아바타는 v9 백업이 필요합니다.');
+    if(v.schemaVersion<15)ensure(v.data.entries.every(e=>e.subject.kind!=='course'||e.subject.gradeRecord?.relative?.preset===undefined),'상대평가 유형은 v15 백업이 필요합니다.');
+    if(v.schemaVersion<14)ensure(v.data.entries.every(e=>e.subject.kind!=='course'||!hasRelativeData(e.subject.gradeRecord)),'상대평가 통계는 v14 백업이 필요합니다.');
+    if(v.schemaVersion<13)ensure(v.data.entries.every(e=>e.subject.kind!=='course'||e.subject.gradeRecord===undefined),'강의 성적은 v13 백업이 필요합니다.');
     if(v.schemaVersion<12)ensure(v.data.entries.every(e=>e.subject.kind!=='course'||e.subject.review===undefined),'강의 평가는 v12 백업이 필요합니다.');
     if(v.schemaVersion<11)ensure(v.data.dexes.every(dex=>dex.kind!=='course'),'강의도감은 v11 백업이 필요합니다.');
     if(v.schemaVersion<10)ensure(v.data.entries.every(e=>!hasPersonDetails(e.subject)),'추가 인연 정보는 v10 백업이 필요합니다.');
