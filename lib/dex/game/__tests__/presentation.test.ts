@@ -29,6 +29,8 @@ const targets=new Map([
   ['AchievementStamp','components/dex/common/AchievementStamp.tsx'],
   ['AchievementArtwork','components/dex/common/AchievementArtwork.tsx'],
   ['GradeBadge','components/dex/common/GradeBadge.tsx'],
+  ['useDexDocument','components/dex/scaffold/useDexDocument.ts'],
+  ['ExpGainOverlay','components/dex/common/ExpGainOverlay.tsx'],
 ]);
 const urls=new Map([...targets.keys()].map(name=>[name,pathToFileURL(join(temporary,name+'.mjs')).href]));
 for(const [name,path] of targets){
@@ -151,3 +153,18 @@ test('실제 카드는 WebP와 공통 기본 이미지를 사용하고 SVG 비�
 test('공통 도장은 실제 달성·미달성·준비 상태를 색상 외 문구로 구분하고 엔진 진행률을 표시한다',async()=>{const {AchievementStamp}=await import(urls.get('AchievementStamp')!);const goal={id:'fixture',name:'첫 발견',icon:'✦',condition:'메뉴 1종 수집',progress:1,target:1,status:'achieved',achievedAt:null};const achieved=render(AchievementStamp,{achievement:goal});assert.ok(achieved.includes('✓ 달성'));assert.ok(achieved.includes('value="1"'));assert.ok(achieved.includes('<details>'));assert.ok(achieved.includes('/dex/achievements/default.webp'));const locked=render(AchievementStamp,{achievement:{...goal,status:'locked',progress:0}});assert.ok(locked.includes('미달성'));assert.ok(locked.includes('value="0"'));const preparing=render(AchievementStamp,{achievement:{...goal,status:'preparing',progress:null}});assert.ok(preparing.includes('판정 대기'));assert.ok(!preparing.includes('<progress'));});
 
 test('공통 업적 일러스트는 선택적으로 표시하며 업적 이름과 실제 상태는 유지한다',async()=>{const {AchievementStamp}=await import(urls.get('AchievementStamp')!);const goal={id:'meal:first',name:'첫 발견',icon:'✦',condition:'메뉴 1종 수집',progress:1,target:1,status:'achieved',achievedAt:null};const html=render(AchievementStamp,{achievement:goal,artwork:'/dex/achievements/first-discovery.webp'});assert.ok(html.includes('/dex/achievements/first-discovery.webp'));assert.ok(html.includes('✓ 달성'));assert.ok(html.includes('메뉴 1종 수집'));});
+
+test('경험치 게이지는 보이는 탭의 순증가만 재생하고, 레벨 업은 이전 레벨을 가득 채운 뒤 새 레벨로 넘어간다',async()=>{
+  const {ExpGauge,expGainStart}=await import(urls.get('ExpGainOverlay')!);
+  assert.equal(expGainStart(null,100,null,true),null,'first read only sets the baseline');
+  assert.equal(expGainStart(100,150,null,false),null,'hidden tab (another tab saved)');
+  assert.equal(expGainStart(100,90,null,true),null,'deletion');
+  assert.equal(expGainStart(100,150,null,true),100);
+  assert.equal(expGainStart(150,170,100,true),100,'quick successive gains merge');
+  assert.equal(expGainStart(170,90,100,true),null,'a later loss cancels the pending gain');
+  const same=render(ExpGauge,{from:30,to:60,onDone:()=>{}});
+  for(const text of ['+30 EXP','Lv.2 새내기','--from:0;--to:0.6','다음 Lv.3까지 20 EXP','경험치 획득'])assert.ok(same.includes(text),text);
+  const leveled=render(ExpGauge,{from:70,to:100,onDone:()=>{}});
+  for(const text of ['+30 EXP','Lv.2 새내기','--from:0.8;--to:1','총 100 EXP'])assert.ok(leveled.includes(text),text);
+  assert.ok(render(ExpGauge,{from:14900,to:15100,onDone:()=>{}}).includes('--to:1'),'max level fills');
+});

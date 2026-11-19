@@ -1246,3 +1246,14 @@ button.dex-edition-card-body,a.dex-edition-card-body{cursor:pointer;transition:t
 .dex-detail-focus .dex-quick-actions{justify-content:flex-start;flex-wrap:wrap;align-items:center}
 .dex-detail-focus .dex-quick-actions>button{flex:0 1 auto;width:auto;min-width:0;min-height:42px;padding:9px 14px;font-size:14px;white-space:nowrap}
 @media(max-width:520px){.dex-dev-tools{grid-template-columns:minmax(0,1fr)}}
+
+/* EXP gain gauge: centered and non-blocking. Reduced motion (rule above) shows each phase's end state; its timers still advance. */
+.dex-exp-gain-layer{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;pointer-events:none}
+.dex-exp-gain{pointer-events:auto;cursor:pointer;width:min(340px,100%);padding:22px 24px;border:1px solid var(--e-border);border-radius:22px;background:var(--e-surface);color:var(--e-ink);text-align:center;box-shadow:0 25px 80px #142d3040;animation:dex-toast-in .25s ease-out}
+.dex-exp-gain>strong{display:block;margin-top:4px;font-size:30px;font-weight:800;color:var(--e-accent);animation:dex-count-pop .4s ease-out}
+.dex-exp-gain>p:not(.dex-small){margin:6px 0 10px;font-weight:700}
+.dex-exp-gain.is-up>p:not(.dex-small){color:var(--e-accent);animation:dex-count-pop .4s ease-out}
+.dex-exp-gain-bar{height:12px;border-radius:20px;overflow:hidden;background:var(--e-surface-2)}
+.dex-exp-gain-bar>span{display:block;height:100%;width:calc(var(--to) * 100%);border-radius:inherit;background:var(--e-accent);animation:dex-exp-fill .8s cubic-bezier(.2,.8,.2,1)}
+.dex-exp-gain>.dex-small{margin-top:8px}
+@keyframes dex-exp-fill{from{width:calc(var(--from) * 100%)}}

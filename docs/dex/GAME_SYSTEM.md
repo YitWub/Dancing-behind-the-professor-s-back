@@ -33,7 +33,7 @@
 - 학식(`mealGrade`): 아래 1번 기준 전체 구현. 운영 중인 출현 희귀도 정책이 아직 없으므로 지금은 별점 반복 기준으로만 승급한다.
 - 인연(`personGrade`): 서버·프로필 공유 계층이 없는 현재 로컬 단계이므로 아래 2-D의 로컬 하위 호환 기준(비민감 기록 깊이·추억 누적·보드 실 연결)으로 동작 중이다. 메모·특징·추억은 공백 제외 10자 이상만 유효하며, 보드 연결은 인물↔인물 실(v1~3 edges, v4 person connections)만 센다. 아바타는 기본값(`classic`) 외 선택 또는 대표 이미지가 있으면 인정한다. 타인 프로필 지표 기반 등급(2-A~2-C)은 계정·프로필 공유 도입 후 전환 대상이다.
 - 강의(`courseGrade`): 3-C의 `/grade` 미연결 하위 호환 등급(최대 희귀)만 구현. 3-A 활동 EXP·성취 축·3-D 예측 봉인은 3-E 마이그레이션 후속이다.
-- 레벨(`LEVEL_TABLE`, `levelFromExp`, `documentLevel`): 아래 `레벨 시스템 (Lv.1 ~ Lv.30)` 전체 구현. 도감 홈(`components/dex/scaffold/DexScaffold.tsx`)에 현재 레벨·칭호·총 EXP·다음 레벨 진행률을 표시하며, DB에 별도 저장하지 않고 `totalExp`에서 파생 계산한다.
+- 레벨(`LEVEL_TABLE`, `levelFromExp`, `documentLevel`): 아래 `레벨 시스템 (Lv.1 ~ Lv.30)` 전체 구현. 도감 홈(`components/dex/scaffold/DexScaffold.tsx`)에 현재 레벨·칭호·총 EXP·다음 레벨 진행률을 표시하며, DB에 별도 저장하지 않고 `totalExp`에서 파생 계산한다. 총 EXP가 오르면(신규 획득·등급 승급·강의 등록 공통) 화면 중앙에 경험치 게이지가 차오르는 연출(`components/dex/common/ExpGainOverlay.tsx`)을 보여 주며, 레벨 업 시 이전 레벨을 가득 채운 뒤 새 레벨로 넘어간다. 카드 공개 창이 열려 있으면 닫힌 뒤 재생한다.
 
 ### 도메인별 등급·EXP 설계 기준 (목표 정책 · 허점 보완안)
 
