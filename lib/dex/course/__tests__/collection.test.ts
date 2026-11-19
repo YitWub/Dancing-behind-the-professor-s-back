@@ -1,6 +1,6 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
-import { DEFAULT_FILTERS, selectCourses, summarizeTerms } from '../collection.ts';
+import { DEFAULT_FILTERS, selectCourses } from '../collection.ts';
 import type { CourseEntry, CourseSubject } from '../course.ts';
 
 function record(id: string, subject: Partial<CourseSubject>, day = '01'): CourseEntry {
@@ -21,11 +21,8 @@ const rows = [
   record('fall-02', { professor: 'Lee', code: 'CS102', category: 'general' }),
 ];
 
-test('counts and orders all four terms and preserves individual enrollment IDs', () => {
+test('orders all four terms and preserves individual enrollment IDs', () => {
   const before = structuredClone(rows);
-  assert.deepEqual(summarizeTerms(rows).map(x => [x.year, x.term, x.count]), [
-    [2026, 'winter', 1], [2026, 'fall', 2], [2026, 'summer', 1], [2026, 'spring', 1], [2025, 'fall', 1],
-  ]);
   const ids = (sort: typeof DEFAULT_FILTERS.sort) => selectCourses(rows, { ...DEFAULT_FILTERS, sort }).map(row => row.id);
   assert.deepEqual(ids('newest'), ['winter', 'fall', 'fall-02', 'summer', 'spring', 'old']);
   assert.deepEqual(ids('oldest'), ['old', 'spring', 'summer', 'fall', 'fall-02', 'winter']);

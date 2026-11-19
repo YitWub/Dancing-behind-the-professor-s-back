@@ -23,18 +23,7 @@ export const DEFAULT_FILTERS: CourseFilters = {
 
 const collator = new Intl.Collator('ko', { sensitivity: 'base', numeric: true });
 const searchKey = (value: string) => value.normalize('NFKC').trim().toLowerCase();
-const termIndex = (year: number, term: CourseSubject['term']) => year * TERM_ORDER.length + TERM_ORDER.indexOf(term);
-
-export function summarizeTerms(entries: readonly CourseEntry[]) {
-  const counts = new Map<number, { year: number; term: CourseSubject['term']; count: number }>();
-  for (const { subject: { year, term } } of entries) {
-    const key = termIndex(year, term);
-    const existing = counts.get(key);
-    if (existing) existing.count++;
-    else counts.set(key, { year, term, count: 1 });
-  }
-  return [...counts].sort(([a], [b]) => b - a).map(([, summary]) => summary);
-}
+export const termIndex = (year: number, term: CourseSubject['term']) => year * TERM_ORDER.length + TERM_ORDER.indexOf(term);
 
 export function selectCourses(entries: readonly CourseEntry[], filters: CourseFilters) {
   const query = searchKey(filters.query);

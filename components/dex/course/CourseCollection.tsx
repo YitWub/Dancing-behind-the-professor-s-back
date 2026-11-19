@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { CourseCompletion } from './CourseReviewPanel';
 import { DIFFICULTIES } from '@/lib/dex/course/review';
+import { CourseProgress } from './CourseProgress';
+import { courseProgress } from '@/lib/dex/course/progress';
 import { Card } from '@/components/ui';
 import { CATEGORIES, STATUSES, TERMS } from '@/lib/dex/course/course';
 import type { CourseEntry } from '@/lib/dex/course/course';
-import { DEFAULT_FILTERS, selectCourses, SORTS, summarizeTerms, TERM_ORDER } from '@/lib/dex/course/collection';
+import { DEFAULT_FILTERS, selectCourses, SORTS, TERM_ORDER } from '@/lib/dex/course/collection';
 import type { CourseFilters } from '@/lib/dex/course/collection';
 
 export function CourseCollection({ entries, busy, onSelect }: {
@@ -17,8 +19,9 @@ export function CourseCollection({ entries, busy, onSelect }: {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const update = <K extends keyof CourseFilters>(key: K, value: CourseFilters[K]) =>
     setFilters(previous => ({ ...previous, [key]: value }));
-  const terms = summarizeTerms(entries);
-  const years = [...new Set([...terms.map(term => term.year), ...(filters.year ? [Number(filters.year)] : [])])]
+  const heading = useRef<HTMLHeadingElement>(null);
+  const progress = courseProgress(entries);
+  const years = [...new Set([...progress.semesters.map(term => term.year), ...(filters.year ? [Number(filters.year)] : [])])]
     .sort((a, b) => b - a);
   const visible = selectCourses(entries, filters);
   const input = 'block w-full min-w-0 rounded border p-2';
@@ -26,8 +29,8 @@ export function CourseCollection({ entries, busy, onSelect }: {
     return Object.entries(labels).map(([value, label]) => <option key={value} value={value}>{label}</option>);
   }
 
-  return <section className="space-y-3" aria-labelledby="course-collection-title">
-    <h2 id="course-collection-title" className="font-semibold">강의 카드 컬렉션</h2>
+  return <div className="space-y-4"><section className="space-y-3" aria-labelledby="course-collection-title">
+    <h2 ref={heading} tabIndex={-1} id="course-collection-title" className="font-semibold">강의 카드 컬렉션</h2>
     <div className="flex flex-wrap items-end gap-2">
       <label className="min-w-0 flex-1">강의 검색
         <input type="search" className={input} value={filters.query} placeholder="강의명, 교수명, 과목 코드"
@@ -55,17 +58,6 @@ export function CourseCollection({ entries, busy, onSelect }: {
       </select></label>
       <button type="button" className="dex-button self-end" onClick={() => setFilters(DEFAULT_FILTERS)}>조건 초기화</button>
     </div>
-    {terms.length > 0 && <details>
-      <summary className="cursor-pointer">학기별 등록 현황</summary>
-      <ul className="mt-2 flex flex-wrap gap-2">
-        {terms.map(({ year, term, count }) => <li key={year + term}>
-          <button type="button" className="dex-tag" aria-pressed={filters.year === String(year) && filters.term === term}
-            onClick={() => setFilters(previous => ({ ...previous, year: String(year), term }))}>
-            {year}년 {TERMS[term]} · {count}개
-          </button>
-        </li>)}
-      </ul>
-    </details>}
     <p role="status">전체 {entries.length}개 강의 · {visible.length}개 표시</p>
     {visible.length > 0 ? <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {visible.map(({ id, subject }) => <li key={id} className="min-w-0">
@@ -85,5 +77,10 @@ export function CourseCollection({ entries, busy, onSelect }: {
         </Card>
       </li>)}
     </ul> : <p>{entries.length ? '선택한 학기나 검색 조건에 맞는 강의가 없어요.' : '아직 등록한 강의가 없어요.'}</p>}
-  </section>;
+  </section>
+    <CourseProgress progress={progress} onSemester={(year, term) => {
+      setFilters(previous => ({ ...previous, year: String(year), term }));
+      heading.current?.focus();
+    }} />
+  </div>;
 }
