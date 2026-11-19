@@ -56,7 +56,8 @@ function connectedPeople(records: Records) {
   return ids;
 }
 
-/** Record depth, never the person's worth. Age, gender and real photos are not grade conditions. */
+/** GAME_SYSTEM.md 2-D local fallback: record depth, never the person's worth. Age, gender and real photos are not grade conditions. */
+// shortcut: 2-A~2-C (other user's connections·level·achievements·admission year, 12-point snapshot) need shared profiles; switch when accounts/profile sharing and the EntrySubject snapshot migration land.
 export function personGrade(entry: PersonEntry, records: Records, connected = connectedPeople(records).has(entry.id)): ExpGrade {
   const s = entry.subject;
   const details = [s.relationship?.trim(), s.department?.trim(), s.admissionYear, s.mbti, s.energyType, meaningful(s.trait)].filter(Boolean).length;
