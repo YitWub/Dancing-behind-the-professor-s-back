@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { ERICA_POLICY_SOURCE, ERICA_RELATIVE_PRESETS, ericaPreset, isRelativePreset } from '@/lib/dex/course/grade/presets';
+import { effectiveRelativePolicy } from '@/lib/dex/course/grade/relative';
 import { analyzeRelativeOutlook } from '@/lib/dex/course/grade/outlook';
 import type { AssessmentStatistics, CourseRelativeData } from '@/lib/dex/course/grade/relative';
 import type { CourseAssessment, CourseGradeRecord } from '@/lib/dex/course/grade-record';
@@ -15,30 +18,29 @@ function optionalNumber(fields: FormData, key: string) {
   return value ? Number(value) : undefined;
 }
 
-export function readRelative(fields: FormData): CourseRelativeData | undefined {
+export function readRelative(fields: FormData, previous?: CourseRelativeData): CourseRelativeData | undefined {
   const enrollment = optionalNumber(fields, 'enrollment');
   const rank = optionalNumber(fields, 'overallRank');
-  const scope = field(fields, 'rankScope');
-  const source = (field(fields, 'policySource') || 'unconfirmed') as keyof typeof sources;
-  const description = field(fields, 'policyDescription') || undefined;
-  const aCap = optionalNumber(fields, 'aCap');
-  const abCap = optionalNumber(fields, 'abCap');
-  return enrollment !== undefined || rank !== undefined || scope || source !== 'unconfirmed' || description || aCap !== undefined || abCap !== undefined
-    ? {
-      enrollment,
-      overallRank: rank !== undefined || scope ? { rank: rank ?? NaN, scope } : undefined,
-      policy: source !== 'unconfirmed' || description || aCap !== undefined || abCap !== undefined ? { source, description, aCap, abCap } : undefined,
-    }
-    : undefined;
+  const selection = field(fields, 'relativePreset');
+  const preset = isRelativePreset(selection) && (selection !== 'unknown' || previous?.policy || previous?.preset)
+    ? selection : undefined;
+  const policy = previous?.policy;
+  const overallRank = rank === undefined ? undefined
+    : previous?.overallRank?.rank === rank ? previous.overallRank : { rank, scope: '공개 종합 등수 · 기준 시점 미기록' };
+  return enrollment !== undefined || overallRank || policy || preset ? {
+    ...(enrollment !== undefined && { enrollment }),
+    ...(overallRank && { overallRank }),
+    ...(policy && { policy }),
+    ...(preset && { preset }),
+  } : undefined;
 }
 
-export function readStatistics(fields: FormData, id: string): AssessmentStatistics | undefined {
+export function readStatistics(fields: FormData, id: string, previous?: AssessmentStatistics): AssessmentStatistics | undefined {
   const mean = optionalNumber(fields, id + ':mean');
   const standardDeviation = optionalNumber(fields, id + ':sd');
-  const rank = optionalNumber(fields, id + ':rank');
-  const cohortSize = optionalNumber(fields, id + ':cohort');
-  if ([mean, standardDeviation, rank, cohortSize].every(value => value === undefined)) return undefined;
-  return { mean, standardDeviation, publishedRank: rank === undefined && cohortSize === undefined ? undefined : { rank: rank ?? NaN, cohortSize } };
+  const publishedRank = previous?.publishedRank;
+  if (mean === undefined && standardDeviation === undefined && !publishedRank) return undefined;
+  return { ...(mean !== undefined && { mean }), ...(standardDeviation !== undefined && { standardDeviation }), ...(publishedRank && { publishedRank }) };
 }
 
 function NumericField({ name, label, value, integer = false }: { name: string; label: string; value?: number; integer?: boolean }) {
@@ -46,48 +48,53 @@ function NumericField({ name, label, value, integer = false }: { name: string; l
 }
 
 export function RelativeFields({ relative }: { relative?: CourseRelativeData }) {
-  return <details className="space-y-2">
-    <summary>상대평가 정책과 공개 종합 등수</summary>
+  const [selection, setSelection] = useState(relative?.preset ?? (relative?.policy ? 'legacy' : 'unknown'));
+  const preset = isRelativePreset(selection) ? ericaPreset(selection) : undefined;
+  return <fieldset className="space-y-2 rounded border p-3">
+    <legend>상대평가 설정</legend>
+    <label>성적 평가 유형<select className={input} name="relativePreset" value={selection} onChange={event => {
+      const next = event.target.value;
+      if (next === 'legacy' || isRelativePreset(next)) setSelection(next);
+    }}>
+      <option value="unknown">유형을 아직 몰라요</option>
+      {relative?.policy && <option value="legacy">이전 직접 입력 설정 유지</option>}
+      {Object.entries(ERICA_RELATIVE_PRESETS).map(([id, item]) => <option value={id} key={id}>{item.label}</option>)}
+    </select></label>
+    {preset && <p>{preset.label} · A계열 최대 {preset.aCap}%, A+B계열 최대 {preset.abCap}%</p>}
+    {relative?.policy && <p className="course-muted text-sm">이전 직접 입력값은 보존됩니다. 유형을 선택해 저장하면 선택한 기준을 적용해요.</p>}
+    <p className="course-muted text-sm">해당 학기의 강좌 안내에서 유형을 확인해 주세요. <a className="underline" href={ERICA_POLICY_SOURCE} target="_blank" rel="noreferrer">평가 기준 확인</a></p>
     <div className="grid gap-2 sm:grid-cols-2">
-      <NumericField name="enrollment" label="수강인원" value={relative?.enrollment} integer />
-      <NumericField name="overallRank" label="공개 종합 등수" value={relative?.overallRank?.rank} integer />
-      <label>종합 등수 기준 시점·범위<input className={input} name="rankScope" maxLength={120} defaultValue={relative?.overallRank?.scope} placeholder="예: 중간고사와 과제 반영 후" /></label>
-      <label>정책 출처<select className={input} name="policySource" defaultValue={relative?.policy?.source ?? 'unconfirmed'}>
-        {Object.entries(sources).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
-      </select></label>
-      <NumericField name="aCap" label="A계열 상한 (%)" value={relative?.policy?.aCap} />
-      <NumericField name="abCap" label="A+B계열 상한 (%)" value={relative?.policy?.abCap} />
-      <label>정책 메모<input className={input} name="policyDescription" maxLength={120} defaultValue={relative?.policy?.description} /></label>
+      <NumericField name="enrollment" label="수강인원 (선택)" value={relative?.enrollment} integer />
+      <NumericField name="overallRank" label="현재 공개된 종합 등수 (선택)" value={relative?.overallRank?.rank} integer />
     </div>
-  </details>;
+  </fieldset>;
 }
 
 export function StatisticsFields({ id, statistics }: Pick<CourseAssessment, 'id' | 'statistics'>) {
   return <details className="space-y-2">
-    <summary>시험 통계와 공개 등수</summary>
+    <summary>시험 통계 (선택)</summary>
     <div className="grid gap-2 sm:grid-cols-2">
       <NumericField name={id + ':mean'} label="시험 평균" value={statistics?.mean} />
       <NumericField name={id + ':sd'} label="시험 표준편차" value={statistics?.standardDeviation} />
-      <NumericField name={id + ':rank'} label="공개 시험 등수" value={statistics?.publishedRank?.rank} integer />
-      <NumericField name={id + ':cohort'} label="시험 비교 인원" value={statistics?.publishedRank?.cohortSize} integer />
     </div>
   </details>;
 }
 
 export function CourseRelativePanel({ record, sameCohort, onSameCohort }: { record: CourseGradeRecord; sameCohort: boolean; onSameCohort: (value: boolean) => void }) {
   const { rank, a, ab, assessments: positions } = analyzeRelativeOutlook(record, sameCohort);
-  const policy = record.relative?.policy;
+  const policy = effectiveRelativePolicy(record.relative);
   const assessments = positions.filter(position => position.mean !== null || position.publishedRank ||
     position.standardDeviation !== undefined);
   return <section aria-label="상대평가 분석" className="course-sheet space-y-2 break-words p-3">
     <h4 className="font-semibold">상대평가 분석</h4>
     {record.relative?.enrollment !== undefined && <p>수강인원 {record.relative.enrollment}명</p>}
+    {!policy && <p>성적 평가 유형 미확인</p>}
     {policy && <p>정책 출처 · {sources[policy.source]}{policy.aCap !== undefined && ' · A계열 상한 ' + policy.aCap + '%'}{policy.abCap !== undefined && ' · A+B계열 상한 ' + policy.abCap + '%'}{policy.description && ' · ' + policy.description}</p>}
     {rank && <>
       <p>공개 종합 등수 {rank.rank}등{rank.cohortSize !== undefined && ' / ' + rank.cohortSize + '명'} · {rank.scope}</p>
       {rank.cohortSize !== undefined && policy && policy.source !== 'unconfirmed' &&
         (policy.aCap !== undefined || policy.abCap !== undefined) && <label className="block">
-          <input type="checkbox" checked={sameCohort} onChange={event => onSameCohort(event.target.checked)} /> 종합 등수의 비교 집단이 입력한 수강인원과 같아요
+          <input type="checkbox" checked={sameCohort} onChange={event => onSameCohort(event.target.checked)} /> 종합 등수와 입력한 인원의 비교 집단이 같아요
         </label>}
       {(a || ab) ? <p>입력한 수강인원과 상한 기준 · {[
         a && 'A계열 상한 ' + (a.comparison === 'within' ? '이내' : '초과') + (a.near ? ' · 경계에서 1등 이내' : ''),

@@ -1,5 +1,5 @@
 import type { CourseGradeRecord } from '../grade-record.ts';
-import { analyzeAssessmentPosition, analyzePublishedRank } from './relative.ts';
+import { analyzeAssessmentPosition, analyzePublishedRank, effectiveRelativePolicy } from './relative.ts';
 import type { GradeScenario } from './simulation.ts';
 
 export type RelativeAssumptions = Readonly<Record<string, { mean?: number; standardDeviation?: number }>>;
@@ -10,7 +10,7 @@ export function analyzeRelativeOutlook(record: CourseGradeRecord, sameCohort = f
     ...analyzeAssessmentPosition(item),
   }));
   const rank = analyzePublishedRank(record.relative);
-  const policy = record.relative?.policy;
+  const policy = effectiveRelativePolicy(record.relative);
   const boundary = (cap: number | undefined, comparison: 'within' | 'outside' | null | undefined) =>
     sameCohort && rank?.cohortSize && cap !== undefined && comparison
       ? { comparison, near: Math.abs(rank.rank - rank.cohortSize * (cap / 100)) <= 1 }

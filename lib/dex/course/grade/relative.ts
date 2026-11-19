@@ -1,3 +1,5 @@
+import { ericaPreset } from './presets.ts';
+import type { RelativePreset } from './presets.ts';
 import { confirmedScore } from '../grade-record.ts';
 import type { CourseAssessment } from '../grade-record.ts';
 
@@ -11,6 +13,7 @@ export interface RelativePolicy {
 }
 export interface CourseRelativeData {
   enrollment?: number;
+  preset?: RelativePreset;
   policy?: RelativePolicy;
   overallRank?: { rank: number; scope: string };
 }
@@ -38,11 +41,17 @@ export function analyzeAssessmentPosition(item: CourseAssessment) {
   };
 }
 
+export function effectiveRelativePolicy(data?: CourseRelativeData): RelativePolicy | undefined {
+  if (data?.preset === 'unknown') return undefined;
+  const preset = ericaPreset(data?.preset);
+  return preset ? { source: 'official-guidance', description: preset.label, aCap: preset.aCap, abCap: preset.abCap } : data?.policy;
+}
+
 export function analyzePublishedRank(data?: CourseRelativeData) {
   const rank = data?.overallRank;
   if (!rank) return null;
   const cohortSize = data.enrollment;
-  const policy = data.policy;
+  const policy = effectiveRelativePolicy(data);
   const ordinalShare = cohortSize === undefined ? null : rank.rank / cohortSize * 100;
   function compare(cap?: number): 'within' | 'outside' | null {
     if (ordinalShare === null || policy?.source === 'unconfirmed' || cap === undefined) return null;

@@ -14,19 +14,20 @@ const MAGIC_V11='BOKAKP11\n';
 const MAGIC_V12='BOKAKP12\n';
 const MAGIC_V13='BOKAKP13\n';
 const MAGIC_V14='BOKAKP14\n';
-const PACKAGE_MAGICS=[MAGIC,'BOKAKPK6\n','BOKAKPK7\n','BOKAKPK8\n','BOKAKPK9\n',MAGIC_V10,MAGIC_V11,MAGIC_V12,MAGIC_V13,MAGIC_V14];
+const MAGIC_V15='BOKAKP15\n';
+const PACKAGE_MAGICS=[MAGIC,'BOKAKPK6\n','BOKAKPK7\n','BOKAKPK8\n','BOKAKPK9\n',MAGIC_V10,MAGIC_V11,MAGIC_V12,MAGIC_V13,MAGIC_V14,MAGIC_V15];
 export function hasCharacterData(doc:DexDocument){return doc.entries.some(e=>e.subject.kind==='person'&&['nickname','trait','tags','avatar','profileAssetId','characterIntro',...PERSON_DETAIL_FIELDS].some(k=>k in e.subject));}
 export function photoReferences(doc:DexDocument){return new Set([...doc.dexes.flatMap(d=>allBoardLayouts(d).flatMap(b=>b.photos?.map(p=>p.assetId)??[])),...doc.entries.flatMap(e=>e.subject.kind==='person'&&e.subject.profileAssetId?[e.subject.profileAssetId]:[])]);}
 export function packBackup(data:DexDocument,assets:PhotoAsset[],exportedAt:string){
- const version=data.entries.some(e=>e.subject.kind==='course'&&hasRelativeData(e.subject.gradeRecord))?14:data.entries.some(e=>e.subject.kind==='course'&&e.subject.gradeRecord!==undefined)?13:data.entries.some(e=>e.subject.kind==='course'&&e.subject.review!==undefined)?12:data.dexes.some(d=>d.kind==='course')?11:data.entries.some(e=>hasPersonDetails(e.subject))?10:data.entries.some(e=>e.subject.kind==='person'&&(e.subject.characterIntro!==undefined||isCharacterAvatar(e.subject.avatar)||(e.subject.trait?.length??0)>100))?9:data.dexes.some(d=>d.peopleBoards?.boards.some(b=>b.layout.version===4))?8:hasCharacterData(data)?7:data.dexes.some(d=>d.peopleBoards)?6:5;
+ const version=data.entries.some(e=>e.subject.kind==='course'&&e.subject.gradeRecord?.relative?.preset!==undefined)?15:data.entries.some(e=>e.subject.kind==='course'&&hasRelativeData(e.subject.gradeRecord))?14:data.entries.some(e=>e.subject.kind==='course'&&e.subject.gradeRecord!==undefined)?13:data.entries.some(e=>e.subject.kind==='course'&&e.subject.review!==undefined)?12:data.dexes.some(d=>d.kind==='course')?11:data.entries.some(e=>hasPersonDetails(e.subject))?10:data.entries.some(e=>e.subject.kind==='person'&&(e.subject.characterIntro!==undefined||isCharacterAvatar(e.subject.avatar)||(e.subject.trait?.length??0)>100))?9:data.dexes.some(d=>d.peopleBoards?.boards.some(b=>b.layout.version===4))?8:hasCharacterData(data)?7:data.dexes.some(d=>d.peopleBoards)?6:5;
  const manifest={format:'bokak-dex',schemaVersion:version,exportedAt,containsSensitiveData:true,data,assets:assets.map(a=>a.info)};
  return packContainer(manifest,assets.map(a=>a.blob),version);
 }
 export function packContainer(manifest:unknown,blobs:Blob[],version=5){
  ensure(blobs.reduce((n,b)=>n+b.size,0)<=MAX_PHOTO_TOTAL,'사진 백업 한도를 초과합니다.');
  const metadata=encoder.encode(JSON.stringify(manifest));ensure(metadata.length<=MAX_MANIFEST,'기록 메타데이터가 5MB를 초과합니다.');
- ensure([5,6,7,8,9,10,11,12,13,14].includes(version),'지원하지 않는 패키지 버전입니다.');
- const head=new Uint8Array(13);head.set(encoder.encode(version===14?MAGIC_V14:version===13?MAGIC_V13:version===12?MAGIC_V12:version===11?MAGIC_V11:version===10?MAGIC_V10:version>=6?'BOKAKPK'+version+'\n':MAGIC));new DataView(head.buffer).setUint32(9,metadata.length,true);
+ ensure([5,6,7,8,9,10,11,12,13,14,15].includes(version),'지원하지 않는 패키지 버전입니다.');
+ const head=new Uint8Array(13);head.set(encoder.encode(version===15?MAGIC_V15:version===14?MAGIC_V14:version===13?MAGIC_V13:version===12?MAGIC_V12:version===11?MAGIC_V11:version===10?MAGIC_V10:version>=6?'BOKAKPK'+version+'\n':MAGIC));new DataView(head.buffer).setUint32(9,metadata.length,true);
  return new Blob([head,metadata,...blobs],{type:PACKAGE_MIME});
 }
 export async function isPhotoPackage(blob:Blob){return PACKAGE_MAGICS.includes(new TextDecoder().decode(await blob.slice(0,9).arrayBuffer()));}
@@ -35,7 +36,7 @@ export async function unpackBackup(file:Blob){
  const head=new Uint8Array(await file.slice(0,13).arrayBuffer());const magic=new TextDecoder().decode(head.subarray(0,9));ensure(PACKAGE_MAGICS.includes(magic),'BOKAK 사진 백업이 아닙니다.');
  const length=new DataView(head.buffer).getUint32(9,true);ensure(length>0&&length<=MAX_MANIFEST&&13+length<=file.size,'백업 헤더를 확인해 주세요.');
  const raw=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(await file.slice(13,13+length).arrayBuffer()));
- ensure(raw&&Object.keys(raw).every(k=>['format','schemaVersion','exportedAt','containsSensitiveData','data','assets'].includes(k))&&raw.schemaVersion===(magic===MAGIC_V14?14:magic===MAGIC_V13?13:magic===MAGIC_V12?12:magic===MAGIC_V11?11:magic===MAGIC_V10?10:Number(magic.slice(7,8))),'사진 백업 버전을 확인해 주세요.');
+ ensure(raw&&Object.keys(raw).every(k=>['format','schemaVersion','exportedAt','containsSensitiveData','data','assets'].includes(k))&&raw.schemaVersion===(magic===MAGIC_V15?15:magic===MAGIC_V14?14:magic===MAGIC_V13?13:magic===MAGIC_V12?12:magic===MAGIC_V11?11:magic===MAGIC_V10?10:Number(magic.slice(7,8))),'사진 백업 버전을 확인해 주세요.');
  const {assets:infos,...envelope}=raw;
  const document=parseBackup(JSON.stringify(envelope)).data;ensure(Array.isArray(infos)&&infos.length<=MAX_PHOTO_ASSETS,'사진 목록을 확인해 주세요.');
  const refs=photoReferences(document),seen=new Set<string>(),assets:PhotoAsset[]=[];let offset=13+length,total=0;

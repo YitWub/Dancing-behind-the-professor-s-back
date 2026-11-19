@@ -48,11 +48,12 @@ export function CourseGradePanel({ entry, busy, onSave }: {
 
   async function save(current: Draft, fields: FormData) {
     setError('');
+    const previous = current.entry.subject.gradeRecord;
     const grade: CourseGradeRecord = {
       method: current.method,
-      relative: readRelative(fields),
+      relative: readRelative(fields, previous?.relative),
       assessments: current.items.map(item => ({
-        statistics: readStatistics(fields, item.id),
+        statistics: readStatistics(fields, item.id, previous?.assessments.find(saved => saved.id === item.id)?.statistics),
         id: item.id, name: item.name.trim(), weightPercent: item.weight.trim() ? Number(item.weight) : NaN,
         maxScore: Number(item.max), result: item.status === 'graded'
           ? { status: 'graded', score: item.score.trim() ? Number(item.score) : NaN }

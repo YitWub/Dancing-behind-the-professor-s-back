@@ -323,6 +323,28 @@ test('relative statistics restore atomically in v14 with original assessments, o
     assert.deepEqual(restored.entries, doc.entries);
     assert.deepEqual(restored.experiences, doc.experiences);
     assert.equal(await imageHash(value(await target.getPhotoAsset(ownerId, assetId))), image.sha256);
+
+    const rolledForward = courseEntries(doc).find(item => item.id === entry.id)!;
+    const legacy = rolledForward.subject.gradeRecord!;
+    const gradeRecordWithPreset: CourseGradeRecord = { ...legacy, relative: { ...legacy.relative, preset: 'relative2' } };
+    value(await repo.updateEntry(ownerId, entry.id, rolledForward.revision, {
+      subject: { ...rolledForward.subject, gradeRecord: gradeRecordWithPreset },
+    }));
+    const latest = await snapshot();
+    const presetBackup = value(await repo.exportRecords(ownerId));
+    assert.equal(await presetBackup.slice(0, 9).text(), 'BOKAKP15\n');
+    const mislabeled = packContainer({ format: 'bokak-dex', schemaVersion: 14, exportedAt: '2026-11-19T00:00:00.000Z',
+      containsSensitiveData: true, data: latest, assets: [] }, [], 14);
+    assert.equal((await target.previewImport(mislabeled)).ok, false);
+    const presetPreview = value(await target.previewImport(presetBackup));
+    fail = true;
+    assert.equal((await target.commitImport({ token: presetPreview.token, strategy: 'replace', confirmed: true })).ok, false);
+    assert.deepEqual(value(await target.snapshot()), restored);
+    fail = false;
+    const presetRetry = value(await target.previewImport(presetBackup));
+    value(await target.commitImport({ token: presetRetry.token, strategy: 'replace', confirmed: true }));
+    assert.deepEqual(value(await target.snapshot()).entries, latest.entries);
+    assert.equal(await imageHash(value(await target.getPhotoAsset(ownerId, assetId))), image.sha256);
   } finally {
     target.close();
     repo.close();
