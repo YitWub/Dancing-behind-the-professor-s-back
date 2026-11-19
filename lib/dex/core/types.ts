@@ -9,7 +9,7 @@ import type { CardInstance } from '../meal/card-editions.ts';
 export type Id = string;
 export type LocalDate = string;
 export type Instant = string;
-export type DexKind = 'meal' | 'people' | 'custom';
+export type DexKind = 'meal' | 'people' | 'custom' | 'course';
 export type Rating = 1 | 2 | 3 | 4 | 5;
 export type Namespace = 'personal' | 'development';
 export interface Versioned {
@@ -28,7 +28,9 @@ export interface Dex extends Versioned {
   peopleBoards?: PeopleBoardCollection;
   progress: { mode: 'count-only' } | { mode: 'bounded'; targetSetId: Id; targetSetVersion: number };
 }
+import type { CourseSubject } from '../course/course.ts';
 export type EntrySubject =
+  | CourseSubject
   | { kind: 'meal'; dishId: Id; displayNameSnapshot: string }
   | { kind: 'person'; displayName: string; age?: number; gender?: PersonGender; mbti?: PersonMbti; energyType?: PersonEnergy; admissionYear?: number; department?: string; relationship?: string; memo?: string; nickname?: string; trait?: string; tags?: string[]; avatar?: PersonAvatarId; characterIntro?: string; profileAssetId?: string }
   | { kind: 'custom'; title: string; memo?: string };
@@ -40,6 +42,7 @@ export interface CollectionEntry extends Versioned {
   collectedOn: LocalDate;
 }
 export type ExperienceData =
+  | { kind: 'course' }
   | { kind: 'meal'; rating: Rating | null; offeringId: Id; context: {
       date: LocalDate; cafeteria: Cafeteria; mealTime: MealTime;
       legacyMealItemId: string; snapshot: MealSnapshot; source: string;
@@ -112,7 +115,7 @@ export type DexErrorCode =
   | 'UNSUPPORTED_SCHEMA' | 'INVALID_BACKUP' | 'IMPORT_CONFLICT';
 export type Result<T> = { ok: true; value: T } | { ok: false; error: { code: DexErrorCode; message: string } };
 export interface BackupEnvelope {
-  format: 'bokak-dex'; schemaVersion: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10; exportedAt: Instant;
+  format: 'bokak-dex'; schemaVersion: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11; exportedAt: Instant;
   containsSensitiveData: true;
   data: DexDocument;
 }

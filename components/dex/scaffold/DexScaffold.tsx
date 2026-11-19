@@ -12,6 +12,7 @@ import { CollectionArtwork, mealArtwork } from '@/components/dex/common/Collecti
 import { CollectionCard } from '@/components/dex/common/CollectionCard';
 
 const CATEGORIES = [
+  {kind:'course', icon:'📚', name:'강의도감', description:'수강한 강의와 기억을 모아요.', href:'/dex/course'},
   {kind:'meal', icon:'🍽️', name:'학식도감', description:'직접 먹은 메뉴와 다시 찾은 경험을 기록해요.', href:'/dex/meal'},
   {kind:'people', icon:'🤝', name:'인연도감', description:'함께한 인연을 별명과 메모로 간직해요.', href:'/dex/people'},
   {kind:'custom', icon:'📖', name:'자유도감', description:'장소, 활동, 추억을 나만의 도감으로 모아요.', href:'/dex/custom'},

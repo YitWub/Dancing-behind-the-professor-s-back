@@ -6,6 +6,8 @@ import { isIsoDate } from '../../datetime.ts';
 import { ensure, DexError } from './errors.ts';
 import type { BackupEnvelope, CollectCommand, DexDocument, EntrySubject, ExperienceDraft } from './types.ts';
 
+import { TERMS, STATUSES, CATEGORIES } from '../course/course.ts';
+
 type ObjectValue = Record<string, unknown>;
 export function object(value: unknown, allowed: string[]): asserts value is ObjectValue {
   ensure(!!value && typeof value === 'object' && !Array.isArray(value) && Object.getPrototypeOf(value) === Object.prototype, '객체 형식이 올바르지 않습니다.');
@@ -51,6 +53,16 @@ export function subject(value: unknown): asserts value is EntrySubject {
     if(v.avatar!==undefined)ensure(AVATAR_IDS.includes(v.avatar as string),'아바타를 확인해 주세요.');
     if(v.characterIntro!==undefined)text(v.characterIntro,300,true);
     if(v.profileAssetId!==undefined)ensure(typeof v.profileAssetId==='string'&&/^img-[a-f0-9]{64}$/.test(v.profileAssetId),'프로필 이미지 참조를 확인해 주세요.');
+  } else if (v.kind === 'course') {
+    object(v, ['kind', 'title', 'year', 'term', 'status', 'professor', 'credits', 'category', 'code', 'memo']);
+    text(v.title, 120);
+    ensure(typeof v.year === 'number' && Number.isInteger(v.year) && v.year >= 1900 && v.year <= 2200, '수강 연도를 확인해 주세요.');
+    ensure(typeof v.term === 'string' && Object.hasOwn(TERMS, v.term), '학기를 확인해 주세요.');
+    ensure(typeof v.status === 'string' && Object.hasOwn(STATUSES, v.status), '수강 상태를 확인해 주세요.');
+    if (v.category !== undefined) ensure(typeof v.category === 'string' && Object.hasOwn(CATEGORIES, v.category), '강의 구분을 확인해 주세요.');
+    if (v.credits !== undefined) ensure(typeof v.credits === 'number' && Number.isFinite(v.credits) && v.credits >= 0 && v.credits <= 30, '학점은 0~30 사이여야 합니다.');
+    for (const key of ['professor', 'code']) if (v[key] !== undefined) text(v[key], 80);
+    if (v.memo !== undefined) text(v.memo, 500, true);
   } else { ensure(v.kind === 'custom', '지원하지 않는 항목 종류입니다.'); object(v, ['kind', 'title', 'memo']); text(v.title, 120); if (v.memo !== undefined) text(v.memo, 500, true); }
 }
 import { CARD_EDITIONS, normalizeLegacyCards } from '../meal/card-editions.ts';
@@ -85,7 +97,7 @@ function experienceData(v: ObjectValue, saved: boolean) {
     }
   } else if (v.kind === 'person') {
     object(v, [...fields, ...experienceFields, 'event']); ensure(['first-met', 'memory'].includes(v.event as string), '인연 기록 종류가 올바르지 않습니다.');
-  } else { ensure(v.kind === 'custom', '지원하지 않는 경험입니다.'); object(v, [...fields, ...experienceFields]); }
+  } else { ensure(v.kind === 'custom' || v.kind === 'course', '지원하지 않는 경험입니다.'); object(v, [...fields, ...experienceFields]); }
 }
 export function collectInput(input: unknown): CollectCommand {
   object(input, ['ownerId', 'dexId', 'requestId', 'subject', 'entryId', 'experience']);
@@ -124,7 +136,7 @@ export function validateDocument(value: unknown): asserts value is DexDocument {
   const owner = (v: {ownerId: string}) => ensure(v.ownerId === p.ownerId, '로컬 소유 범위가 다릅니다.');
   for (const dex of d.dexes) {
     object(dex, [...base,'ownerId','kind','name','icon','visibility','progress','peopleBoard','peopleBoards']); versioned(dex); owner(dex);
-    ensure(['meal','people','custom'].includes(dex.kind) && dex.visibility === 'private', '도감 종류·공개 범위를 확인해 주세요.'); text(dex.name, 80); ensure(ICONS.includes(dex.icon as typeof ICONS[number]), '허용된 아이콘을 사용해 주세요.');
+    ensure(['meal','people','custom','course'].includes(dex.kind) && dex.visibility === 'private', '도감 종류·공개 범위를 확인해 주세요.'); text(dex.name, 80); ensure(ICONS.includes(dex.icon as typeof ICONS[number]), '허용된 아이콘을 사용해 주세요.');
     object(dex.progress, dex.progress?.mode === 'bounded' ? ['mode','targetSetId','targetSetVersion'] : ['mode']);
     if (dex.progress.mode === 'bounded') { id(dex.progress.targetSetId); natural(dex.progress.targetSetVersion, true); }
     else ensure(dex.progress.mode === 'count-only', '진행 표시 정책을 확인해 주세요.');
@@ -168,7 +180,7 @@ export function parseBackup(raw: string): BackupEnvelope {
     const v: unknown = JSON.parse(raw);
     object(v, ['format','schemaVersion','exportedAt','containsSensitiveData','data']);
     ensure(v.format === 'bokak-dex', 'BOKAK 내보내기 파일이 아닙니다.');
-    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8 || v.schemaVersion === 9 || v.schemaVersion === 10, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
+    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8 || v.schemaVersion === 9 || v.schemaVersion === 10 || v.schemaVersion === 11, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
     ensure(v.containsSensitiveData === true, '백업 정보가 누락되었습니다.'); instant(v.exportedAt); validateDocument(v.data);
     if(v.schemaVersion===1||v.schemaVersion===2)ensure(v.data.dexes.every(dex=>dex.peopleBoard===undefined),'보드는 v3 백업을 사용해야 합니다.');
     if(v.schemaVersion===3)ensure(v.data.dexes.every(dex=>!dex.peopleBoard||dex.peopleBoard.version===1),'확장 보드는 v4 백업을 사용해야 합니다.');
@@ -178,6 +190,7 @@ export function parseBackup(raw: string): BackupEnvelope {
     if(v.schemaVersion<7)ensure(v.data.entries.every(e=>e.subject.kind!=='person'||!['nickname','trait','tags','avatar','profileAssetId'].some(k=>k in e.subject)),'캐릭터 인연은 v7 백업을 사용해야 합니다.');
     if(v.schemaVersion<8)ensure(v.data.dexes.every(dex=>!dex.peopleBoards?.boards.some(b=>b.layout.version===4)),'자유 연결은 v8 백업이 필요합니다.');
     if(v.schemaVersion<9)ensure(v.data.entries.every(e=>e.subject.kind!=='person'||(e.subject.characterIntro===undefined&&!isCharacterAvatar(e.subject.avatar)&&(e.subject.trait?.length??0)<=100)),'새 소개와 아바타는 v9 백업이 필요합니다.');
+    if(v.schemaVersion<11)ensure(v.data.dexes.every(dex=>dex.kind!=='course'),'강의도감은 v11 백업이 필요합니다.');
     if(v.schemaVersion<10)ensure(v.data.entries.every(e=>!hasPersonDetails(e.subject)),'추가 인연 정보는 v10 백업이 필요합니다.');
     normalizeLegacyCards(v.data);
     return v as unknown as BackupEnvelope;

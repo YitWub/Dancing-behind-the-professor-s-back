@@ -178,6 +178,8 @@ export class IndexedDbDexRepository implements DexRepository {
   createDex(ownerId: string, draft: { kind: Dex['kind']; name: string; icon: string }) {
     return resultOf(() => this.document(true, doc => {
       owner(doc, ownerId); object(draft, ['kind','name','icon']);
+      const existing = draft.kind === 'course' ? doc.dexes.find(d => d.kind === 'course') : undefined;
+      if (existing) return { value: existing, changed: false };
       const dex: Dex = { ...version(this.runtime), ...draft, ownerId, visibility: 'private', progress: { mode: 'count-only' } };
       doc.dexes.push(dex); return { value: dex, changed: true };
     }));
@@ -296,7 +298,7 @@ export class IndexedDbDexRepository implements DexRepository {
       return {value:{data,assets}};
     });
     const {data,assets}=captured;
-    if(hasCharacterData(data)||data.dexes.some(d=>d.peopleBoards||d.peopleBoard?.version===3)){for(const asset of assets)await verifyPrepared({...asset.info,blob:asset.blob});return packBackup(data,assets,this.runtime.now());}
+    if(hasCharacterData(data)||data.dexes.some(d=>d.kind==='course'||d.peopleBoards||d.peopleBoard?.version===3)){for(const asset of assets)await verifyPrepared({...asset.info,blob:asset.blob});return packBackup(data,assets,this.runtime.now());}
     const envelope:BackupEnvelope={format:'bokak-dex',schemaVersion:data.dexes.some(d=>d.peopleBoard?.version===2)?4:data.dexes.some(d=>d.peopleBoard)?3:2,exportedAt:this.runtime.now(),containsSensitiveData:true,data};
     return new Blob([JSON.stringify(envelope,null,2)],{type:'application/json'});
   });}
