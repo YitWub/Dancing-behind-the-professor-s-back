@@ -14,6 +14,7 @@ import { getBrowserRepository } from '@/lib/dex/storage/browser';
 import { kstToday, kstYear } from '@/lib/datetime';
 import { CATEGORIES, STATUSES, TERMS, courseEntries, saveCourse, similarEnrollment } from '@/lib/dex/course/course';
 import type { CourseEntry, CourseSubject } from '@/lib/dex/course/course';
+import { courseGrade } from '@/lib/dex/game/exp';
 
 export function CourseDex() {
   const { data, loading, error, reload } = useDexDocument();
@@ -66,7 +67,8 @@ export function CourseDex() {
       if (!result.ok) { setFailure(result.error.message); return; }
       await reload();
       navigate(result.value.id);
-      setNotice(editing ? '강의 정보를 저장했어요.' : '강의를 등록했어요.');
+      const grade = courseGrade(subject);
+      setNotice(`${editing ? '강의 정보를 저장했어요.' : '강의를 등록했어요.'} 현재 ${grade.label} 등급 · ${grade.exp} EXP`);
     });
   }
 

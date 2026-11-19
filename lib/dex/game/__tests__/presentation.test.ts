@@ -28,6 +28,7 @@ const targets=new Map([
   ['MealHighlightCard','components/dex/meal/MealHighlightCard.tsx'],
   ['AchievementStamp','components/dex/common/AchievementStamp.tsx'],
   ['AchievementArtwork','components/dex/common/AchievementArtwork.tsx'],
+  ['GradeBadge','components/dex/common/GradeBadge.tsx'],
 ]);
 const urls=new Map([...targets.keys()].map(name=>[name,pathToFileURL(join(temporary,name+'.mjs')).href]));
 for(const [name,path] of targets){
@@ -35,7 +36,9 @@ for(const [name,path] of targets){
   let output=ts.transpileModule(input,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText as string;
   output=output.replace(/from (["'])([^"']+)\1/g,(_match:string,_quote:string,specifier:string)=>{
     const target=[...urls].find(([component])=>specifier.replace(/\.tsx?$/,'').endsWith('/'+component)||specifier==='./'+component)?.[1];
-    return `from '${target??pathToFileURL(require.resolve(specifier)).href}'`;
+    // Non-JSX lib modules load as real .ts files so their own relative imports keep working.
+    const lib=specifier.startsWith('@/lib/')?new URL('../../../../'+specifier.slice(2)+'.ts',import.meta.url).href:null;
+    return `from '${target??lib??pathToFileURL(require.resolve(specifier)).href}'`;
   });
   writeFileSync(join(temporary,name+'.mjs'),output);
 }
@@ -44,7 +47,7 @@ const {CollectionCard}=await import(urls.get('CollectionCard')!);
 const {CollectionFeedback,DiscoveryReveal}=await import(urls.get('CollectionFeedback')!);
 const {MealHighlightCard}=await import(urls.get('MealHighlightCard')!);
 const render=(component:ComponentType<Record<string,unknown>>,props:Record<string,unknown>)=>renderToStaticMarkup(createElement(component,props));
-const success={entry:{id:'fixture-entry'},experience:{id:'fixture-experience'},outcome:'new-entry',replayed:false,committedAt:'2026-11-14T00:00:00Z',discovery:{key:'fixture-request',entryId:'fixture-entry',title:'fixture'}};
+const success={entry:{id:'fixture-entry',subject:{kind:'person',displayName:'fixture'}},experience:{id:'fixture-experience'},outcome:'new-entry',replayed:false,committedAt:'2026-11-14T00:00:00Z',discovery:{key:'fixture-request',entryId:'fixture-entry',title:'fixture'}};
 test('희귀도 다섯 상태의 실제 공통 배지·프레임은 fixture에서만 검증하고 잠긴 등급은 노출하지 않는다',()=>{
   for(const tier of ['UNKNOWN','COMMON','UNCOMMON','RARE','LEGENDARY']){
     assert.ok(render(RarityBadge,{tier}).includes('dex-rarity--'+tier.toLowerCase()));
@@ -55,8 +58,8 @@ test('희귀도 다섯 상태의 실제 공통 배지·프레임은 fixture에�
 test('신규 성공만 희귀도·업적을 한 발견 화면에 표시하며 실패·재전송은 공개하지 않는다',()=>{
   const notices=[{id:'fixture-award',kind:'achievement',title:'테스트 업적',description:'fixture only'}];
   const props={itemName:'fixture meal',onDismiss:()=>{},rarity:'LEGENDARY',notices};
-  const fresh=render(CollectionFeedback,{...props,result:{ok:true,value:success}});assert.ok(fresh.includes('NEW DISCOVERY!'));assert.ok(fresh.includes('LEGENDARY · 전설'));assert.ok(fresh.includes('테스트 업적'));
-  const replay=render(CollectionFeedback,{...props,result:{ok:true,value:{...success,replayed:true}}});assert.ok(!replay.includes('LEGENDARY'));assert.ok(!replay.includes('테스트 업적'));
+  const fresh=render(CollectionFeedback,{...props,result:{ok:true,value:success}});assert.ok(fresh.includes('NEW DISCOVERY!'));assert.ok(fresh.includes('전설'));assert.ok(fresh.includes('테스트 업적')); assert.ok(fresh.includes('EXP'));
+  const replay=render(CollectionFeedback,{...props,result:{ok:true,value:{...success,replayed:true}}});assert.ok(!replay.includes('전설')); assert.ok(!replay.includes('EXP'));assert.ok(!replay.includes('테스트 업적'));
   const failure=render(CollectionFeedback,{...props,result:{ok:false,error:{code:'STORAGE_UNAVAILABLE',message:'fixture failure'}}});assert.ok(!failure.includes('NEW DISCOVERY!'));assert.ok(!failure.includes('테스트 업적'));
 });
 test('재방문은 카드 공개를 반복하지 않고 새 업적과 실제 횟수만 표시한다',()=>{
@@ -83,11 +86,11 @@ test('미리보기 페이지는 프로덕션에서 컴포넌트를 열기 전에
   }
 });
 
-test('랜덤 카드 4종은 실제 저장 결과로 최초·재방문 모두 공개하며 재전송은 숨긴다',()=>{
+test('실제 카드 공개는 랜덤 에디션 대신 등급만 보이고 재전송은 숨긴다',()=>{
   for(const edition of ['NORMAL','SPECIAL','RARE','GOLDEN'])for(const outcome of ['new-entry','revisit']){
     const value={...success,outcome,discovery:outcome==='revisit'?null:success.discovery,experience:{id:'edition-exp',kind:'meal',card:{edition}}};
     const props={itemName:'fixture',onDismiss:()=>{},result:{ok:true,value},visitCount:3,children:createElement('p',null,'빠른 평가 유지')};
-    const html=render(CollectionFeedback,props);assert.ok(html.includes('dex-edition--'+edition.toLowerCase()));assert.ok(html.includes('새 카드 1장 획득 완료'));assert.ok(html.includes('빠른 평가 유지'));assert.ok(html.includes('<strong>3</strong>'));
+    const html=render(CollectionFeedback,props);assert.ok(!html.includes('dex-edition--'+edition.toLowerCase()));assert.ok(html.includes('새 카드 1장 획득 완료'));assert.equal(html.includes('일반 등급'),outcome==='new-entry');assert.ok(html.includes('빠른 평가 유지'));assert.ok(html.includes('<strong>3</strong>'));
     assert.equal(html.includes('처음 만난 메뉴'),outcome==='new-entry');
     assert.ok(!render(CollectionFeedback,{...props,result:{ok:true,value:{...value,replayed:true}}}).includes('dex-edition-badge'));
     const preview=render(DiscoveryReveal,{preview:true,edition,itemName:'test',title:'test',onDismiss:()=>{}});assert.ok(preview.includes('저장되지 않아요'));assert.ok(preview.includes('연출 건너뛰기'));

@@ -39,8 +39,8 @@ export function mealAchievements(document:DexDocument,rarity:MealRarityProvider=
     goal('meal:regular','단골손님','↻','같은 메뉴를 서로 다른 날 5일 경험',days,5),
     goal('meal:soul','소울푸드','♡','같은 메뉴를 서로 다른 날 10일 경험',days,10),
     goal('meal:explorer','캠퍼스 미식 탐험가','⌁','서로 다른 식당 3곳 경험',restaurants,3),
-    goal('meal:rare-three','희귀 메뉴 수집가','◇','통계로 확정된 RARE 이상 메뉴 3종',rarityReady?assessments.filter(r=>r.tier==='RARE'||r.tier==='LEGENDARY').length:null,3),
-    goal('meal:legendary','전설의 미식가','✧','통계로 확정된 LEGENDARY 메뉴 1종',rarityReady?assessments.filter(r=>r.tier==='LEGENDARY').length:null,1),
+    goal('meal:rare-three','희귀 메뉴 수집가','◇','통계로 확정된 희귀 이상 메뉴 3종',rarityReady?assessments.filter(r=>r.tier==='RARE'||r.tier==='LEGENDARY').length:null,3),
+    goal('meal:legendary','전설의 미식가','✧','통계로 확정된 전설 메뉴 1종',rarityReady?assessments.filter(r=>r.tier==='LEGENDARY').length:null,1),
   ];
 }
 /** Attribute unlocks to this committed experience, not to component mount/import or a retry. */

@@ -10,6 +10,8 @@ import { CATEGORIES, STATUSES, TERMS } from '@/lib/dex/course/course';
 import type { CourseEntry } from '@/lib/dex/course/course';
 import { DEFAULT_FILTERS, selectCourses, SORTS, TERM_ORDER } from '@/lib/dex/course/collection';
 import type { CourseFilters } from '@/lib/dex/course/collection';
+import { GradeBadge } from '@/components/dex/common/GradeBadge';
+import { courseGrade } from '@/lib/dex/game/exp';
 
 export function CourseCollection({ entries, progress, busy, onSelect }: {
   entries: readonly CourseEntry[];
@@ -65,6 +67,7 @@ export function CourseCollection({ entries, progress, busy, onSelect }: {
           <button type="button" className="flex h-full w-full flex-col gap-1 break-words rounded-lg p-4 text-left"
             disabled={busy} onClick={() => onSelect(id)}>
             <span className="max-w-full text-lg font-semibold">{subject.title}</span>
+            <span className="self-start"><GradeBadge grade={courseGrade(subject)} /></span>
             <span className="course-muted">{subject.year}년 {TERMS[subject.term]}</span>
             {subject.status !== 'completed' && <span className="dex-tag self-start">{STATUSES[subject.status]}</span>}
             <CourseCompletion status={subject.status} />

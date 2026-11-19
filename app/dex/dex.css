@@ -988,6 +988,7 @@ a.dex-highlight--first:hover{transform:rotate(0) translateY(-3px)}
 .dex-rarity--common{background:#eaf0e3;color:#426141}
 .dex-rarity--uncommon{background:#e0efe8;color:#306c56;border-color:#b2cfbd}
 .dex-rarity--rare{background:#eee5f7;color:#71528f;border-color:#cdb9df}
+.dex-rarity--epic{background:#fbe6dd;color:#94442b;border-color:#e2ae9b}
 .dex-rarity--legendary{background:#f8edc9;color:#80601e;border-color:#d7c07a}
 .dex-rarity-frame--common{border-color:#c6d4bd}
 .dex-rarity-frame--uncommon{border-color:#91b7a1}

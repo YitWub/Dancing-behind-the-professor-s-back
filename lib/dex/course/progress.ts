@@ -8,14 +8,15 @@ function emptyCounts() {
 type Counts = ReturnType<typeof emptyCounts>;
 type Semester = { year: number; term: CourseSubject['term']; counts: Counts };
 
+export function hasCourseReview({ review }: CourseSubject) {
+  return !!review && !!(review.shortReview?.trim() || review.difficulty !== undefined ||
+    review.workload !== undefined || review.teamProject !== undefined || review.tags?.length);
+}
+
 function add(counts: Counts, subject: CourseSubject) {
   counts.total++;
   counts[subject.status]++;
-  const review = subject.review;
-  if (review && (review.shortReview?.trim() || review.difficulty !== undefined ||
-    review.workload !== undefined || review.teamProject !== undefined || review.tags?.length)) {
-    counts.reviewed++;
-  }
+  if (hasCourseReview(subject)) counts.reviewed++;
 }
 
 export function completionRate({ completed, total }: Counts) {
