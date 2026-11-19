@@ -1,0 +1,85 @@
+.course-dex .course-hero,
+.course-dex .course-sheet {
+  border: 1px solid var(--e-border);
+  border-radius: 1rem;
+  background: var(--e-surface);
+}
+
+.course-dex .course-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 4vw, 1.75rem);
+  background: var(--e-surface-2);
+}
+
+.course-dex .course-overview {
+  width: 100%;
+}
+
+.course-dex .course-overview dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5.25rem, 1fr));
+  gap: .5rem;
+  margin-bottom: .75rem;
+}
+
+.course-dex .course-overview dl > div,
+.course-dex .course-goal[data-achieved="true"] {
+  padding: .65rem;
+  border: 1px solid var(--e-border);
+  border-radius: .65rem;
+  background: var(--e-surface-2);
+}
+
+.course-dex .course-overview dd {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.course-dex :is(input:not([type="checkbox"]), textarea, select, button.dex-button, button.dex-back) {
+  min-height: 44px;
+}
+
+.course-dex :is(input:not([type="checkbox"]), textarea, select) {
+  border-color: var(--e-border);
+  background: var(--e-surface);
+}
+
+.course-dex .course-card {
+  border-color: var(--e-border);
+  background: var(--e-surface);
+  box-shadow: 0 2px 0 var(--e-surface-2);
+  overflow-wrap: anywhere;
+}
+
+.course-dex .course-card button:hover,
+.course-dex .course-card button:focus-visible,
+.course-dex .course-complete {
+  background: var(--e-surface-2);
+}
+
+.course-dex .course-card-review {
+  border-left: 2px solid var(--e-border);
+  padding-left: .5rem;
+}
+
+.course-dex .course-muted {
+  color: var(--e-ink-2);
+}
+
+.course-dex .course-danger {
+  color: #8d3429;
+  background: var(--e-surface);
+  border: 1px solid currentColor;
+}
+
+.course-dex .course-notice:empty {
+  display: none;
+}
+
+.course-dex progress {
+  accent-color: var(--e-accent);
+}

@@ -1,8 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import './course.css';
 import { CourseReviewPanel, CourseCompletion } from './CourseReviewPanel';
 import type { CourseReview } from '@/lib/dex/course/review';
+import { courseProgress } from '@/lib/dex/course/progress';
+import { CourseOverview } from './CourseProgress';
 import { CourseCollection } from './CourseCollection';
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
@@ -17,11 +20,13 @@ export function CourseDex() {
   const [selectedId, select] = useState<string>();
   const [mode, setMode] = useState<'create' | 'edit' | null>(null);
   const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState('');
   const [failure, setFailure] = useState('');
   const pending = useRef(false);
   const request = useRef<{ payload: string; id: string; date: string } | null>(null);
   const editTarget = useRef<CourseEntry | undefined>(undefined);
   const entries = data ? courseEntries(data) : [];
+  const progress = courseProgress(entries);
   const selected = entries.find(entry => entry.id === selectedId);
   const detail = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -61,11 +66,13 @@ export function CourseDex() {
       if (!result.ok) { setFailure(result.error.message); return; }
       await reload();
       navigate(result.value.id);
+      setNotice(editing ? '강의 정보를 저장했어요.' : '강의를 등록했어요.');
     });
   }
 
   async function run(operation: () => Promise<void>) {
     pending.current = true;
+    setNotice('');
     setBusy(true);
     setFailure('');
     try { await operation(); }
@@ -83,6 +90,7 @@ export function CourseDex() {
       const result = await getBrowserRepository().updateEntry(data.profile.ownerId, entry.id, entry.revision, { subject });
       if (!result.ok) { setFailure(result.error.message); return; }
       await reload();
+      setNotice(review ? '평가를 저장했어요.' : '평가를 초기화했어요.');
       saved = true;
     });
     return saved;
@@ -95,20 +103,25 @@ export function CourseDex() {
       if (!result.ok) { setFailure(result.error.message); return; }
       await reload();
       navigate();
+      setNotice('수강 기록을 삭제했어요.');
     });
   }
 
-  return <section className="space-y-4">
+  return <section className="course-dex space-y-4">
     <Link className="dex-back" href="/dex">← 도감 홈</Link>
-    <h1 className="text-2xl font-semibold">강의도감</h1>
+    <header className="course-hero">
+      <div><h1 className="text-2xl font-semibold">강의도감</h1><p>수강한 강의와 나만의 평가를 학기별로 모아보세요.</p></div>
+      {data && <button className="dex-button" disabled={busy} onClick={() => navigate(undefined, 'create')}>강의 등록</button>}
+      {data && <CourseOverview progress={progress} />}
+    </header>
     {loading && <p role="status">기록을 불러오는 중…</p>}
     {(error || failure) && <p role="alert">{error || failure}</p>}
     {data && <>
-      <button className="dex-button" disabled={busy} onClick={() => navigate(undefined, 'create')}>강의 등록</button>
+      <p role="status" className="course-notice">{notice}</p>
       {mode === 'create' || (mode === 'edit' && selected) ?
         <CourseForm key={selected?.id ?? 'new'} record={mode === 'edit' ? selected?.subject : undefined} busy={busy} onSubmit={save} onCancel={() => navigate(selectedId)} />
-        : selected && <article ref={detail} tabIndex={-1} aria-label="강의 상세" className="space-y-2 rounded-lg border p-4">
-          <h2 className="text-xl font-semibold">{selected.subject.title}</h2>
+        : selected && <article ref={detail} tabIndex={-1} aria-label="강의 상세" className="course-sheet space-y-3 p-4">
+          <h2 className="break-words text-xl font-semibold">{selected.subject.title}</h2>
           <p>{selected.subject.year}년 {TERMS[selected.subject.term]} · {STATUSES[selected.subject.status]}</p>
           <CourseCompletion status={selected.subject.status} />
           <dl className="space-y-1">
@@ -120,11 +133,11 @@ export function CourseDex() {
           </dl>
           <div className="flex gap-2">
             <button className="dex-button" disabled={busy} onClick={() => navigate(selected.id, 'edit')}>수정</button>
-            <button className="dex-button" disabled={busy} onClick={() => void remove(selected)}>삭제</button>
+            <button className="dex-button course-danger" disabled={busy} onClick={() => void remove(selected)}>삭제</button>
           </div>
           <CourseReviewPanel key={selected.id} entry={selected} busy={busy} onSave={saveReview} />
         </article>}
-      <CourseCollection entries={entries} busy={busy} onSelect={id => navigate(id)} />
+      <CourseCollection progress={progress} entries={entries} busy={busy} onSelect={id => navigate(id)} />
     </>}
   </section>;
 }
@@ -137,9 +150,11 @@ function CourseForm({ record, busy, onSubmit, onCancel }: {
 }) {
   const options = (labels: Record<string, string>) => Object.entries(labels).map(([key, label]) => <option key={key} value={key}>{label}</option>);
   const input = 'block w-full rounded border bg-transparent p-2';
-  return <form onSubmit={onSubmit} className="rounded-lg border p-4">
+  return <form onSubmit={onSubmit} className="course-sheet p-4">
     <fieldset disabled={busy} className="space-y-3">
       <legend className="font-semibold">{record ? '수강 기록 수정' : '새 강의 등록'}</legend>
+      <p className="course-muted text-sm">강의명·연도·학기는 필수입니다.</p>
+      <div className="grid gap-3 sm:grid-cols-2">
       <label className="block">강의명<input className={input} name="title" required maxLength={120} defaultValue={record?.title} /></label>
       <label className="block">수강 연도<input className={input} name="year" type="number" required min={1900} max={2200} defaultValue={record?.year ?? kstYear()} /></label>
       <label className="block">수강 학기<select className={input} name="term" required defaultValue={record?.term ?? ''}><option value="" disabled>학기 선택</option>{options(TERMS)}</select></label>
@@ -148,6 +163,7 @@ function CourseForm({ record, busy, onSubmit, onCancel }: {
       <label className="block">학점<input className={input} name="credits" type="number" min={0} max={30} step="any" defaultValue={record?.credits} /></label>
       <label className="block">강의 구분<select className={input} name="category" defaultValue={record?.category ?? ''}><option value="">미선택</option>{options(CATEGORIES)}</select></label>
       <label className="block">과목 코드<input className={input} name="code" maxLength={80} defaultValue={record?.code} /></label>
+      </div>
       <label className="block">개인 메모<textarea className={input} name="memo" maxLength={500} defaultValue={record?.memo} /></label>
       <div className="flex gap-2"><button className="dex-button" type="submit">{busy ? '저장 중…' : '저장'}</button><button className="dex-button" type="button" onClick={onCancel}>취소</button></div>
     </fieldset>

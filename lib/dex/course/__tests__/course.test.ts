@@ -1,5 +1,6 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
+import { imageHash, inspectImage } from '../../people/photo.ts';
 import { IDBFactory } from 'fake-indexeddb';
 import { IndexedDbDexRepository } from '../../storage/indexeddb.ts';
 import { packContainer, unpackBackup } from '../../storage/photo-package.ts';
@@ -100,6 +101,24 @@ test('reviews are optional, isolated by entry, validated, and survive v12 export
   const target = new IndexedDbDexRepository({ factory: new IDBFactory() });
   try {
     const { ownerId } = value(await repo.open());
+    const initial = value(await repo.snapshot());
+    const blob = new Blob([Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jPz0AAAAASUVORK5CYII=', 'base64')], { type: 'image/png' });
+    const image = { blob, bytes: blob.size, ...inspectImage(new Uint8Array(await blob.arrayBuffer())), sha256: await imageHash(blob) };
+    const assetId = 'img-' + image.sha256;
+    value(await repo.collect({
+      ownerId, dexId: initial.dexes.find(dex => dex.kind === 'people')!.id, requestId: 'mixed-person',
+      subject: { kind: 'person', displayName: '친구', profileAssetId: assetId },
+      experience: { kind: 'person', event: 'first-met', experiencedOn: date },
+    }, image));
+    value(await repo.collect({
+      ownerId, dexId: initial.dexes.find(dex => dex.kind === 'meal')!.id, requestId: 'mixed-meal',
+      subject: { kind: 'meal', dishId: 'mixed-dish', displayNameSnapshot: '제육볶음' },
+      experience: { kind: 'meal', experiencedOn: date, rating: null, offeringId: 'mixed-offering',
+        context: { date, cafeteria: 'haksik', mealTime: 'lunch', legacyMealItemId: 'mixed-menu',
+          source: 'https://example.test/menu', snapshot: { name: '제육볶음', menu: ['밥'], price: null, kcal: null, imageUrl: null, imageSourceUrl: null },
+        },
+      },
+    }));
     const before = value(await repo.snapshot());
     const a = value(await saveCourse(repo, before, past, 'review-a', date));
     const b = value(await saveCourse(repo, before, current, 'review-b', date));
@@ -118,9 +137,9 @@ test('reviews are optional, isolated by entry, validated, and survive v12 export
       subject: { ...reviewed, professor: 'Kim', term: 'summer', review: { ...reviewed.review, difficulty: 3 } },
     }));
     const snapshot = value(await repo.snapshot());
-    assert.equal(snapshot.entries.length, 2);
-    assert.equal(snapshot.experiences.length, 2);
-    assert.equal(snapshot.receipts.length, 2);
+    assert.equal(snapshot.entries.length, before.entries.length + 2);
+    assert.equal(snapshot.experiences.length, before.experiences.length + 2);
+    assert.equal(snapshot.receipts.length, before.receipts.length + 2);
     assert.deepEqual(snapshot.entries.find(e => e.id === b.id)?.subject, current);
 
     const backup = value(await repo.exportRecords(ownerId));
@@ -130,7 +149,10 @@ test('reviews are optional, isolated by entry, validated, and survive v12 export
     assert.equal((await target.previewImport(packContainer(envelope, [], 11))).ok, false);
     const preview = value(await target.previewImport(backup));
     value(await target.commitImport({ token: preview.token, strategy: 'replace', confirmed: true }));
-    assert.deepEqual(value(await target.snapshot()).entries, snapshot.entries);
+    const copied = value(await target.snapshot());
+    assert.deepEqual(copied.entries, snapshot.entries);
+    assert.deepEqual(copied.experiences, snapshot.experiences);
+    assert.equal(await imageHash(value(await target.getPhotoAsset(ownerId, assetId))), image.sha256);
 
     repo.close();
     value(await reopened.open());

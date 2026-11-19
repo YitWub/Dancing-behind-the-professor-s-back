@@ -7,7 +7,7 @@ import { completedCourse, DIFFICULTIES, REVIEW_TAGS, WORKLOADS } from '@/lib/dex
 import type { CourseReview } from '@/lib/dex/course/review';
 
 export function CourseCompletion({ status }: { status: CourseEntry['subject']['status'] }) {
-  return completedCourse(status) ? <span className="dex-tag self-start">✓ 수강 완료 도장</span> : null;
+  return completedCourse(status) ? <span className="dex-tag course-complete self-start">✓ 수강 완료 도장</span> : null;
 }
 
 export function CourseReviewPanel({ entry, busy, onSave }: {
@@ -76,7 +76,7 @@ export function CourseReviewPanel({ entry, busy, onSave }: {
       </> : <p>아직 남긴 평가가 없어요.</p>}
       <div className="flex flex-wrap gap-2">
         <button type="button" className="dex-button" disabled={busy} onClick={() => setEditing(entry)}>{review ? '평가 수정' : '나의 평가 작성'}</button>
-        {review && <button type="button" className="dex-button" disabled={busy} onClick={() => {
+        {review && <button type="button" className="dex-button course-danger" disabled={busy} onClick={() => {
           if (window.confirm('이 강의의 평가를 초기화할까요?')) void onSave(entry);
         }}>평가 초기화</button>}
       </div>
