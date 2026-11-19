@@ -84,3 +84,62 @@ export function totalExp(document: DexDocument): number {
   }
   return sum;
 }
+
+export interface LevelTier {
+  readonly level: number;
+  readonly minExp: number;
+  readonly title: string;
+}
+
+/** Lv.1~Lv.30 progression table (docs/dex/GAME_SYSTEM.md "레벨 시스템"). Max level is 15,000 EXP. */
+export const LEVEL_TABLE: readonly LevelTier[] = [
+  { level: 1, minExp: 0, title: '새내기' },
+  { level: 2, minExp: 30, title: '새내기' },
+  { level: 3, minExp: 80, title: '새내기' },
+  { level: 4, minExp: 150, title: '새내기' },
+  { level: 5, minExp: 250, title: '새내기' },
+  { level: 6, minExp: 400, title: '캠퍼스 탐험가' },
+  { level: 7, minExp: 600, title: '캠퍼스 탐험가' },
+  { level: 8, minExp: 850, title: '캠퍼스 탐험가' },
+  { level: 9, minExp: 1150, title: '캠퍼스 탐험가' },
+  { level: 10, minExp: 1500, title: '캠퍼스 탐험가' },
+  { level: 11, minExp: 1900, title: '도감 수집가' },
+  { level: 12, minExp: 2350, title: '도감 수집가' },
+  { level: 13, minExp: 2800, title: '도감 수집가' },
+  { level: 14, minExp: 3300, title: '도감 수집가' },
+  { level: 15, minExp: 3800, title: '도감 수집가' },
+  { level: 16, minExp: 4350, title: '캠퍼스 베테랑' },
+  { level: 17, minExp: 4900, title: '캠퍼스 베테랑' },
+  { level: 18, minExp: 5500, title: '캠퍼스 베테랑' },
+  { level: 19, minExp: 6100, title: '캠퍼스 베테랑' },
+  { level: 20, minExp: 6750, title: '캠퍼스 베테랑' },
+  { level: 21, minExp: 7450, title: '캠퍼스 고인물' },
+  { level: 22, minExp: 8150, title: '캠퍼스 고인물' },
+  { level: 23, minExp: 8900, title: '캠퍼스 고인물' },
+  { level: 24, minExp: 9650, title: '캠퍼스 고인물' },
+  { level: 25, minExp: 10450, title: '캠퍼스 고인물' },
+  { level: 26, minExp: 11300, title: '살아있는 화석' },
+  { level: 27, minExp: 12150, title: '살아있는 화석' },
+  { level: 28, minExp: 13050, title: '살아있는 화석' },
+  { level: 29, minExp: 14000, title: '살아있는 화석' },
+  { level: 30, minExp: 15000, title: '캠퍼스 전설' },
+];
+
+export const MAX_LEVEL = LEVEL_TABLE[LEVEL_TABLE.length - 1].level;
+
+/** Purely derived from total EXP. At max level the next-level fields are 0 and EXP beyond 15,000 is kept. */
+export function levelFromExp(rawExp: number) {
+  const exp = Number.isFinite(rawExp) && rawExp > 0 ? Math.floor(rawExp) : 0;
+  const index = LEVEL_TABLE.findLastIndex(tier => exp >= tier.minExp);
+  const { level, title, minExp } = LEVEL_TABLE[index], next = LEVEL_TABLE[index + 1];
+  return {
+    level, title, exp, expIntoLevel: exp - minExp,
+    expForNextLevel: next ? next.minExp - minExp : 0,
+    expToNextLevel: next ? next.minExp - exp : 0,
+    isMaxLevel: !next,
+  };
+}
+
+export function documentLevel(document: DexDocument) {
+  return levelFromExp(totalExp(document));
+}

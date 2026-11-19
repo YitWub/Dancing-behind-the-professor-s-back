@@ -10,7 +10,7 @@ import { MEAL_ACHIEVEMENT_ART } from '@/lib/dex/meal/achievement-art';
 import { BackupControls } from './BackupControls';
 import { CollectionArtwork, mealArtwork } from '@/components/dex/common/CollectionArtwork';
 import { CollectionCard } from '@/components/dex/common/CollectionCard';
-import { totalExp } from '@/lib/dex/game/exp';
+import { documentLevel, MAX_LEVEL } from '@/lib/dex/game/exp';
 
 const CATEGORIES = [
   {kind:'course', icon:'📚', name:'강의도감', description:'수강한 강의와 기억을 모아요.', href:'/dex/course'},
@@ -25,12 +25,13 @@ export function DexHomeScaffold() {
   const {data,loading,error,reload}=useDexDocument();
   const [now]=useState(()=>Date.now());
   const earned=data?mealAchievements(data).filter(goal=>goal.status==='achieved'):[];
+  const level=data?documentLevel(data):null;
   const recent=[...(data?.entries??[])].sort((a,b)=>b.firstCollectedAt.localeCompare(a.firstCollectedAt)).slice(0,3);
   return <div className="space-y-8">
     <section className="dex-home-hero"><div><span className="dex-eyebrow">A LITTLE DISCOVERY, EVERY DAY</span><h2>평범한 대학생활이<br/>나만의 <em>컬렉션</em>으로.</h2><p>맛있었던 한 끼, 함께한 인연, 소중한 순간.<br/>대학생활의 모든 발견을 수집하다.</p><Link className="dex-button" href="/dex/meal">나의 도감 펼쳐보기 ↗</Link></div><div className="dex-hero-stickers"><div><CollectionArtwork kind="rice"/></div><div><CollectionArtwork kind="custom"/></div><span>small moments,<br/>my own collection.</span></div></section>
     {loading?<p role="status">이 브라우저의 기록을 불러오는 중…</p>:null}
     {error?<p role="alert">{error} <button onClick={()=>void reload()} className="underline">다시 읽기</button></p>:null}
-    {data?<Card className="flex items-center justify-between gap-3 p-5"><div><span className="dex-eyebrow">MY EXP</span><h2 className="text-xl font-semibold">내 경험치</h2><p className="dex-small dex-muted">학식·인연·강의도감 항목을 처음 획득하면 등급(일반·고급·희귀·영웅·전설)만큼 쌓여요.</p></div><strong data-testid="total-exp" className="text-2xl">{totalExp(data).toLocaleString('ko-KR')} EXP</strong></Card>:null}
+    {level?<Card className="space-y-3 p-5"><div className="flex flex-wrap items-center justify-between gap-3"><div><span className="dex-eyebrow">MY LEVEL · EXP</span><h2 data-testid="user-level" className="text-xl font-semibold">Lv.{level.level} {level.title}{level.isMaxLevel?' · MAX':''}</h2><p className="dex-small dex-muted">학식·인연·강의도감의 현재 기록 등급에 따라 경험치와 레벨이 계산돼요.</p></div><strong data-testid="total-exp" className="text-2xl">{level.exp.toLocaleString('ko-KR')} EXP</strong></div><div className="dex-achievement-progress"><progress value={level.isMaxLevel?1:level.expIntoLevel} max={level.isMaxLevel?1:level.expForNextLevel} aria-label={`레벨 ${level.level} 진행률`}/><span>{level.isMaxLevel?`최고 레벨(Lv.${MAX_LEVEL}) 달성`:`다음 Lv.${level.level+1}까지 ${level.expToNextLevel.toLocaleString('ko-KR')} EXP`}</span></div></Card>:null}
     <div className="grid gap-4 sm:grid-cols-3">
       {CATEGORIES.map(category=>{
         const ids=new Set(data?.dexes.filter(d=>d.kind===category.kind).map(d=>d.id));

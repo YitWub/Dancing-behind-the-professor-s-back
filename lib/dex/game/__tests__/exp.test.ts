@@ -1,6 +1,6 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
-import { courseGrade, mealGrade, personGrade, totalExp } from '../exp.ts';
+import { courseGrade, documentLevel, LEVEL_TABLE, levelFromExp, MAX_LEVEL, mealGrade, personGrade, totalExp } from '../exp.ts';
 import type { DexDocument } from '../../core/types.ts';
 import type { PersonEntry } from '../../people/view.ts';
 import type { CourseSubject } from '../../course/course.ts';
@@ -81,4 +81,77 @@ test('total EXP is derived from owned menus, people and courses', () => {
   // one dish across two entries counts once; two 5-star days make it 희귀
   assert.equal(totalExp(doc), 50 + 50 + 10);
   assert.equal(totalExp({ ...doc, experiences: [] }), 10 + 20 + 10, 'deleting records lowers EXP');
+});
+
+test('level table is contiguous, strictly increasing, and ends at Lv.30 (15,000 EXP)', () => {
+  assert.equal(LEVEL_TABLE.length, 30);
+  assert.equal(MAX_LEVEL, 30);
+  assert.equal(LEVEL_TABLE[LEVEL_TABLE.length - 1].minExp, 15000);
+  assert.equal(LEVEL_TABLE[0].level, 1);
+  assert.equal(LEVEL_TABLE[0].minExp, 0);
+  let prevDelta = 0;
+  for (let i = 1; i < LEVEL_TABLE.length; i++) {
+    assert.equal(LEVEL_TABLE[i].level, i + 1);
+    const delta = LEVEL_TABLE[i].minExp - LEVEL_TABLE[i - 1].minExp;
+    assert.ok(delta > 0, `level ${i + 1} minExp must increase`);
+    assert.ok(delta >= prevDelta, `level ${i + 1} delta (${delta}) must be >= previous delta (${prevDelta})`);
+    prevDelta = delta;
+  }
+});
+
+test('levelFromExp handles boundaries, invalid inputs, and max-level overflow', () => {
+  assert.deepEqual(levelFromExp(0), {
+    level: 1, title: '새내기', exp: 0,
+    expIntoLevel: 0, expForNextLevel: 30, expToNextLevel: 30, isMaxLevel: false,
+  });
+  assert.equal(levelFromExp(-50).level, 1);
+  assert.equal(levelFromExp(Number.NaN).level, 1);
+
+  const justBeforeLv2 = levelFromExp(29);
+  assert.equal(justBeforeLv2.level, 1);
+  assert.equal(justBeforeLv2.expToNextLevel, 1);
+
+  const exactLv2 = levelFromExp(30);
+  assert.equal(exactLv2.level, 2);
+  assert.equal(exactLv2.expIntoLevel, 0);
+  assert.equal(exactLv2.expForNextLevel, 50);
+
+  const lv10 = levelFromExp(1500);
+  assert.equal(lv10.level, 10);
+  assert.equal(lv10.title, '캠퍼스 탐험가');
+
+  const justBeforeMax = levelFromExp(14999);
+  assert.equal(justBeforeMax.level, 29);
+  assert.equal(justBeforeMax.title, '살아있는 화석');
+  assert.equal(justBeforeMax.expToNextLevel, 1);
+  assert.equal(justBeforeMax.isMaxLevel, false);
+
+  const maxExact = levelFromExp(15000);
+  assert.deepEqual(maxExact, {
+    level: 30, title: '캠퍼스 전설', exp: 15000,
+    expIntoLevel: 0, expForNextLevel: 0, expToNextLevel: 0, isMaxLevel: true,
+  });
+
+  const overflow = levelFromExp(18250);
+  assert.equal(overflow.level, 30);
+  assert.equal(overflow.exp, 18250);
+  assert.equal(overflow.expIntoLevel, 3250);
+  assert.equal(overflow.isMaxLevel, true);
+});
+
+test('documentLevel derives level from owned records and updates when records are deleted', () => {
+  const mealExp = (id: string, entryId: string, day: number) => ({ id, entryId, ownerId: 'me', dexId: 'meals', kind: 'meal', rating: 5, experiencedOn: `2026-10-0${day}`, createdAt: '', note: '', context: { cafeteria: 'haksik' } });
+  const doc = {
+    profile: { ownerId: 'me' }, dexes: [{ id: 'meals', kind: 'meal', ownerId: 'me' }],
+    experiences: [firstMet(NOTE), mealExp('x1', 'm', 1), mealExp('x2', 'm', 2)],
+    entries: [
+      { id: 'm', ownerId: 'me', dexId: 'meals', firstCollectedAt: '1', subject: { kind: 'meal', dishId: 'rice' } },
+      person(details),
+    ],
+  } as unknown as DexDocument;
+  // 50 (meal 희귀) + 50 (person 희귀) = 100 EXP -> Lv.3 (80..149)
+  assert.equal(documentLevel(doc).level, 3);
+  assert.equal(documentLevel(doc).expToNextLevel, 50);
+  // Deleting experiences drops EXP to 10 + 20 = 30 -> Lv.2
+  assert.equal(documentLevel({ ...doc, experiences: [] }).level, 2);
 });
