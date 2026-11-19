@@ -1,5 +1,6 @@
 'use client';
 
+import { CourseGradeSimulation } from './CourseGradeSimulation';
 import { CourseGradeBalance } from './CourseGradeBalance';
 import { useState } from 'react';
 import { validateCourseGrade } from '@/lib/dex/core/validation';
@@ -62,6 +63,7 @@ export function CourseGradePanel({ entry, busy, onSave }: {
   return <section className="space-y-2 border-t pt-3">
     <h3 className="font-semibold">성적 관리</h3>
     {!draft && <CourseGradeBalance record={record} />}
+    <div hidden={!!draft}>{record && <CourseGradeSimulation key={JSON.stringify(record)} record={record} />}</div>
     {(draft || record) && <p>반영비율 합계 {Number.isFinite(total) ? total + '%' : '확인 필요'} · {total === 100 ? '설정 완료' : total > 100 ? '100% 초과 · 저장할 수 없어요' : '설정 미완성'}</p>}
     {draft ? <form onSubmit={event => { event.preventDefault(); if (!busy) void save(draft); }}>
       <fieldset disabled={busy} className="space-y-3">

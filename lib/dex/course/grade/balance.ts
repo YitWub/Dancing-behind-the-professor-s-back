@@ -14,8 +14,9 @@ export interface AssessmentBalance {
 
 export type CourseGradeBalance =
   | { status: 'not-started' | 'empty' | 'invalid'; hp: null }
-  | {
-    status: 'partial' | 'complete';
+  | (BalanceTotals & ({ status: 'partial'; hp: null } | { status: 'complete'; hp: number }));
+
+interface BalanceTotals {
     registeredWeight: number;
     unallocatedWeight: number;
     secured: number;
@@ -23,9 +24,12 @@ export type CourseGradeBalance =
     plannedWeight: number;
     pendingWeight: number;
     unconfirmed: number;
-    hp: number | null;
     items: AssessmentBalance[];
-  };
+}
+
+export function convertedAssessmentScore(weight: number, score: number, maxScore: number) {
+  return weight * (score / maxScore);
+}
 
 export function calculateCourseBalance(record?: CourseGradeRecord): CourseGradeBalance {
   if (record === undefined) return { status: 'not-started', hp: null };
@@ -46,7 +50,7 @@ export function calculateCourseBalance(record?: CourseGradeRecord): CourseGradeB
     const score = confirmedScore(item.result);
     const { status } = item.result;
     const weight = item.weightPercent;
-    const gain = score === undefined ? null : weight * (score / item.maxScore);
+    const gain = score === undefined ? null : convertedAssessmentScore(weight, score, item.maxScore);
     const loss = gain === null ? 0 : weight - gain;
     secured += gain ?? 0;
     lost += loss;
@@ -55,13 +59,13 @@ export function calculateCourseBalance(record?: CourseGradeRecord): CourseGradeB
     return { id: item.id, name: item.name, status, weight, secured: gain, lost: loss, unconfirmed: gain === null ? weight : 0 };
   });
   const unconfirmed = (plannedPoints + pendingPoints) / 100;
-  const complete = unallocatedWeight === 0;
-  return {
-    status: complete ? 'complete' : 'partial',
+  const totals: BalanceTotals = {
     registeredWeight, unallocatedWeight, secured, lost,
     plannedWeight: plannedPoints / 100, pendingWeight: pendingPoints / 100, unconfirmed,
-    // Equivalent to 100 minus lost points for a complete scheme.
-    hp: complete ? Math.min(100, secured + unconfirmed) : null,
     items,
   };
+  // Equivalent to 100 minus lost points for a complete scheme.
+  return unallocatedWeight === 0
+    ? { ...totals, status: 'complete', hp: Math.min(100, secured + unconfirmed) }
+    : { ...totals, status: 'partial', hp: null };
 }
