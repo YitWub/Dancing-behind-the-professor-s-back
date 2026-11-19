@@ -158,6 +158,8 @@ export function CourseGradeSimulation({ record, onEdit, busy, sameCohort }: { re
             }} />
         </label>)}
       </div>
+      {scenarioEstimate?.status === 'held' && scenarioEstimate.reason === 'invalid-assumption' &&
+        <p role="status">가정한 통계를 확인할 때까지 상대평가 전망을 보류해요. 환산점수 범위는 계속 볼 수 있어요.</p>}
       {scenarioEstimate?.status === 'modeled' && <div className="space-y-1">
         <p>가상 점수 반영 · {estimateTitle(scenarioEstimate)}{scenarioEstimate.scope === 'included-only' && ' · 일부 평가 기준'}</p>
         {condition && !canSetCutoff && <p>{condition}의 필요 점수는 보류해요. 가상 점수를 바꿔 계열 상한과의 관계를 비교할 수 있어요.</p>}

@@ -1,6 +1,7 @@
 import { calculateCourseBalance } from './balance.ts';
 import { statisticsConcern, effectiveRelativePolicy } from './relative.ts';
 import type { GradeScenario } from './simulation.ts';
+import { analyzeRelativeScenario } from './outlook.ts';
 import type { RelativeAssumptions } from './outlook.ts';
 import { confirmedScore } from '../grade-record.ts';
 import type { CourseGradeRecord } from '../grade-record.ts';
@@ -54,7 +55,7 @@ function shuffled(ranks: number[], seed: number) {
 type Scope = 'all-weighted' | 'included-only';
 type Band = 'a-cap' | 'ab-cap' | 'outside-ab';
 export type RelativeEstimate =
-  | { status: 'held'; reason: 'method' | 'records' | 'statistics' }
+  | { status: 'held'; reason: 'method' | 'records' | 'statistics' | 'invalid-assumption' }
   | {
     status: 'modeled'; scope: Scope; band: Band | 'sensitive' | null;
     weight: number; secured: number; lost: number; unknownPeerWeight: number;
@@ -66,6 +67,10 @@ export function estimateRelativeGrade(record: CourseGradeRecord, scores: GradeSc
   if (record.method !== 'relative') return { status: 'held', reason: 'method' };
   const balance = calculateCourseBalance(record);
   if (!('items' in balance)) return { status: 'held', reason: 'records' };
+  if (analyzeRelativeScenario(record, scores, assumptions).some(row =>
+    row.status === 'invalid' || row.status === 'check-statistics')) {
+    return { status: 'held', reason: 'invalid-assumption' };
+  }
   const ranked = Array.from({ length: samples }, (_, i) => (i + 0.5) / samples);
   const rows = record.assessments.flatMap((item, index) => {
     if (!item.weightPercent) return [];

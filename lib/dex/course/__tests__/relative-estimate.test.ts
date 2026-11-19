@@ -50,6 +50,10 @@ test('weighted scores include losses once and assumptions cannot replace officia
   assert.ok(Math.abs(baseline.secured - 40.7) < 1e-10);
   assert.ok(Math.abs(baseline.lost - 29.3) < 1e-10);
   assert.notEqual(baseline.scenarios[0].above, baseline.scenarios[1].above);
+  for (const invalid of [{ mean: 101 }, { mean: 100, standardDeviation: 12 }]) {
+    assert.deepEqual(estimateRelativeGrade(record, { final: 80 }, { final: invalid }),
+      { status: 'held', reason: 'invalid-assumption' });
+  }
   const missing = estimateRelativeGrade(record, { final: 80 });
   assert.ok(missing.status === 'modeled' && missing.unknownPeerWeight === 40);
   const low = estimateRelativeGrade(record, { final: 10, mid: 0 }, { final: { mean: 65 } });
