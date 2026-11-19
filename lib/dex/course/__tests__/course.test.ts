@@ -1,5 +1,7 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
+import { assessmentWeight, confirmedScore } from '../grade-record.ts';
+import type { CourseGradeRecord } from '../grade-record.ts';
 import { imageHash, inspectImage } from '../../people/photo.ts';
 import { IDBFactory } from 'fake-indexeddb';
 import { IndexedDbDexRepository } from '../../storage/indexeddb.ts';
@@ -93,6 +95,28 @@ test('CRUD survives reopening, retries are idempotent, and v11 restores without 
   }
 });
 
+async function seedOtherDexes(repo: IndexedDbDexRepository, ownerId: string) {
+  const initial = value(await repo.snapshot());
+  const blob = new Blob([Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jPz0AAAAASUVORK5CYII=', 'base64')], { type: 'image/png' });
+  const image = { blob, bytes: blob.size, ...inspectImage(new Uint8Array(await blob.arrayBuffer())), sha256: await imageHash(blob) };
+  const assetId = 'img-' + image.sha256;
+  value(await repo.collect({
+    ownerId, dexId: initial.dexes.find(dex => dex.kind === 'people')!.id, requestId: 'mixed-person',
+    subject: { kind: 'person', displayName: '친구', profileAssetId: assetId },
+    experience: { kind: 'person', event: 'first-met', experiencedOn: date },
+  }, image));
+  value(await repo.collect({
+    ownerId, dexId: initial.dexes.find(dex => dex.kind === 'meal')!.id, requestId: 'mixed-meal',
+    subject: { kind: 'meal', dishId: 'mixed-dish', displayNameSnapshot: '제육볶음' },
+    experience: { kind: 'meal', experiencedOn: date, rating: null, offeringId: 'mixed-offering',
+      context: { date, cafeteria: 'haksik', mealTime: 'lunch', legacyMealItemId: 'mixed-menu',
+        source: 'https://example.test/menu', snapshot: { name: '제육볶음', menu: ['밥'], price: null, kcal: null, imageUrl: null, imageSourceUrl: null },
+      },
+    },
+  }));
+  return { assetId, image };
+}
+
 test('reviews are optional, isolated by entry, validated, and survive v12 export and reopening', async () => {
   const factory = new IDBFactory();
   let fail = false;
@@ -101,24 +125,7 @@ test('reviews are optional, isolated by entry, validated, and survive v12 export
   const target = new IndexedDbDexRepository({ factory: new IDBFactory() });
   try {
     const { ownerId } = value(await repo.open());
-    const initial = value(await repo.snapshot());
-    const blob = new Blob([Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jPz0AAAAASUVORK5CYII=', 'base64')], { type: 'image/png' });
-    const image = { blob, bytes: blob.size, ...inspectImage(new Uint8Array(await blob.arrayBuffer())), sha256: await imageHash(blob) };
-    const assetId = 'img-' + image.sha256;
-    value(await repo.collect({
-      ownerId, dexId: initial.dexes.find(dex => dex.kind === 'people')!.id, requestId: 'mixed-person',
-      subject: { kind: 'person', displayName: '친구', profileAssetId: assetId },
-      experience: { kind: 'person', event: 'first-met', experiencedOn: date },
-    }, image));
-    value(await repo.collect({
-      ownerId, dexId: initial.dexes.find(dex => dex.kind === 'meal')!.id, requestId: 'mixed-meal',
-      subject: { kind: 'meal', dishId: 'mixed-dish', displayNameSnapshot: '제육볶음' },
-      experience: { kind: 'meal', experiencedOn: date, rating: null, offeringId: 'mixed-offering',
-        context: { date, cafeteria: 'haksik', mealTime: 'lunch', legacyMealItemId: 'mixed-menu',
-          source: 'https://example.test/menu', snapshot: { name: '제육볶음', menu: ['밥'], price: null, kcal: null, imageUrl: null, imageSourceUrl: null },
-        },
-      },
-    }));
+    const { assetId, image } = await seedOtherDexes(repo, ownerId);
     const before = value(await repo.snapshot());
     const a = value(await saveCourse(repo, before, past, 'review-a', date));
     const b = value(await saveCourse(repo, before, current, 'review-b', date));
@@ -162,6 +169,99 @@ test('reviews are optional, isolated by entry, validated, and survive v12 export
     value(await reopened.updateEntry(ownerId, updated.id, updated.revision, { subject: cleared }));
     assert.equal(courseEntries(value(await reopened.snapshot())).find(e => e.id === a.id)?.subject.review, undefined);
     assert.equal(await value(await reopened.exportRecords(ownerId)).slice(0, 9).text(), 'BOKAKP11\n');
+  } finally {
+    target.close();
+    reopened.close();
+    repo.close();
+  }
+});
+
+const gradeRecord: CourseGradeRecord = {
+  method: 'relative',
+  assessments: [
+    { id: 'midterm', name: '시험', weightPercent: 30.25, maxScore: 50.5, result: { status: 'graded', score: 0 } },
+    { id: 'final', name: '시험', weightPercent: 39.75, maxScore: 100, result: { status: 'pending' } },
+    { id: 'quiz', name: '퀴즈', weightPercent: 10, maxScore: 20, result: { status: 'missed' } },
+    { id: 'project', name: '프로젝트', weightPercent: 10, maxScore: 20, result: { status: 'planned' } },
+  ],
+};
+
+test('validates partial weights, actual scores, explicit zero, and assessment identity', () => {
+  validateSubject({ ...past, gradeRecord });
+  assert.equal(assessmentWeight(gradeRecord.assessments), 90);
+  assert.deepEqual(gradeRecord.assessments.map(item => confirmedScore(item.result)), [0, undefined, 0, undefined]);
+  const [first, ...rest] = gradeRecord.assessments;
+  for (const patch of [
+    { weightPercent: 41 }, { weightPercent: -1 }, { weightPercent: 1.001 }, { weightPercent: NaN },
+    { maxScore: 0 }, { maxScore: Infinity }, { result: { status: 'graded', score: 51 } },
+    { result: { status: 'graded' } }, { result: { status: 'pending', score: 0 } }, { id: 'quiz' },
+  ]) {
+    assert.throws(() => validateSubject({ ...past, gradeRecord: { ...gradeRecord, assessments: [{ ...first, ...patch }, ...rest] } }));
+  }
+  const complete = [{ ...first, weightPercent: 40.25 }, ...rest];
+  validateSubject({ ...past, gradeRecord: { ...gradeRecord, assessments: complete } });
+  assert.equal(assessmentWeight(complete), 100);
+});
+
+test('grade edits preserve review and memo, reject stale revisions, and round-trip through v13', async () => {
+  const factory = new IDBFactory();
+  let fail = false;
+  const repo = new IndexedDbDexRepository({ factory, beforeCommit: () => { if (fail) throw Error('Test abort'); } });
+  const reopened = new IndexedDbDexRepository({ factory });
+  const target = new IndexedDbDexRepository({ factory: new IDBFactory() });
+  try {
+    const { ownerId } = value(await repo.open());
+    const { assetId, image } = await seedOtherDexes(repo, ownerId);
+    const base = value(await repo.snapshot());
+    const subject: CourseSubject = { ...past, memo: '개인 메모', review: { difficulty: 2 } };
+    const a = value(await saveCourse(repo, base, subject, 'grade-a', date));
+    const b = value(await saveCourse(repo, base, current, 'grade-b', date));
+    const recorded = value(await repo.updateEntry(ownerId, a.id, a.revision, { subject: { ...subject, gradeRecord } }));
+    assert.equal((await repo.updateEntry(ownerId, a.id, a.revision, { subject })).ok, false);
+    fail = true;
+    assert.equal((await repo.updateEntry(ownerId, a.id, recorded.revision, { subject })).ok, false);
+    fail = false;
+    const { review, ...info } = subject;
+    const changed = value(await saveCourse(repo, base, { ...info, title: '개명', professor: '교수', term: 'winter', status: 'active' }, 'edit', date, recorded as ReturnType<typeof courseEntries>[number]));
+    assert.deepEqual((changed.subject as CourseSubject).review, review);
+    assert.deepEqual((changed.subject as CourseSubject).gradeRecord, gradeRecord);
+    const editedGrade = { ...gradeRecord, assessments: [
+      { ...gradeRecord.assessments[0], result: { status: 'graded' as const, score: 42.25 } },
+      ...gradeRecord.assessments.slice(1, 3),
+      { id: 'new', name: '발표', weightPercent: 5, maxScore: 10, result: { status: 'planned' as const } },
+    ] };
+    const reviewed = value(await repo.updateEntry(ownerId, a.id, changed.revision, { subject: { ...changed.subject as CourseSubject, review: { difficulty: 3 } } }));
+    value(await repo.updateEntry(ownerId, a.id, reviewed.revision, { subject: { ...reviewed.subject as CourseSubject, gradeRecord: editedGrade } }));
+    const data = value(await repo.snapshot());
+    assert.equal(data.experiences.length, base.experiences.length + 2);
+    assert.equal(data.receipts.length, base.receipts.length + 2);
+    assert.deepEqual(data.entries.find(entry => entry.id === b.id), b);
+    const backup = value(await repo.exportRecords(ownerId));
+    assert.equal(await backup.slice(0, 9).text(), 'BOKAKP13\n');
+    value(await target.open());
+    const envelope = { format: 'bokak-dex', schemaVersion: 13, exportedAt: '2026-11-19T00:00:00.000Z', containsSensitiveData: true, data, assets: [] };
+    const invalid = structuredClone(envelope);
+    (invalid.data.entries.find(entry => entry.id === a.id)!.subject as CourseSubject).gradeRecord!.assessments[0].maxScore = 0;
+    assert.equal((await target.previewImport(packContainer(invalid, [], 13))).ok, false);
+    assert.equal((await target.previewImport(packContainer({ ...envelope, schemaVersion: 12 }, [], 12))).ok, false);
+    const preview = value(await target.previewImport(backup));
+    value(await target.commitImport({ token: preview.token, strategy: 'replace', confirmed: true }));
+    const restoredData = value(await target.snapshot());
+    assert.deepEqual(restoredData.entries, data.entries);
+    assert.deepEqual(restoredData.experiences, data.experiences);
+    assert.equal(await imageHash(value(await target.getPhotoAsset(ownerId, assetId))), image.sha256);
+    repo.close();
+    value(await reopened.open());
+    const restored = courseEntries(value(await reopened.snapshot())).find(entry => entry.id === a.id)!;
+    assert.deepEqual(restored.subject.gradeRecord, editedGrade);
+    assert.deepEqual(restored.subject.review, { difficulty: 3 });
+    assert.equal(restored.subject.memo, '개인 메모');
+    const cleared = { ...restored.subject };
+    delete cleared.gradeRecord;
+    const saved = value(await reopened.updateEntry(ownerId, restored.id, restored.revision, { subject: cleared }));
+    assert.equal(courseEntries(value(await reopened.snapshot())).length, 2);
+    value(await reopened.deleteEntry(ownerId, saved.id, saved.revision));
+    assert.deepEqual(courseEntries(value(await reopened.snapshot())).map(entry => entry.id), [b.id]);
   } finally {
     target.close();
     reopened.close();

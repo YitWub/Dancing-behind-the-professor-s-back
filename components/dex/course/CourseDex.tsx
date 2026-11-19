@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import './course.css';
+import { CourseGradePanel } from './CourseGradePanel';
+import type { CourseGradeRecord } from '@/lib/dex/course/grade-record';
 import { CourseReviewPanel, CourseCompletion } from './CourseReviewPanel';
 import type { CourseReview } from '@/lib/dex/course/review';
 import { courseProgress } from '@/lib/dex/course/progress';
@@ -55,7 +57,6 @@ export function CourseDex() {
     };
     const editing = mode === 'edit' ? editTarget.current : undefined;
     if (mode === 'edit' && !editing) return;
-    if (editing?.subject.review) subject.review = editing.subject.review;
     if (entries.some(e => e.id !== editing?.id && similarEnrollment(e.subject, subject)) &&
         !window.confirm('같은 학기에 이름·교수·코드가 같은 기록이 있어요. 별개의 수강 기록으로 저장할까요?')) return;
     const payload = JSON.stringify(subject);
@@ -91,6 +92,22 @@ export function CourseDex() {
       if (!result.ok) { setFailure(result.error.message); return; }
       await reload();
       setNotice(review ? '평가를 저장했어요.' : '평가를 초기화했어요.');
+      saved = true;
+    });
+    return saved;
+  }
+
+  async function saveGrade(entry: CourseEntry, gradeRecord?: CourseGradeRecord) {
+    if (!data || pending.current) return false;
+    let saved = false;
+    await run(async () => {
+      const subject = { ...entry.subject };
+      if (gradeRecord) subject.gradeRecord = gradeRecord;
+      else delete subject.gradeRecord;
+      const result = await getBrowserRepository().updateEntry(data.profile.ownerId, entry.id, entry.revision, { subject });
+      if (!result.ok) { setFailure(result.error.message); return; }
+      await reload();
+      setNotice(gradeRecord ? '성적 정보를 저장했어요.' : '성적 정보를 초기화했어요.');
       saved = true;
     });
     return saved;
@@ -135,6 +152,7 @@ export function CourseDex() {
             <button className="dex-button" disabled={busy} onClick={() => navigate(selected.id, 'edit')}>수정</button>
             <button className="dex-button course-danger" disabled={busy} onClick={() => void remove(selected)}>삭제</button>
           </div>
+          <CourseGradePanel key={"grade:" + selected.id} entry={selected} busy={busy} onSave={saveGrade} />
           <CourseReviewPanel key={selected.id} entry={selected} busy={busy} onSave={saveReview} />
         </article>}
       <CourseCollection progress={progress} entries={entries} busy={busy} onSelect={id => navigate(id)} />
