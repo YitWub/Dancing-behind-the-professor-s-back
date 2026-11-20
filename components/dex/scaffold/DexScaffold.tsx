@@ -15,9 +15,10 @@ const CATEGORIES = [
   {kind:'course', icon:'📚', name:'강의도감', description:'수강한 강의와 기억을 모아요.', href:'/dex/course'},
   {kind:'meal', icon:'🍽️', name:'학식도감', description:'직접 먹은 메뉴와 다시 찾은 경험을 기록해요.', href:'/dex/meal'},
   {kind:'people', icon:'🤝', name:'인연도감', description:'함께한 인연을 별명과 메모로 간직해요.', href:'/dex/people'},
+  {kind:'professor', icon:'🎓', name:'교수도감', description:'수업에서 만난 교수님과 배운 과목을 모아요.', href:'/dex/professor'},
   {kind:'custom', icon:'📖', name:'자유도감', description:'장소, 활동, 추억을 나만의 도감으로 모아요.', href:'/dex/custom'},
 ] as const;
-function label(subject: EntrySubject) { return subject.kind==='meal'?subject.displayNameSnapshot:subject.kind==='person'?subject.displayName:subject.title; }
+function label(subject: EntrySubject) { return subject.kind==='meal'?subject.displayNameSnapshot:subject.kind==='person'||subject.kind==='professor'?subject.displayName:subject.title; }
 
 /** A 인수 골격: B/C는 도메인 화면, D는 카드·연출 컴포넌트를 후속 교체한다. */
 export function DexHomeScaffold() {
@@ -29,12 +30,12 @@ export function DexHomeScaffold() {
     <section className="dex-home-hero"><div><span className="dex-eyebrow">A LITTLE DISCOVERY, EVERY DAY</span><h2>평범한 대학생활이<br/>나만의 <em>컬렉션</em>으로.</h2><p>맛있었던 한 끼, 함께한 인연, 소중한 순간.<br/>대학생활의 모든 발견을 수집하다.</p><Link className="dex-button" href="/dex/meal">나의 도감 펼쳐보기 ↗</Link></div><div className="dex-hero-stickers"><div><CollectionArtwork kind="rice"/></div><div><CollectionArtwork kind="custom"/></div><span>small moments,<br/>my own collection.</span></div></section>
     {loading?<p role="status">이 브라우저의 기록을 불러오는 중…</p>:null}
     {error?<p role="alert">{error} <button onClick={()=>void reload()} className="underline">다시 읽기</button></p>:null}
-    <div className="grid gap-4 sm:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {CATEGORIES.map(category=>{
         const ids=new Set(data?.dexes.filter(d=>d.kind===category.kind).map(d=>d.id));
         const count=data?.entries.filter(e=>ids.has(e.dexId)).length??0;
         return <Card key={category.kind} className="flex flex-col gap-3 p-5">
-          <CollectionArtwork kind={category.kind==='meal'?'food':category.kind==='people'?'people':'custom'}/><h2 className="text-xl font-semibold">{category.name}</h2>
+          <CollectionArtwork kind={category.kind==='meal'?'food':category.kind==='people'?'people':category.kind==='professor'?'professor':'custom'}/><h2 className="text-xl font-semibold">{category.name}</h2>
           <p className="flex-1 text-sm text-[var(--e-ink-2)]">{category.description}</p>
           <p data-testid={`count-${category.kind}`}>{data?`수집 ${count}개`:'수집 개수 확인 중'}</p>
           {data&&count===0?<p className="text-sm text-[var(--e-muted)]">아직 수집한 기록이 없어요.</p>:null}
@@ -47,7 +48,7 @@ export function DexHomeScaffold() {
       {data?earned.length?<div className="dex-stamp-grid dex-home-stamp-grid">{earned.map(goal=><AchievementStamp key={goal.id} achievement={goal} artwork={MEAL_ACHIEVEMENT_ART[goal.id]}/>)}</div>:<div className="dex-home-stamp-empty"><p>아직 전시한 도장이 없어요.</p><p className="dex-small dex-muted">첫 메뉴를 수집하면 첫 발견 도장이 이곳에 놓여요.</p></div>:<p role="status">{error?'업적을 읽지 못했어요. 위에서 다시 읽어 주세요.':'내 도장을 불러오는 중…'}</p>}
       <Link className="dex-back" href="/dex/meal/collection#meal-achievements">학식 업적과 진행 상황 보기 ↗</Link>
     </section>
-    <section><div className="dex-section-heading"><div><span className="dex-eyebrow">LITTLE MOMENTS, COLLECTED</span><h2>최근 발견한 카드</h2></div><span className="dex-tag">나만의 기록</span></div>{recent.length?<div className="dex-card-grid">{recent.map(entry=><CollectionCard key={entry.id} title={label(entry.subject)} isNew={now-Date.parse(entry.firstCollectedAt)>=0&&now-Date.parse(entry.firstCollectedAt)<7*86400000} artwork={<CollectionArtwork kind={entry.subject.kind==='meal'?mealArtwork(label(entry.subject)):entry.subject.kind==='person'?'people':'custom'}/>} href={entry.subject.kind==='meal'?`/dex/meal/collection/${entry.id}`:undefined} meta={`첫 기록 ${entry.collectedOn}`}/>)}</div>:<div className="dex-empty dex-empty--small"><h3>아직 비어 있는 첫 페이지</h3><p>직접 경험한 발견을 모으면 이곳에 카드가 쌓여요.</p><Link href="/dex/meal?view=discover" className="dex-back">첫 번째 메뉴 만나러 가기 ↗</Link></div>}</section>
+    <section><div className="dex-section-heading"><div><span className="dex-eyebrow">LITTLE MOMENTS, COLLECTED</span><h2>최근 발견한 카드</h2></div><span className="dex-tag">나만의 기록</span></div>{recent.length?<div className="dex-card-grid">{recent.map(entry=><CollectionCard key={entry.id} title={label(entry.subject)} isNew={now-Date.parse(entry.firstCollectedAt)>=0&&now-Date.parse(entry.firstCollectedAt)<7*86400000} artwork={<CollectionArtwork kind={entry.subject.kind==='meal'?mealArtwork(label(entry.subject)):entry.subject.kind==='person'?'people':entry.subject.kind==='professor'?'professor':'custom'}/>} href={entry.subject.kind==='meal'?`/dex/meal/collection/${entry.id}`:entry.subject.kind==='professor'?'/dex/professor':undefined} meta={`첫 기록 ${entry.collectedOn}`}/>)}</div>:<div className="dex-empty dex-empty--small"><h3>아직 비어 있는 첫 페이지</h3><p>직접 경험한 발견을 모으면 이곳에 카드가 쌓여요.</p><Link href="/dex/meal?view=discover" className="dex-back">첫 번째 메뉴 만나러 가기 ↗</Link></div>}</section>
     <BackupControls ownerId={data?.profile.ownerId} onChanged={reload}/>
     {process.env.NODE_ENV==='development'?<p className="text-sm"><Link className="dex-dev-entry" href="/dex/dev">개발자 도구 ↗</Link></p>:null}
   </div>;

@@ -9,7 +9,7 @@ import type { CardInstance } from '../meal/card-editions.ts';
 export type Id = string;
 export type LocalDate = string;
 export type Instant = string;
-export type DexKind = 'meal' | 'people' | 'custom' | 'course';
+export type DexKind = 'meal' | 'people' | 'custom' | 'course' | 'professor';
 export type Rating = 1 | 2 | 3 | 4 | 5;
 export type Namespace = 'personal' | 'development';
 export interface Versioned {
@@ -33,6 +33,7 @@ export type EntrySubject =
   | CourseSubject
   | { kind: 'meal'; dishId: Id; displayNameSnapshot: string }
   | { kind: 'person'; displayName: string; age?: number; gender?: PersonGender; mbti?: PersonMbti; energyType?: PersonEnergy; admissionYear?: number; department?: string; relationship?: string; memo?: string; nickname?: string; trait?: string; tags?: string[]; avatar?: PersonAvatarId; characterIntro?: string; profileAssetId?: string }
+  | { kind: 'professor'; professorId: Id; displayName: string; college: string; department: string; sourceUrl?: string }
   | { kind: 'custom'; title: string; memo?: string };
 export interface CollectionEntry extends Versioned {
   ownerId: Id;
@@ -48,6 +49,7 @@ export type ExperienceData =
       legacyMealItemId: string; snapshot: MealSnapshot; source: string;
     } }
   | { kind: 'person'; event: 'first-met' | 'memory' }
+  | { kind: 'professor'; courseName: string; academicYear: number; semester: '1' | 'summer' | '2' | 'winter' }
   | { kind: 'custom' };
 export type Experience = Versioned & (ExperienceData & { card?: CardInstance }) & {
   ownerId: Id; dexId: Id; entryId: Id; requestId: Id;
@@ -115,7 +117,7 @@ export type DexErrorCode =
   | 'UNSUPPORTED_SCHEMA' | 'INVALID_BACKUP' | 'IMPORT_CONFLICT';
 export type Result<T> = { ok: true; value: T } | { ok: false; error: { code: DexErrorCode; message: string } };
 export interface BackupEnvelope {
-  format: 'bokak-dex'; schemaVersion: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15; exportedAt: Instant;
+  format: 'bokak-dex'; schemaVersion: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16; exportedAt: Instant;
   containsSensitiveData: true;
   data: DexDocument;
 }
@@ -142,7 +144,7 @@ export interface DexRepository {
   updateEntry(ownerId: Id, id: Id, revision: number, patch: { subject?: EntrySubject; collectedOn?: LocalDate }, image?: PreparedImage): Promise<Result<CollectionEntry>>;
   deleteEntry(ownerId: Id, id: Id, revision: number): Promise<Result<void>>;
   listExperiences(ownerId: Id, entryId: Id): Promise<Result<Experience[]>>;
-  updateExperience(ownerId: Id, id: Id, revision: number, patch: { note?: string; experiencedOn?: LocalDate; rating?: Rating | null }): Promise<Result<Experience>>;
+  updateExperience(ownerId: Id, id: Id, revision: number, patch: { note?: string; experiencedOn?: LocalDate; rating?: Rating | null; courseName?: string; academicYear?: number; semester?: '1' | 'summer' | '2' | 'winter' }): Promise<Result<Experience>>;
   deleteExperience(ownerId: Id, id: Id, revision: number): Promise<Result<void>>;
   exportRecords(ownerId: Id): Promise<Result<Blob>>;
   exportRecovery(): Promise<Result<Blob>>;

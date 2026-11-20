@@ -58,7 +58,10 @@ export function applyCollection(doc: DexDocument, input: CollectCommand, hash: s
   }
   const matching = input.subject.kind === 'meal'
     ? doc.entries.find(e => e.dexId === dex.id && e.subject.kind === 'meal' && input.subject.kind === 'meal' && e.subject.dishId === input.subject.dishId)
-    : undefined;
+    : input.subject.kind === 'professor'
+      ? doc.entries.find(e => e.dexId === dex.id && e.subject.kind === 'professor' && input.subject.kind === 'professor' && e.subject.professorId === input.subject.professorId)
+      : undefined;
+  if(input.experience.kind==='professor'){const exp=input.experience;const target=selected??matching;ensure(!target||!doc.experiences.some(e=>e.entryId===target.id&&e.kind==='professor'&&e.academicYear===exp.academicYear&&e.semester===exp.semester&&e.courseName.trim().replace(/\s+/g,' ').toLocaleLowerCase()===exp.courseName.trim().replace(/\s+/g,' ').toLocaleLowerCase()),'같은 학기의 같은 수업이 이미 등록되어 있습니다.');}
   let entry = selected ?? matching;
   const created = !entry;
   if (!entry) {

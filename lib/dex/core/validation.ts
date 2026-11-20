@@ -161,6 +161,10 @@ export function subject(value: unknown): asserts value is EntrySubject {
     if (v.credits !== undefined) ensure(typeof v.credits === 'number' && Number.isFinite(v.credits) && v.credits >= 0 && v.credits <= 30, '학점은 0~30 사이여야 합니다.');
     for (const key of ['professor', 'code']) if (v[key] !== undefined) text(v[key], 80);
     if (v.memo !== undefined) text(v.memo, 500, true);
+  } else if (v.kind === 'professor') {
+    object(v, ['kind','professorId','displayName','college','department','sourceUrl']);
+    id(v.professorId); text(v.displayName,80); text(v.college,80); text(v.department,80);
+    if(v.sourceUrl!==undefined){text(v.sourceUrl,2000);const u=new URL(v.sourceUrl as string);ensure(u.protocol==='https:'&&u.hostname.endsWith('.hanyang.ac.kr'),'공식 한양대학교 출처만 사용할 수 있습니다.');}
   } else { ensure(v.kind === 'custom', '지원하지 않는 항목 종류입니다.'); object(v, ['kind', 'title', 'memo']); text(v.title, 120); if (v.memo !== undefined) text(v.memo, 500, true); }
 }
 import { CARD_EDITIONS, normalizeLegacyCards } from '../meal/card-editions.ts';
@@ -195,6 +199,10 @@ function experienceData(v: ObjectValue, saved: boolean) {
     }
   } else if (v.kind === 'person') {
     object(v, [...fields, ...experienceFields, 'event']); ensure(['first-met', 'memory'].includes(v.event as string), '인연 기록 종류가 올바르지 않습니다.');
+  } else if (v.kind === 'professor') {
+    object(v,[...fields,...experienceFields,'courseName','academicYear','semester']);
+    text(v.courseName,120);ensure(Number.isInteger(v.academicYear)&&(v.academicYear as number)>=1939&&(v.academicYear as number)<=2200,'수강 연도를 확인해 주세요.');
+    ensure(['1','summer','2','winter'].includes(v.semester as string),'수강 학기를 확인해 주세요.');
   } else { ensure(v.kind === 'custom' || v.kind === 'course', '지원하지 않는 경험입니다.'); object(v, [...fields, ...experienceFields]); }
 }
 export function collectInput(input: unknown): CollectCommand {
@@ -234,7 +242,7 @@ export function validateDocument(value: unknown): asserts value is DexDocument {
   const owner = (v: {ownerId: string}) => ensure(v.ownerId === p.ownerId, '로컬 소유 범위가 다릅니다.');
   for (const dex of d.dexes) {
     object(dex, [...base,'ownerId','kind','name','icon','visibility','progress','peopleBoard','peopleBoards']); versioned(dex); owner(dex);
-    ensure(['meal','people','custom','course'].includes(dex.kind) && dex.visibility === 'private', '도감 종류·공개 범위를 확인해 주세요.'); text(dex.name, 80); ensure(ICONS.includes(dex.icon as typeof ICONS[number]), '허용된 아이콘을 사용해 주세요.');
+    ensure(['meal','people','custom','course','professor'].includes(dex.kind) && dex.visibility === 'private', '도감 종류·공개 범위를 확인해 주세요.'); text(dex.name, 80); ensure(ICONS.includes(dex.icon as typeof ICONS[number]), '허용된 아이콘을 사용해 주세요.');
     object(dex.progress, dex.progress?.mode === 'bounded' ? ['mode','targetSetId','targetSetVersion'] : ['mode']);
     if (dex.progress.mode === 'bounded') { id(dex.progress.targetSetId); natural(dex.progress.targetSetVersion, true); }
     else ensure(dex.progress.mode === 'count-only', '진행 표시 정책을 확인해 주세요.');
@@ -248,18 +256,25 @@ export function validateDocument(value: unknown): asserts value is DexDocument {
   const entries = new Map(d.entries.map(v => [v.id,v]));
   const experiences = new Map(d.experiences.map(v => [v.id,v]));
   const mealKeys: string[] = [];
+  const professorKeys: string[] = [];
+  const professorCourses: string[] = [];
+  ensure(d.dexes.filter(dex=>dex.kind==='professor').length<=1,'교수도감은 하나만 사용할 수 있습니다.');
   for (const entry of d.entries) {
     object(entry, [...base,'ownerId','dexId','subject','firstCollectedAt','collectedOn']); versioned(entry); owner(entry); subject(entry.subject); date(entry.collectedOn); instant(entry.firstCollectedAt); id(entry.dexId);
     ensure(dexes.get(entry.dexId)?.kind === kindFor(entry.subject), '카드의 도감 참조가 올바르지 않습니다.');
+    if(entry.subject.kind==='professor')professorKeys.push(canonical([entry.ownerId,entry.dexId,entry.subject.professorId]));
     if (entry.subject.kind === 'meal') mealKeys.push(canonical([entry.ownerId, entry.dexId, entry.subject.dishId]));
   }
+  ensure(new Set(professorKeys).size===professorKeys.length,'같은 교수님의 카드가 중복되었습니다.');
   ensure(new Set(mealKeys).size === mealKeys.length, '같은 메뉴의 카드가 중복되었습니다.');
   for (const exp of d.experiences) {
     versioned(exp as unknown as ObjectValue); owner(exp); experienceData(exp as unknown as ObjectValue, true);
     id(exp.dexId); id(exp.entryId); id(exp.requestId); text(exp.note,500,true);
+    if(exp.kind==='professor')professorCourses.push(canonical([exp.entryId,exp.academicYear,exp.semester,exp.courseName.trim().replace(/\s+/g,' ').toLocaleLowerCase()]));
     const entry = entries.get(exp.entryId);
     ensure(entry && entry.dexId === exp.dexId && entry.subject.kind === exp.kind, '경험의 카드 참조가 올바르지 않습니다.');
   }
+  ensure(new Set(professorCourses).size===professorCourses.length,'같은 학기의 같은 수업이 중복되었습니다.');
   for (const r of d.receipts) {
     object(r, ['id','ownerId','requestId','dexId','operation','payloadFingerprint','entryId','experienceId','originalEntryWasCreated','committedAt']);
     owner(r); id(r.requestId); id(r.dexId); id(r.entryId); id(r.experienceId); instant(r.committedAt);
@@ -278,7 +293,8 @@ export function parseBackup(raw: string): BackupEnvelope {
     const v: unknown = JSON.parse(raw);
     object(v, ['format','schemaVersion','exportedAt','containsSensitiveData','data']);
     ensure(v.format === 'bokak-dex', 'BOKAK 내보내기 파일이 아닙니다.');
-    ensure(v.schemaVersion === 1 || v.schemaVersion === 2 || v.schemaVersion === 3 || v.schemaVersion === 4 || v.schemaVersion === 5 || v.schemaVersion === 6 || v.schemaVersion === 7 || v.schemaVersion === 8 || v.schemaVersion === 9 || v.schemaVersion === 10 || v.schemaVersion === 11 || v.schemaVersion === 12 || v.schemaVersion === 13 || v.schemaVersion === 14 || v.schemaVersion === 15, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
+    ensure(typeof v.schemaVersion === 'number' && Number.isInteger(v.schemaVersion) &&
+      v.schemaVersion >= 1 && v.schemaVersion <= 16, '지원하지 않는 백업 버전입니다.', 'UNSUPPORTED_SCHEMA');
     ensure(v.containsSensitiveData === true, '백업 정보가 누락되었습니다.'); instant(v.exportedAt); validateDocument(v.data);
     if(v.schemaVersion===1||v.schemaVersion===2)ensure(v.data.dexes.every(dex=>dex.peopleBoard===undefined),'보드는 v3 백업을 사용해야 합니다.');
     if(v.schemaVersion===3)ensure(v.data.dexes.every(dex=>!dex.peopleBoard||dex.peopleBoard.version===1),'확장 보드는 v4 백업을 사용해야 합니다.');
@@ -294,6 +310,8 @@ export function parseBackup(raw: string): BackupEnvelope {
     if(v.schemaVersion<12)ensure(v.data.entries.every(e=>e.subject.kind!=='course'||e.subject.review===undefined),'강의 평가는 v12 백업이 필요합니다.');
     if(v.schemaVersion<11)ensure(v.data.dexes.every(dex=>dex.kind!=='course'),'강의도감은 v11 백업이 필요합니다.');
     if(v.schemaVersion<10)ensure(v.data.entries.every(e=>!hasPersonDetails(e.subject)),'추가 인연 정보는 v10 백업이 필요합니다.');
+    // Read pre-integration professor backups written as v11. New exports use v16.
+    if(v.schemaVersion<11)ensure(v.data.dexes.every(d=>d.kind!=='professor'),'교수도감 백업 버전을 확인해 주세요.');
     normalizeLegacyCards(v.data);
     return v as unknown as BackupEnvelope;
   } catch (error) {
