@@ -178,7 +178,9 @@ export class IndexedDbDexRepository implements DexRepository {
   createDex(ownerId: string, draft: { kind: Dex['kind']; name: string; icon: string }) {
     return resultOf(() => this.document(true, doc => {
       owner(doc, ownerId); object(draft, ['kind','name','icon']);
-      const existing = draft.kind === 'course' ? doc.dexes.find(d => d.kind === 'course') : undefined;
+      const existing = draft.kind === 'course' || draft.kind === 'professor'
+        ? doc.dexes.find(d => d.kind === draft.kind)
+        : undefined;
       if (existing) return { value: existing, changed: false };
       const dex: Dex = { ...version(this.runtime), ...draft, ownerId, visibility: 'private', progress: { mode: 'count-only' } };
       doc.dexes.push(dex); return { value: dex, changed: true };
@@ -279,10 +281,11 @@ export class IndexedDbDexRepository implements DexRepository {
     }));
   }
   listExperiences(ownerId: string, entryId: string) { return resultOf(() => this.document(false, doc => { owner(doc,ownerId); find(doc.entries,entryId); return {value:doc.experiences.filter(e=>e.entryId===entryId)}; })); }
-  updateExperience(ownerId: string, id: string, revision: number, patch: { note?: string; experiencedOn?: LocalDate; rating?: Rating | null }) {
+  updateExperience(ownerId: string, id: string, revision: number, patch: { note?: string; experiencedOn?: LocalDate; rating?: Rating | null; courseName?: string; academicYear?: number; semester?: '1' | 'summer' | '2' | 'winter' }) {
     return resultOf(() => this.document(true, doc => {
       owner(doc,ownerId); const exp=find(doc.experiences,id); checkRevision(exp,revision);
-      object(patch,exp.kind==='meal'?['note','experiencedOn','rating']:['note','experiencedOn']);
+      object(patch,exp.kind==='meal'?['note','experiencedOn','rating']:exp.kind==='professor'?['note','experiencedOn','courseName','academicYear','semester']:['note','experiencedOn']);
+      if(exp.kind==='professor'){const next={...exp,...patch};ensure(!doc.experiences.some(e=>e.id!==exp.id&&e.entryId===exp.entryId&&e.kind==='professor'&&e.academicYear===next.academicYear&&e.semester===next.semester&&e.courseName.trim().replace(/\s+/g,' ').toLocaleLowerCase()===next.courseName.trim().replace(/\s+/g,' ').toLocaleLowerCase()),'같은 학기의 같은 수업이 이미 등록되어 있습니다.');}
       Object.assign(exp,structuredClone(patch)); touch(exp,this.runtime); return {value:exp,changed:true};
     }));
   }
@@ -298,7 +301,7 @@ export class IndexedDbDexRepository implements DexRepository {
       return {value:{data,assets}};
     });
     const {data,assets}=captured;
-    if(hasCharacterData(data)||data.dexes.some(d=>d.kind==='course'||d.peopleBoards||d.peopleBoard?.version===3)){for(const asset of assets)await verifyPrepared({...asset.info,blob:asset.blob});return packBackup(data,assets,this.runtime.now());}
+    if(hasCharacterData(data)||data.dexes.some(d=>d.kind==='course'||d.kind==='professor'||d.peopleBoards||d.peopleBoard?.version===3)){for(const asset of assets)await verifyPrepared({...asset.info,blob:asset.blob});return packBackup(data,assets,this.runtime.now());}
     const envelope:BackupEnvelope={format:'bokak-dex',schemaVersion:data.dexes.some(d=>d.peopleBoard?.version===2)?4:data.dexes.some(d=>d.peopleBoard)?3:2,exportedAt:this.runtime.now(),containsSensitiveData:true,data};
     return new Blob([JSON.stringify(envelope,null,2)],{type:'application/json'});
   });}

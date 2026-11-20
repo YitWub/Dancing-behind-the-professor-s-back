@@ -1,0 +1,3233 @@
+{
+  "checkedOn": "2026-11-18",
+  "coverage": "partial",
+  "description": "공식 페이지에서 확인된 교수진입니다. 강사·겸임교원 및 일부 학과는 누락될 수 있습니다.",
+  "professors": [
+    {
+      "id": "hyu-79787d17b5dd3186d5be",
+      "name": "김나영",
+      "college": "LIONS칼리지",
+      "department": "LIONS칼리지",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-91a82a18a3cfd73c4d88",
+      "name": "김민아",
+      "college": "LIONS칼리지",
+      "department": "LIONS칼리지",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c01e38c8c27565af5f74",
+      "name": "김부경",
+      "college": "LIONS칼리지",
+      "department": "LIONS칼리지",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-75ec1622bbeef1276eaa",
+      "name": "유재연",
+      "college": "LIONS칼리지",
+      "department": "LIONS칼리지",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-74d30e75213eb3320d5a",
+      "name": "윤혜경",
+      "college": "LIONS칼리지",
+      "department": "LIONS칼리지",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e298f642c9e2f3d9a783",
+      "name": "조은원",
+      "college": "LIONS칼리지",
+      "department": "LIONS칼리지",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-cd8ab7f2f83b571f5e97",
+      "name": "강석후",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-efbd428e198355e3ec19",
+      "name": "고동희",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-bcf9aacdd650b82bb378",
+      "name": "공태식",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0c180a8563e311249a4e",
+      "name": "구자근",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-be444b7f743f0f663af1",
+      "name": "길재욱",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f695a0e59f92ddd61dd2",
+      "name": "김가은",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c0ca59150685623fbb90",
+      "name": "김누리",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b4faa10c47df01201542",
+      "name": "김빛누리",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-09b4001acdf42ad2971e",
+      "name": "김상수",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9014d072b8e1cf49910e",
+      "name": "김성규",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-5a84a6535e6da6e51cb2",
+      "name": "김성민",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-7cfa5b9aa2a592aa1b2c",
+      "name": "김유찬",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-1b39124faf29566e7f7d",
+      "name": "김은영",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-43c9469c1e2e1d4bb412",
+      "name": "김인호",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-1cb5c17b5345b2c8bc40",
+      "name": "김준용",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2cb2a834a9b0a4ac8459",
+      "name": "도현수",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ae125d815832777fc628",
+      "name": "류태수",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2fa5d9ffc309cf705552",
+      "name": "명재호",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-3531dcd2832b87d36039",
+      "name": "문준연",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c2bb26bcc8bfe02378e5",
+      "name": "박경원",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-166bfd1dc191b45b6adc",
+      "name": "박광호",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-24b56a15c186abd592ec",
+      "name": "방준식",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-549423a3781fe5229b36",
+      "name": "백동현",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-a6f35c313f54ce80db97",
+      "name": "백승현",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6e86ec1181e9b11a4728",
+      "name": "서환주",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9eca304c463cf57d77aa",
+      "name": "송유진",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d15b2aebfedca861525e",
+      "name": "신정훈",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-21ce417cb3754eda3ef7",
+      "name": "심원술",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c3713ccb3010da2e9f58",
+      "name": "양창삼",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c8db7bfd4bdd6e7b87cd",
+      "name": "원석희",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-cf6d197a39da63021dc7",
+      "name": "원정연",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-7735013e54fe9efead23",
+      "name": "유나령",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-922f7b4ee56c53d33e33",
+      "name": "윤병욱",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-aa5610e5a405db13e21b",
+      "name": "윤우진",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-053e8fd1cfb0e4447671",
+      "name": "이길수",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0c63f9ced5cf08ab6d66",
+      "name": "이민영",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c1c44d7f0681d6a540b6",
+      "name": "이상열",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-67944da9aebba7c39ab3",
+      "name": "이성욱",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b08c766c245f0b95b970",
+      "name": "이솔지",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-7bb78fa007563f2fa6c9",
+      "name": "이우택",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-afc80d1f892465ccd568",
+      "name": "이은정",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-7a40a81ac31b87ed300f",
+      "name": "이정연",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6e2e199e8c2337564a8f",
+      "name": "이정현",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2a323e844d64a089f6f7",
+      "name": "장희근",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0b204ca8d41403ea9b73",
+      "name": "전상길",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f92bb7971e28008e142c",
+      "name": "정기인",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-02c313d5d9f8c0d9e7c9",
+      "name": "정요섭",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-7be2fd484331f18e8ddd",
+      "name": "조재영",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-775ff10e3fa1b9d07f33",
+      "name": "조현철",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-dd33c947185826fdf995",
+      "name": "최문경",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-31f335a9256fcce2c77f",
+      "name": "한영규",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0ba6fbdf37457c894b98",
+      "name": "한창희",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-67c5f68236345f116dd8",
+      "name": "황승준",
+      "college": "경상대학",
+      "department": "경영학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e69561bc26973e92e2c1",
+      "name": "Gouranga G. Das",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-fdb19b1d7c30dbea1c2e",
+      "name": "강임호",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-5fb30d83887ce6fbb27a",
+      "name": "김용규",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9af06f30c9dd098f27ff",
+      "name": "김종혁",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f3bb893955e7ae9384dd",
+      "name": "김지환",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8e0811d5977c8e216718",
+      "name": "김효명",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-a43eede7846657b73727",
+      "name": "류한별",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6ddb80d4fd615b2bf3c0",
+      "name": "박혜진",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-99074a53e56ff9d31723",
+      "name": "백상현",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b1c0a9b73829901c1df1",
+      "name": "사공진",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-3cff76981b678ff9b0be",
+      "name": "윤성호",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0b1310c7ae5765eec51c",
+      "name": "윤충한",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0f19252c34ecf279df23",
+      "name": "이재선",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f58447a9a57cfb989c27",
+      "name": "임덕호",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-60b1582fa4f604e71939",
+      "name": "정도영",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-80981889f31347f0147d",
+      "name": "정중호",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0b4a8305951b14902c0e",
+      "name": "주동헌",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2926a072da7eefc8a627",
+      "name": "주만수",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-54b1b2f636a92cec76bc",
+      "name": "진창하",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-cb5786b03dc0c4159936",
+      "name": "하준경",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-1399b3d77d788f9cc615",
+      "name": "한홍열",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-fb3eb7f7395d4f8f99d1",
+      "name": "현석하",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-7f13e356e08acecadb05",
+      "name": "황영진",
+      "college": "경상대학",
+      "department": "경제학부",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9df8ba153bc871bef7aa",
+      "name": "김영미",
+      "college": "경상대학",
+      "department": "보험계리학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-3-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-eb576901ab5dc468b1a9",
+      "name": "문혜영",
+      "college": "경상대학",
+      "department": "보험계리학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-3-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-073797ce323d2bb7fbf8",
+      "name": "심현우",
+      "college": "경상대학",
+      "department": "보험계리학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-3-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-30380f3cc8832c99e9e8",
+      "name": "오창수",
+      "college": "경상대학",
+      "department": "보험계리학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-3-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-19f0f1e0bf13cdc0a5c7",
+      "name": "이가은",
+      "college": "경상대학",
+      "department": "보험계리학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-3-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f41f82fcd5375d100317",
+      "name": "인태교",
+      "college": "경상대학",
+      "department": "보험계리학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-3-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e9a42bd7e3e06fd9dd2c",
+      "name": "최양호",
+      "college": "경상대학",
+      "department": "보험계리학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ba5f4a79590cdcf6c49c",
+      "name": "권신형",
+      "college": "경상대학",
+      "department": "회계세무학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-4-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e97952f45d1706cb3b95",
+      "name": "김병용",
+      "college": "경상대학",
+      "department": "회계세무학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-4-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6ab9207ebe48c53728ec",
+      "name": "김영천",
+      "college": "경상대학",
+      "department": "회계세무학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-4-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-89962003dcf219048919",
+      "name": "김종현",
+      "college": "경상대학",
+      "department": "회계세무학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-4-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6e571a8fd0e9eb9e648d",
+      "name": "마성민",
+      "college": "경상대학",
+      "department": "회계세무학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-4-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c5bcae0de95b8848bf1c",
+      "name": "심해린",
+      "college": "경상대학",
+      "department": "회계세무학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-4-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0d3470e9814da1ff1028",
+      "name": "홍사선",
+      "college": "경상대학",
+      "department": "회계세무학과",
+      "sourceUrl": "https://site.hanyang.ac.kr/web/cbe/-02-4-3",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-68c89737e262e6e011a4",
+      "name": "곽동엽",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-69edb6be61f2c3a08a59",
+      "name": "김문일",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-56546fbbc21821aac1a8",
+      "name": "김수삼",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-af84a33e2c113eed0bf8",
+      "name": "김태웅",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-27f81861f6660e435015",
+      "name": "배우근",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-db53eeebcdb240b79bcc",
+      "name": "심종성",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8d3a7519e2ea56e0eef6",
+      "name": "안기용",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-13e5fa493ad69b1c68e5",
+      "name": "안진성",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-50f20fc7fd32d585dc77",
+      "name": "유한규",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4d7bd56180e6e96376e3",
+      "name": "윤성범",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-14681c8e966c3b58db85",
+      "name": "이종세",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0337f4e9e6d1376db223",
+      "name": "이태식",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d1ea7c43f62b9d397551",
+      "name": "장승환",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e10162019e534fe44d1d",
+      "name": "조효남",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-648a0121e4a0ffaabc43",
+      "name": "홍승호",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "sourceUrl": "https://ericacivil.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f14979e2615b87b1ba5b",
+      "name": "김태수",
+      "college": "공학대학",
+      "department": "건축공학전공",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-065806fe2c58ee5623ab",
+      "name": "김소영",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b2ff2188e414995596a0",
+      "name": "김용승",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/%EB%AA%85%EC%98%88%EA%B5%90%EC%88%98",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-656d3aa5ab79deab1572",
+      "name": "김지홍",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-cb2986a53ebcf22225d2",
+      "name": "김환용",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0581871bb6e861d9daeb",
+      "name": "노삼영",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/%EB%AA%85%EC%98%88%EA%B5%90%EC%88%98",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2a75e427d390cf209103",
+      "name": "박재승",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/%EB%AA%85%EC%98%88%EA%B5%90%EC%88%98",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-593bbd031d3ac5b41c11",
+      "name": "신성우",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/%EB%AA%85%EC%98%88%EA%B5%90%EC%88%98",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-932b63a0e894d95991b3",
+      "name": "안치원",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-3c86a261bc86135d4dd1",
+      "name": "양내원",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/%EB%AA%85%EC%98%88%EA%B5%90%EC%88%98",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-bd8a20bcc8e21553ca81",
+      "name": "이병해",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/%EB%AA%85%EC%98%88%EA%B5%90%EC%88%98",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8d811edd6f4a42e1c973",
+      "name": "임지택",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-83d87808af6c8291bb5e",
+      "name": "전재봉",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-1f056abfd4d1a7306000",
+      "name": "정인하",
+      "college": "공학대학",
+      "department": "건축학부",
+      "sourceUrl": "https://arch.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e476a1d7f8e5ac1e21f1",
+      "name": "이강준",
+      "college": "공학대학",
+      "department": "건축학전공",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8f9d1cde6d757e64ac32",
+      "name": "강경우",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2c79de3336c19e9bf2af",
+      "name": "고지은",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-bfa3b7cf168ca11af453",
+      "name": "김성호",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4f7125444ce7574d37f1",
+      "name": "김익기",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-fff0eeb50f24024add3c",
+      "name": "노병준",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-a25bf70b86480e0b1639",
+      "name": "도철웅",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-53257c92a81c705073c0",
+      "name": "문세동",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6a336f31acc2e540fd6b",
+      "name": "박준영",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f4e787e36112cd4530be",
+      "name": "서선덕",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-faa706dd63030b2ea1db",
+      "name": "서영찬",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c38fae7733c786e3b0ee",
+      "name": "서원호",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-78996f759e881c683cfe",
+      "name": "양삼규",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-25e9704d6928fb4e8265",
+      "name": "오철",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2a97f54825ac90c6400e",
+      "name": "이건우",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-20ee49997ff561e50f82",
+      "name": "장명순",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-94ee7cd0824f30cb9097",
+      "name": "조은솔",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "sourceUrl": "https://traffic.hanyang.ac.kr/intro4",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-efa10b6f2b4f4d30cf80",
+      "name": "강석경",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0ea8c79f8a43b24b9cce",
+      "name": "김남욱",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4532cf4470ffac3aa738",
+      "name": "김영득",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-77c5201fccfc06e03a89",
+      "name": "김우승",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-580a9892f99a3bc52b5f",
+      "name": "김진용",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-58fd15cbe501f42608ff",
+      "name": "김태균",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-81140c3232d2db96523b",
+      "name": "김호준",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b6c5c339ea5793acd2b8",
+      "name": "노형도",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-543302ea94772f7421bc",
+      "name": "류 근 Keun Ryu",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c76a63b6e7d631dfb13e",
+      "name": "박경진",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-bd1b8923b1d0b3e26278",
+      "name": "박주현",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2c2f2f856085f094b96c",
+      "name": "박지혁",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2998b1a8e78ecd06f654",
+      "name": "배대성",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4fa3ce55779487056591",
+      "name": "안강호",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-61ddedbfb1c9deafd12c",
+      "name": "안유민",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-5e332121a3c135cc9e02",
+      "name": "양선웅",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-445c0f2e028237153cf9",
+      "name": "양현익",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6622ec2b3611f971307e",
+      "name": "오제훈",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8d6caba0b0f9179c15f3",
+      "name": "오준호",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-bac77091c07ca2b1c5df",
+      "name": "윤종헌",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-903bd15e25dd666803d7",
+      "name": "윤준용",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b474a54dc6205ef51f06",
+      "name": "이기형",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-33e1d563f64f6056512e",
+      "name": "이도형",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-02e221706417be166935",
+      "name": "이성환",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-a991f422bb8ca9cd2224",
+      "name": "이원철",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0529b684a821657f96ae",
+      "name": "정진태",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c7043deecb24191e66cf",
+      "name": "정태형",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b442aa6eccb0d8df6e7a",
+      "name": "조남규",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-83e6108af314d4220b34",
+      "name": "최낙삼",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/-28-2",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d7684be921c98d83c526",
+      "name": "최이현",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-5d0cd849cfbbc92029bc",
+      "name": "홍석준",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "sourceUrl": "https://mech.hanyang.ac.kr/people_",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-a0986715f93b96838982",
+      "name": "김완수",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d50aca2a5b6f9eb6a54b",
+      "name": "류우석",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://robot.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-18c334dbeb56ef72f058",
+      "name": "박태준",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-dcc709e8b59ceb8f9d22",
+      "name": "배지훈",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2851964c97d8f9f05618",
+      "name": "신규식",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://robot.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-fc5df8092aebe21b9d43",
+      "name": "이성온",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-14c97b444c08c8320479",
+      "name": "이영문",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8912ab15b51be0b30887",
+      "name": "이지영",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://robot.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-909096845129270d2a84",
+      "name": "장범진",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-bf898af928e43d399fc4",
+      "name": "정낙영",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://robot.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-70bcdf9685ea301179d7",
+      "name": "최영진",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e72c354892981408b417",
+      "name": "한재권",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e2efebeefa0c177d6837",
+      "name": "한창수",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "sourceUrl": "https://robot.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0d3f00c903a8a3e9752e",
+      "name": "권오민",
+      "college": "공학대학",
+      "department": "배터리소재화학공학과",
+      "sourceUrl": "https://ericacheme.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d94141628817aa99f292",
+      "name": "김백민",
+      "college": "공학대학",
+      "department": "배터리소재화학공학과",
+      "sourceUrl": "https://ericacheme.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-123b5cbc2bbb77e7fa17",
+      "name": "김승혁",
+      "college": "공학대학",
+      "department": "배터리소재화학공학과",
+      "sourceUrl": "https://ericacheme.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-57a0304b1cf1e64654b7",
+      "name": "박성오",
+      "college": "공학대학",
+      "department": "배터리소재화학공학과",
+      "sourceUrl": "https://ericacheme.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-399dba0fcfd5caced7a3",
+      "name": "이재원",
+      "college": "공학대학",
+      "department": "배터리소재화학공학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ff14e1a76591a8ecd6bd",
+      "name": "홍석영",
+      "college": "공학대학",
+      "department": "배터리소재화학공학과",
+      "sourceUrl": "https://ericacheme.hanyang.ac.kr/-31",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-66bbd763a44e91cacb7c",
+      "name": "오요셉",
+      "college": "공학대학",
+      "department": "산업경영공학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-31352d12b1e47a6fd81a",
+      "name": "전형필",
+      "college": "공학대학",
+      "department": "에너지바이오학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ce439a35c0045337e2a5",
+      "name": "김형수",
+      "college": "공학대학",
+      "department": "융합시스템공학과",
+      "sourceUrl": "https://cie.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-32abafb24b0f51a64ff7",
+      "name": "민웅규",
+      "college": "공학대학",
+      "department": "융합시스템공학과",
+      "sourceUrl": "https://cie.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4e41fe8adf11aa6040c5",
+      "name": "양성일",
+      "college": "공학대학",
+      "department": "융합시스템공학과",
+      "sourceUrl": "https://cie.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b112ab1f42b3ab65509b",
+      "name": "이상훈",
+      "college": "공학대학",
+      "department": "융합시스템공학과",
+      "sourceUrl": "https://cie.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8634fde6159521187df0",
+      "name": "이성준",
+      "college": "공학대학",
+      "department": "융합시스템공학과",
+      "sourceUrl": "https://cie.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-07ec07c630d6fad44974",
+      "name": "조옥래",
+      "college": "공학대학",
+      "department": "융합시스템공학과",
+      "sourceUrl": "https://cie.hanyang.ac.kr/-41",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-5b584768b0175df2d529",
+      "name": "Manwar Hussain",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-988577738665ac59000b",
+      "name": "김우희",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4305c8071281489b3995",
+      "name": "김종렬",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6310d9d13bc7d335cd87",
+      "name": "김종호",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8e2fa3b2543097a2904a",
+      "name": "김진경",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-7f834991a8c10b88f057",
+      "name": "박주현",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-58483a1015f2c3c42a56",
+      "name": "박진구",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ad9b03a930e60f2bc30f",
+      "name": "박태주",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-306b928275f31514aa5c",
+      "name": "안지훈",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-aadd69749639d78d2c19",
+      "name": "유효종",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4fc1864c50119c33d024",
+      "name": "이선영",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-cacadb635c1e41419822",
+      "name": "이정호",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d14f9cf469eaaacb1b47",
+      "name": "이화성",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-32b9ba8e979bb6360fa4",
+      "name": "장영욱",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-221a8c98ee7f92be59b5",
+      "name": "조국영",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9470e10faf09b7d2d9a0",
+      "name": "조용우",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-12f9f207277f3b2d8f7a",
+      "name": "조홍백",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2a9c8eb737bf2cf4cfac",
+      "name": "좌용호",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "sourceUrl": "https://mscheme.hanyang.ac.kr/-9",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f1bbc8ac743301573202",
+      "name": "고현석",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ad49ada59d1c05a77f61",
+      "name": "구자윤",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2b9d731a753aab5e27e9",
+      "name": "권병일",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6c36993d36461abecf41",
+      "name": "김동우",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2641512e98bcd9312ec0",
+      "name": "김병호",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-97c723c87c6f5ca3cace",
+      "name": "김정현",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b8d6bccea6d3fc59f5a4",
+      "name": "김종석",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-1a94f9db3cb8a45dedc7",
+      "name": "김호",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-50fc57d307407f0dfecb",
+      "name": "김희준",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4ef10e6ebe19b1fb44d0",
+      "name": "남해운",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-759fe47c22b80ddc6da3",
+      "name": "노정진",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-89d19ad51e991870d7ff",
+      "name": "맹승준",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ca397cb4f7ad09208e35",
+      "name": "박석환",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0bdd0987fabf9c965359",
+      "name": "박정기",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0cfb79fd341455c6f3ff",
+      "name": "박진석",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-590e32a72cdb24c813d1",
+      "name": "백상현",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-cd703a9ca1abdd06ad52",
+      "name": "송지호",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ad27feb65d949a6215e9",
+      "name": "송택렬",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d8a909374ee806e8e4f1",
+      "name": "신상훈",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-db18236a7e3a8c3fadf3",
+      "name": "신승연",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-3808a2bb15251b72b356",
+      "name": "신현철",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-75eb499250fbd4d253b8",
+      "name": "심상완",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9ceaff65fd8a3b10c114",
+      "name": "양성일",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b02bbf19f6c48efc54f0",
+      "name": "양해원",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-38f4eab0be2e97170f03",
+      "name": "어영선",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-81b6e6e1a0ea1164686b",
+      "name": "오세용",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c842224edabade665089",
+      "name": "오재응",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-905491900649724b534c",
+      "name": "유경렬",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b25994f1ff0840cd733c",
+      "name": "유석구",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-018f6fe2fda2fd0bdc1d",
+      "name": "이도언",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8ad5f466c0524f76424b",
+      "name": "이동호",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-40a8a4b40020e98202eb",
+      "name": "이민식",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c3fbb924a10f854ee505",
+      "name": "이방욱",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-753ee889f262f57d05bb",
+      "name": "이병주",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d2f6378630d9c66c1a9e",
+      "name": "이상원",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0064872f816d872cc838",
+      "name": "이영우",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ae0443e8aa2dfa97dafb",
+      "name": "이은수",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6a2c151a85e6d164a369",
+      "name": "이정훈",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4a0ceb88f681a57378c9",
+      "name": "이중근",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-feaba82d8613464bf6a1",
+      "name": "이찬길",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-565797944c99ffa24c8c",
+      "name": "임동진",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-a478127ed33834bdaaa2",
+      "name": "임준홍",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-fa438d47ee1dcdddc8bf",
+      "name": "장태환",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-3f6cb1a764267298a864",
+      "name": "전상운",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-060e5a480015556c0c35",
+      "name": "준장",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-38eda254dfcd3b115828",
+      "name": "최명렬",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-fdb42eb45208b1908d5c",
+      "name": "한승호",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-715c531abad9d16b29d1",
+      "name": "한창희",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-8",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-867489aa1d2ca2faf43d",
+      "name": "홍승호",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "sourceUrl": "https://eece.hanyang.ac.kr/-27",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-a3c0b8e360be06075079",
+      "name": "신성원",
+      "college": "공학대학",
+      "department": "해양융합공학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-19470a93370379e97fe7",
+      "name": "백서인",
+      "college": "글로벌문화통상대학",
+      "department": "글로벌문화통상학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=124&code_page=about&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ac67f5b9622def7f62bb",
+      "name": "신종호",
+      "college": "글로벌문화통상대학",
+      "department": "글로벌문화통상학부",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-79efe797236a621ef282",
+      "name": "RYAN JONGWOO CHOI",
+      "college": "디자인대학",
+      "department": "융합디자인학부",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-963a5727101a72344257",
+      "name": "김태선",
+      "college": "디자인대학",
+      "department": "융합디자인학부",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d99335d254803744f7de",
+      "name": "정의태",
+      "college": "디자인대학",
+      "department": "커뮤니케이션디자인학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=124&code_page=about&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f0842e2b1e8b3103117a",
+      "name": "고민삼",
+      "college": "소프트웨어융합대학",
+      "department": "ICT융합학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-13e3df932fe3db09f5cb",
+      "name": "김성권",
+      "college": "소프트웨어융합대학",
+      "department": "ICT융합학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-80168bf4a17013c9b09c",
+      "name": "김정룡",
+      "college": "소프트웨어융합대학",
+      "department": "ICT융합학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor4.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4294e6c44eb40b8a1354",
+      "name": "박정은",
+      "college": "소프트웨어융합대학",
+      "department": "데이터인텔리전스전공",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c75e8721b200e1bfebc6",
+      "name": "권세현",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=7&code_page=member",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b7ef28ecbbc32ca18840",
+      "name": "김대경",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor4.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9880c8318f9b6c52fcfe",
+      "name": "김도헌",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=7&code_page=member",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-97c9a3a1d707bf352d3f",
+      "name": "김성수",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=10&code_page=member&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ac1a29c83b4ce83f5a65",
+      "name": "김성욱",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=7&code_page=member",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d59f59c061700b83c4a0",
+      "name": "송종철",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=10&code_page=member&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d9f9fe6c1ccb2190b132",
+      "name": "왕문옥",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=10&code_page=member&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-23ec3d6119dad1654a33",
+      "name": "이성동",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=7&code_page=member",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e957fa5137e31761337c",
+      "name": "임종록",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=10&code_page=member&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-443013c82010d18079b7",
+      "name": "정혜영",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=7&code_page=member",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-138a3300318c55400c08",
+      "name": "조광현",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c0e349198dc71a3e69d1",
+      "name": "최성경",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=7&code_page=member",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8e13b87de8e20f01be49",
+      "name": "한정순",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "sourceUrl": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=10&code_page=member&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-beb802cc4201b16050cc",
+      "name": "강경태",
+      "college": "소프트웨어융합대학",
+      "department": "인공지능학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-24791f909970fee3ce91",
+      "name": "권보경",
+      "college": "소프트웨어융합대학",
+      "department": "인공지능학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b15c19d1c5ca375e4d74",
+      "name": "김동찬",
+      "college": "소프트웨어융합대학",
+      "department": "인공지능학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-dd5f2b35c713f8ddeb46",
+      "name": "김영훈",
+      "college": "소프트웨어융합대학",
+      "department": "인공지능학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6ba1996e99ee5c2fae6e",
+      "name": "유용재",
+      "college": "소프트웨어융합대학",
+      "department": "인공지능학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4587163b8d82dc1c9788",
+      "name": "윤석민",
+      "college": "소프트웨어융합대학",
+      "department": "인공지능학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f8427ad2f8a80212a717",
+      "name": "이동호",
+      "college": "소프트웨어융합대학",
+      "department": "인공지능학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0bd930b21a6062e85f9c",
+      "name": "장수진",
+      "college": "소프트웨어융합대학",
+      "department": "인공지능학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-f820455ff78a668b788f",
+      "name": "조영은",
+      "college": "소프트웨어융합대학",
+      "department": "인공지능학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6f6357dd056c6df8935f",
+      "name": "Scott Uk-Jin Lee",
+      "college": "소프트웨어융합대학",
+      "department": "컴퓨터학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-dc7f171e4eccc51217d3",
+      "name": "박서연",
+      "college": "소프트웨어융합대학",
+      "department": "컴퓨터학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=123&code_page=about&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-accb975df68fb936c3d7",
+      "name": "이석복",
+      "college": "소프트웨어융합대학",
+      "department": "컴퓨터학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-1d9fce37e6ced4919eca",
+      "name": "이연준",
+      "college": "소프트웨어융합대학",
+      "department": "컴퓨터학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-74d58e1e37d3f740cf86",
+      "name": "이우석",
+      "college": "소프트웨어융합대학",
+      "department": "컴퓨터학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6e54cc557b2ae911a580",
+      "name": "조성현",
+      "college": "소프트웨어융합대학",
+      "department": "컴퓨터학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c62c7481ccd5ef8eabd6",
+      "name": "최원일",
+      "college": "소프트웨어융합대학",
+      "department": "컴퓨터학부",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-813f1fdca104aac35e45",
+      "name": "홍규연",
+      "college": "소프트웨어융합대학",
+      "department": "컴퓨터학부",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-774f6d3d10f49b1288cc",
+      "name": "이찬석",
+      "college": "첨단융합대학",
+      "department": "바이오나노공학전공",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-a48eae195abec0d0edf9",
+      "name": "서혜명",
+      "college": "첨단융합대학",
+      "department": "바이오신약융합학부 분자의약전공",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=123&code_page=about&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e637d57001c35fc2bbc4",
+      "name": "황승용",
+      "college": "첨단융합대학",
+      "department": "바이오신약융합학부 분자의약전공",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=123&code_page=about&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-af7637d4289203683845",
+      "name": "조성용",
+      "college": "첨단융합대학",
+      "department": "반도체·디스플레이공학전공",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-10cd9f5228cd81b8aa2b",
+      "name": "김주연",
+      "college": "첨단융합대학",
+      "department": "분자의약전공",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6c0db835faf68d1d3089",
+      "name": "KIM TAE HYUN",
+      "college": "첨단융합대학",
+      "department": "신소재·반도체공학전공",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-7883d37361997f7ba0ee",
+      "name": "김동하",
+      "college": "첨단융합대학",
+      "department": "신소재·반도체공학전공",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0302720665daee9f69ae",
+      "name": "유봉영",
+      "college": "첨단융합대학",
+      "department": "신소재·반도체공학전공",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9daad19b8666aa6c3a11",
+      "name": "강보수",
+      "college": "첨단융합대학",
+      "department": "지능정보양자공학전공",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-93230a8daf92599694cc",
+      "name": "김도균",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/professor",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e3b25bc95bbc35c00919",
+      "name": "김영준",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/staff",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9130969b9314a512c5d5",
+      "name": "김정숙",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/staff",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-7437ac863cd186899d2c",
+      "name": "김지원",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/professor",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-919da12965cd05abca3d",
+      "name": "손승우",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/professor",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e2c8d090071f60b6075f",
+      "name": "어은희",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/staff",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-5f652034e54aa871b65c",
+      "name": "이승환",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/professor",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-def38aacd03ae05e985b",
+      "name": "이정연",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/staff",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-bfd65bdcee671b3c7b79",
+      "name": "이현지",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/staff",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-880f28b2079da915cf0a",
+      "name": "임동우",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/professor",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-aacd9ce821838124d188",
+      "name": "전연수",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/staff",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c594c59d085852d2bf9e",
+      "name": "조수영",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/professor",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-94d05c9689a594aae528",
+      "name": "최지웅",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "sourceUrl": "https://atc.hanyang.ac.kr/front/univintro/member/professor",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6d06387c43218944ebea",
+      "name": "이형석",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "광고홍보학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-fea955bcdbd71188f89f",
+      "name": "송도영",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "문화인류학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=124&code_page=about&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-a5467c3490e71ca6e5d1",
+      "name": "최경철",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "문화인류학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ee2b8b2920a77ff724f4",
+      "name": "박소정",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "문화콘텐츠학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4d1b7bb2d811a5e9c9bf",
+      "name": "이진",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "문화콘텐츠학과",
+      "sourceUrl": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=124&code_page=about&pos=#contents",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-b467eb902aa85b54cb9e",
+      "name": "김헌",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "미디어학과",
+      "sourceUrl": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e437a36fa45857737a1c",
+      "name": "Piotr B. Konieczny",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-12d650101afa7183081b",
+      "name": "Thomas Britten Hove",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-4075db5d6578a1eae431",
+      "name": "고운기",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-8764ba6b68d3f8553548",
+      "name": "김영재",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-55c37793c215e860045a",
+      "name": "김재민",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-aaba39b8325c8a3f7505",
+      "name": "김정원",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-0f7ae201970a8c050e78",
+      "name": "김치호",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-e996a476ff4f1e970dde",
+      "name": "박기수",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9b6eef81a3a9dd42cf39",
+      "name": "박성복",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ebfe456771aa0043a0be",
+      "name": "박세진",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-58e790a7de5264f85a41",
+      "name": "박조원",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c7374de63896be7d51f2",
+      "name": "박준규",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d97602a42c45100c89ec",
+      "name": "백혜진",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-121c6b132f4e6629ef37",
+      "name": "심성욱",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-12932cc87282c5a4ad0f",
+      "name": "안신원",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-9df6f090df4c217900cb",
+      "name": "오현정",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ce3f6fd2ca7cd45806f5",
+      "name": "우형진",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6487ab38c8a84b77cdfc",
+      "name": "이병관",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-6095e1df99a5f3b257c9",
+      "name": "이종수",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-c76a97ce2ab5f277b01d",
+      "name": "이현우",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-d79595c1e97d216fe49f",
+      "name": "전범수",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ea4c1f48559ad0d5df85",
+      "name": "최윤형",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-ae1b7d997c029220b373",
+      "name": "최진아",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-03a466d1b1b8dab37e07",
+      "name": "최태랑",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-bd807a21d0caf5caca10",
+      "name": "한미정",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-2aacfcc3d01c5a3a93aa",
+      "name": "한상필",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    },
+    {
+      "id": "hyu-3bf7d28c2fbf4eb13c09",
+      "name": "현효원",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "sourceUrl": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "verifiedOn": "2026-11-18"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://site.hanyang.ac.kr/web/cbe/-02-1-3",
+      "college": "경상대학",
+      "department": "경제학부",
+      "count": 23
+    },
+    {
+      "url": "https://lions.hanyang.ac.kr/lions/sub/sub1-7.aspx",
+      "college": "LIONS칼리지",
+      "department": "LIONS칼리지",
+      "count": 40
+    },
+    {
+      "url": "https://ccss.hanyang.ac.kr/bbs/board.php?tbl=bbs15_1",
+      "college": "커뮤니케이션&컬처대학",
+      "department": "커뮤니케이션&컬처대학",
+      "count": 33
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 30
+    },
+    {
+      "url": "https://site.hanyang.ac.kr/web/cbe/-02-2-3",
+      "college": "경상대학",
+      "department": "경영학부",
+      "count": 54
+    },
+    {
+      "url": "https://site.hanyang.ac.kr/web/cbe/-02-3-3",
+      "college": "경상대학",
+      "department": "보험계리학과",
+      "count": 7
+    },
+    {
+      "url": "https://site.hanyang.ac.kr/web/cbe/-02-4-3",
+      "college": "경상대학",
+      "department": "회계세무학과",
+      "count": 7
+    },
+    {
+      "url": "https://atc.hanyang.ac.kr/front/univintro/member/professor",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "count": 10
+    },
+    {
+      "url": "https://atc.hanyang.ac.kr/front/univintro/member/staff",
+      "college": "첨단융합대학",
+      "department": "첨단융합대학",
+      "count": 6
+    },
+    {
+      "url": "https://site.hanyang.ac.kr/web/cbe/-02-5-3",
+      "college": "경상대학",
+      "department": "경제학부",
+      "count": 7
+    },
+    {
+      "url": "https://arch.hanyang.ac.kr/-31",
+      "college": "공학대학",
+      "department": "건축학부",
+      "count": 8
+    },
+    {
+      "url": "https://ericacivil.hanyang.ac.kr/-41",
+      "college": "공학대학",
+      "department": "건설환경공학과",
+      "count": 15
+    },
+    {
+      "url": "https://traffic.hanyang.ac.kr/intro4",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "count": 16
+    },
+    {
+      "url": "https://traffic.hanyang.ac.kr/web/traffic/intro4/",
+      "college": "공학대학",
+      "department": "교통·물류공학과",
+      "count": 16
+    },
+    {
+      "url": "https://eece.hanyang.ac.kr/-8",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "count": 60
+    },
+    {
+      "url": "https://mscheme.hanyang.ac.kr/-9",
+      "college": "공학대학",
+      "department": "재료화학공학과",
+      "count": 22
+    },
+    {
+      "url": "https://ericacheme.hanyang.ac.kr/-31",
+      "college": "공학대학",
+      "department": "배터리소재화학공학과",
+      "count": 11
+    },
+    {
+      "url": "https://mech.hanyang.ac.kr/people_",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "count": 40
+    },
+    {
+      "url": "https://mech.hanyang.ac.kr/web/mech/-28",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "count": 40
+    },
+    {
+      "url": "https://robot.hanyang.ac.kr/-41",
+      "college": "공학대학",
+      "department": "로봇공학과",
+      "count": 13
+    },
+    {
+      "url": "https://cie.hanyang.ac.kr/-41",
+      "college": "공학대학",
+      "department": "융합시스템공학과",
+      "count": 6
+    },
+    {
+      "url": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=7&code_page=member",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "count": 21
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=126",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 8
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor4.php",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 2
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor3.php",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 5
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=126&code_page=about&pos=#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 8
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=49&code_page=about&pos=#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 8
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=121&code_page=about&pos=#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 8
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=122&code_page=about&pos=#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 10
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=123&code_page=about&pos=#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 9
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=124&code_page=about&pos=#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 6
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?page=1&code=professor1",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 30
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?page=2&code=professor1",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 19
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 30
+    },
+    {
+      "url": "https://arch.hanyang.ac.kr/%EB%AA%85%EC%98%88%EA%B5%90%EC%88%98",
+      "college": "공학대학",
+      "department": "건축학부",
+      "count": 6
+    },
+    {
+      "url": "https://eece.hanyang.ac.kr/-26",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "count": 60
+    },
+    {
+      "url": "https://eece.hanyang.ac.kr/-27",
+      "college": "공학대학",
+      "department": "전자공학부",
+      "count": 19
+    },
+    {
+      "url": "https://mech.hanyang.ac.kr/-28-2",
+      "college": "공학대학",
+      "department": "기계공학과",
+      "count": 11
+    },
+    {
+      "url": "https://mds.hanyang.ac.kr/member/member.php?ptype=list&code=member&category=10&code_page=member&pos=#contents",
+      "college": "소프트웨어융합대학",
+      "department": "수리데이터사이언스학과",
+      "count": 18
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?page=1&code=professor1&category=126",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 8
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=126&code_page=about&pos=0#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 8
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=49&code_page=about&pos=0#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 8
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=121&code_page=about&pos=0#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 8
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=122&code_page=about&pos=0#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 10
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=123&code_page=about&pos=0#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 9
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?ptype=list&code=professor1&category=124&code_page=about&pos=0#contents",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 6
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?page=1&code=professor1&category=49",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 8
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?page=1&code=professor1&category=121",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 8
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?page=1&code=professor1&category=122",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 10
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?page=1&code=professor1&category=123",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 9
+    },
+    {
+      "url": "https://aic.hanyang.ac.kr/about/professor1.php?page=1&code=professor1&category=124",
+      "college": "소프트웨어융합대학",
+      "department": "소프트웨어융합대학",
+      "count": 6
+    }
+  ],
+  "unavailableSources": [
+    {
+      "url": "https://computing.hanyang.ac.kr",
+      "reason": "URLError"
+    },
+    {
+      "url": "https://design.hanyang.ac.kr",
+      "reason": "URLError"
+    },
+    {
+      "url": "https://sportsnarts.hanyang.ac.kr",
+      "reason": "URLError"
+    },
+    {
+      "url": "https://sw.hanyang.ac.kr",
+      "reason": "URLError"
+    },
+    {
+      "url": "https://aix.hanyang.ac.kr",
+      "reason": "URLError"
+    }
+  ]
+}

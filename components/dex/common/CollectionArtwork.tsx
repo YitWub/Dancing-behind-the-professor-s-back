@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export type ArtworkKind = 'food'|'noodles'|'rice'|'stew'|'cutlet'|'fried-rice'|'rice-bowl'|'curry'|'snack'|'meat'|'people'|'custom';
+export type ArtworkKind = 'food'|'noodles'|'rice'|'stew'|'cutlet'|'fried-rice'|'rice-bowl'|'curry'|'snack'|'meat'|'people'|'professor'|'custom';
 /** Conservative visual hint only: never used for identity or menu classification in storage. */
 export function mealArtwork(name:string):ArtworkKind {
   const hints:{kind:ArtworkKind;pattern:RegExp}[]=[
@@ -15,7 +15,7 @@ export function mealArtwork(name:string):ArtworkKind {
   if(/[&/]/.test(name)&&matches.length>1)return 'food';
   return matches[0]?.kind??(/비빔밥|오므라이스/.test(name)?'rice':'food');
 }
-const LABELS:Record<ArtworkKind,string>={'fried-rice':'볶음밥','rice-bowl':'덮밥',curry:'카레',snack:'떡볶이·분식',meat:'고기 볶음',food:'음식',noodles:'면 요리',rice:'밥 요리',stew:'국물 요리',cutlet:'커틀릿 요리',people:'인연',custom:'추억 노트'};
+const LABELS:Record<ArtworkKind,string>={'fried-rice':'볶음밥','rice-bowl':'덮밥',curry:'카레',snack:'떡볶이·분식',meat:'고기 볶음',food:'음식',noodles:'면 요리',rice:'밥 요리',stew:'국물 요리',cutlet:'커틀릿 요리',people:'인연',professor:'교수님과 배움',custom:'추억 노트'};
 export function CollectionArtwork({kind='food',locked=false,children}:{kind?:ArtworkKind;locked?:boolean;children?:ReactNode}) {
   return <div className={`dex-art dex-art--${kind}${locked?' dex-art--locked':''}`} role="img" aria-label={`${LABELS[kind]} 심볼${locked?' · 미수집':''}`}>
     {children??<svg viewBox="0 0 240 180" aria-hidden="true" fill="none">
@@ -33,6 +33,7 @@ export function CollectionArtwork({kind='food',locked=false,children}:{kind?:Art
 }
 
 function FoodScene({kind}:{kind:ArtworkKind}){
+  if(kind==='professor')return <><path d="M48 151h144v10H48z" fill="#c5ad7c"/><path d="M59 117h38v34H59z" fill="#c5d4bc"/><path d="M64 124h26m-26 9h26" stroke="#8da77e"/><path d="M139 129h43v22h-43z" fill="#e3cd8e"/><path d="M144 136h29m-29 8h29" stroke="#af945e"/><circle cx="121" cy="66" r="26" fill="#e6bf94"/><path d="M96 64c-8-37 55-40 52 0l-12-14-28 5Z" fill="#556456"/><path d="M83 143c0-65 76-65 76 0" fill="#6d947e"/><path d="m107 98 14 19 14-19m-14 19v26" stroke="#f4edce"/><path d="m108 66 10 0m9 0h10m-19 0h9" stroke="#42594a" strokeWidth="3"/><path d="m103 136 17-6 18 6v18l-18-5-17 5Z" fill="#fff7dd"/><path d="M120 131v18" stroke="#cbbf9c"/><path d="m162 46 4-11 4 11 11 4-11 4-4 11-4-11-11-4Z" fill="#dcbf69"/></>;
   if(kind==='cutlet')return <><ellipse cx="120" cy="112" rx="85" ry="37" fill="#fff9e8"/><ellipse cx="120" cy="109" rx="75" ry="29" stroke="#d6c99f"/><path d="M58 95q0-26 56-24 46 0 48 27 0 28-58 29-47-2-46-32Z" fill="#d8a359"/><path d="m76 79 14 42m3-46 14 48m4-47 14 44m4-43 14 34" stroke="#99652d"/><path d="m160 96 14-16 8 14-14 17m-4 5 21-8-6 17-19-1" fill="#a8bc74"/><path d="m176 76 14 12-18 4Z" fill="#edcb67"/></>;
   if(kind==='fried-rice')return <><ellipse cx="120" cy="123" rx="79" ry="26" fill="#fff8e2"/><path d="M65 116c-2-69 112-70 112 0-33 22-77 22-112 0Z" fill="#dbb56b"/><path d="m86 100 6-4m23-13 5 4m24 13 6-4m-41 21 5-3" stroke="#fff4c8"/><circle cx="91" cy="112" r="5" fill="#d57d4d"/><circle cx="140" cy="84" r="4" fill="#d57d4d"/><path d="m109 98 9 4m27 8 7 3m-41-36 7-3" stroke="#7da467"/><path d="M69 88 48 59m7 2 17 12" stroke="#a68b63"/></>;
   if(kind==='rice-bowl')return <><path d="M50 98h140c-5 43-27 57-70 57S56 137 50 98Z" fill="#c8d8bd"/><ellipse cx="120" cy="97" rx="70" ry="24" fill="#fff9df"/><path d="m62 85 25-12 13 14-24 13m21-18 24-12 13 15-24 14m22-17 24-9 14 15-24 12" fill="#bd8453"/><ellipse cx="141" cy="94" rx="20" ry="13" fill="#fffdf0"/><circle cx="141" cy="94" r="8" fill="#e7b34c"/><path d="m81 106 13 5m16-12 7 7m49-13 7 6" stroke="#75a36b"/><path d="M105 134h30" opacity=".35"/></>;
