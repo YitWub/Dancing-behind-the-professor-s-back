@@ -1,6 +1,6 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
-import { courseGrade, documentLevel, LEVEL_TABLE, levelFromExp, MAX_LEVEL, mealGrade, personGrade, totalExp } from '../exp.ts';
+import { courseGrade, documentLevel, LEVEL_TABLE, levelFromExp, MAX_LEVEL, mealGrade, personGrade, personGradeRises, totalExp } from '../exp.ts';
 import type { DexDocument } from '../../core/types.ts';
 import type { PersonEntry } from '../../people/view.ts';
 import type { CourseSubject } from '../../course/course.ts';
@@ -12,32 +12,45 @@ const person = (subject: object, id = 'p1') => ({ id, ownerId: 'me', dexId: 'peo
 const memory = (day: number, note = NOTE, entryId = 'p1') => ({ entryId, kind: 'person', event: 'memory', experiencedOn: `2026-10-${String(day).padStart(2, '0')}`, note });
 const firstMet = (note: string) => ({ entryId: 'p1', kind: 'person', event: 'first-met', experiencedOn: '2026-09-01', note });
 const records = (experiences: object[], dexes: object[] = []) => ({ dexes, experiences }) as unknown as DexDocument;
-const thread = { kind: 'people', peopleBoard: { version: 1, positions: [], edges: [{ id: 'e', a: 'p1', b: 'p2' }] } };
 const details = { relationship: '동아리', department: '컴퓨터학부' };
 
-test('person grade follows record depth, not personal data', () => {
-  assert.equal(personGrade(person({}), records([])).label, '일반');
-  assert.equal(personGrade(person({ age: 22, gender: 'female', relationship: '동아리' }), records([])).label, '일반', 'sensitive fields never raise the grade');
-  assert.equal(personGrade(person({ relationship: '동아리', trait: '짧음' }), records([])).label, '일반', 'trait under 10 chars does not count');
-  assert.equal(personGrade(person(details), records([])).label, '고급');
-  assert.equal(personGrade(person({ avatar: 'reader' }), records([])).label, '고급');
-  assert.equal(personGrade(person({ avatar: 'classic' }), records([])).label, '일반');
-  assert.equal(personGrade(person(details), records([firstMet('ㅇ ㅇ')])).label, '고급', 'dummy first-met note');
-  assert.equal(personGrade(person(details), records([firstMet(NOTE)])).label, '희귀');
-  assert.equal(personGrade(person(details), records([memory(1), memory(1), memory(2)])).label, '희귀', 'same-day memories count once');
-  assert.equal(personGrade(person(details), records([memory(1), memory(2), memory(3)])).label, '영웅');
-  assert.equal(personGrade(person(details), records([memory(1), memory(2)], [thread])).label, '영웅');
-  assert.equal(personGrade(person(details), records([1, 2, 3, 4, 5].map(d => memory(d)))).label, '영웅', 'legendary needs a thread');
-  assert.equal(personGrade(person(details), records([1, 2, 3, 4, 5].map(d => memory(d)), [thread])).label, '전설');
-  assert.equal(personGrade(person(details), records([1, 2, 3, 4, 5].map(d => memory(d, 'x')), [thread])).label, '고급', 'dummy memories do not count');
+const days = (n: number, note = NOTE) => Array.from({ length: n }, (_, i) => memory(i + 1, note));
+const linkedTo = (...others: string[]) => ({ kind: 'people', peopleBoard: { version: 1, positions: [], edges: others.map((b, i) => ({ id: 'e' + i, a: 'p1', b })) } });
+
+test('person card evolves from memory days (+2, max 10) and unique board links (+1, max 3), never profile data', () => {
+  const grade = (experiences: object[], dexes: object[] = []) => personGrade(person(details), records(experiences, dexes)).label;
+  assert.equal(personGrade(person({ ...details, age: 22, gender: 'female', avatar: 'reader', admissionYear: 2021 }), records([firstMet(NOTE)])).label, '일반', 'profile fields, avatar, admission year and the first-met note never count');
+  assert.equal(grade(days(1)), '고급', '2 points');
+  assert.equal(grade([memory(1), memory(1), memory(2, 'ㅇ ㅇ')]), '고급', 'same-day memories once, dummy notes ignored');
+  assert.equal(grade(days(2)), '희귀', '4 points');
+  assert.equal(grade(days(3)), '희귀', '6 points');
+  assert.equal(grade(days(3), [linkedTo('p2')]), '영웅', '6 + 1');
+  assert.equal(grade(days(4)), '영웅', '8 points');
+  assert.equal(grade(days(5)), '전설', 'memories alone reach 10');
+  assert.equal(grade(days(4), [linkedTo('p2', 'p3')]), '전설', '8 + 2 (doc example)');
+  assert.equal(grade(days(7)), '전설', 'memory points cap at 10');
+  assert.equal(grade([], [linkedTo('p2', 'p3', 'p4', 'p5')]), '고급', 'link points cap at 3');
+  assert.equal(grade(days(5, 'x')), '일반', 'dummy memories do not count');
 });
 
-test('v4 board connections count only person-to-person threads', () => {
+test('board links count unique person-to-person threads across boards', () => {
   const placements = [{ entryId: 'p1', placementId: 'pl1' }, { entryId: 'p2', placementId: 'pl2' }];
-  const board = (to: object) => ({ kind: 'people', peopleBoards: { boards: [{ layout: { version: 4, positions: placements, edges: [], connections: [{ from: { type: 'person', objectId: 'pl1' }, to }] } }] } });
-  const five = [1, 2, 3, 4, 5].map(d => memory(d));
-  assert.equal(personGrade(person(details), records(five, [board({ type: 'person', objectId: 'pl2' })])).label, '전설');
-  assert.equal(personGrade(person(details), records(five, [board({ type: 'note', objectId: 'n1' })])).label, '영웅');
+  const layout = (to: object) => ({ layout: { version: 4, positions: placements, edges: [], connections: [{ from: { type: 'person', objectId: 'pl1' }, to }] } });
+  const boards = (...tos: object[]) => ({ kind: 'people', peopleBoards: { boards: tos.map(layout) } });
+  const toP2 = { type: 'person', objectId: 'pl2' };
+  assert.equal(personGrade(person({}), records(days(3), [boards(toP2)])).label, '영웅', '6 + 1');
+  assert.equal(personGrade(person({}), records(days(3), [boards({ type: 'note', objectId: 'n1' })])).label, '희귀', 'note threads do not count');
+  assert.equal(personGrade(person({}), records(days(3), [linkedTo('p1')])).label, '희귀', 'self links do not count');
+  assert.equal(personGrade(person({}), records(days(1), [boards(toP2, toP2), linkedTo('p2')])).label, '고급', 'the same person on two boards and a legacy edge counts once (2 + 1)');
+});
+
+test('card evolution lists only people whose grade rose', () => {
+  const doc = (experiences: object[], extra: object[] = []) => ({ profile: { ownerId: 'me' }, dexes: [], experiences, entries: [person({}), person({}, 'p2'), ...extra] }) as unknown as DexDocument;
+  const before = doc(days(1));
+  assert.deepEqual(personGradeRises(before, doc(days(1))), [], 'no grade change');
+  assert.deepEqual(personGradeRises(before, doc(days(2))).map(r => [r.entry.id, r.from.label, r.to.label, r.to.exp - r.from.exp]), [['p1', '고급', '희귀', 30]]);
+  assert.deepEqual(personGradeRises(doc(days(2)), before), [], 'a drop never plays');
+  assert.deepEqual(personGradeRises(before, doc([...days(1), memory(1, NOTE, 'p3')], [person({}, 'p3')])), [], 'a new person is a discovery, not an evolution');
 });
 
 test('meal grade is 일반/희귀/전설 from repeated taste or confirmed rarity', () => {
@@ -78,9 +91,9 @@ test('total EXP is derived from owned menus, people and courses', () => {
       { id: 'o', ownerId: 'other', subject: { kind: 'meal' } },
     ],
   } as unknown as DexDocument;
-  // one dish across two entries counts once; two 5-star days make it 희귀
-  assert.equal(totalExp(doc), 50 + 50 + 10);
-  assert.equal(totalExp({ ...doc, experiences: [] }), 10 + 20 + 10, 'deleting records lowers EXP');
+  // one dish across two entries counts once; two 5-star days make it 희귀. A first-met note alone leaves the person 일반.
+  assert.equal(totalExp(doc), 50 + 10 + 10);
+  assert.equal(totalExp({ ...doc, experiences: [] }), 10 + 10 + 10, 'deleting records lowers EXP');
 });
 
 test('level table is contiguous, strictly increasing, and ends at Lv.30 (15,000 EXP)', () => {
@@ -149,9 +162,9 @@ test('documentLevel derives level from owned records and updates when records ar
       person(details),
     ],
   } as unknown as DexDocument;
-  // 50 (meal 희귀) + 50 (person 희귀) = 100 EXP -> Lv.3 (80..149)
-  assert.equal(documentLevel(doc).level, 3);
-  assert.equal(documentLevel(doc).expToNextLevel, 50);
-  // Deleting experiences drops EXP to 10 + 20 = 30 -> Lv.2
-  assert.equal(documentLevel({ ...doc, experiences: [] }).level, 2);
+  // 50 (meal 희귀) + 10 (person 일반: first-met only) = 60 EXP -> Lv.2 (30..79)
+  assert.equal(documentLevel(doc).level, 2);
+  assert.equal(documentLevel(doc).expToNextLevel, 20);
+  // Deleting experiences drops EXP to 10 + 10 = 20 -> Lv.1
+  assert.equal(documentLevel({ ...doc, experiences: [] }).level, 1);
 });

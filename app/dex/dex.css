@@ -1257,3 +1257,12 @@ button.dex-edition-card-body,a.dex-edition-card-body{cursor:pointer;transition:t
 .dex-exp-gain-bar>span{display:block;height:100%;width:calc(var(--to) * 100%);border-radius:inherit;background:var(--e-accent);animation:dex-exp-fill .8s cubic-bezier(.2,.8,.2,1)}
 .dex-exp-gain>.dex-small{margin-top:8px}
 @keyframes dex-exp-fill{from{width:calc(var(--from) * 100%)}}
+
+/* Person card evolution (GAME_SYSTEM.md 2-C): the old-grade card shakes and flares out, the new-grade card takes its place. Skip/reduced motion show the new card. */
+.dex-rarity-frame--epic{border-color:#e2ae9b;box-shadow:0 5px 0 #f6ddd2,0 0 0 2px #f3d5c844}
+.dex-evolution-stage{display:grid}
+.dex-evolution-stage>.dex-reveal-card{grid-area:1/1;width:100%}
+.dex-evolution .dex-reveal-card.dex-evolution-from{opacity:0;animation:dex-evolve-out 1.4s ease-in both}
+.dex-evolution .dex-reveal-card.dex-evolution-to{animation:dex-evolve-in .6s 1.3s ease-out both}
+@keyframes dex-evolve-out{0%{opacity:1}20%{transform:rotate(-2deg)}35%{transform:rotate(2deg)}50%{transform:none;filter:none}85%{opacity:1;filter:brightness(2.6)}to{opacity:0;filter:brightness(3)}}
+@keyframes dex-evolve-in{from{opacity:0;transform:scale(.85);filter:brightness(3)}}

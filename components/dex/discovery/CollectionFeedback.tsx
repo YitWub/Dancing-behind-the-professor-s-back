@@ -15,7 +15,7 @@ import { GradeBadge } from '@/components/dex/common/GradeBadge';
 /** A just-registered entry has only this experience and no board threads yet. */
 function newEntryGrade({entry,experience}:CollectResult):ExpGrade|null{
   if(entry.subject.kind==='meal'&&experience.kind==='meal')return mealGrade(entry.subject.dishId,[experience]);
-  return entry.subject.kind==='person'?personGrade(entry as PersonEntry,{dexes:[],experiences:[experience]},false):null;
+  return entry.subject.kind==='person'?personGrade(entry as PersonEntry,{dexes:[],experiences:[experience]},0):null;
 }
 function ExpGain({grade}:{grade:ExpGrade|null}){return grade?<p className="dex-visit-count">{grade.label} 등급 · 경험치 <strong>+{grade.exp}</strong> EXP</p>:null;}
 

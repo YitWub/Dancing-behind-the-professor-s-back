@@ -20,6 +20,7 @@ import { THREAD_PRESETS } from './board-style';
 import type { ThreadStyle,BoardNote,NoteColor } from '@/lib/dex/people/board';
 import type { BoardManagementCommand,PeopleBoardRecord } from '@/lib/dex/people/multi-board';
 import { usePeopleLeaveGuard } from './PeopleForms';
+import { usePersonEvolution } from './PersonEvolution';
 
 export function PeopleBoard({data,onChanged,onAddPerson}:{data:DexDocument;onChanged:()=>Promise<void>;onAddPerson:()=>void}){
  const dex=data.dexes.find(d=>d.peopleBoards)??data.dexes.find(d=>d.kind==='people');
@@ -51,7 +52,7 @@ export function PeopleBoard({data,onChanged,onAddPerson}:{data:DexDocument;onCha
 }
 function BoardCanvas({dex,record,data,onChanged,onPlace,managementBusy,onGuardChange,onRemove,onZoom}:{dex:Dex;record:PeopleBoardRecord;data:DexDocument;onChanged:()=>Promise<void>;onPlace:()=>void;managementBusy:boolean;onGuardChange:(blocked:boolean)=>void;onRemove:(entryId:string)=>Promise<boolean>;onZoom:(zoom:.5|.75|1)=>Promise<boolean>}){
  const board=record.layout,entries=peopleView(data).filter(e=>board.positions.some(p=>p.entryId===e.id));
- const router=useRouter(),viewport=useRef<HTMLDivElement>(null),active=useRef(false);
+ const router=useRouter(),viewport=useRef<HTMLDivElement>(null),active=useRef(false),[evolution,celebrate]=usePersonEvolution();
  const [mode,setMode]=useState<'move'|'connect'>('move'),[first,setFirst]=useState<ObjectRef|null>(null),[selected,setSelected]=useState(''),[zoom,setZoom]=useState<.5|.75|1>(record.view.zoom),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[preview,setPreview]=useState<BoardPosition|null>(null),[failed,setFailed]=useState<BoardCommand|null>(null);
  const [connectionEditor,setConnectionEditor]=useState<{connection:BoardConnection;isNew:boolean}|null>(null),[objectPreviews,setObjectPreviews]=useState(new Map<string,{x:number;y:number}>());
  const selectedFirst=first&&objectExists(board,first)?first:null;
@@ -73,11 +74,11 @@ function BoardCanvas({dex,record,data,onChanged,onPlace,managementBusy,onGuardCh
  const save=useCallback(async(command:BoardCommand)=>{
   if(active.current)return false;active.current=true;setBusy(true);setMessage('저장 중…');
   try{const result=await getBrowserRepository().updatePeopleBoard(dex.ownerId,dex.id,dex.revision,command,record.id);
-   if(result.ok){if(command.type==='connect-objects'||command.type==='edit-connection'||command.type==='delete-connection'){setConnectionEditor(null);setFirst(null);}if(command.type==='add-note'||command.type==='edit-note')setNoteEditor(null);setFailed(null);setPreview(null);setMessage('저장했어요.');await onChanged();return true;}
+   if(result.ok){if(command.type==='connect-objects')void celebrate(data);if(command.type==='connect-objects'||command.type==='edit-connection'||command.type==='delete-connection'){setConnectionEditor(null);setFirst(null);}if(command.type==='add-note'||command.type==='edit-note')setNoteEditor(null);setFailed(null);setPreview(null);setMessage('저장했어요.');await onChanged();return true;}
    else{setFailed(command);setMessage('저장하지 못했어요. '+result.error.message);await onChanged();return false;}
   }catch{setFailed(command);setMessage('저장하지 못했어요. 다시 시도해 주세요.');return false;}
   finally{active.current=false;setBusy(false);}
- },[dex.ownerId,dex.id,dex.revision,record.id,onChanged]);
+ },[dex.ownerId,dex.id,dex.revision,record.id,onChanged,celebrate,data]);
  const missing=entries.some(e=>!board?.positions.some(p=>p.entryId===e.id));
  useEffect(()=>{if(missing&&!failed&&!active.current&&!noteEditor&&!uploading&&!photoEditor&&!uploadFailed)void save({type:'initialize'});},[missing,failed,save,noteEditor,uploading,photoEditor,uploadFailed]);
  usePeopleLeaveGuard(!!failed||!!preview||!!uploadFailed,busy||uploading);
@@ -119,7 +120,7 @@ function BoardCanvas({dex,record,data,onChanged,onPlace,managementBusy,onGuardCh
  const activePhoto=board?.photos?.find(p=>p.id===selectedPhoto);
  const activeNote=board?.notes?.find(n=>n.id===selectedNote);
 
- return <div className="connection-board"><div className="connection-toolbar notebook-toolbar" role="group" aria-label="보드 도구"><div className="notebook-primary-tools" role="group" aria-label="조작과 꾸미기">
+ return <div className="connection-board">{evolution}<div className="connection-toolbar notebook-toolbar" role="group" aria-label="보드 도구"><div className="notebook-primary-tools" role="group" aria-label="조작과 꾸미기">
 <button disabled={toolsDisabled} aria-pressed={mode==='move'} onClick={()=>{setMode('move');setFirst(null);}}><BoardToolIcon kind="move"/>선택·이동</button><button disabled={toolsDisabled} aria-pressed={mode==='connect'} onClick={()=>{setMode('connect');setFirst(null);}}><BoardToolIcon kind="thread"/>실 연결</button><button disabled={toolsDisabled} onClick={()=>{setNoteRequest('note-'+crypto.randomUUID());setNoteEditor('new');}}><BoardToolIcon kind="note"/>메모 추가</button><button disabled={toolsDisabled} onClick={()=>{setShowPhotoInfo(true);photoInput.current?.click();}}><BoardToolIcon kind="photo"/>사진 추가</button></div>
 <input ref={photoInput} hidden type="file" aria-label="추억 사진 파일" accept="image/jpeg,image/png,image/webp" onChange={e=>{const file=e.target.files?.[0];e.target.value='';if(file)void upload(file);}}/>
 <div className="notebook-secondary-tools"><label><span className="people-sr-only">보드 확대</span><select aria-label="보드 확대" value={zoom} disabled={toolsDisabled} onChange={async e=>{const zoom=Number(e.target.value) as .5|.75|1;if(await onZoom(zoom))setZoom(zoom);}}><option value={0.5}>50%</option><option value={0.75}>75%</option><option value={1}>100%</option></select></label>

@@ -38,51 +38,60 @@ export function courseGrade(subject: CourseSubject): ExpGrade {
 /** At least 10 non-whitespace characters, so one-letter dummy text does not count. */
 const meaningful = (text?: string) => (text?.replace(/\s/g, '').length ?? 0) >= 10;
 
-/** People whose card has a person-to-person thread on any board. */
-function connectedPeople(records: Records) {
-  const ids = new Set<string>();
+/** Unique people directly threaded to each person on my boards (v1~3 edges, v4 person↔person connections). Repeated threads count once; self links and note/photo threads never. */
+function personLinks(records: Records) {
+  const links = new Map<string, Set<string>>();
+  const link = (a?: string, b?: string) => {
+    if (!a || !b || a === b) return;
+    links.set(a, (links.get(a) ?? new Set()).add(b)).set(b, (links.get(b) ?? new Set()).add(a));
+  };
   for (const dex of records.dexes) {
     if (dex.kind !== 'people') continue;
     for (const board of allBoardLayouts(dex)) {
-      for (const edge of board.edges) if (edge.a !== edge.b) ids.add(edge.a).add(edge.b);
+      for (const edge of board.edges) link(edge.a, edge.b);
       const byPlacement = new Map(board.positions.map(p => [p.placementId, p.entryId]));
-      for (const { from, to } of board.connections ?? []) {
-        const a = from.type === 'person' ? byPlacement.get(from.objectId) : undefined;
-        const b = to.type === 'person' ? byPlacement.get(to.objectId) : undefined;
-        if (a && b && a !== b) ids.add(a).add(b);
-      }
+      for (const { from, to } of board.connections ?? []) link(from.type === 'person' ? byPlacement.get(from.objectId) : undefined, to.type === 'person' ? byPlacement.get(to.objectId) : undefined);
     }
   }
-  return ids;
+  return links;
 }
 
-/** GAME_SYSTEM.md 2-D local fallback: record depth, never the person's worth. Age, gender and real photos are not grade conditions. */
-// shortcut: 2-A~2-C (other user's connections·level·achievements·admission year, 12-point snapshot) need shared profiles; switch when accounts/profile sharing and the EntrySubject snapshot migration land.
-export function personGrade(entry: PersonEntry, records: Records, connected = connectedPeople(records).has(entry.id)): ExpGrade {
-  const s = entry.subject;
-  const details = [s.relationship?.trim(), s.department?.trim(), s.admissionYear, s.mbti, s.energyType, meaningful(s.trait)].filter(Boolean).length;
-  const image = !!s.profileAssetId || (!!s.avatar && s.avatar !== 'classic');
-  if (details < 2 && !image) return COMMON;
-  const notes = records.experiences.filter(e => e.entryId === entry.id && e.kind === 'person' && meaningful(e.note));
-  if (!notes.length) return UNCOMMON;
-  const memoryDays = new Set(notes.filter(e => e.kind === 'person' && e.event === 'memory').map(e => e.experiencedOn)).size;
-  if (memoryDays >= 5 && connected) return LEGENDARY;
-  if (memoryDays >= 3 || (memoryDays >= 2 && connected)) return EPIC;
-  return RARE;
+const PERSON_BANDS = [[10, LEGENDARY], [7, EPIC], [4, RARE], [2, UNCOMMON], [0, COMMON]] as const;
+
+/** GAME_SYSTEM.md 2 card evolution: +2 per distinct memory day (max 10) and +1 per unique linked person (max 3). Profile fields and the first-met note never count, so it never rates the person. */
+export function personScore(entry: PersonEntry, records: Records, linked = personLinks(records).get(entry.id)?.size ?? 0) {
+  const days = new Set(records.experiences.filter(e => e.entryId === entry.id && e.kind === 'person' && e.event === 'memory' && meaningful(e.note)).map(e => e.experiencedOn)).size;
+  const score = Math.min(days, 5) * 2 + Math.min(linked, 3);
+  const next = PERSON_BANDS.findLast(([min]) => min > score)?.[0];
+  return { days, linked, score, grade: PERSON_BANDS.find(([min]) => score >= min)![1] as ExpGrade, toNext: next === undefined ? 0 : next - score };
+}
+
+export function personGrade(entry: PersonEntry, records: Records, linked?: number): ExpGrade {
+  return personScore(entry, records, linked).grade;
+}
+
+/** My people's grades with one board scan. */
+function personGrades(document: DexDocument) {
+  const links = personLinks(document);
+  return new Map(document.entries.filter(e => e.ownerId === document.profile.ownerId && e.subject.kind === 'person')
+    .map(e => [e.id, personGrade(e as PersonEntry, document, links.get(e.id)?.size ?? 0)]));
+}
+
+/** People whose card grade rose from `before` to `after` (a card evolution). New people are discoveries, and drops never count. */
+export function personGradeRises(before: DexDocument, after: DexDocument) {
+  const old = personGrades(before);
+  return [...personGrades(after)].flatMap(([id, to]) => {
+    const from = old.get(id);
+    return from && to.exp > from.exp ? [{ entry: after.entries.find(e => e.id === id) as PersonEntry, from, to }] : [];
+  });
 }
 
 /** Sum of grade EXP over owned menus, people and courses; deletions and edits re-derive it. */
 export function totalExp(document: DexDocument): number {
-  const owner = document.profile.ownerId;
-  const connected = connectedPeople(document);
   let sum = 0;
   for (const card of mealPersonalCards(document)) sum += mealGrade(card.dishId, card.experiences).exp; // once per dishId
-  for (const entry of document.entries) {
-    if (entry.ownerId !== owner) continue;
-    const s = entry.subject;
-    if (s.kind === 'course') sum += courseGrade(s).exp;
-    else if (s.kind === 'person') sum += personGrade(entry as PersonEntry, document, connected.has(entry.id)).exp;
-  }
+  for (const grade of personGrades(document).values()) sum += grade.exp;
+  for (const entry of document.entries) if (entry.ownerId === document.profile.ownerId && entry.subject.kind === 'course') sum += courseGrade(entry.subject).exp;
   return sum;
 }
 
