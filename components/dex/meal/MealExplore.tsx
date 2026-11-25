@@ -10,6 +10,7 @@ import type { Cafeteria, MealTime } from '@/lib/dex/meal/types';
 import { MealCollectionRequests } from '@/lib/dex/meal/requests';
 import { CollectionFeedback } from '@/components/dex/discovery/CollectionFeedback';
 import { MealPhoto } from './MealPhoto';
+import { HoldButton } from '@/components/dex/common/HoldButton';
 import { MealCollectionPanel } from './MealCollection';
 import { mealArtwork } from '@/components/dex/common/CollectionArtwork';
 import { MealImageArtwork } from '@/components/dex/common/MealImageArtwork';
@@ -123,9 +124,10 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
           {row.reason?<p className="text-sm text-[var(--e-muted)]">{row.reason}</p>:null}
           <details className="dex-tray"><summary>메뉴 구성·원문·식판 사진</summary><p>{item.snapshot.menu.join(' · ')}</p><p className="dex-menu-original">원문 메뉴: {label.original}</p>{label.translation?<p lang="en">{label.translation}</p>:null}<p>식판 전체 사진이며, 개별 메뉴 사진이 아니에요.</p><MealPhoto imageUrl={item.snapshot.imageUrl} imageSourceUrl={item.snapshot.imageSourceUrl} name={`${name} · 당시 식판 전체 사진`}/></details>
           <div className="dex-offering-actions"><div className="dex-offering-price"><strong>{item.snapshot.price!==null?`${item.snapshot.price.toLocaleString('ko-KR')}원`:'가격 정보 없음'}</strong><span>{collected?'수집 완료':'아직 미수집'}</span></div>
-          <button className="w-full rounded-xl bg-[var(--e-accent)] px-3 py-3 font-semibold text-white disabled:opacity-40" disabled={!!busy||!row.selection||!mealDex||!!error} onClick={()=>void record(row)}>
+          <HoldButton disabled={!!busy||!row.selection||!mealDex||!!error} onConfirm={()=>void record(row)}
+            holdLabel={collected?'0.6초 눌러 재방문 기록':'0.6초 눌러 수집 확정'}>
             {busy===item.id?'수집 중…':failed.has(item.id)?'같은 요청으로 다시 시도':collected?'다시 먹었어요 · 기록 추가':'먹었어요 · 도감에 수집'}
-          </button>
+          </HoldButton>
           {failed.has(item.id)?<p className="text-sm" role="alert">저장 실패 · 성공 처리하지 않았습니다.</p>:null}
           {item.soldOut?<p className="text-xs text-[var(--e-muted)]">원본 저장 당시 품절 표시가 있었습니다. 과거에 먹은 경험만 기록하세요.</p>:null}
           </div>

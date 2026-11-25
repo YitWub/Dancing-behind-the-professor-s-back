@@ -1,14 +1,15 @@
 'use client';
 
-import Link from 'next/link';
 import './course.css';
 import { CourseGradePanel } from './CourseGradePanel';
+import { CourseSummary } from './CourseSummary';
 import type { CourseGradeRecord } from '@/lib/dex/course/grade-record';
 import { CourseReviewPanel, CourseCompletion } from './CourseReviewPanel';
 import type { CourseReview } from '@/lib/dex/course/review';
 import { courseProgress } from '@/lib/dex/course/progress';
-import { CourseOverview } from './CourseProgress';
+import { DexPageHeader } from '@/components/dex/common/DexPageHeader';
 import { CourseCollection } from './CourseCollection';
+import { calculateCourseBalance } from '@/lib/dex/course/grade/balance';
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useDexDocument } from '../scaffold/useDexDocument';
@@ -31,6 +32,8 @@ export function CourseDex() {
   const progress = courseProgress(entries);
   const selected = entries.find(entry => entry.id === selectedId);
   const detail = useRef<HTMLElement>(null);
+  const hps = entries.map(entry => calculateCourseBalance(entry.subject.gradeRecord).hp).filter((hp): hp is number => hp !== null);
+  const average = hps.length ? Math.round(hps.reduce((sum, hp) => sum + hp, 0) / hps.length) : null;
   useEffect(() => {
     if (selectedId && mode === null) detail.current?.focus();
   }, [selectedId, mode]);
@@ -124,13 +127,10 @@ export function CourseDex() {
     });
   }
 
-  return <section className="course-dex space-y-4">
-    <Link className="dex-back" href="/dex">← 도감 홈</Link>
-    <header className="course-hero">
-      <div><h1 className="text-2xl font-semibold">강의도감</h1><p>수강한 강의와 나만의 평가를 학기별로 모아보세요.</p></div>
-      {data && <button className="dex-button" disabled={busy} onClick={() => navigate(undefined, 'create')}>강의 등록</button>}
-      {data && <CourseOverview progress={progress} />}
-    </header>
+  return <section className="course-dex">
+    <DexPageHeader backHref="/dex" title="강의도감"
+      summary={data ? `${entries.length}과목${average === null ? '' : ` · 평균 HP ${average}`}` : '기록을 불러오는 중…'}
+      action={data ? <button type="button" className="bk-header-action" disabled={busy} onClick={() => navigate(undefined, 'create')}>＋ 강의</button> : undefined} />
     {loading && <p role="status">기록을 불러오는 중…</p>}
     {(error || failure) && <p role="alert">{error || failure}</p>}
     {data && <>
@@ -152,10 +152,11 @@ export function CourseDex() {
             <button className="dex-button" disabled={busy} onClick={() => navigate(selected.id, 'edit')}>수정</button>
             <button className="dex-button course-danger" disabled={busy} onClick={() => void remove(selected)}>삭제</button>
           </div>
+          <CourseSummary key={"summary:" + selected.id} subject={selected.subject} />
           <CourseGradePanel key={"grade:" + selected.id} entry={selected} busy={busy} onSave={saveGrade} />
           <CourseReviewPanel key={selected.id} entry={selected} busy={busy} onSave={saveReview} />
         </article>}
-      <CourseCollection progress={progress} entries={entries} busy={busy} onSelect={id => navigate(id)} />
+      <CourseCollection progress={progress} entries={entries} busy={busy} onSelect={id => navigate(id)} onCreate={() => navigate(undefined, 'create')} />
     </>}
   </section>;
 }

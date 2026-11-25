@@ -16,6 +16,8 @@ import { mealArtwork } from '@/components/dex/common/CollectionArtwork';
 import { MealImageArtwork } from '@/components/dex/common/MealImageArtwork';
 import { CollectionCard, CollectionEmptyState } from '@/components/dex/common/CollectionCard';
 import { MealGamePanel } from './MealGamePanel';
+import { BinderPage } from '@/components/dex/common/BinderPage';
+import { MealTcgCard } from './MealTcgCard';
 
 /** Known cards come only from a real stored offering date; this is not a complete school catalogue. */
 export function MealCollectionPanel({data,onExplore}:{data:DexDocument;onExplore?:()=>void}) {
@@ -53,7 +55,13 @@ export function MealCollectionPanel({data,onExplore}:{data:DexDocument;onExplore
     <div className="dex-collection-tools"><label>메뉴 검색<input aria-label="메뉴 검색" value={search} onChange={e=>{setSearch(e.target.value);setLimit(24);}} placeholder="메뉴 이름"/></label><label>정렬<select aria-label="컬렉션 정렬" value={sort} onChange={e=>{setSort(e.target.value as CardSort);setLimit(24);}}><option value="recent">최근 획득순</option><option value="edition">에디션 높은 순</option><option value="name">메뉴 이름순</option><option value="visits">많이 먹은 메뉴순</option></select></label><label>에디션<select aria-label="에디션 필터" value={edition} onChange={e=>{setEdition(e.target.value as CardEdition|'all');setLimit(24);}}><option value="all">모든 에디션</option>{CARD_EDITIONS.map(e=><option key={e} value={e}>{e}</option>)}</select></label></div>
     {view==='menus'&&edition!=='all'?<p className="dex-small dex-muted">선택 에디션을 보유한 메뉴를 표시해요. 대표 카드는 그 메뉴의 최고 에디션이에요.</p>:null}
     <p className="dex-small" role="status">{view==='menus'?'메뉴':'카드'} {Math.min(limit,total)} / {total}{view==='menus'?'종':'장'} 표시</p>
-    {collection.menus.length===0?<CollectionEmptyState onExplore={onExplore}/>:total===0?<div className="dex-empty dex-empty--small"><h3>{view==='album'&&collection.cards.length===0?'보유 카드가 없어요':'검색 결과가 없어요'}</h3><p>검색어와 에디션 필터를 확인해 주세요. 경험을 모두 삭제한 메뉴 등록은 남아 있어요.</p></div>:<div className="dex-owned-grid" data-testid="owned-grid">{view==='menus'?result.menus.slice(0,limit).map(menu=><EditionCollectionCard key={menu.dishId} name={menu.name} edition={menu.representative?.card.edition} count={menu.cards.length} evaluationCount={menu.cards.filter(item=>item.experience.rating!==null).length} rating={menu.cards.some(item=>item.experience.rating!==null)?menu.cards.reduce((sum,item)=>sum+(item.experience.rating??0),0)/menu.cards.filter(item=>item.experience.rating!==null).length:null} acquiredOn={menu.firstCollectedOn} href={`/dex/meal/collection/${encodeURIComponent(menu.entryId)}`}/>):result.cards.slice(0,limit).map(item=><EditionCollectionCard key={item.card.id} name={item.name} edition={item.card.edition} rating={item.experience.rating} acquiredOn={kstToday(new Date(item.card.acquiredAt))} href={mealDetailHref(item)}/>)}</div>}
+    {view==='menus'&&collection.menus.length>0&&total>0?<BinderPage label="학식 카드 바인더" items={result.menus.map((menu,index)=>
+      <MealTcgCard key={menu.dishId} name={menu.name} edition={menu.representative?.card.edition}
+        ratings={menu.cards.flatMap(item=>item.experience.rating===null?[]:[item.experience.rating as number])}
+        visits={menu.cards.length} acquiredOn={menu.firstCollectedOn} index={index} total={result.menus.length}
+        href={`/dex/meal/collection/${encodeURIComponent(menu.entryId)}`}/>)}
+      emptySlot={<span className="bk-pocket-add" aria-hidden="true"><b>＋</b>다음 칸</span>}/>:null}
+    {collection.menus.length===0?<CollectionEmptyState onExplore={onExplore}/>:total===0?<div className="dex-empty dex-empty--small"><h3>{view==='album'&&collection.cards.length===0?'보유 카드가 없어요':'검색 결과가 없어요'}</h3><p>검색어와 에디션 필터를 확인해 주세요. 경험을 모두 삭제한 메뉴 등록은 남아 있어요.</p></div>:<div className="dex-owned-grid" data-testid="owned-grid" hidden={view==='menus'}>{result.cards.slice(0,limit).map(item=><EditionCollectionCard key={item.card.id} name={item.name} edition={item.card.edition} rating={item.experience.rating} acquiredOn={kstToday(new Date(item.card.acquiredAt))} href={mealDetailHref(item)}/>)}</div>}
     {total>limit?<button className="dex-button dex-button--quiet" onClick={()=>setLimit(n=>n+24)}>더 보기 ({total-limit}개 남음)</button>:null}
     <MealGamePanel document={data}/>
     <section className="dex-known"><div className="dex-section-heading"><div><span className="dex-eyebrow">다음에 만날 발견</span><h3>다음에 만날 메뉴</h3></div><span className="dex-tag">확인된 저장본</span></div>

@@ -71,7 +71,7 @@
 }
 
 .course-dex .course-danger {
-  color: #8d3429;
+  color: var(--bk-ink);
   background: var(--e-surface);
   border: 1px solid currentColor;
 }

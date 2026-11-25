@@ -1,13 +1,11 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
-import { Card } from '@/components/ui';
 import type { DexKind, EntrySubject } from '@/lib/dex/core/types';
+import { Card } from '@/components/ui';
 import { useDexDocument } from './useDexDocument';
-import { AchievementStamp } from '@/components/dex/common/AchievementStamp';
-import { mealAchievements } from '@/lib/dex/meal/game';
-import { MEAL_ACHIEVEMENT_ART } from '@/lib/dex/meal/achievement-art';
-import { BackupControls } from './BackupControls';
+import { GrassGrid } from '@/components/dex/common/GrassGrid';
+import { kstToday } from '@/lib/datetime';
 import { CollectionArtwork, mealArtwork } from '@/components/dex/common/CollectionArtwork';
 import { CollectionCard } from '@/components/dex/common/CollectionCard';
 
@@ -24,33 +22,49 @@ function label(subject: EntrySubject) { return subject.kind==='meal'?subject.dis
 export function DexHomeScaffold() {
   const {data,loading,error,reload}=useDexDocument();
   const [now]=useState(()=>Date.now());
-  const earned=data?mealAchievements(data).filter(goal=>goal.status==='achieved'):[];
-  const recent=[...(data?.entries??[])].sort((a,b)=>b.firstCollectedAt.localeCompare(a.firstCollectedAt)).slice(0,3);
-  return <div className="space-y-8">
-    <section className="dex-home-hero"><div><span className="dex-eyebrow">A LITTLE DISCOVERY, EVERY DAY</span><h2>평범한 대학생활이<br/>나만의 <em>컬렉션</em>으로.</h2><p>맛있었던 한 끼, 함께한 인연, 소중한 순간.<br/>대학생활의 모든 발견을 수집하다.</p><Link className="dex-button" href="/dex/meal">나의 도감 펼쳐보기 ↗</Link></div><div className="dex-hero-stickers"><div><CollectionArtwork kind="rice"/></div><div><CollectionArtwork kind="custom"/></div><span>small moments,<br/>my own collection.</span></div></section>
+  const today=kstToday();
+  const entries=data?.entries??[];
+  const recent=[...entries].sort((a,b)=>b.firstCollectedAt.localeCompare(a.firstCollectedAt)).slice(0,3);
+  const todayCount=entries.filter(e=>e.collectedOn===today).length;
+  return <div className="bk-screen">
     {loading?<p role="status">이 브라우저의 기록을 불러오는 중…</p>:null}
-    {error?<p role="alert">{error} <button onClick={()=>void reload()} className="underline">다시 읽기</button></p>:null}
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {CATEGORIES.map(category=>{
-        const ids=new Set(data?.dexes.filter(d=>d.kind===category.kind).map(d=>d.id));
-        const count=data?.entries.filter(e=>ids.has(e.dexId)).length??0;
-        return <Card key={category.kind} className="flex flex-col gap-3 p-5">
-          <CollectionArtwork kind={category.kind==='meal'?'food':category.kind==='people'?'people':category.kind==='professor'?'professor':'custom'}/><h2 className="text-xl font-semibold">{category.name}</h2>
-          <p className="flex-1 text-sm text-[var(--e-ink-2)]">{category.description}</p>
-          <p data-testid={`count-${category.kind}`}>{data?`수집 ${count}개`:'수집 개수 확인 중'}</p>
-          {data&&count===0?<p className="text-sm text-[var(--e-muted)]">아직 수집한 기록이 없어요.</p>:null}
-          <Link href={category.href} className="rounded-lg bg-[var(--e-accent)] px-4 py-2 text-center text-white">{category.name} 열기</Link>
-        </Card>;
-      })}
-    </div>
-    <section className="dex-home-achievements" aria-labelledby="campus-achievements-heading"><div className="dex-section-heading"><div><span className="dex-eyebrow">나의 업적 전시대</span><h2 id="campus-achievements-heading">캠퍼스 탐험 도장</h2></div>{data?<span className="dex-tag">달성한 도장 {earned.length}개</span>:null}</div>
-      <p className="dex-small dex-muted">대학생활에서 모은 발견을 전시해요. 현재는 학식 업적을 연결했어요.</p>
-      {data?earned.length?<div className="dex-stamp-grid dex-home-stamp-grid">{earned.map(goal=><AchievementStamp key={goal.id} achievement={goal} artwork={MEAL_ACHIEVEMENT_ART[goal.id]}/>)}</div>:<div className="dex-home-stamp-empty"><p>아직 전시한 도장이 없어요.</p><p className="dex-small dex-muted">첫 메뉴를 수집하면 첫 발견 도장이 이곳에 놓여요.</p></div>:<p role="status">{error?'업적을 읽지 못했어요. 위에서 다시 읽어 주세요.':'내 도장을 불러오는 중…'}</p>}
-      <Link className="dex-back" href="/dex/meal/collection#meal-achievements">학식 업적과 진행 상황 보기 ↗</Link>
+    {error?<p role="alert">{error} <button type="button" className="bk-link" onClick={()=>void reload()}>다시 읽기</button></p>:null}
+
+    <Link href="/dex/meal/collection" className="bk-today" data-done={todayCount>0?'':undefined}>
+      <span className="bk-today-pocket" aria-hidden="true"><i/><i/><i/></span>
+      <span className="bk-today-main">{todayCount>0?`오늘 ${todayCount}장 꽂음`:'오늘 칸 꽂기'}</span>
+      <span className="bk-today-sub">{todayCount>0?'한 장 더 꽂을 수 있어요':'오늘 만난 한 끼부터 기록해요'}</span>
+    </Link>
+
+    <GrassGrid dates={entries.map(e=>e.collectedOn)}/>
+
+    <section className="bk-section" aria-labelledby="bk-binders">
+      <header className="bk-section-head"><h2 id="bk-binders">내 바인더</h2><span>{data?`${entries.length}장 수집`:'불러오는 중'}</span></header>
+      <ul className="bk-binder-grid">
+        {CATEGORIES.map(category=>{
+          const ids=new Set(data?.dexes.filter(d=>d.kind===category.kind).map(d=>d.id));
+          const count=data?.entries.filter(e=>ids.has(e.dexId)).length??0;
+          return <li key={category.kind}>
+            <Link href={category.href} className="bk-binder" data-kind={category.kind}>
+              <span className="bk-binder-spine" aria-hidden="true"/>
+              <span className="bk-binder-zip" aria-hidden="true">{Array.from({length:6},(_,z)=><i key={z}/>)}</span>
+              <span className="bk-binder-plate">
+                <strong>{category.name}</strong>
+                <span data-testid={`count-${category.kind}`}>{data?`${count}장`:'확인 중'}</span>
+              </span>
+            </Link>
+          </li>;
+        })}
+      </ul>
     </section>
-    <section><div className="dex-section-heading"><div><span className="dex-eyebrow">LITTLE MOMENTS, COLLECTED</span><h2>최근 발견한 카드</h2></div><span className="dex-tag">나만의 기록</span></div>{recent.length?<div className="dex-card-grid">{recent.map(entry=><CollectionCard key={entry.id} title={label(entry.subject)} isNew={now-Date.parse(entry.firstCollectedAt)>=0&&now-Date.parse(entry.firstCollectedAt)<7*86400000} artwork={<CollectionArtwork kind={entry.subject.kind==='meal'?mealArtwork(label(entry.subject)):entry.subject.kind==='person'?'people':entry.subject.kind==='professor'?'professor':'custom'}/>} href={entry.subject.kind==='meal'?`/dex/meal/collection/${entry.id}`:entry.subject.kind==='professor'?'/dex/professor':undefined} meta={`첫 기록 ${entry.collectedOn}`}/>)}</div>:<div className="dex-empty dex-empty--small"><h3>아직 비어 있는 첫 페이지</h3><p>직접 경험한 발견을 모으면 이곳에 카드가 쌓여요.</p><Link href="/dex/meal?view=discover" className="dex-back">첫 번째 메뉴 만나러 가기 ↗</Link></div>}</section>
-    <BackupControls ownerId={data?.profile.ownerId} onChanged={reload}/>
-    {process.env.NODE_ENV==='development'?<p className="text-sm"><Link className="dex-dev-entry" href="/dex/dev">개발자 도구 ↗</Link></p>:null}
+
+    <section className="bk-section" aria-labelledby="bk-recent">
+      <header className="bk-section-head"><h2 id="bk-recent">최근에 꽂은 카드</h2></header>
+      {recent.length?<div className="dex-card-grid">{recent.map(entry=><CollectionCard key={entry.id} title={label(entry.subject)} isNew={now-Date.parse(entry.firstCollectedAt)>=0&&now-Date.parse(entry.firstCollectedAt)<7*86400000} artwork={<CollectionArtwork kind={entry.subject.kind==='meal'?mealArtwork(label(entry.subject)):entry.subject.kind==='person'?'people':entry.subject.kind==='professor'?'professor':'custom'}/>} href={entry.subject.kind==='meal'?`/dex/meal/collection/${entry.id}`:entry.subject.kind==='professor'?'/dex/professor':undefined} meta={`첫 기록 ${entry.collectedOn}`}/>)}</div>
+        :<div className="bk-empty"><p>아직 꽂은 카드가 없어요.</p><Link href="/dex/meal?view=discover" className="bk-link">첫 번째 메뉴 만나러 가기 ↗</Link></div>}
+    </section>
+
+    {process.env.NODE_ENV==='development'?<p className="bk-muted"><Link className="bk-link" href="/dex/dev">개발자 도구 ↗</Link></p>:null}
   </div>;
 }
 
