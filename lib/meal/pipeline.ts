@@ -13,6 +13,9 @@ import { OBSERVATION_USER_AGENT, robotsAllows } from './history-policy.ts';
 import type { ConfirmedMealUnit } from './sync.ts';
 
 export interface PipelineOptions {rootDir:string;baseDate?:string;dates?:string[];extraDates?:string[];cafeterias?:Cafeteria[];lookbackDays?:number;maxRequests?:number;intervalMs?:number;force?:boolean;scheduledSlot?:string;observationsDir?:string;storageDir?:string;now?:Date;fetcher?:typeof fetch;pause?:(ms:number)=>Promise<void>;silent?:boolean}
+const NOTHING_CONFIRMED='정상 관측된 메뉴·명시적 휴무가 없어 이전 저장본 유지: ';
+/** A failed run whose only issue is that the site published nothing for the checked units (weekend, holiday): the stored menus stand. */
+export function nothingNewPublished(error?:string){return !!error?.startsWith(NOTHING_CONFIRMED)&&error.slice(NOTHING_CONFIRMED.length).split('; ').every(issue=>issue.endsWith(': empty-unknown'));}
 export function shiftMealDate(date:string,days:number){const value=new Date(date+'T00:00:00Z');value.setUTCDate(value.getUTCDate()+days);return value.toISOString().slice(0,10);}
 export function reusableObservation(record:ReturnType<typeof readHistoryDay>,date:string,today:string,now:number){
   const day=record?.effective;if(!day)return false;
@@ -63,7 +66,7 @@ export async function runMealDataPipeline(options:PipelineOptions){
           if(!options.dates&&date===base&&day.status!=='parse-error')for(const published of [...new Set(parsed.weeklyItems.map(item=>item.date))].sort())if(published>=base&&published<=shiftMealDate(base,6))enqueue(published,facility);
         }catch(error){const reason=error instanceof Error?error.message:'네트워크 오류';const failed=failedHistoryDay(date,facility.cafeteria,source,observedAt,'network-error',reason,status);saveHistoryDay(root,failed);attempted.push({date,cafeteria:facility.cafeteria,status:'network-error',menus:0});issues.push(date+' '+facility.cafeteria+': '+reason);}
       }
-      if(!confirmedUnits.length){if(attempted.length)throw Error('정상 관측된 메뉴·명시적 휴무가 없어 이전 저장본 유지: '+issues.join('; '));return {source:HOME_URL,items:[],cafeterias:[],confirmedUnits:[],issues:[]};}
+      if(!confirmedUnits.length){if(attempted.length)throw Error(NOTHING_CONFIRMED+issues.join('; '));return {source:HOME_URL,items:[],cafeterias:[],confirmedUnits:[],issues:[]};}
       return {source:HOME_URL,items,cafeterias:[],confirmedUnits,issues,observedDates:[...dates]};
     });
   }finally{

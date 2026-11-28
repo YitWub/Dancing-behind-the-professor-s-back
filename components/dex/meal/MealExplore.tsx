@@ -4,7 +4,7 @@ import { Card } from '@/components/ui';
 import { useDexDocument } from '@/components/dex/scaffold/useDexDocument';
 import { getBrowserRepository } from '@/lib/dex/storage/browser';
 import type { CollectResult, Result } from '@/lib/dex/core/types';
-import { readOfferings, mealCoverageMessage, CAFETERIA_NAMES, MEAL_TIME_NAMES } from '@/lib/dex/meal/catalog';
+import { readOfferings, requestMealSync, mealCoverageMessage, CAFETERIA_NAMES, MEAL_TIME_NAMES } from '@/lib/dex/meal/catalog';
 import type { CatalogOffering, MealCatalog } from '@/lib/dex/meal/catalog';
 import type { Cafeteria, MealTime } from '@/lib/dex/meal/types';
 import { MealCollectionRequests } from '@/lib/dex/meal/requests';
@@ -32,6 +32,8 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
   const [catalogError,setCatalogError]=useState('');
   const [reading,setReading]=useState(true);
   const [nonce,setNonce]=useState(0);
+  const [syncNote,setSyncNote]=useState('');
+  const crawl=useRef<string|null>(initialDate); // date to crawl before the next read: today on first visit, then the '선택 날짜 조회' date
   const [busy,setBusy]=useState<string|null>(null);
   const [failed,setFailed]=useState<Set<string>>(()=>new Set());
   const [feedback,setFeedback]=useState<{result:Result<CollectResult>;name:string;visitCount?:number;notices:GameNotice[]}|null>(null);
@@ -45,14 +47,22 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
   const personal=data?mealPersonalCards(data):[];
   useEffect(()=>{
     const controller=new AbortController();let alive=true;
-    void readOfferings({date},{signal:controller.signal}).then(result=>{
+    const crawlNow=tab==='discover'&&crawl.current===date;
+    void (async()=>{
+      if(crawlNow){
+        setReading(true);setSyncNote('학교 식단 페이지에서 이 날짜의 식단을 가져오는 중… (10초 정도 걸릴 수 있어요)');
+        const synced=await requestMealSync(date,{signal:controller.signal});
+        if(!alive)return; // an aborted run keeps crawl.current, so the re-run crawls again
+        crawl.current=null;setSyncNote(synced.ok?'':synced.error);
+      }
+      const result=await readOfferings({date},{signal:controller.signal});
       if(!alive)return;
       setCatalog(result.ok?result.value:null);setCatalogError(result.ok?'':result.error.message);setReading(false);
-    });
+    })();
     return ()=>{alive=false;controller.abort();};
-  },[date,nonce]);
+  },[date,nonce,tab]);
   function changeDate(next:string){if(next&&next!==date&&(!feedback||canDismissFeedback())){setReading(true);setDate(next);dismissFeedback();}}
-  function reread(){setReading(true);setNonce(n=>n+1);}
+  function reread(){crawl.current=date;setReading(true);setNonce(n=>n+1);}
   async function record(row:CatalogOffering) {
     if(submitting.current||!data||!mealDex||!row.selection)return;
     if(feedback&&!canDismissFeedback())return;
@@ -102,6 +112,7 @@ export function MealExplore({initialDate,initialTab='collection'}:{initialDate:s
         <label className="text-sm">확인된 날짜<select aria-label="확인된 제공 날짜" value={catalog?.availableDates.includes(date)?date:''} onChange={e=>changeDate(e.target.value)}><option value="" disabled>달력에서 날짜 선택</option>{catalog?.availableDates.map(day=><option key={day} value={day}>{day}</option>)}</select></label>
         <button className="rounded-lg border px-3 py-2 text-sm disabled:opacity-40" disabled={reading} onClick={reread}>선택 날짜 조회</button>
       </div>
+      {syncNote?<p role="status" className="text-sm">{syncNote}</p>:null}
       {catalog?<>
         <details className="dex-source-info"><summary>저장본 정보{catalog.dataState==='stale'?' · 오래된 데이터':catalog.dataState==='seed'?' · 예시 데이터':''}</summary><p data-testid="meal-source-notice">{catalog.notice}</p><p className="break-all">저장 출처: {catalog.source}</p><p>조회만으로 수집되지 않아요. 선택한 제공일에 실제로 먹은 메뉴만 등록해 주세요.</p></details>
 

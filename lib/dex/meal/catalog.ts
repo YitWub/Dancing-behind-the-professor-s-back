@@ -66,12 +66,22 @@ export async function readOfferings(query:MealCatalogQuery,options:{signal?:Abor
   }catch(error){return {ok:false as const,error:{message:error instanceof Error?error.message:'식단 조회에 실패했습니다. 자동으로 재수집하지 않습니다.'}};}
 }
 
+/** Asks the server to crawl the official menu for one date (POST /api/meals/sync). On failure the stored snapshot stays and is still read. */
+export async function requestMealSync(date:string,options:{signal?:AbortSignal;fetcher?:typeof fetch}={}):Promise<{ok:true}|{ok:false;error:string}>{
+  try{
+    const response=await (options.fetcher??fetch)('/api/meals/sync',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({date}),cache:'no-store',signal:options.signal});
+    const body:unknown=await response.json().catch(()=>null);
+    if(body&&typeof body==='object'&&'ok'in body&&body.ok===true)return {ok:true};
+    return {ok:false,error:'학교 식단을 새로 가져오지 못했어요. 저장된 식단을 보여 드려요.'+(body&&typeof body==='object'&&'error'in body&&typeof body.error==='string'?' ('+body.error+')':'')};
+  }catch{return {ok:false,error:'학교 식단을 새로 가져오지 못했어요. 저장된 식단을 보여 드려요.'};}
+}
+
 /** Honest empty-state wording over the selected restaurant/meal units. */
 export function mealCoverageMessage(coverage:MealDateCoverage|undefined,cafeteria:string,mealTime:string){
   const units=coverage?.units.filter(unit=>(!cafeteria||unit.cafeteria===cafeteria)&&(!mealTime||unit.mealTime===mealTime))??[];
   if(units.length&&units.every(unit=>unit.state==='closed'))return '공식 원문에서 선택한 날짜·끼니의 미운영이 확인됐어요.';
   if(units.some(unit=>unit.lastAttemptStatus==='network-error'||unit.lastAttemptStatus==='parse-error'))return '최근 조회 또는 파싱에 실패했어요. 이전 정상 기록은 보존하며, 메뉴가 없었다는 뜻은 아니에요.';
   if(units.some(unit=>unit.state==='partial'))return '일부 식단만 확인되어 해당 메뉴의 수집을 보류했어요. 미운영으로 집계하지 않아요.';
-  if(units.length&&units.every(unit=>unit.state==='not-observed'))return '아직 이 날짜의 식단을 수집하지 않았어요. 오늘 식단만 자동으로 수집해요.';
+  if(units.length&&units.every(unit=>unit.state==='not-observed'))return '아직 이 날짜의 식단을 수집하지 않았어요. ‘선택 날짜 조회’를 누르면 학교 식단을 가져와요.';
   return '공식 응답에 해당 식단이 없거나 일부 끼니가 확인되지 않았어요. 미운영일로 단정하지 않아요.';
 }
